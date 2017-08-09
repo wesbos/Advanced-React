@@ -1,0 +1,28 @@
+{
+  "name": "nowgql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "micro": "micro",
+    "micro-dev": "micro-dev ./functions"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "micro": "^8.0.1",
+    "micro-dev": "^1.1.1",
+    "next": "^3.0.1-beta.20",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-apollo": "^1.4.10",
+    "react-dom": "^15.6.1",
+    "react-stripe-checkout": "^2.6.3",
+    "stripe": "^4.23.2",
+    "styled-components": "^2.1.2"
+  }
+}
