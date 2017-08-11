@@ -36,17 +36,13 @@ class CreateLink extends Component {
       <div>
         { this.state.loading ? 'LOADING...' : 'Ready!' }
         <form onSubmit={this._createLink}>
-          <p>Image: {this.state.image}</p>
-          <input
-            value={this.state.title}
-            onChange={(e) => this.setState({ title: e.target.value })}
-            type='text'
-            placeholder='A description for the link'
-          />
-          <input
-            onChange={this.uploadFile}
-            type='file'
-          />
+          <p>
+            Image
+            <input onChange={this.uploadFile} type='file'/>
+          </p>
+          <p>Title
+            <input value={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} type='text' placeholder='A description for the link'/>
+          </p>
           <textarea
             value={this.state.description}
             onChange={(e) => this.setState({ description: e.target.value })}
@@ -77,9 +73,7 @@ class CreateLink extends Component {
     });
     this.setState({ loading: false });
   }
-
 }
-
 // When we submit this mutation, we need to update our store - we have a few ways to do that:
 // One - we can go nucular and run refetchQueries() which will just go get everything - this is easy, but at the cost of efficiency.
 

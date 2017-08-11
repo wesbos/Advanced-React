@@ -3,6 +3,8 @@ import { graphql, compose } from 'react-apollo'
 import UpdateItem from './UpdateItem';
 import Link from 'next/link';
 import styled from 'styled-components';
+import TakeMyMoney from './TakeMyMoney';
+import formatMoney from '../lib/formatMoney';
 
 import { ALL_ITEMS_QUERY, DELETE_ITEM_MUTATION } from '../queries';
 
@@ -43,6 +45,15 @@ class ItemList extends Component {
             }}>
               <a>Edit {item.id}</a>
             </Link>
+
+            <TakeMyMoney
+              amount={item.price}
+              name={item.title} // the pop-in header title
+              description={item.description} // the pop-in header subtitle
+              image={`https://images.graph.cool/v1/cj5xz8szs28930145gct82bdj/${item.image.secret}/300x300`}
+            >
+              <button>Buy for {formatMoney(item.price)}</button>
+            </TakeMyMoney>
 
             <UpdateItem id={item.id} />
 

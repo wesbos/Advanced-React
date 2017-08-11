@@ -6,8 +6,6 @@ class UpdateLink extends Component {
 
   state = {
     ...this.props.findItem.Item,
-    price: 0,
-    fullPrice: 0
   }
 
   saveToState = (e) => {

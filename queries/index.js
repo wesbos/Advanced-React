@@ -21,7 +21,6 @@ export const CREATE_ORDER_MUTATION = gql`
       token,
       charge,
       amount,
-      email
     }
   }
 `;

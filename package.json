@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "micro": "micro",
-    "micro-dev": "micro-dev ./functions"
+    "micro-dev": "micro-dev ./functions",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -24,5 +25,8 @@
     "react-stripe-checkout": "^2.6.3",
     "stripe": "^4.23.2",
     "styled-components": "^2.1.2"
+  },
+  "devDependencies": {
+    "jest": "^20.0.4"
   }
 }
