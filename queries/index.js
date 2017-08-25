@@ -3,24 +3,48 @@ import { itemDetails } from './fragments';
 
 export const CREATE_LINK_MUTATION = gql`
   ${itemDetails}
-  mutation CreateLinkMutation($description: String!, $title: String!, $imageId: ID) {
+  mutation CreateLinkMutation($description: String!, $title: String!, $imageId: ID, $price: Int!) {
     createItem(
       description: $description,
       title: $title,
       imageId: $imageId
+      price: $price
     ) {
       ...itemDetails
     }
   }
 `
 
-export const CREATE_ORDER_MUTATION = gql`
-  mutation CreateOrderMutation($token: String!) {
-    createOrder(token: $token) {
+export const CREATE_USER_MUTATION = gql`
+  mutation CreateUserMutation($email: String!, $name: String!, $idToken: String!) {
+    createUser(
+      email: $email,
+      name: $name,
+      authProvider: { auth0: { idToken: $idToken } }
+    ) {
       id,
-      token,
-      charge,
-      amount,
+      email,
+      name
+    }
+  }
+`
+
+export const CREATE_ORDER_MUTATION = gql`
+  mutation CreateOrderMutation($token: String!, $userId: ID!, $itemId: ID!) {
+    createOrder(token: $token, userId: $userId, itemId: $itemId) {
+      id
+      token
+      charge
+      amount
+      item {
+        id
+        title
+        description
+      }
+      user {
+        id
+        email
+      }
     }
   }
 `;
@@ -70,3 +94,34 @@ export const UPDATE_LINK_MUTATION = gql`
     }
   }
 `
+
+export const CURRENT_USER_QUERY = gql`
+  query userQuery {
+    user {
+      id
+      name
+      email
+    }
+  }
+`;
+
+export const USER_ORDERS_QUERY = gql`
+  query {
+    user { # grab the current user
+      id
+      orders { # and a all their orders
+        id
+        amount
+        charge
+        item { # populate the details about the item they bought with the image, description and title
+          image {
+            id,
+            secret
+          }
+          description
+          title
+        }
+      }
+    }
+  }
+`;

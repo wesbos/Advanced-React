@@ -1,3 +1,11 @@
+## Gotchas
+
+https://github.com/graphcool/feature-requests/issues/145#issuecomment-318968578
+
+Clients -> Advanced Settings -> OAuth -> JsonWebToken Signature Algorithm: HS256
+
+
+
 # Advanced-React
 
 

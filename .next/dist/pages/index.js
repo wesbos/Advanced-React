@@ -28,10 +28,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _withData = require('../lib/withData');
-
-var _withData2 = _interopRequireDefault(_withData);
-
 var _Items = require('../components/Items');
 
 var _Items2 = _interopRequireDefault(_Items);
@@ -43,6 +39,18 @@ var _CreateItem2 = _interopRequireDefault(_CreateItem);
 var _Count = require('../components/Count');
 
 var _Count2 = _interopRequireDefault(_Count);
+
+var _LoginAuth = require('../components/LoginAuth0');
+
+var _LoginAuth2 = _interopRequireDefault(_LoginAuth);
+
+var _Header = require('../components/Header');
+
+var _Header2 = _interopRequireDefault(_Header);
+
+var _Page = require('../components/Page');
+
+var _Page2 = _interopRequireDefault(_Page);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61,25 +69,30 @@ var Home = function (_Component) {
   (0, _createClass3.default)(Home, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 10
-        }
-      }, _react2.default.createElement(_Count2.default, {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 11
-        }
-      }), _react2.default.createElement(_CreateItem2.default, {
+      return _react2.default.createElement(_Page2.default, {
         __source: {
           fileName: _jsxFileName,
           lineNumber: 12
         }
-      }), _react2.default.createElement(_Items2.default, {
+      }, _react2.default.createElement(_LoginAuth2.default, {
         __source: {
           fileName: _jsxFileName,
           lineNumber: 13
+        }
+      }), _react2.default.createElement(_Count2.default, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 14
+        }
+      }), _react2.default.createElement(_CreateItem2.default, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 15
+        }
+      }), _react2.default.createElement(_Items2.default, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 16
         }
       }));
     }
@@ -88,4 +101,4 @@ var Home = function (_Component) {
   return Home;
 }(_react.Component);
 
-exports.default = (0, _withData2.default)(Home);
+exports.default = Home;

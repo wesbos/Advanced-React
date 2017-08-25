@@ -54,15 +54,25 @@ var _formatMoney = require('../lib/formatMoney');
 
 var _formatMoney2 = _interopRequireDefault(_formatMoney);
 
+var _image = require('../lib/image');
+
+var _image2 = _interopRequireDefault(_image);
+
 var _queries = require('../queries');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _jsxFileName = '/Users/wesbos/Sites/advanced-react/examples/next/components/Items.js';
 
-var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  font-size: 50px;\n'], ['\n  font-size: 50px;\n']);
+var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  font-size: 50px;\n'], ['\n  font-size: 50px;\n']),
+    _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n  display: grid;\n  grid-template-columns: repeat(4, calc(25% - 20px));\n  grid-gap: 20px;\n'], ['\n  display: grid;\n  grid-template-columns: repeat(4, calc(25% - 20px));\n  grid-gap: 20px;\n']),
+    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n  background: #f3f3f3;\n  padding: 20px;\n  img {\n    width: 100%;\n  }\n'], ['\n  background: #f3f3f3;\n  padding: 20px;\n  img {\n    width: 100%;\n  }\n']);
 
 var Title = _styledComponents2.default.h1(_templateObject);
+
+var Items = _styledComponents2.default.div(_templateObject2);
+
+var Item = _styledComponents2.default.div(_templateObject3);
 
 var ItemList = function (_Component) {
   (0, _inherits3.default)(ItemList, _Component);
@@ -83,7 +93,7 @@ var ItemList = function (_Component) {
         return _react2.default.createElement('div', {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 21
+            lineNumber: 38
           }
         }, 'Loading');
       }
@@ -94,7 +104,7 @@ var ItemList = function (_Component) {
         return _react2.default.createElement('div', {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 27
+            lineNumber: 44
           }
         }, 'Error');
       }
@@ -102,75 +112,67 @@ var ItemList = function (_Component) {
       // 3
       var itemsToRender = this.props.allLinksQuery.allItems;
 
-      return _react2.default.createElement('div', {
+      return _react2.default.createElement(Items, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 34
+          lineNumber: 51
         }
       }, _react2.default.createElement(Title, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 35
+          lineNumber: 52
         }
       }, 'Items For Sale'), itemsToRender.map(function (item, i) {
-        return _react2.default.createElement('div', { className: 'item', key: i, __source: {
+        return _react2.default.createElement(Item, { className: 'item', key: i, __source: {
             fileName: _jsxFileName,
-            lineNumber: 37
+            lineNumber: 54
           }
-        }, _react2.default.createElement('hr', {
-          __source: {
+        }, item.image ? _react2.default.createElement('img', { src: (0, _image2.default)(item.image), __source: {
             fileName: _jsxFileName,
-            lineNumber: 38
-          }
-        }), item.image ? _react2.default.createElement('img', { src: 'https://images.graph.cool/v1/cj5xz8szs28930145gct82bdj/' + item.image.secret + '/300x300', __source: {
-            fileName: _jsxFileName,
-            lineNumber: 39
+            lineNumber: 55
           }
         }) : null, _react2.default.createElement('h3', {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 40
+            lineNumber: 56
           }
         }, item.title), _react2.default.createElement('p', {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 41
+            lineNumber: 57
           }
         }, item.description), _react2.default.createElement(_link2.default, { href: {
             pathname: '/admin/update',
             query: { id: item.id }
           }, __source: {
             fileName: _jsxFileName,
-            lineNumber: 42
+            lineNumber: 58
           }
         }, _react2.default.createElement('a', {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 46
+            lineNumber: 62
           }
         }, 'Edit ', item.id)), _react2.default.createElement(_TakeMyMoney2.default, {
+          id: item.id,
           amount: item.price,
           name: item.title // the pop-in header title
           , description: item.description // the pop-in header subtitle
-          , image: 'https://images.graph.cool/v1/cj5xz8szs28930145gct82bdj/' + item.image.secret + '/300x300',
+          , image: (0, _image2.default)(item.image),
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 49
+            lineNumber: 65
           }
         }, _react2.default.createElement('button', {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 55
+            lineNumber: 72
           }
-        }, 'Buy for ', (0, _formatMoney2.default)(item.price))), _react2.default.createElement(_UpdateItem2.default, { id: item.id, __source: {
-            fileName: _jsxFileName,
-            lineNumber: 58
-          }
-        }), _react2.default.createElement('button', { onClick: function onClick() {
+        }, 'Buy for ', (0, _formatMoney2.default)(item.price))), _react2.default.createElement('button', { onClick: function onClick() {
             return _this2.props.removeItemMutation({ variables: { id: item.id } });
           }, __source: {
             fileName: _jsxFileName,
-            lineNumber: 60
+            lineNumber: 74
           }
         }, '\xD7 Delete item'));
       }));

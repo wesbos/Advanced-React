@@ -1,15 +1,32 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { graphql, compose } from 'react-apollo'
 import UpdateItem from './UpdateItem';
 import Link from 'next/link';
 import styled from 'styled-components';
 import TakeMyMoney from './TakeMyMoney';
 import formatMoney from '../lib/formatMoney';
+import makeImage from '../lib/image';
 
 import { ALL_ITEMS_QUERY, DELETE_ITEM_MUTATION } from '../queries';
 
 const Title = styled.h1`
   font-size: 50px;
+`;
+
+
+
+const Items = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, calc(25% - 20px));
+  grid-gap: 20px;
+`;
+
+const Item = styled.div`
+  background: #f3f3f3;
+  padding: 20px;
+  img {
+    width: 100%;
+  }
 `;
 
 class ItemList extends Component {
@@ -31,12 +48,11 @@ class ItemList extends Component {
     const itemsToRender = this.props.allLinksQuery.allItems
 
     return (
-      <div>
+      <Items>
         <Title>Items For Sale</Title>
         {itemsToRender.map((item,i) => (
-          <div className="item" key={i}>
-            <hr/>
-            { item.image ?  <img src={`https://images.graph.cool/v1/cj5xz8szs28930145gct82bdj/${item.image.secret}/300x300`} /> : null }
+          <Item className="item" key={i}>
+            { item.image ?  <img src={makeImage(item.image)} /> : null }
             <h3>{item.title}</h3>
             <p>{item.description}</p>
             <Link href={{
@@ -47,21 +63,19 @@ class ItemList extends Component {
             </Link>
 
             <TakeMyMoney
+              id={item.id}
               amount={item.price}
               name={item.title} // the pop-in header title
               description={item.description} // the pop-in header subtitle
-              image={`https://images.graph.cool/v1/cj5xz8szs28930145gct82bdj/${item.image.secret}/300x300`}
+              image={makeImage(item.image)}
             >
               <button>Buy for {formatMoney(item.price)}</button>
             </TakeMyMoney>
-
-            <UpdateItem id={item.id} />
-
             <button onClick={() => this.props.removeItemMutation({ variables: { id: item.id }})}>&times; Delete item</button>
 
-          </div>
+          </Item>
         ))}
-      </div>
+      </Items>
     )
   }
 

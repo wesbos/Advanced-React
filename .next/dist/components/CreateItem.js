@@ -64,6 +64,8 @@ var CreateLink = function (_Component) {
       description: '',
       title: '',
       image: '',
+      price: 0,
+      fullPrice: 0,
       loading: false
     }, _this.uploadFile = function () {
       var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(e) {
@@ -108,7 +110,7 @@ var CreateLink = function (_Component) {
       };
     }(), _this._createLink = function () {
       var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(e) {
-        var _this$state, description, title, image, res;
+        var _this$state, description, title, image, price, fullPrice, res;
 
         return _regenerator2.default.wrap(function _callee2$(_context2) {
           while (1) {
@@ -116,7 +118,7 @@ var CreateLink = function (_Component) {
               case 0:
                 e.preventDefault();
                 // pull the values from state
-                _this$state = _this.state, description = _this$state.description, title = _this$state.title, image = _this$state.image;
+                _this$state = _this.state, description = _this$state.description, title = _this$state.title, image = _this$state.image, price = _this$state.price, fullPrice = _this$state.fullPrice;
                 // create a mutation
                 // TODO: handle any errors
                 // turn loading on
@@ -128,6 +130,8 @@ var CreateLink = function (_Component) {
                   variables: {
                     description: description,
                     title: title,
+                    price: parseInt(price),
+                    fullPrice: fullPrice,
                     imageId: image
                   }
                 });
@@ -164,31 +168,42 @@ var CreateLink = function (_Component) {
       return _react2.default.createElement('div', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 36
+          lineNumber: 38
         }
       }, this.state.loading ? 'LOADING...' : 'Ready!', _react2.default.createElement('form', { onSubmit: this._createLink, __source: {
           fileName: _jsxFileName,
-          lineNumber: 38
+          lineNumber: 40
         }
       }, _react2.default.createElement('p', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 39
+          lineNumber: 41
         }
       }, 'Image', _react2.default.createElement('input', { onChange: this.uploadFile, type: 'file', __source: {
           fileName: _jsxFileName,
-          lineNumber: 41
+          lineNumber: 43
         }
       })), _react2.default.createElement('p', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 43
+          lineNumber: 45
         }
       }, 'Title', _react2.default.createElement('input', { value: this.state.title, onChange: function onChange(e) {
           return _this3.setState({ title: e.target.value });
         }, type: 'text', placeholder: 'A description for the link', __source: {
           fileName: _jsxFileName,
-          lineNumber: 44
+          lineNumber: 46
+        }
+      })), _react2.default.createElement('label', {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 48
+        }
+      }, 'Price', _react2.default.createElement('input', { type: 'number', min: '0', value: this.state.price, onChange: function onChange(e) {
+          return _this3.setState({ price: e.target.value });
+        }, __source: {
+          fileName: _jsxFileName,
+          lineNumber: 48
         }
       })), _react2.default.createElement('textarea', {
         value: this.state.description,
@@ -199,11 +214,11 @@ var CreateLink = function (_Component) {
         placeholder: 'The desc for this item',
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 46
+          lineNumber: 49
         }
       }), _react2.default.createElement('button', { type: 'submit', __source: {
           fileName: _jsxFileName,
-          lineNumber: 52
+          lineNumber: 55
         }
       }, 'Submit')));
     }

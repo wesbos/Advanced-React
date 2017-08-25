@@ -18,7 +18,9 @@ function getItem(id) {
     })
 }
 
-getItem().then(x => x.json()).then(res => {
-  console.log(res.data.Item.price);
-}).catch(console.log)
 
+module.exports = function(event) {
+  getItem().then(x => x.json()).then(res => {
+    console.log(res.data.Item.price);
+  }).catch(console.log)
+}

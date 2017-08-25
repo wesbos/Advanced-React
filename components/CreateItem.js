@@ -8,6 +8,8 @@ class CreateLink extends Component {
     description: '',
     title: '',
     image: '',
+    price: 0,
+    fullPrice: 0,
     loading: false
   }
 
@@ -43,6 +45,7 @@ class CreateLink extends Component {
           <p>Title
             <input value={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} type='text' placeholder='A description for the link'/>
           </p>
+          <label>Price<input type="number" min="0" value={this.state.price} onChange={(e) => this.setState({ price: e.target.value })} /></label>
           <textarea
             value={this.state.description}
             onChange={(e) => this.setState({ description: e.target.value })}
@@ -58,7 +61,7 @@ class CreateLink extends Component {
   _createLink = async (e) => {
     e.preventDefault();
     // pull the values from state
-    const { description, title, image } = this.state
+    const { description, title, image, price, fullPrice } = this.state;
     // create a mutation
     // TODO: handle any errors
     // turn loading on
@@ -68,6 +71,8 @@ class CreateLink extends Component {
       variables: {
         description,
         title,
+        price: parseInt(price),
+        fullPrice,
         imageId: image
       }
     });

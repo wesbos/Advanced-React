@@ -1,19 +1,22 @@
 import { Component } from 'react';
-import withData from '../lib/withData';
 import Items from '../components/Items';
 import CreateItem from '../components/CreateItem';
 import Count from '../components/Count';
+import LoginAuth0 from '../components/LoginAuth0';
+import Header from '../components/Header';
+import Page from '../components/Page';
 
 class Home extends Component {
   render() {
     return (
-      <div>
+      <Page>
+        <LoginAuth0 />
         <Count/>
         <CreateItem />
         <Items></Items>
-      </div>
+      </Page>
     )
   }
 }
 
-export default withData(Home);
+export default Home;

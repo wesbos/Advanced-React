@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -70,24 +66,28 @@ var TakeMyMoney = function (_Component) {
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = TakeMyMoney.__proto__ || (0, _getPrototypeOf2.default)(TakeMyMoney)).call.apply(_ref, [this].concat(args))), _this), _this.onToken = function () {
       var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(res) {
-        var token, charge;
+        var token, userId, itemId, charge;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 token = res.id;
+                userId = _this.props.currentUserQuery.user.id;
+                itemId = _this.props.id;
 
                 console.log('Going to make a purchase with ' + token);
-                _context.next = 4;
-                return _this.props.createOrder({ variables: { token: token } });
+                console.log('THe person that bought this was ' + userId);
+                console.log('The item id is ' + itemId);
+                _context.next = 8;
+                return _this.props.createOrder({ variables: { token: token, userId: userId, itemId: itemId } });
 
-              case 4:
+              case 8:
                 charge = _context.sent;
 
                 alert('Back from the charge! ' + charge.id);
                 console.log(charge);
 
-              case 7:
+              case 11:
               case 'end':
                 return _context.stop();
             }
@@ -104,22 +104,32 @@ var TakeMyMoney = function (_Component) {
   (0, _createClass3.default)(TakeMyMoney, [{
     key: 'render',
     value: function render() {
-      return (
-        // ...
-        _react2.default.createElement(_reactStripeCheckout2.default, (0, _extends3.default)({}, this.props, {
-          token: this.onToken,
-          stripeKey: 'pk_lclTtThFp8CnO3QtEZSd8HA9mFUps',
-          currency: 'USD',
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 19
-          }
-        }), this.props.children)
-      );
+      var user = this.props.currentUserQuery.user || {};
+      var email = user.email || '';
+      return _react2.default.createElement('div', {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 24
+        }
+      }, _react2.default.createElement(_reactStripeCheckout2.default, {
+        amount: this.props.amount,
+        name: this.props.name,
+        description: this.props.description,
+        token: this.onToken,
+        stripeKey: 'pk_lclTtThFp8CnO3QtEZSd8HA9mFUps',
+        currency: 'USD',
+        email: email,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 25
+        }
+      }, this.props.children));
     }
   }]);
 
   return TakeMyMoney;
 }(_react.Component);
 
-exports.default = (0, _reactApollo.graphql)(_queries.CREATE_ORDER_MUTATION, { name: 'createOrder' })(TakeMyMoney);
+var userEnhancer = (0, _reactApollo.graphql)(_queries.CURRENT_USER_QUERY, { name: 'currentUserQuery' });
+var createOrderEnhancer = (0, _reactApollo.graphql)(_queries.CREATE_ORDER_MUTATION, { name: 'createOrder' });
+exports.default = (0, _reactApollo.compose)(userEnhancer, createOrderEnhancer)(TakeMyMoney);
