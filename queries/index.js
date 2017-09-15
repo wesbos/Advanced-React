@@ -24,7 +24,11 @@ export const CREATE_USER_MUTATION = gql`
     ) {
       id,
       email,
-      name
+      name,
+      cart {
+        id
+        title
+      }
     }
   }
 `
@@ -53,15 +57,17 @@ export const CREATE_ORDER_MUTATION = gql`
 export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
   ${itemDetails}
-  query AllLinksQuery {
-    allItems(orderBy: createdAt_DESC) {
-      # Use that fragment by it's name (even though it the same as the variable)
+  query AllLinksQuery($skip: Int = 0, $first: Int = 3) {
+    _allItemsMeta {
+      count
+    }
+    allItems(orderBy: createdAt_DESC, first: $first, skip: $skip) {
       ...itemDetails
     }
   }
 `
 
-export const SINGLE_LINK_QUERY = gql`
+export const SINGLE_ITEM_QUERY = gql`
   ${itemDetails}
   query FindItem($id: ID!) {
     Item(id: $id) {
@@ -69,6 +75,21 @@ export const SINGLE_LINK_QUERY = gql`
     }
   }
 `;
+
+export const SEARCH_ITEMS_QUERY = gql`
+  ${itemDetails}
+  query SearchItems($searchTerm: String!) {
+    allItems(filter:{
+     OR:[
+      { title_contains: $searchTerm },
+      { description_contains: $searchTerm },
+    ]
+    }) {
+      ...itemDetails
+    }
+  }
+`;
+
 
 export const DELETE_ITEM_MUTATION = gql`
   mutation DelteItem($id: ID!) {
@@ -101,6 +122,15 @@ export const CURRENT_USER_QUERY = gql`
       id
       name
       email
+      cart {
+        id
+        price
+        title
+        image {
+          id
+          secret
+        }
+      }
     }
   }
 `;
@@ -121,6 +151,30 @@ export const USER_ORDERS_QUERY = gql`
           description
           title
         }
+      }
+    }
+  }
+`;
+
+export const ADD_TO_CART_MUTATION = gql`
+  mutation AddToCart($userId: ID!, $itemId: ID!) {
+    addToCartItems(userUserId:$userId, cartItemId: $itemId) {
+      cartItem {
+        id
+        title
+        price
+      }
+    }
+  }
+`;
+
+export const REMOVE_FROM_CART_MUTATION = gql`
+  mutation xxx($userId: ID!, $itemId: ID!) {
+    removeFromCartItems(userUserId:$userId, cartItemId: $itemId) {
+      cartItem {
+        id
+        title
+        price
       }
     }
   }

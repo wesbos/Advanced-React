@@ -1,10 +1,11 @@
 # project: cj5xz8szs28930145gct82bdj
-# version: 8
+# version: 69
 
 type File implements Node {
   contentType: String!
   createdAt: DateTime!
   id: ID! @isUnique
+  item: Item @relation(name: "Photo")
   name: String!
   secret: String! @isUnique
   size: Int!
@@ -15,13 +16,37 @@ type File implements Node {
 type Item implements Node {
   createdAt: DateTime!
   description: String!
+  fullPrice: Int
   id: ID! @isUnique
+  image: File @relation(name: "Photo")
+  order: Order @relation(name: "OrderOnItem")
+  price: Int
   title: String!
   updatedAt: DateTime!
+  user: User @relation(name: "CartItems")
+}
+
+type Order implements Node {
+  amount: Int
+  charge: String
+  createdAt: DateTime!
+  id: ID! @isUnique
+  item: Item @relation(name: "OrderOnItem")
+  token: String
+  updatedAt: DateTime!
+  user: User @relation(name: "OrderOnUser")
 }
 
 type User implements Node {
   createdAt: DateTime!
+  email: String @isUnique
   id: ID! @isUnique
+  isVerified: Boolean! @defaultValue(value: false)
+  orders: [Order!]! @relation(name: "OrderOnUser")
+  password: String
+  secret: String @isUnique
   updatedAt: DateTime!
+  auth0UserId: String @isUnique
+  name: String!
+  cart: [Item!]! @relation(name: "CartItems")
 }

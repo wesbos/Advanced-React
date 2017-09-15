@@ -1,6 +1,9 @@
 import { Component } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { CURRENT_USER_QUERY } from '../queries';
+import Cart from './Cart';
+import Login from './LoginAuth0';
+import Search from './Search';
 
 class Header extends Component {
 
@@ -12,13 +15,14 @@ class Header extends Component {
   }
 
   render() {
-    console.log(this.props.currentUserQuery.user);
     const user = this.props.currentUserQuery.user || {};
     const { email = '' } = user;
-
     return (
       <div>
-        <p>{email} I'm the header!</p>
+        <p>Signed in as <strong>{email}</strong></p>
+        <Login></Login>
+        <Cart></Cart>
+        <Search></Search>
       </div>
     )
   }

@@ -1,5 +1,7 @@
 import { Component, PropTypes } from 'react'
 import Auth0Lock from 'auth0-lock'
+import { graphql, compose } from 'react-apollo'
+import { CURRENT_USER_QUERY } from '../queries/index';
 
 class LoginAuth0 extends Component {
 
@@ -15,9 +17,14 @@ class LoginAuth0 extends Component {
     });
   }
 
+  logout = () => {
+    window.localStorage.removeItem('auth0IdToken');
+    this.props.currentUserQuery.refetch();
+  }
+
   createUser = () => {
     const variables = {
-      idToken: window.localStorage.getItem("auth0IdToken"),
+      idToken: window.localStorage.getItem('auth0IdToken'),
       emailAddress: 'wesbos@gmail.com',
       name: 'Hardcoded Wes'
     };
@@ -25,6 +32,7 @@ class LoginAuth0 extends Component {
     this.props
       .createUser({ variables })
       .then(response => {
+        // this.props.currentUserQuery.refetch();
         this.props.history.replace("/");
       })
       .catch(e => {
@@ -36,9 +44,8 @@ class LoginAuth0 extends Component {
   componentDidMount() {
     console.log('MOUNT');
     this._lock.on('authenticated', (authResult) => {
-      console.log('HIIIIIIII')
       window.localStorage.setItem('auth0IdToken', authResult.idToken)
-      console.log('Done!', authResult);
+      this.props.currentUserQuery.refetch();
     })
   }
 
@@ -47,6 +54,10 @@ class LoginAuth0 extends Component {
   }
 
   render() {
+    const { user } = this.props.currentUserQuery;
+    if ( user ) {
+      return <button onClick={this.logout}>Log out 👋</button>
+    }
     return (
       <div>
         <button onClick={this._showLogin}>Log in with Auth0 </button>
@@ -55,4 +66,5 @@ class LoginAuth0 extends Component {
   }
 }
 
-export default LoginAuth0;
+const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' });
+export default compose(userEnhancer)(LoginAuth0)

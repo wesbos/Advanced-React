@@ -1,29 +1,30 @@
 import { Component } from 'react'
-import { graphql, compose } from 'react-apollo'
+import { withApollo, graphql, compose } from 'react-apollo'
 import UpdateItem from './UpdateItem';
 import Link from 'next/link';
 import styled from 'styled-components';
 import TakeMyMoney from './TakeMyMoney';
+import AddToCart from './AddToCart';
+import Pagination from './Pagination';
 import formatMoney from '../lib/formatMoney';
 import makeImage from '../lib/image';
+import slugify from 'slugify';
 
 import { ALL_ITEMS_QUERY, DELETE_ITEM_MUTATION } from '../queries';
 
 const Title = styled.h1`
-  font-size: 50px;
+  font-size: 10px;
 `;
-
-
 
 const Items = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, calc(25% - 20px));
+  grid-template-columns: repeat(4, calc(33% - 20px));
   grid-gap: 20px;
 `;
 
 const Item = styled.div`
   background: #f3f3f3;
-  padding: 20px;
+  padding: 5px;
   img {
     width: 100%;
   }
@@ -31,51 +32,91 @@ const Item = styled.div`
 
 class ItemList extends Component {
 
+  componentDidMount() {
+    this.prefetchNextItems(this.props.page);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // update the next items if the page prop changed
+    if(this.props.page !== nextProps.page) {
+      this.prefetchNextItems(nextProps.page);
+    }
+  }
+
+  prefetchNextItems = (currentPage) => {
+    const page = currentPage + 1;
+    console.log(`Prefetching Next items! Page ${page}`);
+    this.props.client.query({
+      query: ALL_ITEMS_QUERY,
+      variables: {
+        skip: (page * 3) - 3
+      }
+    })
+  }
+
   render() {
+    console.log("CLIENTTT!!", this.props.client);
 
     // 1
-    if (this.props.allLinksQuery && this.props.allLinksQuery.loading) {
+    if (this.props.allItemsQuery && this.props.allItemsQuery.loading) {
       return <div>Loading</div>
     }
 
     // 2
-    if (this.props.allLinksQuery && this.props.allLinksQuery.error) {
-      console.log(this.props.allLinksQuery.error)
+    if (this.props.allItemsQuery && this.props.allItemsQuery.error) {
+      console.log(this.props.allItemsQuery.error)
       return <div>Error</div>
     }
 
     // 3
-    const itemsToRender = this.props.allLinksQuery.allItems
+    const itemsToRender = this.props.allItemsQuery.allItems;
 
     return (
-      <Items>
+      <div>
+        <Pagination page={this.props.page}></Pagination>
         <Title>Items For Sale</Title>
-        {itemsToRender.map((item,i) => (
-          <Item className="item" key={i}>
-            { item.image ?  <img src={makeImage(item.image)} /> : null }
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            <Link href={{
-              pathname: '/admin/update',
-              query: { id: item.id }
-            }}>
-              <a>Edit {item.id}</a>
-            </Link>
+        <Items>
+          {itemsToRender.map((item,i) => (
+            <Item className="item" key={i}>
+              { item.image ?  <img key={item.image.secret} src={makeImage(item.image)} /> : null }
+              <h3>
+                <Link href={{
+                  pathname: 'item',
+                  query: {
+                    slug: slugify(item.title),
+                    itemId: item.id
+                  },
+                }}>
+                  <a>{item.title}</a>
+                </Link>
+              </h3>
 
-            <TakeMyMoney
-              id={item.id}
-              amount={item.price}
-              name={item.title} // the pop-in header title
-              description={item.description} // the pop-in header subtitle
-              image={makeImage(item.image)}
-            >
-              <button>Buy for {formatMoney(item.price)}</button>
-            </TakeMyMoney>
-            <button onClick={() => this.props.removeItemMutation({ variables: { id: item.id }})}>&times; Delete item</button>
+              <p>{item.description}</p>
+              <Link href={{
+                pathname: '/admin/update',
+                query: { id: item.id }
+              }}>
+                <a>Edit ✏️</a>
+              </Link>
 
-          </Item>
-        ))}
-      </Items>
+              <TakeMyMoney
+                id={item.id}
+                amount={item.price}
+                name={item.title} // the pop-in header title
+                description={item.description} // the pop-in header subtitle
+                image={makeImage(item.image)}
+              >
+                <button>Buy for {formatMoney(item.price)}</button>
+              </TakeMyMoney>
+
+              <AddToCart id={item.id}></AddToCart>
+              <button onClick={() => this.props.removeItemMutation({ variables: { id: item.id }})}>&times; Delete item</button>
+
+            </Item>
+          ))}
+        </Items>
+
+      </div>
     )
   }
 
@@ -86,7 +127,14 @@ class ItemList extends Component {
 // We export the graphQL HOC - this will fetch the data and inject it into the ItemList compeont via props
 
 // Create some Enhancers
-const itemsEnahncer = graphql(ALL_ITEMS_QUERY, { name: 'allLinksQuery' });
+const itemsEnahncer = graphql(ALL_ITEMS_QUERY, { name: 'allItemsQuery', options({ page }) {
+  return {
+    variables: {
+      skip: (page * 3) - 3
+    },
+  }
+}});
+
 const deleteItemEnhancer = graphql(DELETE_ITEM_MUTATION, {
   name: 'removeItemMutation',
   options: {
@@ -105,4 +153,4 @@ const deleteItemEnhancer = graphql(DELETE_ITEM_MUTATION, {
   }
 });
 
-export default compose(itemsEnahncer, deleteItemEnhancer)(ItemList)
+export default withApollo(compose(itemsEnahncer, deleteItemEnhancer)(ItemList));

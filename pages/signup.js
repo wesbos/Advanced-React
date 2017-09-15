@@ -6,7 +6,7 @@ import Signup from '../components/Signup';
 import LoginAuth0 from '../components/LoginAuth0';
 import Page from '../components/Page';
 
-class Home extends Component {
+class SignUpPage extends Component {
   render() {
     return (
       <Page>
@@ -18,4 +18,4 @@ class Home extends Component {
   }
 }
 
-export default withData(Home);
+export default withData(SignUpPage);

@@ -1,6 +1,5 @@
 import Header from './Header'
 import Meta from './Meta'
-import withData from '../lib/withData';
 import Nav from './Nav';
 import styled from 'styled-components';
 
@@ -14,12 +13,10 @@ const StyledPage = styled.div`
 const Page = ({ children }) => (
   <StyledPage className="main">
     <Meta />
-    <Header />
     <Nav></Nav>
-    <div>
-      { children }
-    </div>
+    <Header />
+    { children }
   </StyledPage>
 )
 
-export default withData(Page);
+export default Page;

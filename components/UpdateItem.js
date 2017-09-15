@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql, gql, compose } from 'react-apollo'
-import { SINGLE_LINK_QUERY, UPDATE_LINK_MUTATION } from '../queries';
+import { SINGLE_ITEM_QUERY, UPDATE_LINK_MUTATION } from '../queries';
 
 class UpdateLink extends Component {
 
@@ -66,7 +66,7 @@ class UpdateLink extends Component {
 
 const ComponentWithMutations = compose(
   // First, query for getting the link
-  graphql(SINGLE_LINK_QUERY, {
+  graphql(SINGLE_ITEM_QUERY, {
     name: 'findItem',
     options: ({ id }) => ({
       variables: { id }
@@ -75,6 +75,5 @@ const ComponentWithMutations = compose(
   // Second, the mutation for updating the link
   graphql(UPDATE_LINK_MUTATION, { name: 'updateItem' })
 )(UpdateLink);
-
 
 export default ComponentWithMutations;
