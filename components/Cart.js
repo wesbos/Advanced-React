@@ -1,12 +1,17 @@
-import { Component } from "react";
-import { graphql, compose } from "react-apollo";
-import { CURRENT_USER_QUERY } from "../queries";
-import styled from "styled-components";
-import formatMoney from "../lib/formatMoney.js";
+import { Component } from 'react';
+import { graphql, compose } from 'react-apollo';
+import styled from 'styled-components';
+import { CURRENT_USER_QUERY } from '../queries';
+import formatMoney from '../lib/formatMoney.js';
+import ChaChing from './ChaChing';
 
-const cartStyles = styled.div`
+const CartStyles = styled.div`
   background: white;
+  border-radius: 10px;
   padding: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 `;
 
 class Cart extends Component {
@@ -14,7 +19,6 @@ class Cart extends Component {
     // This fetches the new data, but doesn't populate the user via props
     // this.props.currentUserQuery.refetch();
     // This fetches the new data, and populates the user via props
-    console.log("refetching!");
     setTimeout(this.props.currentUserQuery.refetch, 1);
   }
 
@@ -23,19 +27,20 @@ class Cart extends Component {
     const { loading, error } = this.props.currentUserQuery;
     const { user } = this.props.currentUserQuery;
     if (loading || error || !user) return <p>Cart Loading...</p>;
-    const { email = "" } = user;
     const total = user.cart.reduce((a, b) => a + b.price, 0);
 
     return (
-      <div>
-        <p>
-          💰 There are <strong>{user.cart.length}</strong> Items in your cart
-          totaling <strong>{formatMoney(total)}</strong>
-        </p>
-      </div>
+      <CartStyles className="cart">
+        There
+        {user.cart.length === 1 ? ' is ' : 'are '}
+        <ChaChing amount={user.cart.length} />
+        {user.cart.length === 1 ? ' item ' : ' items '}
+        in your cart totaling
+        <ChaChing amount={formatMoney(total)} />
+      </CartStyles>
     );
   }
 }
 
-const userEnhancer = graphql(CURRENT_USER_QUERY, { name: "currentUserQuery" });
+const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' });
 export default compose(userEnhancer)(Cart);

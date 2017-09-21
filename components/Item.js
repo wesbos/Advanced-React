@@ -1,33 +1,61 @@
-import React, { Component } from 'react'
-import { graphql, gql, compose } from 'react-apollo'
-import { SINGLE_ITEM_QUERY } from '../queries';
-import withData from '../lib/withData';
+import styled from 'styled-components';
+import slugify from 'slugify';
+import { Link } from '../routes';
+import AddToCart from './AddToCart';
+import makeImage from '../lib/image';
+import TakeMyMoney from './TakeMyMoney';
+import formatMoney from '../lib/formatMoney';
 
-class Item extends Component {
-  render() {
-    if(!this.props.findItem.Item) return <p>Not ready</p>
-    console.log(this.props.findItem.Item);
-
-    if(this.props.loading) return <p>Loading...</p>
-    if(this.props.error) return <p>Error...</p>
-
-    const item = this.props.findItem.Item;
-    return (
-      <div>
-        <h2>Viewing {item.title}</h2>
-      </div>
-    )
+const Item = styled.div`
+  background: #f3f3f3;
+  padding: 5px;
+  img {
+    width: 100%;
   }
-}
+`;
 
-const ComponentWithMutations = compose(
-  graphql(SINGLE_ITEM_QUERY, {
-    name: 'findItem',
-    // This comes from Props
-    options: ({ id }) => ({
-      variables: { id }
-    })
-  })
-)(Item);
+const ItemComponent = ({ item }) => (
+  <Item key={item.id}>
+    {item.image ? <img key={item.image.secret} src={makeImage(item.image)} alt={item.title} /> : null}
+    <h3>
+      <Link
+        route="item"
+        params={{
+          slug: slugify(item.title),
+          itemId: item.id,
+        }}
+      >
+        <a>{item.title}</a>
+      </Link>
+    </h3>
 
-export default ComponentWithMutations;
+    <p>{item.description}</p>
+    {/* {
+
+      <Link
+        href={{
+          pathname: '/admin/update',
+          query: { id: item.id },
+        }}
+      >
+        <a>Edit ✏️</a>
+      </Link>
+
+    } */}
+
+    <TakeMyMoney
+      id={item.id}
+      amount={item.price}
+      name={item.title} // the pop-in header title
+      description={item.description} // the pop-in header subtitle
+      image={makeImage(item.image)}
+    >
+      <button>Buy for {formatMoney(item.price)}</button>
+    </TakeMyMoney>
+
+    <AddToCart id={item.id} />
+    <button onClick={() => this.props.removeItemMutation({ variables: { id: item.id } })}>&times; Delete item</button>
+  </Item>
+);
+
+export default ItemComponent;

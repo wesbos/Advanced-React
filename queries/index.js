@@ -1,4 +1,4 @@
-import { gql } from 'react-apollo'
+import { gql } from 'react-apollo';
 import { itemDetails } from './fragments';
 
 export const CREATE_LINK_MUTATION = gql`
@@ -13,25 +13,21 @@ export const CREATE_LINK_MUTATION = gql`
       ...itemDetails
     }
   }
-`
+`;
 
 export const CREATE_USER_MUTATION = gql`
   mutation CreateUserMutation($email: String!, $name: String!, $idToken: String!) {
-    createUser(
-      email: $email,
-      name: $name,
-      authProvider: { auth0: { idToken: $idToken } }
-    ) {
-      id,
-      email,
-      name,
+    createUser(email: $email, name: $name, authProvider: { auth0: { idToken: $idToken } }) {
+      id
+      email
+      name
       cart {
         id
         title
       }
     }
   }
-`
+`;
 
 export const CREATE_ORDER_MUTATION = gql`
   mutation CreateOrderMutation($token: String!, $userId: ID!, $itemId: ID!) {
@@ -53,7 +49,6 @@ export const CREATE_ORDER_MUTATION = gql`
   }
 `;
 
-
 export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
   ${itemDetails}
@@ -65,7 +60,7 @@ export const ALL_ITEMS_QUERY = gql`
       ...itemDetails
     }
   }
-`
+`;
 
 export const SINGLE_ITEM_QUERY = gql`
   ${itemDetails}
@@ -90,16 +85,15 @@ export const SEARCH_ITEMS_QUERY = gql`
   }
 `;
 
-
 export const DELETE_ITEM_MUTATION = gql`
   mutation DelteItem($id: ID!) {
     deleteItem(id: $id) {
-      id,
-      title,
+      id
+      title
       description
     }
   }
-`
+`;
 
 export const UPDATE_LINK_MUTATION = gql`
   ${itemDetails}
@@ -114,7 +108,7 @@ export const UPDATE_LINK_MUTATION = gql`
       ...itemDetails
     }
   }
-`
+`;
 
 export const CURRENT_USER_QUERY = gql`
   query userQuery {
@@ -137,15 +131,18 @@ export const CURRENT_USER_QUERY = gql`
 
 export const USER_ORDERS_QUERY = gql`
   query {
-    user { # grab the current user
+    user {
+      # grab the current user
       id
-      orders { # and a all their orders
+      orders {
+        # and a all their orders
         id
         amount
         charge
-        item { # populate the details about the item they bought with the image, description and title
+        item {
+          # populate the details about the item they bought with the image, description and title
           image {
-            id,
+            id
             secret
           }
           description
@@ -158,7 +155,7 @@ export const USER_ORDERS_QUERY = gql`
 
 export const ADD_TO_CART_MUTATION = gql`
   mutation AddToCart($userId: ID!, $itemId: ID!) {
-    addToCartItems(userUserId:$userId, cartItemId: $itemId) {
+    addToCartItems(userUserId: $userId, cartItemId: $itemId) {
       cartItem {
         id
         title
@@ -170,7 +167,7 @@ export const ADD_TO_CART_MUTATION = gql`
 
 export const REMOVE_FROM_CART_MUTATION = gql`
   mutation xxx($userId: ID!, $itemId: ID!) {
-    removeFromCartItems(userUserId:$userId, cartItemId: $itemId) {
+    removeFromCartItems(userUserId: $userId, cartItemId: $itemId) {
       cartItem {
         id
         title
