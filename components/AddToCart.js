@@ -62,8 +62,7 @@ class AddToCart extends Component {
 
   render() {
     const user = this.props.currentUserQuery.user;
-
-    if (!user) return <p>Loading...</p>;
+    if (!user || this.props.singleItemQuery.loading) return <p>Loading...</p>;
     const cartIds = user.cart.map(item => item.id);
     const image = this.props.singleItemQuery.Item.image;
     const isInCart = cartIds.includes(this.props.id);
