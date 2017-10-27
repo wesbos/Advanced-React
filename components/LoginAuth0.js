@@ -7,8 +7,8 @@ class LoginAuth0 extends Component {
   constructor(props) {
     super(props);
     if (typeof window === 'undefined') return;
-    const redirectUrl = `http://localhost:6969/signup`;
-    this._lock = new Auth0Lock('l851ev2q8X48wf56eGLjIWFbMwwbvWPE', 'wesbos.auth0.com', {
+    const redirectUrl = `http://localhost:3000/signup`;
+    this._lock = new Auth0Lock('r6D64Waoq7roAnv8GT04dnn1tpq9PAqu', 'wesbos.auth0.com', {
       auth: {
         redirect: false,
       },
@@ -16,11 +16,17 @@ class LoginAuth0 extends Component {
   }
 
   componentDidMount() {
-    console.log('MOUNT');
     this._lock.on('authenticated', authResult => {
+      console.log(authResult);
       window.localStorage.setItem('auth0IdToken', authResult.idToken);
+      console.log('Im baaaack!');
       this.props.currentUserQuery.refetch();
     });
+
+    this._lock.on('authorization_error', err => {
+      console.error(err);
+    });
+
     // refech on page load because of the server render
     this.props.currentUserQuery.refetch();
   }

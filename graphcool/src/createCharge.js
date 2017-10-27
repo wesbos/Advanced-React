@@ -1,6 +1,6 @@
-const stripe = require('stripe')('sk_ycLkGc2cAaBDSCKkHiKVBeT71CMxd')
-;
-const endpoint = 'https://api.graph.cool/simple/v1/cj5xz8szs28930145gct82bdj';
+const stripe = require('stripe')('sk_ycLkGc2cAaBDSCKkHiKVBeT71CMxd');
+
+const endpoint = 'https://api.graph.cool/simple/v1/cj99zm6ye06sb01325ic751ww';
 
 require('isomorphic-fetch');
 
@@ -22,11 +22,12 @@ const getPrice = itemId => {
   });
 };
 
-const createStripeCharge = (token, amount) => stripe.charges.create({
+const createStripeCharge = (token, amount) =>
+  stripe.charges.create({
     amount,
     currency: 'usd',
     description: `a test charge`,
-    source: token
+    source: token,
   });
 
 module.exports = function(event) {
