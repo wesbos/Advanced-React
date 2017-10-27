@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { graphql, gql } from 'react-apollo';
-import { ALL_ITEMS_QUERY, CREATE_LINK_MUTATION } from '../queries';
+import { ALL_ITEMS_QUERY, CREATE_ITEM_MUTATION } from '../queries';
 import ErrorMessage from './ErrorMessage';
+import makeImage from '../lib/image';
+import { fileEndpoint } from '../config';
 
 class CreateLink extends Component {
   state = {
@@ -12,7 +14,7 @@ class CreateLink extends Component {
     fullPrice: 0,
     loading: false,
     error: {
-      message: 'shit!',
+      message: '',
     },
   };
 
@@ -21,19 +23,19 @@ class CreateLink extends Component {
   }
 
   uploadFile = async e => {
+    this.setState({ loading: true });
     const files = e.currentTarget.files;
 
     const data = new FormData();
     data.append('data', files[0]);
 
     // use the file endpoint
-    const res = await fetch('https://api.graph.cool/file/v1/cj5xz8szs28930145gct82bdj', {
+    const res = await fetch(fileEndpoint, {
       method: 'POST',
       body: data,
     });
     const file = await res.json();
-    console.log(file);
-    this.setState({ image: file.id });
+    this.setState({ image: file.id, loading: false });
   };
 
   _createLink = async e => {
@@ -45,7 +47,7 @@ class CreateLink extends Component {
     // turn loading on
     this.setState({ loading: true });
     try {
-      const res = await this.props.createLinkMutation({
+      const res = await this.props.createItemMutation({
         // pass in those variables from state
         variables: {
           description,
@@ -71,7 +73,7 @@ class CreateLink extends Component {
         <form onSubmit={this._createLink}>
           <p>
             Image
-            <input onChange={this.uploadFile} type="file" />
+            <input onChange={this.uploadFile} type="file" accept=".png, .jpg, .jpeg" />
           </p>
           <p>
             Title
@@ -79,7 +81,7 @@ class CreateLink extends Component {
               value={this.state.title}
               onChange={e => this.setState({ title: e.target.value })}
               type="text"
-              placeholder="A description for the link"
+              placeholder="Title"
             />
           </p>
           <label>
@@ -96,7 +98,9 @@ class CreateLink extends Component {
             type="text"
             placeholder="The desc for this item"
           />
-          <button type="submit">Submit</button>
+          <button disabled={!this.state.loading} type="submit">
+            Submit
+          </button>
         </form>
       </div>
     );
@@ -105,18 +109,18 @@ class CreateLink extends Component {
 // When we submit this mutation, we need to update our store - we have a few ways to do that:
 // One - we can go nucular and run refetchQueries() which will just go get everything - this is easy, but at the cost of efficiency.
 
-export default graphql(CREATE_LINK_MUTATION, {
-  name: 'createLinkMutation',
+export default graphql(CREATE_ITEM_MUTATION, {
+  name: 'createItemMutation',
   options: {
     // Easy, but slow
     // refetchQueries: ['AllLinksQuery']
     // This is much Better / efficient
     // Notice how the variable is called createItem - that is because createItem is the name of the query!
     update: (proxy, { data: { createItem } }) => {
-      console.log({ createItem, ALL_ITEMS_QUERY });
       const data = proxy.readQuery({ query: ALL_ITEMS_QUERY });
       // data is our store, allItems is our sub-"state", it's just an array. We can just add it to
-      data.allItems.unshift(createItem);
+      console.log({ createItem });
+      data.allItems = [createItem, ...data.allItems.slice(1, 3)];
       // and then "set state", so it will update on the page. This will update the cache for us!
       proxy.writeQuery({ query: ALL_ITEMS_QUERY, data });
     },

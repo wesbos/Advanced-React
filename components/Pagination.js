@@ -29,7 +29,7 @@ const Pagination = props => {
         </Link>
       ) : null}
 
-      {page <= pages ? (
+      {page < pages ? (
         <Link prefetch route="items" params={{ page: page + 1 }}>
           <a>Next →</a>
         </Link>

@@ -1,9 +1,10 @@
 const stripe = require('stripe')('sk_ycLkGc2cAaBDSCKkHiKVBeT71CMxd')
-const graphCoolEndpoint = 'https://api.graph.cool/simple/v1/cj5xz8szs28930145gct82bdj'
+;
+const endpoint = 'https://api.graph.cool/simple/v1/cj5xz8szs28930145gct82bdj';
 
-require('isomorphic-fetch')
+require('isomorphic-fetch');
 
-const getPrice = (itemId) =>  {
+const getPrice = itemId => {
   const query = `
     query SingleItem {
       Item(id: "${itemId}") {
@@ -12,23 +13,21 @@ const getPrice = (itemId) =>  {
     }
   `;
 
-  return fetch('https://api.graph.cool/simple/v1/cj5xz8szs28930145gct82bdj', {
+  return fetch(endpoint, {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ query }),
-  })
-}
+  });
+};
 
-const createStripeCharge = (token, amount) => {
-  return stripe.charges.create({
+const createStripeCharge = (token, amount) => stripe.charges.create({
     amount,
     currency: 'usd',
     description: `a test charge`,
     source: token
-  })
-}
+  });
 
 module.exports = function(event) {
   return new Promise((resolve, reject) => {
@@ -47,6 +46,6 @@ module.exports = function(event) {
       })
       .catch(err => {
         reject(err);
-      })
+      });
   });
-}
+};

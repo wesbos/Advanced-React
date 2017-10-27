@@ -14,7 +14,6 @@ function routeToItem(item) {
 
 function BasicAutocomplete(props) {
   const { items, onChange } = props;
-  console.log(props);
   return (
     <Downshift onChange={routeToItem} itemToString={item => item.title}>
       {({ getInputProps, getItemProps, isOpen, inputValue, selectedItem, highlightedIndex }) => (

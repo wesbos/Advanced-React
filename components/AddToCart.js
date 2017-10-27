@@ -5,6 +5,7 @@ import { graphql, compose } from 'react-apollo';
 import Transition from 'react-transition-group/Transition';
 import makeImage from '../lib/image';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const JumpImg = styled.img`
   border: 0 solid black;
@@ -34,6 +35,10 @@ const JumpImg = styled.img`
 `;
 
 class AddToCart extends Component {
+  static propTypes = {
+    currentUserQuery: PropTypes.object,
+  };
+
   componentDidMount() {
     this.props.currentUserQuery.refetch();
   }
@@ -62,13 +67,12 @@ class AddToCart extends Component {
 
   render() {
     const user = this.props.currentUserQuery.user;
-    if (!user || this.props.singleItemQuery.loading) return <p>Loading...</p>;
+    // TODO WTF
+    if (!user || this.props.singleItemQuery.loading || !this.props.singleItemQuery.Item) return <p>Loading...</p>;
     const cartIds = user.cart.map(item => item.id);
-    const image = this.props.singleItemQuery.Item.image;
+    const image = this.props.singleItemQuery.Item.image || {};
     const isInCart = cartIds.includes(this.props.id);
     const { x, y } = document.querySelector('.cart').getBoundingClientRect();
-    console.log({ x, y });
-
     return (
       <div>
         {isInCart ? (

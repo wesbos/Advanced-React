@@ -1,7 +1,7 @@
-import { gql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { itemDetails } from './fragments';
 
-export const CREATE_LINK_MUTATION = gql`
+export const CREATE_ITEM_MUTATION = gql`
   ${itemDetails}
   mutation CreateLinkMutation($description: String!, $title: String!, $imageId: ID, $price: Int!) {
     createItem(
