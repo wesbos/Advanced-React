@@ -20,6 +20,18 @@ types: ./types.graphql
 
 functions:
 
+# added by auth0 template: (please uncomment)
+#
+  authenticate:
+    handler:
+      code:
+        src: ./src/auth0/auth0Authentication.js
+        environment:
+          AUTH0_DOMAIN: wesbos.auth0.com
+          AUTH0_API_IDENTIFIER: https://wesbos.auth0.com/api/v2/
+    type: resolver
+    schema: ./src/auth0/auth0Authentication.graphql
+
   createCharge:
     handler:
       code: src/createCharge.js

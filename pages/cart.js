@@ -12,9 +12,9 @@ class Orders extends Component {
     return (
       <Page>
         <h2>My Cart</h2>
-        <CartList/>
+        <CartList />
       </Page>
-    )
+    );
   }
 }
 

@@ -1,18 +1,8 @@
 {
   "name": "graphcool",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "description": "My Graphcool Service",
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
-    "stripe": "^5.2.0",
-    "graphcool-lib": "^0.1.0",
-    "jsonwebtoken": "^8.1.0",
-    "jwks-rsa": "^1.2.1"
+    "stripe": "^5.4.0"
   }
 }

@@ -176,3 +176,21 @@ export const REMOVE_FROM_CART_MUTATION = gql`
     }
   }
 `;
+
+export const GET_CART_STATE = gql`
+  query {
+    ui {
+      isCartOpen
+    }
+  }
+`;
+
+export const UPDATE_CART_STATE = gql`
+  mutation updateCartState($isCartOpen: Boolean!) {
+    updateCartState(isCartOpen: $isCartOpen) {
+      ui {
+        isCartOpen
+      }
+    }
+  }
+`;

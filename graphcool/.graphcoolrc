@@ -1,3 +1,4 @@
 targets:
-  Sick Fits 2: shared-eu-west-1/cj99zm6ye06sb01325ic751ww
-  default: Sick Fits 2
+  prod: shared-eu-west-1/cjctbkp4o02fh0105aff50ccn
+  default: local
+  local: local/cjctdwrq1000e0149tlqfs0c7

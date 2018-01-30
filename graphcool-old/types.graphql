@@ -51,3 +51,6 @@ type User @model {
   cart: [Item!]! @relation(name: "CartItems")
   level: Int
 }
+
+
+

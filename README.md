@@ -23,3 +23,6 @@ I love this look and feel: http://wes.io/lxQe
 https://www.youtube.com/watch?v=Y0ePh9OxSWo
 
 
+## Questions
+* Apollo Link State will be good for local variables
+* Server Side Auth
