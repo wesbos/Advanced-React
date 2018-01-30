@@ -1,0 +1,36 @@
+# import Post, Item, ItemCreateInput from './generated/prisma.graphql'
+
+type Query {
+  feed: [Post!]!
+  drafts: [Post!]!
+  post(id: ID!): Post!
+  me: User
+}
+
+# import Mutation from './generated/prisma.graphql'
+
+type Mutation {
+  signup(email: String!, password: String!, name: String!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+  createDraft(title: String!, text: String!): Post!
+  publish(id: ID!): Post!
+  deletePost(id: ID!): Post!
+  updatePost(id: ID!, title: String, text: String): Post!
+  createItem(data: ItemCreateInput): Item!
+  deleteItem(id: ID!): Item!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+# THe user definition overrides
+type User {
+  id: ID!
+  email: String!
+  website: String
+  name: String!
+  posts: [Post!]!
+  age: Int
+}

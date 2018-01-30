@@ -1,0 +1,22 @@
+{
+  "name": "my-own",
+  "scripts": {
+    "start": "nodemon -e js,graphql -x node -r dotenv/config src/index.js",
+    "debug": "nodemon -e js,graphql -x node --inspect -r dotenv/config src/index.js",
+    "playground": "graphql playground",
+    "dev": "npm-run-all --parallel start playground"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "graphql-yoga": "1.2.1",
+    "jsonwebtoken": "8.1.1",
+    "prisma-binding": "1.4.0"
+  },
+  "devDependencies": {
+    "dotenv": "4.0.0",
+    "graphql-cli": "2.13.0",
+    "nodemon": "1.14.11",
+    "npm-run-all": "4.1.2",
+    "prisma": "1.0.11"
+  }
+}

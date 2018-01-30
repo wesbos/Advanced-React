@@ -1,4 +1,0 @@
-targets:
-  prod: shared-eu-west-1/cjctbkp4o02fh0105aff50ccn
-  default: local
-  local: local/cjctdwrq1000e0149tlqfs0c7
