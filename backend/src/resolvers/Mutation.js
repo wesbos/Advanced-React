@@ -35,8 +35,35 @@ const mutations = {
   },
 
   // Creation of Post Mutations
-  createItem: forwardTo('db'),
-  deleteItem: forwardTo('db'),
+  async createItem(parent, args, ctx, info) {
+    return ctx.db.mutation.createItem({ data: { ...args } }, info);
+  },
+
+  async deleteItem(parent, args, ctx, info) {
+    console.log('gonna delete one');
+    console.log(args);
+    return ctx.db.mutation.deleteItem(
+      {
+        where: {
+          id: args.id,
+        },
+      },
+      info
+    );
+  },
+
+  async updateItem(parent, args, ctx, info) {
+    console.log('Updating an item');
+    const updates = { ...args };
+    delete updates.id;
+    return ctx.db.mutation.updateItem({
+      where: { id: args.id },
+      data: {
+        ...updates,
+      },
+    });
+  },
+
   async createDraft(parent, { title, text }, ctx, info) {
     // const userId = getUserId(ctx);
     const userId = getUserId(ctx);

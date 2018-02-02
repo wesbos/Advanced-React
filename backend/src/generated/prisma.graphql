@@ -30,6 +30,7 @@ type User implements Node {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   website: String
   age: Int
+  dummy: String
 }
 
 
@@ -420,6 +421,7 @@ input UserCreateInput {
   name: String!
   website: String
   age: Int
+  dummy: String
   posts: PostCreateManyWithoutAuthorInput
 }
 
@@ -434,6 +436,7 @@ input UserCreateWithoutPostsInput {
   name: String!
   website: String
   age: Int
+  dummy: String
 }
 
 type UserEdge {
@@ -454,6 +457,8 @@ enum UserOrderByInput {
   website_DESC
   age_ASC
   age_DESC
+  dummy_ASC
+  dummy_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -467,6 +472,7 @@ type UserPreviousValues {
   name: String!
   website: String
   age: Int
+  dummy: String
 }
 
 type UserSubscriptionPayload {
@@ -492,6 +498,7 @@ input UserUpdateInput {
   name: String
   website: String
   age: Int
+  dummy: String
   posts: PostUpdateManyWithoutAuthorInput
 }
 
@@ -510,6 +517,7 @@ input UserUpdateWithoutPostsDataInput {
   name: String
   website: String
   age: Int
+  dummy: String
 }
 
 input UserUpdateWithoutPostsInput {
@@ -604,6 +612,20 @@ input UserWhereInput {
   age_lte: Int
   age_gt: Int
   age_gte: Int
+  dummy: String
+  dummy_not: String
+  dummy_in: [String!]
+  dummy_not_in: [String!]
+  dummy_lt: String
+  dummy_lte: String
+  dummy_gt: String
+  dummy_gte: String
+  dummy_contains: String
+  dummy_not_contains: String
+  dummy_starts_with: String
+  dummy_not_starts_with: String
+  dummy_ends_with: String
+  dummy_not_ends_with: String
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput

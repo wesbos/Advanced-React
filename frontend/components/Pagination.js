@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
-import { graphql, gql, compose } from 'react-apollo';
-import { ALL_ITEMS_QUERY } from '../queries';
-import withData from '../lib/withData';
-import { Link } from '../routes';
+import React, { Component } from "react";
+import { graphql, gql, compose } from "react-apollo";
+import { ALL_ITEMS_QUERY } from "../queries";
+import withData from "../lib/withData";
+import { Link } from "../routes";
+import { itemEnhancer } from "../enhancers/enhancers";
 
 const Pagination = props => {
   const { loading, error } = props.allItemsQuery;
 
   if (loading) return <p>Loading Item...</p>;
 
-  const meta = props.allItemsQuery._allItemsMeta;
+  const { aggregate, pageInfo } = props.allItemsQuery.itemsConnection;
+
   const { page } = props;
-  const pages = Math.floor(meta.count / 3);
+  const pages = Math.floor(aggregate.count / 3);
   return (
     <div>
       <p>
@@ -19,17 +21,16 @@ const Pagination = props => {
         of
         <strong>{pages} </strong>
         -
-        <strong>{meta.count} </strong>
+        <strong>{aggregate.count} </strong>
         total
       </p>
-
-      {page > 1 ? (
+      {pageInfo.hasPreviousPage ? (
         <Link prefetch route="items" params={{ page: page - 1 }}>
           <a>←Prev</a>
         </Link>
       ) : null}
 
-      {page < pages ? (
+      {pageInfo.hasNextPage ? (
         <Link prefetch route="items" params={{ page: page + 1 }}>
           <a>Next →</a>
         </Link>
@@ -38,6 +39,6 @@ const Pagination = props => {
   );
 };
 
-const ComponentWithMutations = compose(graphql(ALL_ITEMS_QUERY, { name: 'allItemsQuery' }))(Pagination);
+const ComponentWithMutations = compose(itemEnhancer)(Pagination);
 
 export default ComponentWithMutations;

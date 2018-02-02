@@ -1,12 +1,12 @@
 # the name for the service (will be part of the service's HTTP endpoint)
-service: my-own
+service: sick-fits
 
 # the cluster and stage the service is deployed to
 stage: ${env:PRISMA_STAGE}
 
 # to disable authentication:
-# disableAuth: true
-secret: ${env:PRISMA_SECRET}
+disableAuth: true
+# secret: ${env:PRISMA_SECRET}
 
 # the file path pointing to your data model
 datamodel: datamodel.graphql
@@ -17,5 +17,3 @@ datamodel: datamodel.graphql
 
 cluster: ${env:PRISMA_CLUSTER}
 
-
-disableAuth: true

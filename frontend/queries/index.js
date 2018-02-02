@@ -1,23 +1,26 @@
-import gql from 'graphql-tag';
-import { itemDetails } from './fragments';
+import gql from "graphql-tag";
+import { itemDetails } from "./fragments";
 
 export const CREATE_ITEM_MUTATION = gql`
   ${itemDetails}
-  mutation CreateLinkMutation($description: String!, $title: String!, $imageId: ID, $price: Int!) {
-    createItem(
-      description: $description,
-      title: $title,
-      imageId: $imageId
-      price: $price
-    ) {
+  mutation createItem($description: String!, $title: String!, $price: Int!) {
+    createItem(description: $description, title: $title, price: $price) {
       ...itemDetails
     }
   }
 `;
 
 export const CREATE_USER_MUTATION = gql`
-  mutation CreateUserMutation($email: String!, $name: String!, $idToken: String!) {
-    createUser(email: $email, name: $name, authProvider: { auth0: { idToken: $idToken } }) {
+  mutation CreateUserMutation(
+    $email: String!
+    $name: String!
+    $idToken: String!
+  ) {
+    createUser(
+      email: $email
+      name: $name
+      authProvider: { auth0: { idToken: $idToken } }
+    ) {
       id
       email
       name
@@ -52,11 +55,19 @@ export const CREATE_ORDER_MUTATION = gql`
 export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
   ${itemDetails}
-  query AllLinksQuery($skip: Int = 0, $first: Int = 3) {
-    _allItemsMeta {
-      count
+  query AllItemsQuery($skip: Int = 0, $first: Int = 3) {
+    itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      aggregate {
+        count
+      }
     }
-    allItems(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+    items(orderBy: createdAt_DESC, first: $first, skip: $skip) {
       ...itemDetails
     }
   }
@@ -74,12 +85,14 @@ export const SINGLE_ITEM_QUERY = gql`
 export const SEARCH_ITEMS_QUERY = gql`
   ${itemDetails}
   query SearchItems($searchTerm: String!) {
-    allItems(filter:{
-     OR:[
-      { title_contains: $searchTerm },
-      { description_contains: $searchTerm },
-    ]
-    }) {
+    allItems(
+      filter: {
+        OR: [
+          { title_contains: $searchTerm }
+          { description_contains: $searchTerm }
+        ]
+      }
+    ) {
       ...itemDetails
     }
   }
@@ -97,12 +110,18 @@ export const DELETE_ITEM_MUTATION = gql`
 
 export const UPDATE_LINK_MUTATION = gql`
   ${itemDetails}
-  mutation UpdateItem($id: ID!, $title: String!, $description: String!, $price: Int!, $fullPrice: Int!) {
+  mutation UpdateItem(
+    $id: ID!
+    $title: String!
+    $description: String!
+    $price: Int!
+    $fullPrice: Int!
+  ) {
     updateItem(
-      id: $id,
-      description: $description,
-      title: $title,
-      price: $price,
+      id: $id
+      description: $description
+      title: $title
+      price: $price
       fullPrice: $fullPrice
     ) {
       ...itemDetails

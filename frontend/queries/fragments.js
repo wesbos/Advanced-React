@@ -5,12 +5,6 @@ export const itemDetails = gql`
     id
     title
     price
-    fullPrice
     description
-    image {
-      id
-      url
-      secret
-    }
   }
 `;

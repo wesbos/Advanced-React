@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import slugify from 'slugify';
-import { Link } from '../routes';
-import AddToCart from './AddToCart';
-import makeImage from '../lib/image';
-import TakeMyMoney from './TakeMyMoney';
-import formatMoney from '../lib/formatMoney';
+import styled from "styled-components";
+import slugify from "slugify";
+import { Link } from "../routes";
+import AddToCart from "./AddToCart";
+import makeImage from "../lib/image";
+import TakeMyMoney from "./TakeMyMoney";
+import formatMoney from "../lib/formatMoney";
 
 const Item = styled.div`
   background: #f3f3f3;
@@ -16,13 +16,19 @@ const Item = styled.div`
 
 const ItemComponent = ({ item }) => (
   <Item key={item.id}>
-    {item.image ? <img key={item.image.secret} src={makeImage(item.image)} alt={item.title} /> : null}
+    {item.image ? (
+      <img
+        key={item.image.secret}
+        src={makeImage(item.image)}
+        alt={item.title}
+      />
+    ) : null}
     <h3>
       <Link
         route="item"
         params={{
           slug: slugify(item.title),
-          itemId: item.id,
+          itemId: item.id
         }}
       >
         <a>{item.title}</a>
@@ -54,7 +60,13 @@ const ItemComponent = ({ item }) => (
     </TakeMyMoney>
 
     <AddToCart id={item.id} />
-    <button onClick={() => this.props.removeItemMutation({ variables: { id: item.id } })}>&times; Delete item</button>
+    <button
+      onClick={() =>
+        this.props.removeItemMutation({ variables: { id: item.id } })
+      }
+    >
+      &times; Delete item
+    </button>
   </Item>
 );
 

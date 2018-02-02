@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import styled from 'styled-components';
+import Link from "next/link";
+import styled from "styled-components";
 
 const StyledUl = styled.ul`
   margin: 0;
@@ -27,6 +27,9 @@ const Nav = () => (
   <StyledUl>
     <Link prefetch href="/">
       <a>Home</a>
+    </Link>
+    <Link prefetch href="/items">
+      <a>Just Items</a>
     </Link>
     <Link prefetch href="/signup">
       <a>Sign Up</a>

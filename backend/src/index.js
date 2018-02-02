@@ -24,10 +24,10 @@ const server = new GraphQLServer({
   }),
 });
 
-// This is an example of custom express middlware
-server.express.use((req, res, next) => {
-  console.log("Hi I'm middlware");
-  next();
-});
+// // This is an example of custom express middlware
+// server.express.use((req, res, next) => {
+//   // console.log("Hi I'm middlware");
+//   next();
+// });
 
 server.start(() => console.log('Server is running on http://localhost:4000'));

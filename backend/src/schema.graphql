@@ -1,10 +1,25 @@
-# import Post, Item, ItemCreateInput from './generated/prisma.graphql'
+# import ItemWhereInput, ItemOrderByInput, allItems, Post, Item, ItemCreateInput, ItemOrderByInput, ItemWhereInput from './generated/prisma.graphql'
 
 type Query {
   feed: [Post!]!
   drafts: [Post!]!
   post(id: ID!): Post!
   me: User
+  itemsConnection(
+    where: ItemWhereInput
+    orderBy: ItemOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ItemConnection!
+  items(
+    where: ItemWhereInput
+    orderBy: ItemOrderByInput
+    skip: Int
+    first: Int
+  ): [Item]!
 }
 
 # import Mutation from './generated/prisma.graphql'
@@ -16,8 +31,9 @@ type Mutation {
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
   updatePost(id: ID!, title: String, text: String): Post!
-  createItem(data: ItemCreateInput): Item!
+  createItem(title: String, description: String, price: Int): Item!
   deleteItem(id: ID!): Item!
+  updateItem(id: ID!, title: String, description: String, price: Int): Item!
 }
 
 type AuthPayload {

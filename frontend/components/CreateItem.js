@@ -7,10 +7,10 @@ import { fileEndpoint } from '../config';
 
 class CreateLink extends Component {
   state = {
-    description: '',
-    title: '',
+    description: 'test',
+    title: 'testing title',
     image: '',
-    price: 0,
+    price: 500,
     fullPrice: 0,
     loading: false,
     error: {
@@ -41,20 +41,19 @@ class CreateLink extends Component {
   _createLink = async e => {
     e.preventDefault();
     // pull the values from state
-    const { description, title, image, price, fullPrice } = this.state;
+    const { description, title, price } = this.state;
     // create a mutation
     // TODO: handle any errors
     // turn loading on
     this.setState({ loading: true });
     try {
+      console.log('About to call create item mutation');
       const res = await this.props.createItemMutation({
         // pass in those variables from state
         variables: {
           description,
           title,
           price: parseInt(price),
-          fullPrice,
-          imageId: image,
         },
       });
     } catch (error) {
@@ -98,7 +97,7 @@ class CreateLink extends Component {
             type="text"
             placeholder="The desc for this item"
           />
-          <button disabled={!this.state.loading} type="submit">
+          <button disabledx={!this.state.loading} type="submit">
             Submit
           </button>
         </form>
@@ -117,6 +116,7 @@ export default graphql(CREATE_ITEM_MUTATION, {
     // This is much Better / efficient
     // Notice how the variable is called createItem - that is because createItem is the name of the query!
     update: (proxy, { data: { createItem } }) => {
+      console.log('UPDATING');
       const data = proxy.readQuery({ query: ALL_ITEMS_QUERY });
       // data is our store, allItems is our sub-"state", it's just an array. We can just add it to
       console.log({ createItem });

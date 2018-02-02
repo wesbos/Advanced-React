@@ -19,19 +19,18 @@ class Header extends Component {
     // This fetches the new data, but doesn't populate the user via props
     // this.props.currentUserQuery.refetch();
     // This fetches the new data, and populates the user via props
-    setTimeout(this.props.currentUserQuery.refetch, 1);
+    // setTimeout(this.props.currentUserQuery.refetch, 1);
   }
 
   render() {
-    const user = this.props.currentUserQuery.user || {};
-    const { email = '' } = user;
+    // const user = this.props.currentUserQuery.user || {};
+    // const { email = '' } = user;
     return (
       <div>
-        <p>
+        {/* <p>
           Signed in as <strong>{email}</strong>
-        </p>
-        <Login />
-        <Cart />
+        </p> */}
+        {/* <Cart /> */}
         <Search />
       </div>
     );
@@ -39,4 +38,5 @@ class Header extends Component {
 }
 
 const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' });
-export default compose(userEnhancer)(Header);
+// export default compose(userEnhancer)(Header);
+export default Header;

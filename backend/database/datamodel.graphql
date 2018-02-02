@@ -16,6 +16,7 @@ type User {
   posts: [Post!]!
   website: String
   age: Int
+  dummy: String
 }
 
 type Item {
