@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { graphql, gql, compose } from "react-apollo";
-import { ALL_ITEMS_QUERY } from "../queries";
-import withData from "../lib/withData";
-import { Link } from "../routes";
-import { itemEnhancer } from "../enhancers/enhancers";
+import React, { Component } from 'react';
+import { graphql, gql, compose } from 'react-apollo';
+import { ALL_ITEMS_QUERY } from '../queries';
+import withData from '../lib/withData';
+import { Link } from '../routes';
+import { itemEnhancer } from '../enhancers/enhancers';
 
 const Pagination = props => {
-  const { loading, error } = props.allItemsQuery;
+  const { loading, error } = props.itemsQuery;
 
   if (loading) return <p>Loading Item...</p>;
 
-  const { aggregate, pageInfo } = props.allItemsQuery.itemsConnection;
+  const { aggregate, pageInfo } = props.itemsQuery.itemsConnection;
 
   const { page } = props;
   const pages = Math.floor(aggregate.count / 3);

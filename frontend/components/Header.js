@@ -6,6 +6,7 @@ import Login from './LoginAuth0';
 import Search from './Search';
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import Signout from './Signout';
 
 Router.onRouteChangeStart = url => {
   console.log(`Loading: ${url}`);
@@ -23,20 +24,17 @@ class Header extends Component {
   }
 
   render() {
-    // const user = this.props.currentUserQuery.user || {};
-    // const { email = '' } = user;
     return (
       <div>
-        {/* <p>
-          Signed in as <strong>{email}</strong>
-        </p> */}
+        {this.props.currentUser.me ? this.props.currentUser.me.email : 'Not Signed in'}
+        <Signout />
         {/* <Cart /> */}
-        <Search />
+        {/* <Search /> */}
       </div>
     );
   }
 }
 
-const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' });
-// export default compose(userEnhancer)(Header);
-export default Header;
+const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });
+export default compose(userEnhancer)(Header);
+// export default Header;

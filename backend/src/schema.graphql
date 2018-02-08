@@ -26,7 +26,8 @@ type Query {
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
-  login(email: String!, password: String!): AuthPayload!
+  signin(email: String!, password: String!): AuthPayload!
+  requestReset(email: String!): User
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
@@ -41,7 +42,6 @@ type AuthPayload {
   user: User!
 }
 
-# THe user definition overrides
 type User {
   id: ID!
   email: String!
@@ -49,4 +49,5 @@ type User {
   name: String!
   posts: [Post!]!
   age: Int
+  resetToken: String
 }

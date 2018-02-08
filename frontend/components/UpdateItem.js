@@ -2,58 +2,75 @@ import React, { Component } from 'react';
 import { graphql, gql, compose } from 'react-apollo';
 import { SINGLE_ITEM_QUERY, UPDATE_LINK_MUTATION } from '../queries';
 
-class UpdateLink extends Component {
+import { singleItemEnhancer } from '../enhancers/enhancers';
+
+class UpdateItem extends Component {
   state = {
-    ...this.props.findItem.Item,
+    item: {},
   };
+  componentDidMount() {
+    console.log(this.props);
+  }
 
   saveToState = e => {
     let { name, value, type } = e.target;
     if (type === 'number') {
       value = parseInt(value);
     }
-
-    this.setState({ [name]: value });
+    console.log('Saving to state');
+    const item = { ...this.state.item };
+    item[name] = value;
+    this.setState({ item });
   };
 
-  _createLink = async e => {
+  updateItem = async e => {
     e.preventDefault();
     // pull the values from state
     const { description, title } = this.state;
     const { id } = this.props;
     // create a mutation
-    // TODO: handle any errors
+    // TODO: handle any errors. If you send an extra field it should break -how do we display those errors if they are currently only visible via the network tab?
     // turn loading on
     this.setState({ loading: true });
-    console.log(this.state);
     const res = await this.props.updateItem({
       // pass in those variables from state
       variables: {
-        ...this.state,
+        ...this.props.findItem.items[0],
+        ...this.state.item,
       },
     });
+    console.log(res);
     this.setState({ loading: false });
   };
 
   render() {
+    if (this.props.findItem.loading) {
+      return <p>Loading...</p>;
+    }
+
+    const item = this.props.findItem.items[0];
     return (
       <div>
         <h2>Edit {this.props.id}</h2>
         {this.state.loading ? 'LOADING...' : 'Ready!'}
-        <form onSubmit={this._createLink}>
-          <label htmlFor="title">Title</label>
-          <input value={this.state.title} name="title" onChange={this.saveToState} type="text" />
+        <form onSubmit={this.updateItem}>
+          <fieldset disabled={this.state.loading}>
+            <label htmlFor="title">
+              Title
+              <input id="title" defaultValue={item.title} name="title" onChange={this.saveToState} type="text" />
+            </label>
 
-          <label htmlFor="description">Description</label>
-          <textarea value={this.state.description} name="description" onChange={this.saveToState} />
+            <label htmlFor="description">
+              Description
+              <textarea defaultValue={item.description} name="description" onChange={this.saveToState} />
+            </label>
 
-          <label htmlFor="price">Price</label>
-          <input type="number" name="price" onChange={this.saveToState} value={this.state.price} />
-
-          <label htmlFor="fullPrice">Full Price</label>
-          <input type="number" name="fullPrice" onChange={this.saveToState} value={this.state.fullPrice} />
-
-          <button type="submit">Save...</button>
+            <label htmlFor="price">
+              Price
+              <input type="number" name="price" onChange={this.saveToState} defaultValue={item.price} />
+            </label>
+            <button type="submit">Save...</button>
+          </fieldset>
         </form>
       </div>
     );
@@ -61,15 +78,9 @@ class UpdateLink extends Component {
 }
 
 const ComponentWithMutations = compose(
-  // First, query for getting the link
-  graphql(SINGLE_ITEM_QUERY, {
-    name: 'findItem',
-    options: ({ id }) => ({
-      variables: { id },
-    }),
-  }),
+  singleItemEnhancer,
   // Second, the mutation for updating the link
   graphql(UPDATE_LINK_MUTATION, { name: 'updateItem' })
-)(UpdateLink);
+)(UpdateItem);
 
 export default ComponentWithMutations;

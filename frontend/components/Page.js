@@ -1,8 +1,26 @@
-import styled from "styled-components";
-import Header from "./Header";
-import Meta from "./Meta";
-import Nav from "./Nav";
-import CartList from "./CartList";
+import styled from 'styled-components';
+import Header from './Header';
+import Meta from './Meta';
+import Nav from './Nav';
+import CartList from './CartList';
+import { Component } from 'react';
+
+class ErrorBoundary extends Component {
+  state = {
+    error: null,
+    errorInfo: null,
+  };
+  componentDidCatch(error, errorInfo) {
+    console.log('Caught an erorrror!');
+    this.setState({ error, errorInfo });
+  }
+  render() {
+    if (this.state.error) {
+      return <p>Shit! AN error!</p>;
+    }
+    return this.props.children;
+  }
+}
 
 const StyledPage = styled.div`
   font-family: sans-serif;
@@ -13,11 +31,13 @@ const StyledPage = styled.div`
 
 const Page = ({ children }) => (
   <StyledPage className="main">
-    <Meta />
-    <Nav />
-    {/* <Header /> */}
-    {/* <CartList /> */}
-    {children}
+    <ErrorBoundary>
+      <Meta />
+      <Nav />
+      <Header />
+      {/* <CartList /> */}
+      {children}
+    </ErrorBoundary>
   </StyledPage>
 );
 

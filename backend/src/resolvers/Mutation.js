@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { forwardTo } = require('prisma-binding');
 const { getUserId, Context } = require('../utils');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
 
 const mutations = {
   // Signup Mutations
@@ -17,7 +19,7 @@ const mutations = {
     };
   },
 
-  async login(parent, { email, password }, ctx, info) {
+  async signin(parent, { email, password }, ctx, info) {
     const user = await ctx.db.query.user({ where: { email } });
     if (!user) {
       throw new Error(`No such user found for email: ${email}`);
@@ -40,8 +42,7 @@ const mutations = {
   },
 
   async deleteItem(parent, args, ctx, info) {
-    console.log('gonna delete one');
-    console.log(args);
+    // TODO - handle auth for deleting an item
     return ctx.db.mutation.deleteItem(
       {
         where: {
@@ -53,7 +54,6 @@ const mutations = {
   },
 
   async updateItem(parent, args, ctx, info) {
-    console.log('Updating an item');
     const updates = { ...args };
     delete updates.id;
     return ctx.db.mutation.updateItem({
@@ -123,8 +123,29 @@ const mutations = {
         text: args.text,
       },
     });
-    console.log(updatedPost);
     return updatedPost;
+  },
+
+  // Send password request
+  async requestReset(parent, args, ctx, info) {
+    // 1. find if there is a user with that email
+    const user = await ctx.db.query.user({ where: { email: args.email } });
+
+    if (!user) {
+      throw new Error(`No user with the email ${args.email}`);
+    }
+    console.log(user);
+    // 2. Set a reset token, and a reset date
+    // const resetToken = await promisify(randomBytes)(20);
+    // const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
+    // console.log({ resetToken, resetTokenExpiry });
+    // const res = await ctx.db.mutation.updateUser({
+    //   where: { email: args.email },
+    //   data: { resetToken, resetTokenExpiry },
+    // });
+
+    // console.log(res);
+    // 3. Send them their token via email
   },
 };
 

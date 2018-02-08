@@ -11,6 +11,15 @@ function getUserId(ctx) {
   throw new AuthError();
 }
 
+function checkForUserId(ctx) {
+  const Authorization = ctx.request.get('Authorization');
+  if (Authorization) {
+    const token = Authorization.replace('Bearer ', '');
+    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    return userId;
+  }
+}
+
 class AuthError extends Error {
   constructor() {
     super('Not authorized');
@@ -20,4 +29,5 @@ class AuthError extends Error {
 module.exports = {
   getUserId,
   AuthError,
+  checkForUserId,
 };

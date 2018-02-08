@@ -1,36 +1,22 @@
 import { graphql, compose } from 'react-apollo';
-import { Motion, spring } from 'react-motion';
 import { SINGLE_ITEM_QUERY } from '../queries';
+import { singleItemEnhancer } from '../enhancers/enhancers';
 import makeImage from '../lib/image';
 
 const SingleItem = props => {
-  if (!props.findItem.Item) return <p>Not ready</p>;
-  console.log(props.findItem.Item);
-
-  if (props.loading) return <p>Loading...</p>;
+  if (props.loading || !props.item) return <p>Loading...</p>;
   if (props.error) return <p>Error...</p>;
-
-  const item = props.findItem.Item;
+  console.log(props);
+  const item = props.findItem.items[0];
   return (
     <div>
       <img src={makeImage(item.image)} alt={item.title} />
       <h2>Viewing {item.title}</h2>
-
-      <Motion defaultStyle={{ x: 0 }} style={{ x: spring(100) }}>
-        {value => <div>{value.x}</div>}
-      </Motion>
+      <p>{item.description}</p>
     </div>
   );
 };
 
-const ComponentWithMutations = compose(
-  graphql(SINGLE_ITEM_QUERY, {
-    name: 'findItem',
-    // This comes from Props
-    options: ({ id }) => ({
-      variables: { id },
-    }),
-  })
-)(SingleItem);
+const ComponentWithMutations = compose(singleItemEnhancer)(SingleItem);
 
 export default ComponentWithMutations;

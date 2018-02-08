@@ -1,5 +1,5 @@
-import gql from "graphql-tag";
-import { itemDetails } from "./fragments";
+import gql from 'graphql-tag';
+import { itemDetails } from './fragments';
 
 export const CREATE_ITEM_MUTATION = gql`
   ${itemDetails}
@@ -10,24 +10,36 @@ export const CREATE_ITEM_MUTATION = gql`
   }
 `;
 
-export const CREATE_USER_MUTATION = gql`
-  mutation CreateUserMutation(
-    $email: String!
-    $name: String!
-    $idToken: String!
-  ) {
-    createUser(
-      email: $email
-      name: $name
-      authProvider: { auth0: { idToken: $idToken } }
-    ) {
-      id
-      email
-      name
-      cart {
+export const SIGNUP_MUTATION = gql`
+  mutation signup($email: String!, $name: String!, $password: String!) {
+    signup(email: $email, name: $name, password: $password) {
+      token
+      user {
         id
-        title
+        email
+        name
       }
+    }
+  }
+`;
+
+export const SIGNIN_MUTATION = gql`
+  mutation signup($email: String!, $password: String!) {
+    signin(email: $email, password: $password) {
+      token
+      user {
+        id
+        email
+        name
+      }
+    }
+  }
+`;
+
+export const REQUEST_RESET_MUTATION = gql`
+  mutation requestReset($email: String!) {
+    requestReset(email: $email) {
+      id
     }
   }
 `;
@@ -76,7 +88,7 @@ export const ALL_ITEMS_QUERY = gql`
 export const SINGLE_ITEM_QUERY = gql`
   ${itemDetails}
   query FindItem($id: ID!) {
-    Item(id: $id) {
+    items(where: { id: $id }) {
       ...itemDetails
     }
   }
@@ -98,8 +110,8 @@ export const SEARCH_ITEMS_QUERY = gql`
   }
 `;
 
-export const DELETE_ITEM_MUTATION = gql`
-  mutation DelteItem($id: ID!) {
+export const REMOVE_ITEM_MUTATION = gql`
+  mutation RemoveItem($id: ID!) {
     deleteItem(id: $id) {
       id
       title
@@ -115,14 +127,14 @@ export const UPDATE_LINK_MUTATION = gql`
     $title: String!
     $description: String!
     $price: Int!
-    $fullPrice: Int!
+    # $fullPrice: Int!
   ) {
     updateItem(
       id: $id
       description: $description
       title: $title
       price: $price
-      fullPrice: $fullPrice
+      # fullPrice: $fullPrice
     ) {
       ...itemDetails
     }
@@ -131,19 +143,10 @@ export const UPDATE_LINK_MUTATION = gql`
 
 export const CURRENT_USER_QUERY = gql`
   query userQuery {
-    user {
+    me {
       id
-      name
       email
-      cart {
-        id
-        price
-        title
-        image {
-          id
-          secret
-        }
-      }
+      name
     }
   }
 `;

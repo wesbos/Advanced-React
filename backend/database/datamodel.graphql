@@ -16,7 +16,7 @@ type User {
   posts: [Post!]!
   website: String
   age: Int
-  dummy: String
+  resetToken: String
 }
 
 type Item {

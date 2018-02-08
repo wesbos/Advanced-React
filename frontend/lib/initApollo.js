@@ -17,7 +17,6 @@ function create(initialState) {
 
   // 1. Create a link for local state to be managed in Apollo
 
-
   // 1. connect to our GraphQL API
   const httpLink = new HttpLink({
     uri: endpoint, // Server URL (must be absolute)
@@ -28,11 +27,13 @@ function create(initialState) {
 
   // 2. One to tack on our auth token on each request
   const authMiddleware = new ApolloLink((operation, forward) => {
+    console.log('Adding Auth');
     const headers = {};
 
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('auth0IdToken')) {
-      headers.authorization = `Bearer ${localStorage.getItem('auth0IdToken')}`;
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
+      headers.authorization = `Bearer ${localStorage.getItem('token')}`;
     }
+    console.log({ headers });
 
     operation.setContext({ headers });
     return forward(operation);
@@ -43,6 +44,10 @@ function create(initialState) {
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     link: concat(authMiddleware, httpLink),
     cache: new InMemoryCache().restore(initialState || {}),
+    defaultOptions: {
+      query: { errorPolicy: 'all' },
+      mutate: { errorPolicy: 'all' },
+    },
   });
 }
 

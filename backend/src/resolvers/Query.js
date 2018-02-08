@@ -1,4 +1,4 @@
-const { getUserId, Context } = require('../utils');
+const { getUserId, Context, checkForUserId } = require('../utils');
 const { forwardTo } = require('prisma-binding');
 
 const Query = {
@@ -31,6 +31,11 @@ const Query = {
   },
 
   me(parent, args, ctx, info) {
+    const Authorization = ctx.request.get('Authorization');
+    if (!Authorization || Authorization === 'null') {
+      console.log('Authorization is null');
+      return null;
+    }
     const id = getUserId(ctx);
     return ctx.db.query.user({ where: { id } }, info);
   },
