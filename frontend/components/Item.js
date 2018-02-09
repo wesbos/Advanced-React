@@ -59,7 +59,7 @@ class ItemComponent extends React.Component {
           <button>Buy for {formatMoney(item.price)}</button>
         </TakeMyMoney>
 
-        {/* <AddToCart id={item.id} /> */}
+        <AddToCart id={item.id} />
         <button onClick={this.removeItem}>&times; Delete item</button>
       </Item>
     );

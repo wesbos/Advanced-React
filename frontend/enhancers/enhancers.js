@@ -1,5 +1,12 @@
-import { ALL_ITEMS_QUERY, REMOVE_ITEM_MUTATION, SINGLE_ITEM_QUERY } from '../queries/index';
 import { graphql } from 'react-apollo';
+import {
+  REMOVE_FROM_CART_MUTATION,
+  ALL_ITEMS_QUERY,
+  REMOVE_ITEM_MUTATION,
+  SINGLE_ITEM_QUERY,
+  CURRENT_USER_QUERY,
+  ADD_TO_CART_MUTATION,
+} from '../queries/index';
 
 export const itemEnhancer = graphql(ALL_ITEMS_QUERY, {
   name: 'itemsQuery',
@@ -35,3 +42,26 @@ export const singleItemEnhancer = graphql(SINGLE_ITEM_QUERY, {
     variables: { id },
   }),
 });
+
+export const removeFromCartEnhancer = graphql(REMOVE_FROM_CART_MUTATION, {
+  name: 'removeFromCart',
+  options: {
+    update: (proxy, payload) => {
+      const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
+      const cartItemId = payload.data.removeFromCart.id;
+      data.me.cart = data.me.cart.filter(item => item.id !== cartItemId);
+      proxy.writeQuery({ query: CURRENT_USER_QUERY, data });
+    },
+  },
+});
+
+export const addtoCartEnhancer = graphql(ADD_TO_CART_MUTATION, {
+  name: 'addToCart',
+  options: {
+    update: (proxy, payload) => {
+      console.log('=----asdf-asd-fas-df-asdf-sa-df');
+    },
+  },
+});
+
+export const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });

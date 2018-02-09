@@ -28,7 +28,7 @@ class Header extends Component {
       <div>
         {this.props.currentUser.me ? this.props.currentUser.me.email : 'Not Signed in'}
         <Signout />
-        {/* <Cart /> */}
+        <Cart />
         {/* <Search /> */}
       </div>
     );

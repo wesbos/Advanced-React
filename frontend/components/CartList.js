@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import formatMoney from '../lib/formatMoney';
 import makeImage from '../lib/image';
 import TakeMyMoney from './TakeMyMoney';
-import { removeFromCartEnhancer } from '../enhancers';
+import { removeFromCartEnhancer } from '../enhancers/enhancers';
 import { CURRENT_USER_QUERY } from '../queries';
 import PropTypes from 'prop-types';
 

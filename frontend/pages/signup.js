@@ -9,7 +9,7 @@ const SignUpPage = () => (
   <Page>
     <p>I'm the Sign Up url!</p>
     <Signup />
-    {/* <Signin /> */}
+    <Signin />
     <RequestReset />
   </Page>
 );

@@ -17,6 +17,14 @@ type User {
   website: String
   age: Int
   resetToken: String
+  resetTokenExpiry: String
+  cart: [CartItem!]!
+}
+
+type CartItem {
+  id: ID! @unique
+  quantity: Int! @default(value: 1)
+  item: Item!
 }
 
 type Item {

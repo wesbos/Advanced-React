@@ -1,4 +1,4 @@
-# import ItemWhereInput, ItemOrderByInput, allItems, Post, Item, ItemCreateInput, ItemOrderByInput, ItemWhereInput from './generated/prisma.graphql'
+# import CartItem, ItemWhereInput, ItemOrderByInput, allItems, Post, Item, ItemCreateInput, ItemOrderByInput, ItemWhereInput from './generated/prisma.graphql'
 
 type Query {
   feed: [Post!]!
@@ -28,6 +28,7 @@ type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   signin(email: String!, password: String!): AuthPayload!
   requestReset(email: String!): User
+  resetPassword(resetToken: String!, password: String!, confirmPassword: String!): AuthPayload!
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
@@ -35,6 +36,8 @@ type Mutation {
   createItem(title: String, description: String, price: Int): Item!
   deleteItem(id: ID!): Item!
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
+  addToCart(id: ID!): CartItem
+  removeFromCart(id: ID!): CartItem
 }
 
 type AuthPayload {
@@ -49,5 +52,5 @@ type User {
   name: String!
   posts: [Post!]!
   age: Int
-  resetToken: String
+  cart: [CartItem!]!
 }

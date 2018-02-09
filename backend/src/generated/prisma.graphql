@@ -5,6 +5,12 @@
 # Model Types
 #
 
+type CartItem implements Node {
+  id: ID!
+  quantity: Int!
+  item(where: ItemWhereInput): Item!
+}
+
 type Item implements Node {
   id: ID!
   title: String!
@@ -31,12 +37,18 @@ type User implements Node {
   website: String
   age: Int
   resetToken: String
+  resetTokenExpiry: String
+  cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
 }
 
 
 #
 # Other Types
 #
+
+type AggregateCartItem {
+  count: Int!
+}
 
 type AggregateItem {
   count: Int!
@@ -54,6 +66,104 @@ type BatchPayload {
   count: Long!
 }
 
+type CartItemConnection {
+  pageInfo: PageInfo!
+  edges: [CartItemEdge]!
+  aggregate: AggregateCartItem!
+}
+
+input CartItemCreateInput {
+  quantity: Int
+  item: ItemCreateOneInput!
+}
+
+input CartItemCreateManyInput {
+  create: [CartItemCreateInput!]
+  connect: [CartItemWhereUniqueInput!]
+}
+
+type CartItemEdge {
+  node: CartItem!
+  cursor: String!
+}
+
+enum CartItemOrderByInput {
+  id_ASC
+  id_DESC
+  quantity_ASC
+  quantity_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CartItemPreviousValues {
+  id: ID!
+  quantity: Int!
+}
+
+type CartItemSubscriptionPayload {
+  mutation: MutationType!
+  node: CartItem
+  updatedFields: [String!]
+  previousValues: CartItemPreviousValues
+}
+
+input CartItemSubscriptionWhereInput {
+  AND: [CartItemSubscriptionWhereInput!]
+  OR: [CartItemSubscriptionWhereInput!]
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CartItemWhereInput
+}
+
+input CartItemUpdateInput {
+  quantity: Int
+  item: ItemUpdateOneInput
+}
+
+input CartItemUpdateManyInput {
+  create: [CartItemCreateInput!]
+  connect: [CartItemWhereUniqueInput!]
+  disconnect: [CartItemWhereUniqueInput!]
+  delete: [CartItemWhereUniqueInput!]
+}
+
+input CartItemWhereInput {
+  AND: [CartItemWhereInput!]
+  OR: [CartItemWhereInput!]
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  item: ItemWhereInput
+}
+
+input CartItemWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 type ItemConnection {
@@ -66,6 +176,11 @@ input ItemCreateInput {
   title: String!
   description: String!
   price: Int!
+}
+
+input ItemCreateOneInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
 }
 
 type ItemEdge {
@@ -116,6 +231,13 @@ input ItemUpdateInput {
   title: String
   description: String
   price: Int
+}
+
+input ItemUpdateOneInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
+  disconnect: ItemWhereUniqueInput
+  delete: ItemWhereUniqueInput
 }
 
 input ItemWhereInput {
@@ -182,21 +304,27 @@ scalar Long
 type Mutation {
   createPost(data: PostCreateInput!): Post!
   createUser(data: UserCreateInput!): User!
+  createCartItem(data: CartItemCreateInput!): CartItem!
   createItem(data: ItemCreateInput!): Item!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteItem(where: ItemWhereUniqueInput!): Item
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
+  updateManyCartItems(data: CartItemUpdateInput!, where: CartItemWhereInput!): BatchPayload!
   updateManyItems(data: ItemUpdateInput!, where: ItemWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
+  deleteManyCartItems(where: CartItemWhereInput!): BatchPayload!
   deleteManyItems(where: ItemWhereInput!): BatchPayload!
 }
 
@@ -393,12 +521,15 @@ input PostWhereUniqueInput {
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
+  cartItem(where: CartItemWhereUniqueInput!): CartItem
   item(where: ItemWhereUniqueInput!): Item
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
   node(id: ID!): Node
 }
@@ -406,6 +537,7 @@ type Query {
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
 }
 
@@ -422,7 +554,9 @@ input UserCreateInput {
   website: String
   age: Int
   resetToken: String
+  resetTokenExpiry: String
   posts: PostCreateManyWithoutAuthorInput
+  cart: CartItemCreateManyInput
 }
 
 input UserCreateOneWithoutPostsInput {
@@ -437,6 +571,8 @@ input UserCreateWithoutPostsInput {
   website: String
   age: Int
   resetToken: String
+  resetTokenExpiry: String
+  cart: CartItemCreateManyInput
 }
 
 type UserEdge {
@@ -459,6 +595,8 @@ enum UserOrderByInput {
   age_DESC
   resetToken_ASC
   resetToken_DESC
+  resetTokenExpiry_ASC
+  resetTokenExpiry_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -473,6 +611,7 @@ type UserPreviousValues {
   website: String
   age: Int
   resetToken: String
+  resetTokenExpiry: String
 }
 
 type UserSubscriptionPayload {
@@ -499,7 +638,9 @@ input UserUpdateInput {
   website: String
   age: Int
   resetToken: String
+  resetTokenExpiry: String
   posts: PostUpdateManyWithoutAuthorInput
+  cart: CartItemUpdateManyInput
 }
 
 input UserUpdateOneWithoutPostsInput {
@@ -518,6 +659,8 @@ input UserUpdateWithoutPostsDataInput {
   website: String
   age: Int
   resetToken: String
+  resetTokenExpiry: String
+  cart: CartItemUpdateManyInput
 }
 
 input UserUpdateWithoutPostsInput {
@@ -626,9 +769,26 @@ input UserWhereInput {
   resetToken_not_starts_with: String
   resetToken_ends_with: String
   resetToken_not_ends_with: String
+  resetTokenExpiry: String
+  resetTokenExpiry_not: String
+  resetTokenExpiry_in: [String!]
+  resetTokenExpiry_not_in: [String!]
+  resetTokenExpiry_lt: String
+  resetTokenExpiry_lte: String
+  resetTokenExpiry_gt: String
+  resetTokenExpiry_gte: String
+  resetTokenExpiry_contains: String
+  resetTokenExpiry_not_contains: String
+  resetTokenExpiry_starts_with: String
+  resetTokenExpiry_not_starts_with: String
+  resetTokenExpiry_ends_with: String
+  resetTokenExpiry_not_ends_with: String
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
+  cart_every: CartItemWhereInput
+  cart_some: CartItemWhereInput
+  cart_none: CartItemWhereInput
 }
 
 input UserWhereUniqueInput {

@@ -33,7 +33,6 @@ function create(initialState) {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
       headers.authorization = `Bearer ${localStorage.getItem('token')}`;
     }
-    console.log({ headers });
 
     operation.setContext({ headers });
     return forward(operation);

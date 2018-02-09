@@ -42,7 +42,7 @@ class Signup extends Component {
   render() {
     return (
       <div>
-        {this.state.loading ? 'LOADING...' : 'Ready!'}
+        {this.state.loading ? 'LOADING...' : null}
 
         {this.state.error ? <p>{this.state.error.message}</p> : null}
 

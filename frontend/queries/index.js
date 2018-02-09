@@ -44,6 +44,19 @@ export const REQUEST_RESET_MUTATION = gql`
   }
 `;
 
+export const RESET_MUTATION = gql`
+  mutation resetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
+    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
+      token
+      user {
+        id
+        email
+        name
+      }
+    }
+  }
+`;
+
 export const CREATE_ORDER_MUTATION = gql`
   mutation CreateOrderMutation($token: String!, $userId: ID!, $itemId: ID!) {
     createOrder(token: $token, userId: $userId, itemId: $itemId) {
@@ -142,11 +155,19 @@ export const UPDATE_LINK_MUTATION = gql`
 `;
 
 export const CURRENT_USER_QUERY = gql`
+  ${itemDetails}
   query userQuery {
     me {
       id
       email
       name
+      cart {
+        id
+        quantity
+        item {
+          ...itemDetails
+        }
+      }
     }
   }
 `;
@@ -176,25 +197,17 @@ export const USER_ORDERS_QUERY = gql`
 `;
 
 export const ADD_TO_CART_MUTATION = gql`
-  mutation AddToCart($userId: ID!, $itemId: ID!) {
-    addToCartItems(userUserId: $userId, cartItemId: $itemId) {
-      cartItem {
-        id
-        title
-        price
-      }
+  mutation addToCart($id: ID!) {
+    addToCart(id: $id) {
+      id
     }
   }
 `;
 
 export const REMOVE_FROM_CART_MUTATION = gql`
-  mutation xxx($userId: ID!, $itemId: ID!) {
-    removeFromCartItems(userUserId: $userId, cartItemId: $itemId) {
-      cartItem {
-        id
-        title
-        price
-      }
+  mutation removeFromCart($id: ID!) {
+    removeFromCart(id: $id) {
+      id
     }
   }
 `;

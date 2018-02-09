@@ -32,7 +32,6 @@
     "micro-dev": "^2.2.0",
     "next": "^4.2.3",
     "next-routes": "^1.2.0",
-    "nodemailer": "^4.4.2",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",

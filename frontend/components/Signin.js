@@ -37,7 +37,7 @@ class Signin extends Component {
   render() {
     return (
       <div>
-        {this.state.loading ? 'LOADING...' : 'Ready!'}
+        {this.state.loading ? 'LOADING...' : null}
 
         {this.state.errors ? this.state.errors.map(err => <p>{err.message}</p>) : null}
 
