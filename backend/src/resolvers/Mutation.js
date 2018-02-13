@@ -251,14 +251,6 @@ const mutations = {
     return ctx.db.mutation.deleteCartItem({
       where: { id: args.id },
     });
-    // const userId = getUserId(ctx);
-    // return ctx.db.query.user({ where: { id: userId } }, '{ id, cart { id, quantity }}');
-    // const cartItem = await ctx.db.query.cartItem({
-    //   where: { id: args.id },
-    // });
-
-    // console.log(cartItem);
-    // return cartItem;
   },
   async createOrder(parent, args, ctx, info) {
     const userId = getUserId(ctx);

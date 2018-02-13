@@ -170,26 +170,39 @@ export const CURRENT_USER_QUERY = gql`
 `;
 
 export const USER_ORDERS_QUERY = gql`
-  query {
-    user {
-      # grab the current user
+  query orders {
+    orders(orderBy: createdAt_DESC) {
       id
-      orders {
-        # and a all their orders
+      total
+      createdAt
+      updatedAt
+      items {
         id
-        amount
-        charge
-        item {
-          # populate the details about the item they bought with the image, description and title
-          image {
-            id
-            secret
-          }
-          description
-          title
-        }
+        title
+        price
+        description
+        image
       }
     }
+    # user {
+    #   # grab the current user
+    #   id
+    #   orders {
+    #     # and a all their orders
+    #     id
+    #     amount
+    #     charge
+    #     item {
+    #       # populate the details about the item they bought with the image, description and title
+    #       image {
+    #         id
+    #         secret
+    #       }
+    #       description
+    #       title
+    #     }
+    #   }
+    # }
   }
 `;
 
@@ -231,6 +244,26 @@ export const UPDATE_CART_STATE = gql`
       ui {
         isCartOpen
       }
+    }
+  }
+`;
+
+export const UI_STATE = gql`
+  query {
+    isCartOpen @client
+  }
+`;
+
+export const UPDATE_NETWORK_STATUS = gql`
+  mutation updateNetworkStatus($isConnected: Boolean) {
+    updateNetworkStatus(isConnected: $isConnected) @client
+  }
+`;
+
+export const GET_UI_STATE = gql`
+  query cartState {
+    networkStatus @client {
+      isConnected
     }
   }
 `;

@@ -1,3 +1,4 @@
+// I THINK THIS CAN BE DELETED
 import { Component } from 'react';
 import withData from '../lib/withData';
 import Items from '../components/Items';

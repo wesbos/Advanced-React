@@ -35,4 +35,5 @@ server.start(() => console.log('Server is running on http://localhost:4000'));
 // overwrite console.log
 const chalk = require('chalk');
 
-global.console.l = (...butta) => console.log(chalk.bold.yellow(...butta));
+// global.console.l = (...butta) => console.log(chalk.bold.yellow(...butta));
+global.console.l = console.log;

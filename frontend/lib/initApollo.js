@@ -1,8 +1,9 @@
 import { ApolloClient } from 'apollo-client';
-import { ApolloLink, concat } from 'apollo-link';
+import { ApolloLink, from } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import fetch from 'isomorphic-fetch';
+import { withClientState } from 'apollo-link-state';
 import { endpoint } from '../config';
 
 let apolloClient = null;
@@ -13,11 +14,38 @@ if (!process.browser) {
 }
 
 function create(initialState) {
+  // Create a new Cache
+  const cache = new InMemoryCache().restore(initialState || {});
   // First we create three peices of middleware
+  const stateLink = withClientState({
+    cache,
+    defaults: {
+      networkStatus: {
+        __typename: 'NetworkStatus',
+        isConnected: true,
+        isCartOpen: true,
+      },
+    },
+    resolvers: {
+      Mutation: {
+        updateNetworkStatus: (_, { isConnected }, { cache }) => {
+          console.log(isConnected);
+          const data = {
+            networkStatus: {
+              __typename: 'NetworkStatus',
+              isConnected,
+            },
+          };
+          cache.writeData({ data });
+          return null;
+        },
+      },
+    },
+  });
 
   // 1. Create a link for local state to be managed in Apollo
 
-  // 1. connect to our GraphQL API
+  // 2. connect to our GraphQL API
   const httpLink = new HttpLink({
     uri: endpoint, // Server URL (must be absolute)
     opts: {
@@ -25,9 +53,8 @@ function create(initialState) {
     },
   });
 
-  // 2. One to tack on our auth token on each request
+  // 3. One to tack on our auth token on each request
   const authMiddleware = new ApolloLink((operation, forward) => {
-    console.log('Adding Auth');
     const headers = {};
 
     if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
@@ -41,8 +68,8 @@ function create(initialState) {
   return new ApolloClient({
     connectToDevTools: process.browser,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
-    link: concat(authMiddleware, httpLink),
-    cache: new InMemoryCache().restore(initialState || {}),
+    link: from([stateLink, authMiddleware, httpLink]),
+    cache,
     defaultOptions: {
       query: { errorPolicy: 'all' },
       mutate: { errorPolicy: 'all' },

@@ -20,6 +20,8 @@ type User {
   resetToken: String
   resetTokenExpiry: String
   cart: [CartItem!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type CartItem {
@@ -27,6 +29,8 @@ type CartItem {
   quantity: Int! @default(value: 1)
   item: Item! # Relationship to an Item
   user: User! # Relationship to a user
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Item {
@@ -35,6 +39,8 @@ type Item {
   description: String!
   image: String
   price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Order {
@@ -42,5 +48,7 @@ type Order {
   items: [Item!]!
   total: Int!
   user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   charge: String!
 }

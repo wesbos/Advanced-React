@@ -41,10 +41,15 @@ const Query = {
     return ctx.db.query.user({ where: { id } }, info);
   },
   async orders(parent, args, ctx, info) {
-    console.l('--------------------FETCHING ORDERS---------------------');
-    console.log(args);
-    return ctx.db.query.orders({}, info);
-    console.l('--------------------FETCHING ORDERS---------------------');
+    const userId = getUserId(ctx);
+    return ctx.db.query.orders(
+      {
+        where: {
+          user: { id: userId },
+        },
+      },
+      info
+    );
   },
 };
 

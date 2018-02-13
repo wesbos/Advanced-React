@@ -10,6 +10,8 @@ type CartItem implements Node {
   quantity: Int!
   item(where: ItemWhereInput): Item!
   user(where: UserWhereInput): User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Item implements Node {
@@ -18,6 +20,8 @@ type Item implements Node {
   description: String!
   image: String
   price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Order implements Node {
@@ -25,6 +29,8 @@ type Order implements Node {
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
   total: Int!
   user(where: UserWhereInput): User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   charge: String!
 }
 
@@ -50,6 +56,8 @@ type User implements Node {
   resetToken: String
   resetTokenExpiry: String
   cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 
@@ -113,15 +121,17 @@ enum CartItemOrderByInput {
   id_DESC
   quantity_ASC
   quantity_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type CartItemPreviousValues {
   id: ID!
   quantity: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type CartItemSubscriptionPayload {
@@ -197,6 +207,22 @@ input CartItemWhereInput {
   quantity_lte: Int
   quantity_gt: Int
   quantity_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   item: ItemWhereInput
   user: UserWhereInput
 }
@@ -246,10 +272,10 @@ enum ItemOrderByInput {
   image_DESC
   price_ASC
   price_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ItemPreviousValues {
@@ -258,6 +284,8 @@ type ItemPreviousValues {
   description: String!
   image: String
   price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ItemSubscriptionPayload {
@@ -365,6 +393,22 @@ input ItemWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
 }
 
 input ItemWhereUniqueInput {
@@ -450,17 +494,19 @@ enum OrderOrderByInput {
   id_DESC
   total_ASC
   total_DESC
-  charge_ASC
-  charge_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  charge_ASC
+  charge_DESC
 }
 
 type OrderPreviousValues {
   id: ID!
   total: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   charge: String!
 }
 
@@ -539,6 +585,22 @@ input OrderWhereInput {
   total_lte: Int
   total_gt: Int
   total_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   charge: String
   charge_not: String
   charge_in: [String!]
@@ -862,10 +924,10 @@ enum UserOrderByInput {
   resetToken_DESC
   resetTokenExpiry_ASC
   resetTokenExpiry_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
@@ -877,6 +939,8 @@ type UserPreviousValues {
   age: Int
   resetToken: String
   resetTokenExpiry: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -1114,6 +1178,22 @@ input UserWhereInput {
   resetTokenExpiry_not_starts_with: String
   resetTokenExpiry_ends_with: String
   resetTokenExpiry_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput

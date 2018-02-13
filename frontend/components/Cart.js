@@ -1,39 +1,62 @@
 import { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import styled from 'styled-components';
-import { CURRENT_USER_QUERY } from '../queries';
+import { networkEnhancer, userEnhancer, uiEnhancer } from '../enhancers/enhancers';
 import RemoveFromCart from './RemoveFromCart';
 import TakeMyMoney from './TakeMyMoney';
-import { formatMoney } from '../lib/formatMoney';
 
 const CartStyles = styled.div`
-  background: white;
-  border-radius: 10px;
   padding: 20px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
+  position: relative;
+  background: white;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateX(100%);
+  transition: all 0.3s;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+  ${props => props.open && `transform: translateX(0);`};
+  .toggleOpen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+  }
 `;
 
 class Cart extends Component {
+  state = {
+    open: true,
+  };
   componentDidMount() {
     console.log('refetching..');
     setTimeout(this.props.currentUser.refetch, 10);
   }
+  toggleOpen = () => {
+    this.setState({ open: !this.state.open });
+  };
+  handleClick = () => {
+    console.log('CLICK');
+    this.props.updateNetworkStatus(!this.props.ui.networkStatus.isConnected);
+  };
   render() {
     if (!this.props.currentUser.me) {
       return null;
     }
-    // Check for loading state..
-    // const { loading, error } = this.props.currentUserQuery;
-    // const { user } = this.props.currentUserQuery;
-    // if (loading || error || !user) return <p>Cart Loading...</p>;
-    // const total = user.cart.reduce((a, b) => a + b.price, 0);
-
     const { me } = this.props.currentUser;
-    console.log(me);
+
     return (
-      <CartStyles className="cart">
+      <CartStyles className="cart" open={this.state.open}>
+        <button onClick={this.handleClick}>
+          Toggle Network Status:: {this.props.ui.networkStatus.isConnected.toString()}
+        </button>
+        <button className="toggleOpen" onClick={this.toggleOpen}>
+          Open Cart
+        </button>
+
         <p>🛒: {me.cart.length} Items</p>
         <ul>
           {me.cart.map(cartItem => (
@@ -50,7 +73,7 @@ class Cart extends Component {
           <hr />
           <button>Checkout!!!</button>
         </TakeMyMoney>
-        {/* There
+        {/* Theren
         {user.cart.length === 1 ? ' is ' : 'are '}
         <ChaChing amount={user.cart.length} />
         {user.cart.length === 1 ? ' item ' : ' items '}
@@ -61,5 +84,4 @@ class Cart extends Component {
   }
 }
 
-const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });
-export default compose(userEnhancer)(Cart);
+export default compose(userEnhancer, networkEnhancer, uiEnhancer)(Cart);
