@@ -5,6 +5,7 @@ const { getUserId, Context } = require('../utils');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const mail = require('../mail');
+const stripe = require('../stripe');
 
 const mutations = {
   // Signup Mutations
@@ -39,6 +40,8 @@ const mutations = {
 
   // Creation of Post Mutations
   async createItem(parent, args, ctx, info) {
+    // TODO - they should be signed in when creating an item for sale
+    // TODO: The user should be saved to the item so they can manage it
     return ctx.db.mutation.createItem({ data: { ...args } }, info);
   },
 
@@ -202,52 +205,49 @@ const mutations = {
     Add to cart
   */
   async addToCart(parent, args, ctx, info) {
-    console.l('Add to cart calle');
+    console.l('Add to cart called');
     const userId = getUserId(ctx);
-    // get the current user
-    const currentUser = await ctx.db.query.user(
-      {
-        where: { id: userId },
-      },
-      '{ cart { id, quantity item { id } }}'
-    );
-
-    // find out if the user currently has this item in their cart
-    const existingCartItemIndex = currentUser.cart.findIndex(cartItem => cartItem.item.id === args.id);
-
-    if (existingCartItemIndex >= 0) {
-      console.l('======This item already exists in the cart============');
-      const cartItem = currentUser.cart[existingCartItemIndex];
-      return ctx.db.mutation.updateCartItem({
-        where: { id: cartItem.id },
-        data: {
-          quantity: cartItem.quantity + 1,
-        },
-      });
+    if (!userId) {
+      throw new Error('You must be signed in to add to cart!');
     }
 
-    const res = await ctx.db.mutation.updateUser({
-      where: { id: userId },
-      data: {
-        cart: {
-          create: [
-            {
-              item: {
-                connect: {
-                  id: args.id,
-                },
-              },
-              quantity: 1,
-            },
-          ],
-        },
+    // 1. Check if there is a CartItem for this user and item already
+    const [existingCartItem] = await ctx.db.query.cartItems({
+      where: {
+        user: { id: userId },
+        item: { id: args.id },
       },
     });
-    console.log(res);
-    // return res;
+
+    if (existingCartItem) {
+      return ctx.db.mutation.updateCartItem(
+        {
+          where: { id: existingCartItem.id },
+          data: { quantity: existingCartItem.quantity + 1 },
+        },
+        info
+      );
+    }
+
+    // Otherwise create a new cartItem
+    return ctx.db.mutation.createCartItem(
+      {
+        data: {
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          item: {
+            connect: { id: args.id },
+          },
+        },
+      },
+      info
+    );
   },
+  // delete that cart item
   async removeFromCart(parent, args, ctx, info) {
-    // delete that cart item
     return ctx.db.mutation.deleteCartItem({
       where: { id: args.id },
     });
@@ -259,6 +259,57 @@ const mutations = {
 
     // console.log(cartItem);
     // return cartItem;
+  },
+  async createOrder(parent, args, ctx, info) {
+    const userId = getUserId(ctx);
+    const user = await ctx.db.query.user(
+      { where: { id: userId } },
+      '{ id, name, email, cart { id, quantity, item { price, id } }}'
+    );
+    console.log('-------USER-----');
+    console.log(user);
+    console.log('-------USER-----');
+    // 1. Recalculate the total for the price
+    const amount = user.cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
+    // TODO Error Handling
+    // 2.1 Create a Stripe Customer
+    const customer = await stripe.customers.create({
+      email: user.email,
+    });
+    console.log(customer);
+    // 2.3 Charge the stripe token
+    const charge = await stripe.charges.create({
+      amount,
+      currency: 'usd',
+      source: args.token,
+    });
+
+    // Save this order to the database
+    const items = user.cart.map(cartItem => ({ id: cartItem.item.id }));
+    console.l('---Gonna connect these items: ----');
+    console.log(items);
+    console.l('---Gonna connect these items: ----');
+    const order = await ctx.db.mutation.createOrder({
+      data: {
+        total: charge.amount,
+        charge: charge.id,
+        items: {
+          connect: items,
+        },
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+      },
+    });
+    console.l('--------ORDER-------------');
+    console.log(order);
+    console.l('--------ORDER-------------');
+    return order;
+    // 4. Send an email with their order
+    // 5. Send the order back
+    // 6. Clean up, clear the users cart adn send back { user, order }
   },
 };
 

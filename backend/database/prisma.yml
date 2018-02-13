@@ -15,5 +15,6 @@ datamodel: datamodel.graphql
 # seed:
 #   import: seed.graphql
 
-cluster: ${env:PRISMA_CLUSTER}
+# cluster: ${env:PRISMA_CLUSTER}
+cluster: local
 

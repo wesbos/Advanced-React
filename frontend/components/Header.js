@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
-import { CURRENT_USER_QUERY } from '../queries';
+import { userEnhancer } from '../enhancers/enhancers';
 import Cart from './Cart';
 import Login from './LoginAuth0';
 import Search from './Search';
@@ -21,6 +21,7 @@ class Header extends Component {
     // this.props.currentUserQuery.refetch();
     // This fetches the new data, and populates the user via props
     // setTimeout(this.props.currentUserQuery.refetch, 1);
+    console.log(this.props.currentUser);
   }
 
   render() {
@@ -35,6 +36,5 @@ class Header extends Component {
   }
 }
 
-const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });
 export default compose(userEnhancer)(Header);
 // export default Header;

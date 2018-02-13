@@ -38,7 +38,7 @@ const JumpImg = styled.img`
 
 class AddToCart extends Component {
   static propTypes = {
-    currentUser: PropTypes.object,
+    currentUser: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
@@ -52,8 +52,7 @@ class AddToCart extends Component {
         id: this.props.id,
       },
     });
-    console.log({ realResponse: res });
-    this.props.currentUser.refetch();
+    // this.props.currentUser.refetch();
   };
 
   render() {

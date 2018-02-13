@@ -5,7 +5,6 @@ import { compose } from 'react-apollo';
 import { Link } from '../routes';
 import AddToCart from './AddToCart';
 import makeImage from '../lib/image';
-import TakeMyMoney from './TakeMyMoney';
 import formatMoney from '../lib/formatMoney';
 import { removeItemMutation } from '../enhancers/enhancers';
 
@@ -25,7 +24,7 @@ class ItemComponent extends React.Component {
     const item = this.props.item;
     return (
       <Item key={item.id}>
-        {item.image ? <img key={item.image.secret} src={makeImage(item.image)} alt={item.title} /> : null}
+        {item.image ? <img src={item.image} alt={item.title} /> : null}
         <h3>
           <Link
             route="item"
@@ -48,17 +47,6 @@ class ItemComponent extends React.Component {
         >
           <a>Edit ✏️</a>
         </Link>
-
-        <TakeMyMoney
-          id={item.id}
-          amount={item.price}
-          name={item.title} // the pop-in header title
-          description={item.description} // the pop-in header subtitle
-          image={makeImage(item.image)}
-        >
-          <button>Buy for {formatMoney(item.price)}</button>
-        </TakeMyMoney>
-
         <AddToCart id={item.id} />
         <button onClick={this.removeItem}>&times; Delete item</button>
       </Item>

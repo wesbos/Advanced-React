@@ -3,8 +3,8 @@ import { itemDetails } from './fragments';
 
 export const CREATE_ITEM_MUTATION = gql`
   ${itemDetails}
-  mutation createItem($description: String!, $title: String!, $price: Int!) {
-    createItem(description: $description, title: $title, price: $price) {
+  mutation createItem($description: String!, $title: String!, $price: Int!, $image: String) {
+    createItem(description: $description, title: $title, price: $price, image: $image) {
       ...itemDetails
     }
   }
@@ -58,20 +58,14 @@ export const RESET_MUTATION = gql`
 `;
 
 export const CREATE_ORDER_MUTATION = gql`
-  mutation CreateOrderMutation($token: String!, $userId: ID!, $itemId: ID!) {
-    createOrder(token: $token, userId: $userId, itemId: $itemId) {
+  mutation CreateOrderMutation($token: String!) {
+    createOrder(token: $token) {
       id
-      token
       charge
-      amount
-      item {
+      total
+      items {
         id
         title
-        description
-      }
-      user {
-        id
-        email
       }
     }
   }
@@ -85,8 +79,6 @@ export const ALL_ITEMS_QUERY = gql`
       pageInfo {
         hasNextPage
         hasPreviousPage
-        startCursor
-        endCursor
       }
       aggregate {
         count
@@ -161,6 +153,11 @@ export const CURRENT_USER_QUERY = gql`
       id
       email
       name
+      orders {
+        charge
+        id
+        total
+      }
       cart {
         id
         quantity
@@ -200,6 +197,14 @@ export const ADD_TO_CART_MUTATION = gql`
   mutation addToCart($id: ID!) {
     addToCart(id: $id) {
       id
+      quantity
+      item {
+        id
+        price
+        description
+        image
+        title
+      }
     }
   }
 `;

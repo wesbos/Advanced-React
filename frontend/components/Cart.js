@@ -3,6 +3,8 @@ import { graphql, compose } from 'react-apollo';
 import styled from 'styled-components';
 import { CURRENT_USER_QUERY } from '../queries';
 import RemoveFromCart from './RemoveFromCart';
+import TakeMyMoney from './TakeMyMoney';
+import { formatMoney } from '../lib/formatMoney';
 
 const CartStyles = styled.div`
   background: white;
@@ -43,6 +45,11 @@ class Cart extends Component {
             </li>
           ))}
         </ul>
+
+        <TakeMyMoney>
+          <hr />
+          <button>Checkout!!!</button>
+        </TakeMyMoney>
         {/* There
         {user.cart.length === 1 ? ' is ' : 'are '}
         <ChaChing amount={user.cart.length} />

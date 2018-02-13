@@ -14,6 +14,7 @@ type User {
   password: String!
   name: String!
   posts: [Post!]!
+  orders: [Order!]!
   website: String
   age: Int
   resetToken: String
@@ -24,12 +25,22 @@ type User {
 type CartItem {
   id: ID! @unique
   quantity: Int! @default(value: 1)
-  item: Item!
+  item: Item! # Relationship to an Item
+  user: User! # Relationship to a user
 }
 
 type Item {
   id: ID! @unique
   title: String!
   description: String!
+  image: String
   price: Int!
+}
+
+type Order {
+  id: ID! @unique
+  items: [Item!]!
+  total: Int!
+  user: User!
+  charge: String!
 }

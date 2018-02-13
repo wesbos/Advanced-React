@@ -1,7 +1,6 @@
 import { graphql, compose } from 'react-apollo';
 import { SINGLE_ITEM_QUERY } from '../queries';
 import { singleItemEnhancer } from '../enhancers/enhancers';
-import makeImage from '../lib/image';
 
 const SingleItem = props => {
   if (props.loading || !props.item) return <p>Loading...</p>;
@@ -10,7 +9,7 @@ const SingleItem = props => {
   const item = props.findItem.items[0];
   return (
     <div>
-      <img src={makeImage(item.image)} alt={item.title} />
+      <img src={item.image} alt={item.title} />
       <h2>Viewing {item.title}</h2>
       <p>{item.description}</p>
     </div>

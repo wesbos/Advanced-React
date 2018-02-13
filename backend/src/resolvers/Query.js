@@ -31,6 +31,7 @@ const Query = {
   },
 
   me(parent, args, ctx, info) {
+    console.l('me!');
     const Authorization = ctx.request.get('Authorization');
     if (!Authorization || Authorization === 'null') {
       console.log('Authorization is null');
@@ -38,6 +39,12 @@ const Query = {
     }
     const id = getUserId(ctx);
     return ctx.db.query.user({ where: { id } }, info);
+  },
+  async orders(parent, args, ctx, info) {
+    console.l('--------------------FETCHING ORDERS---------------------');
+    console.log(args);
+    return ctx.db.query.orders({}, info);
+    console.l('--------------------FETCHING ORDERS---------------------');
   },
 };
 

@@ -18,4 +18,15 @@ When you want to add a new function:
 
 ### Installing Docker
 
+1. download docker
+1. run `prisma local start`
+1. Run `prisma deploy`
 
+if in trouble, run `prisma local nuke`
+
+
+
+### Cloudinary
+
+1. go to your settings and turn on unsigned uploading
+2.

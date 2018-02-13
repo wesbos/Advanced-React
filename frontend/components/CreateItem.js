@@ -24,24 +24,27 @@ class CreateLink extends Component {
 
   uploadFile = async e => {
     this.setState({ loading: true });
+
     const files = e.currentTarget.files;
 
     const data = new FormData();
-    data.append('data', files[0]);
+    data.append('file', files[0]);
+    data.append('upload_preset', 'sickfits');
 
     // use the file endpoint
-    const res = await fetch(fileEndpoint, {
+    const res = await fetch('https://api.cloudinary.com/v1_1/wesbos/image/upload', {
       method: 'POST',
       body: data,
     });
     const file = await res.json();
-    this.setState({ image: file.id, loading: false });
+    console.log(file);
+    this.setState({ image: file.secure_url, loading: false });
   };
 
   _createLink = async e => {
     e.preventDefault();
     // pull the values from state
-    const { description, title, price } = this.state;
+    const { description, title, price, image } = this.state;
     // create a mutation
     // TODO: handle any errors
     // turn loading on
@@ -53,6 +56,7 @@ class CreateLink extends Component {
         variables: {
           description,
           title,
+          image,
           price: parseInt(price),
         },
       });
@@ -73,6 +77,7 @@ class CreateLink extends Component {
           <p>
             Image
             <input onChange={this.uploadFile} type="file" accept=".png, .jpg, .jpeg" />
+            {this.state.image ? <img src={this.state.image} width="100" alt={this.state.title} /> : null}
           </p>
           <p>
             Title
@@ -105,9 +110,11 @@ class CreateLink extends Component {
     );
   }
 }
+
+// TODO: The create item should only be allowed
+
 // When we submit this mutation, we need to update our store - we have a few ways to do that:
 // One - we can go nucular and run refetchQueries() which will just go get everything - this is easy, but at the cost of efficiency.
-
 export default graphql(CREATE_ITEM_MUTATION, {
   name: 'createItemMutation',
   options: {
