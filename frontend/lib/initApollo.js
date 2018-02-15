@@ -20,20 +20,19 @@ function create(initialState) {
   const stateLink = withClientState({
     cache,
     defaults: {
-      networkStatus: {
-        __typename: 'NetworkStatus',
+      uiData: {
+        __typename: 'UIData',
         isConnected: true,
-        isCartOpen: true,
+        isCartOpen: false,
       },
     },
     resolvers: {
       Mutation: {
-        updateNetworkStatus: (_, { isConnected }, { cache }) => {
-          console.log(isConnected);
+        setLocalData: (_, values, { cache }) => {
           const data = {
-            networkStatus: {
-              __typename: 'NetworkStatus',
-              isConnected,
+            uiData: {
+              __typename: 'UIData',
+              ...values,
             },
           };
           cache.writeData({ data });

@@ -12,8 +12,7 @@ const Meta = () => (
           }
         `}
       <meta charSet="utf-8" />
-      <link rel="shortcut icon" href="https://wesbos.com/wp-content/themes/wb2014/i/crown-yellow-small.png" />
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+      <link rel="shortcut icon" href="/static/favicon.png" />
       <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
 
       <title>Sick Fits</title>

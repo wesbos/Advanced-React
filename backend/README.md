@@ -30,3 +30,8 @@ if in trouble, run `prisma local nuke`
 
 1. go to your settings and turn on unsigned uploading
 2.
+
+
+## TODO:
+1. When an item is deleted, the cartItems need to be deleted as well
+1. When an order goes through, delete cartItems

@@ -6,8 +6,9 @@ import {
   SINGLE_ITEM_QUERY,
   CURRENT_USER_QUERY,
   ADD_TO_CART_MUTATION,
-  UPDATE_NETWORK_STATUS,
+  UPDATE_UI,
   GET_UI_STATE,
+  TOGGLE_CART,
 } from '../queries/index';
 
 export const itemEnhancer = graphql(ALL_ITEMS_QUERY, {
@@ -79,8 +80,21 @@ export const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' })
 
 export const uiEnhancer = graphql(GET_UI_STATE, { name: 'ui' });
 
-export const networkEnhancer = graphql(UPDATE_NETWORK_STATUS, {
-  props: ({ mutate }) => ({
-    updateNetworkStatus: isConnected => mutate({ variables: { isConnected } }),
+export const updateUIEnhancer = graphql(UPDATE_UI, {
+  props: data => ({
+    updateNetworkStatus: isConnected =>
+      data.mutate({
+        variables: {
+          ...data.ownProps.ui.uiData,
+          isConnected,
+        },
+      }),
+    toggleCart: isCartOpen =>
+      data.mutate({
+        variables: {
+          ...data.ownProps.ui.uiData,
+          isCartOpen,
+        },
+      }),
   }),
 });

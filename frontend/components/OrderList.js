@@ -3,14 +3,12 @@ import { USER_ORDERS_QUERY } from '../queries';
 import { graphql, compose } from 'react-apollo';
 import { format, formatDistance } from 'date-fns';
 import formatMoney from '../lib/formatMoney';
-import makeImage from '../lib/image';
 
 class OrderList extends Component {
   componentDidMount() {
     this.props.userOrdersQuery.refetch();
   }
   render() {
-    console.log(this.props.userOrdersQuery);
     if (this.props.loading) {
       return <p>Loading...</p>;
     }
@@ -23,7 +21,6 @@ class OrderList extends Component {
 
     if (!orders || !orders.length) return <p>No Orders Yet!</p>;
 
-    console.log(orders);
     return (
       <div>
         <h2>You have {orders.length} Orders</h2>

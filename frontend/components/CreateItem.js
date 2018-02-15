@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { graphql, gql } from 'react-apollo';
 import { ALL_ITEMS_QUERY, CREATE_ITEM_MUTATION } from '../queries';
 import ErrorMessage from './ErrorMessage';
-import makeImage from '../lib/image';
 import { fileEndpoint } from '../config';
 
 class CreateLink extends Component {
@@ -102,7 +101,7 @@ class CreateLink extends Component {
             type="text"
             placeholder="The desc for this item"
           />
-          <button disabledx={!this.state.loading} type="submit">
+          <button disabled={!this.state.loading} type="submit">
             Submit
           </button>
         </form>

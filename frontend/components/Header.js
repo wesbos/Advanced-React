@@ -1,40 +1,66 @@
 import { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
+import { compose } from 'react-apollo';
 import { userEnhancer } from '../enhancers/enhancers';
-import Cart from './Cart';
-import Login from './LoginAuth0';
-import Search from './Search';
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import styled from 'styled-components';
+import Link from 'next/link';
 import Signout from './Signout';
+import Cart from './Cart';
+import Search from './Search';
+import Nav from './Nav';
 
 Router.onRouteChangeStart = url => {
-  console.log(`Loading: ${url}`);
   NProgress.start();
 };
 Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
-class Header extends Component {
-  componentDidMount() {
-    // This fetches the new data, but doesn't populate the user via props
-    // this.props.currentUserQuery.refetch();
-    // This fetches the new data, and populates the user via props
-    // setTimeout(this.props.currentUserQuery.refetch, 1);
-    console.log(this.props.currentUser);
+const StyledHeader = styled.header`
+  .bar {
+    border-bottom: 10px solid ${props => props.theme.black};
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: space-between;
+    align-items: stretch;
   }
+  .sub-bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-bottom: 1px solid ${props => props.theme.lightgrey};
+  }
+`;
 
-  render() {
-    return (
-      <div>
-        {this.props.currentUser.me ? this.props.currentUser.me.email : 'Not Signed in'}
-        <Signout />
-        <Cart />
-        {/* <Search /> */}
-      </div>
-    );
+const Logo = styled.h1`
+  font-size: 4rem;
+  margin-left: 2rem;
+  transform: skew(-5deg);
+  a {
+    padding: 1rem 1.5rem;
+    background: ${props => props.theme.red};
+    color: white;
+    letter-spacing: -2px;
+    text-transform: uppercase;
   }
-}
+`;
+
+const Header = props => (
+  <StyledHeader>
+    <div className="bar">
+      <Logo>
+        <Link href="/">
+          <a>Sick Fits!</a>
+        </Link>
+      </Logo>
+      <Nav />
+    </div>
+    <div className="sub-bar">
+      <Search />
+      <Signout />
+    </div>
+    <Cart />
+  </StyledHeader>
+);
 
 export default compose(userEnhancer)(Header);
 // export default Header;

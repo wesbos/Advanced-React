@@ -5,6 +5,16 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { removeFromCartEnhancer } from '../enhancers/enhancers';
 
+const BigButton = styled.button`
+  font-size: 3rem;
+  background: none;
+  border: 0;
+  &:hover {
+    color: ${props => props.theme.red};
+    cursor: pointer;
+  }
+`;
+
 class RemoveFromCart extends Component {
   handleRemoveFromCart = async () => {
     console.log(`gonna remove item from cart`);
@@ -18,7 +28,11 @@ class RemoveFromCart extends Component {
   };
 
   render() {
-    return <button onClick={this.handleRemoveFromCart}>&times; Remove</button>;
+    return (
+      <BigButton title="Remove From Cart" onClick={this.handleRemoveFromCart}>
+        &times;
+      </BigButton>
+    );
   }
 }
 

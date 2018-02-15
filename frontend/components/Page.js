@@ -1,44 +1,56 @@
-import styled from 'styled-components';
+import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 import Header from './Header';
 import Meta from './Meta';
 import Nav from './Nav';
 import CartList from './CartList';
 import { Component } from 'react';
 
-class ErrorBoundary extends Component {
-  state = {
-    error: null,
-    errorInfo: null,
-  };
-  componentDidCatch(error, errorInfo) {
-    console.log('Caught an erorrror!');
-    this.setState({ error, errorInfo });
+// Global Style
+
+const theme = {
+  red: '#FF0000',
+  black: '#393939',
+  grey: '#3A3A3A',
+  lightgrey: '#E1E1E1',
+  offWhite: '#EDEDED',
+  maxWidth: '1300px',
+};
+
+const globals = injectGlobal`
+  html {
+   box-sizing: border-box;
+   font-size: 10px;
   }
-  render() {
-    if (this.state.error) {
-      return <p>Shit! AN error! {this.state.error.message}</p>;
-    }
-    return this.props.children;
+  body {
+   font-family: 'radnika next', sans-serif;
+   padding: 0;
+   background-color: #ffffff;
+   background: blue;
+   margin: 0;
+   font-size: 1.5rem;
   }
-}
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  a {
+    color: ${theme.black};
+    text-decoration: none;
+  }
+`;
 
 const StyledPage = styled.div`
-  font-family: sans-serif;
-  color: #303030;
-  background: #efc600;
-  padding: 100px;
+  color: ${props => props.theme.black};
+  background: white;
 `;
 
 const Page = ({ children }) => (
-  <StyledPage className="main">
-    <ErrorBoundary>
+  <ThemeProvider theme={theme}>
+    <StyledPage className="main">
       <Meta />
-      <Nav />
       <Header />
-      {/* <CartList /> */}
       {children}
-    </ErrorBoundary>
-  </StyledPage>
+    </StyledPage>
+  </ThemeProvider>
 );
 
 export default Page;

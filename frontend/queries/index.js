@@ -102,8 +102,8 @@ export const SINGLE_ITEM_QUERY = gql`
 export const SEARCH_ITEMS_QUERY = gql`
   ${itemDetails}
   query SearchItems($searchTerm: String!) {
-    allItems(
-      filter: {
+    items(
+      where: {
         OR: [
           { title_contains: $searchTerm }
           { description_contains: $searchTerm }
@@ -238,32 +238,17 @@ export const GET_CART_STATE = gql`
   }
 `;
 
-export const UPDATE_CART_STATE = gql`
-  mutation updateCartState($isCartOpen: Boolean!) {
-    updateCartState(isCartOpen: $isCartOpen) {
-      ui {
-        isCartOpen
-      }
-    }
-  }
-`;
-
-export const UI_STATE = gql`
-  query {
-    isCartOpen @client
-  }
-`;
-
-export const UPDATE_NETWORK_STATUS = gql`
-  mutation updateNetworkStatus($isConnected: Boolean) {
-    updateNetworkStatus(isConnected: $isConnected) @client
+export const UPDATE_UI = gql`
+  mutation setLocalData($isConnected: Boolean, $isCartOpen: Boolean) {
+    setLocalData(isConnected: $isConnected, isCartOpen: $isCartOpen) @client
   }
 `;
 
 export const GET_UI_STATE = gql`
   query cartState {
-    networkStatus @client {
+    uiData @client {
       isConnected
+      isCartOpen
     }
   }
 `;

@@ -3,9 +3,9 @@ import { SINGLE_ITEM_QUERY } from '../queries';
 import { singleItemEnhancer } from '../enhancers/enhancers';
 
 const SingleItem = props => {
-  if (props.loading || !props.item) return <p>Loading...</p>;
-  if (props.error) return <p>Error...</p>;
   console.log(props);
+  if (props.loading) return <p>Loading...</p>;
+  if (props.error) return <p>Error...</p>;
   const item = props.findItem.items[0];
   return (
     <div>

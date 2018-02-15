@@ -7,7 +7,6 @@ import { CURRENT_USER_QUERY, SINGLE_ITEM_QUERY } from '../queries';
 import { removeFromCartEnhancer, userEnhancer, addtoCartEnhancer } from '../enhancers/enhancers';
 
 console.log(addtoCartEnhancer);
-import makeImage from '../lib/image';
 
 const JumpImg = styled.img`
   border: 0 solid black;
