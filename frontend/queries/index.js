@@ -99,6 +99,25 @@ export const SINGLE_ITEM_QUERY = gql`
   }
 `;
 
+export const SINGLE_ORDER_QUERY = gql`
+  query order($id: ID!) {
+    order(where: { id: $id }) {
+      id
+      charge
+      total
+      createdAt
+      items {
+        id
+        title
+        price
+        description
+        image
+        quantity
+      }
+    }
+  }
+`;
+
 export const SEARCH_ITEMS_QUERY = gql`
   ${itemDetails}
   query SearchItems($searchTerm: String!) {

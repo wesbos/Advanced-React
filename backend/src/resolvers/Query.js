@@ -8,27 +8,28 @@ const Query = {
   },
 
   itemsConnection: forwardTo('db'),
+  order: forwardTo('db'),
 
-  feed(parent, args, ctx, info) {
-    return ctx.db.query.posts({}, info);
-  },
+  // feed(parent, args, ctx, info) {
+  //   return ctx.db.query.posts({}, info);
+  // },
 
-  drafts(parent, args, ctx, info) {
-    // const id = getUserId(ctx);
+  // drafts(parent, args, ctx, info) {
+  //   // const id = getUserId(ctx);
 
-    const where = {
-      isPublished: false,
-      // author: {
-      //   id,
-      // },
-    };
+  //   const where = {
+  //     isPublished: false,
+  //     // author: {
+  //     //   id,
+  //     // },
+  //   };
 
-    return ctx.db.query.posts({ where }, info);
-  },
+  //   return ctx.db.query.posts({ where }, info);
+  // },
 
-  post(parent, { id }, ctx, info) {
-    return ctx.db.query.post({ where: { id } }, info);
-  },
+  // post(parent, { id }, ctx, info) {
+  //   return ctx.db.query.post({ where: { id } }, info);
+  // },
 
   me(parent, args, ctx, info) {
     console.l('me!');

@@ -26,12 +26,25 @@ type Item implements Node {
 
 type Order implements Node {
   id: ID!
-  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+  items(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem!]
   total: Int!
   user(where: UserWhereInput): User!
   createdAt: DateTime!
   updatedAt: DateTime!
   charge: String!
+}
+
+type OrderItem implements Node {
+  id: ID!
+  title: String!
+  description: String!
+  image: String
+  price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  quantity: Int!
+  item(where: ItemWhereInput): Item!
+  user(where: UserWhereInput): User!
 }
 
 type Post implements Node {
@@ -74,6 +87,10 @@ type AggregateItem {
 }
 
 type AggregateOrder {
+  count: Int!
+}
+
+type AggregateOrderItem {
   count: Int!
 }
 
@@ -246,11 +263,6 @@ input ItemCreateInput {
   price: Int!
 }
 
-input ItemCreateManyInput {
-  create: [ItemCreateInput!]
-  connect: [ItemWhereUniqueInput!]
-}
-
 input ItemCreateOneInput {
   create: ItemCreateInput
   connect: ItemWhereUniqueInput
@@ -310,13 +322,6 @@ input ItemUpdateInput {
   description: String
   image: String
   price: Int
-}
-
-input ItemUpdateManyInput {
-  create: [ItemCreateInput!]
-  connect: [ItemWhereUniqueInput!]
-  disconnect: [ItemWhereUniqueInput!]
-  delete: [ItemWhereUniqueInput!]
 }
 
 input ItemUpdateOneInput {
@@ -422,31 +427,37 @@ type Mutation {
   createUser(data: UserCreateInput!): User!
   createCartItem(data: CartItemCreateInput!): CartItem!
   createItem(data: ItemCreateInput!): Item!
+  createOrderItem(data: OrderItemCreateInput!): OrderItem!
   createOrder(data: OrderCreateInput!): Order!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  updateOrderItem(data: OrderItemUpdateInput!, where: OrderItemWhereUniqueInput!): OrderItem
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteItem(where: ItemWhereUniqueInput!): Item
+  deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
   deleteOrder(where: OrderWhereUniqueInput!): Order
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
   updateManyCartItems(data: CartItemUpdateInput!, where: CartItemWhereInput!): BatchPayload!
   updateManyItems(data: ItemUpdateInput!, where: ItemWhereInput!): BatchPayload!
+  updateManyOrderItems(data: OrderItemUpdateInput!, where: OrderItemWhereInput!): BatchPayload!
   updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
   deleteManyCartItems(where: CartItemWhereInput!): BatchPayload!
   deleteManyItems(where: ItemWhereInput!): BatchPayload!
+  deleteManyOrderItems(where: OrderItemWhereInput!): BatchPayload!
   deleteManyOrders(where: OrderWhereInput!): BatchPayload!
 }
 
@@ -469,7 +480,7 @@ type OrderConnection {
 input OrderCreateInput {
   total: Int!
   charge: String!
-  items: ItemCreateManyInput
+  items: OrderItemCreateManyInput
   user: UserCreateOneWithoutOrdersInput!
 }
 
@@ -481,12 +492,201 @@ input OrderCreateManyWithoutUserInput {
 input OrderCreateWithoutUserInput {
   total: Int!
   charge: String!
-  items: ItemCreateManyInput
+  items: OrderItemCreateManyInput
 }
 
 type OrderEdge {
   node: Order!
   cursor: String!
+}
+
+type OrderItemConnection {
+  pageInfo: PageInfo!
+  edges: [OrderItemEdge]!
+  aggregate: AggregateOrderItem!
+}
+
+input OrderItemCreateInput {
+  title: String!
+  description: String!
+  image: String
+  price: Int!
+  quantity: Int
+  item: ItemCreateOneInput!
+  user: UserCreateOneInput!
+}
+
+input OrderItemCreateManyInput {
+  create: [OrderItemCreateInput!]
+  connect: [OrderItemWhereUniqueInput!]
+}
+
+type OrderItemEdge {
+  node: OrderItem!
+  cursor: String!
+}
+
+enum OrderItemOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  image_ASC
+  image_DESC
+  price_ASC
+  price_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  quantity_ASC
+  quantity_DESC
+}
+
+type OrderItemPreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+  image: String
+  price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  quantity: Int!
+}
+
+type OrderItemSubscriptionPayload {
+  mutation: MutationType!
+  node: OrderItem
+  updatedFields: [String!]
+  previousValues: OrderItemPreviousValues
+}
+
+input OrderItemSubscriptionWhereInput {
+  AND: [OrderItemSubscriptionWhereInput!]
+  OR: [OrderItemSubscriptionWhereInput!]
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OrderItemWhereInput
+}
+
+input OrderItemUpdateInput {
+  title: String
+  description: String
+  image: String
+  price: Int
+  quantity: Int
+  item: ItemUpdateOneInput
+  user: UserUpdateOneInput
+}
+
+input OrderItemUpdateManyInput {
+  create: [OrderItemCreateInput!]
+  connect: [OrderItemWhereUniqueInput!]
+  disconnect: [OrderItemWhereUniqueInput!]
+  delete: [OrderItemWhereUniqueInput!]
+}
+
+input OrderItemWhereInput {
+  AND: [OrderItemWhereInput!]
+  OR: [OrderItemWhereInput!]
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  item: ItemWhereInput
+  user: UserWhereInput
+}
+
+input OrderItemWhereUniqueInput {
+  id: ID
 }
 
 enum OrderOrderByInput {
@@ -530,7 +730,7 @@ input OrderSubscriptionWhereInput {
 input OrderUpdateInput {
   total: Int
   charge: String
-  items: ItemUpdateManyInput
+  items: OrderItemUpdateManyInput
   user: UserUpdateOneWithoutOrdersInput
 }
 
@@ -546,7 +746,7 @@ input OrderUpdateManyWithoutUserInput {
 input OrderUpdateWithoutUserDataInput {
   total: Int
   charge: String
-  items: ItemUpdateManyInput
+  items: OrderItemUpdateManyInput
 }
 
 input OrderUpdateWithoutUserInput {
@@ -615,9 +815,9 @@ input OrderWhereInput {
   charge_not_starts_with: String
   charge_ends_with: String
   charge_not_ends_with: String
-  items_every: ItemWhereInput
-  items_some: ItemWhereInput
-  items_none: ItemWhereInput
+  items_every: OrderItemWhereInput
+  items_some: OrderItemWhereInput
+  items_none: OrderItemWhereInput
   user: UserWhereInput
 }
 
@@ -810,16 +1010,19 @@ type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  orderItems(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   item(where: ItemWhereUniqueInput!): Item
+  orderItem(where: OrderItemWhereUniqueInput!): OrderItem
   order(where: OrderWhereUniqueInput!): Order
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  orderItemsConnection(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
   node(id: ID!): Node
 }
@@ -829,6 +1032,7 @@ type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  orderItem(where: OrderItemSubscriptionWhereInput): OrderItemSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
 }
 
@@ -849,6 +1053,11 @@ input UserCreateInput {
   posts: PostCreateManyWithoutAuthorInput
   orders: OrderCreateManyWithoutUserInput
   cart: CartItemCreateManyWithoutUserInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutCartInput {
@@ -971,6 +1180,13 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutAuthorInput
   orders: OrderUpdateManyWithoutUserInput
   cart: CartItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: UserWhereUniqueInput
+  delete: UserWhereUniqueInput
 }
 
 input UserUpdateOneWithoutCartInput {

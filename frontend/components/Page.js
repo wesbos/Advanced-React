@@ -25,9 +25,9 @@ const globals = injectGlobal`
    font-family: 'radnika next', sans-serif;
    padding: 0;
    background-color: #ffffff;
-   background: blue;
    margin: 0;
    font-size: 1.5rem;
+   background: red;
   }
   *, *:before, *:after {
     box-sizing: inherit;

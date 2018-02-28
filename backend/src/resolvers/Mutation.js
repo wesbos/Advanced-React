@@ -68,67 +68,67 @@ const mutations = {
     });
   },
 
-  async createDraft(parent, { title, text }, ctx, info) {
-    // const userId = getUserId(ctx);
-    const userId = getUserId(ctx);
-    return ctx.db.mutation.createPost(
-      {
-        data: {
-          title,
-          text,
-          isPublished: false,
-          author: {
-            connect: { id: userId },
-          },
-        },
-      },
-      info
-    );
-  },
+  // async createDraft(parent, { title, text }, ctx, info) {
+  //   // const userId = getUserId(ctx);
+  //   const userId = getUserId(ctx);
+  //   return ctx.db.mutation.createPost(
+  //     {
+  //       data: {
+  //         title,
+  //         text,
+  //         isPublished: false,
+  //         author: {
+  //           connect: { id: userId },
+  //         },
+  //       },
+  //     },
+  //     info
+  //   );
+  // },
 
-  async publish(parent, { id }, ctx, info) {
-    const userId = getUserId(ctx);
-    const postExists = await ctx.db.exists.Post({
-      id,
-      author: { id: userId },
-    });
-    if (!postExists) {
-      throw new Error(`Post not found or you're not the author`);
-    }
+  // async publish(parent, { id }, ctx, info) {
+  //   const userId = getUserId(ctx);
+  //   const postExists = await ctx.db.exists.Post({
+  //     id,
+  //     author: { id: userId },
+  //   });
+  //   if (!postExists) {
+  //     throw new Error(`Post not found or you're not the author`);
+  //   }
 
-    return ctx.db.mutation.updatePost(
-      {
-        where: { id },
-        data: { isPublished: true },
-      },
-      info
-    );
-  },
+  //   return ctx.db.mutation.updatePost(
+  //     {
+  //       where: { id },
+  //       data: { isPublished: true },
+  //     },
+  //     info
+  //   );
+  // },
 
-  async deletePost(parent, { id }, ctx, info) {
-    const userId = getUserId(ctx);
-    const postExists = await ctx.db.exists.Post({
-      id,
-      author: { id: userId },
-    });
-    if (!postExists) {
-      throw new Error(`Post not found or you're not the author`);
-    }
+  // async deletePost(parent, { id }, ctx, info) {
+  //   const userId = getUserId(ctx);
+  //   const postExists = await ctx.db.exists.Post({
+  //     id,
+  //     author: { id: userId },
+  //   });
+  //   if (!postExists) {
+  //     throw new Error(`Post not found or you're not the author`);
+  //   }
 
-    return ctx.db.mutation.deletePost({ where: { id } });
-  },
+  //   return ctx.db.mutation.deletePost({ where: { id } });
+  // },
 
-  // Wes Added this brand new one!
-  async updatePost(parent, args, ctx, info) {
-    const updatedPost = await ctx.db.mutation.updatePost({
-      where: { id: args.id },
-      data: {
-        title: args.title,
-        text: args.text,
-      },
-    });
-    return updatedPost;
-  },
+  // // Wes Added this brand new one!
+  // async updatePost(parent, args, ctx, info) {
+  //   const updatedPost = await ctx.db.mutation.updatePost({
+  //     where: { id: args.id },
+  //     data: {
+  //       title: args.title,
+  //       text: args.text,
+  //     },
+  //   });
+  //   return updatedPost;
+  // },
 
   // Send password request
   async requestReset(parent, args, ctx, info) {
@@ -256,11 +256,9 @@ const mutations = {
     const userId = getUserId(ctx);
     const user = await ctx.db.query.user(
       { where: { id: userId } },
-      '{ id, name, email, cart { id, quantity, item { price, id } }}'
+      // TODO - can we just pass info here?
+      '{ id, name, email, cart { id, quantity, item { title, price, id, description, image } }}'
     );
-    console.log('-------USER-----');
-    console.log(user);
-    console.log('-------USER-----');
     // 1. Recalculate the total for the price
     const amount = user.cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
     // TODO Error Handling
@@ -268,7 +266,6 @@ const mutations = {
     const customer = await stripe.customers.create({
       email: user.email,
     });
-    console.log(customer);
     // 2.3 Charge the stripe token
     const charge = await stripe.charges.create({
       amount,
@@ -276,17 +273,30 @@ const mutations = {
       source: args.token,
     });
 
-    // Save this order to the database
-    const items = user.cart.map(cartItem => ({ id: cartItem.item.id }));
-    console.l('---Gonna connect these items: ----');
-    console.log(items);
-    console.l('---Gonna connect these items: ----');
+    const orderItems = user.cart.map(cartItem => {
+      const orderItem = {
+        quantity: cartItem.quantity,
+        // copy all the item details so it's there forever
+        ...cartItem.item,
+        item: {
+          // realtionship to the Item incase we need it
+          connect: { id: cartItem.item.id },
+        },
+        user: { connect: { id: user.id } },
+      };
+      // scrub the ID from it because the orderItem will have it's own ID
+      delete orderItem.id;
+      return orderItem;
+    });
+
+    // Create the Order
     const order = await ctx.db.mutation.createOrder({
       data: {
         total: charge.amount,
         charge: charge.id,
         items: {
-          connect: items,
+          // TODO this is going to be create instead
+          create: orderItems,
         },
         user: {
           connect: {
@@ -295,13 +305,22 @@ const mutations = {
         },
       },
     });
+    console.log('Gonna delete some items');
+    // 6. Clean up, clear the users cart adn send back { user, order }
+    // Delete the users current cart items
+    const cartItemIds = user.cart.map(cartItem => cartItem.id);
+    const deletedCartItems = await ctx.db.mutation.deleteManyCartItems({
+      where: {
+        id_in: cartItemIds,
+      },
+    });
+
     console.l('--------ORDER-------------');
     console.log(order);
     console.l('--------ORDER-------------');
     return order;
     // 4. Send an email with their order
     // 5. Send the order back
-    // 6. Clean up, clear the users cart adn send back { user, order }
   },
 };
 

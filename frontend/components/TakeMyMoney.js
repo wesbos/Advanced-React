@@ -3,16 +3,23 @@ import StripeCheckout from 'react-stripe-checkout';
 import { graphql, compose } from 'react-apollo';
 import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries';
 import formatMoney from '../lib/formatMoney';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 
 class TakeMyMoney extends Component {
   onToken = async res => {
-    console.log('We got a toooken!');
+    NProgress.start();
     const order = await this.props.createOrder({
       variables: {
         token: res.id,
       },
     });
-    console.log(order);
+    // Route them to that order page
+    const { id } = order.data.createOrder;
+    Router.push({
+      pathname: `/order/${id}`,
+      query: { id },
+    });
   };
 
   render() {

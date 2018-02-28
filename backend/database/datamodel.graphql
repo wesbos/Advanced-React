@@ -43,9 +43,22 @@ type Item {
   updatedAt: DateTime!
 }
 
+type OrderItem {
+  id: ID! @unique
+  title: String!
+  description: String!
+  image: String
+  price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  quantity: Int! @default(value: 1)
+  item: Item! # Relationship to an Item
+  user: User! # Relationship to a user
+}
+
 type Order {
   id: ID! @unique
-  items: [Item!]!
+  items: [OrderItem!]!
   total: Int!
   user: User!
   createdAt: DateTime!
