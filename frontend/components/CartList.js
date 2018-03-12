@@ -88,4 +88,4 @@ class CartList extends Component {
   }
 }
 
-export default compose(userEnhancer, removeFromCartEnhancer, uiEnhancer)(CartList);
+export default compose(userEnhancer, removeFromCartEnhancer)(CartList);

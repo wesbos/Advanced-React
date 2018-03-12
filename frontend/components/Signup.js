@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import Form from './styles/Form';
 
 class Signup extends Component {
   state = {
@@ -46,7 +47,7 @@ class Signup extends Component {
 
         {this.state.error ? <p>{this.state.error.message}</p> : null}
 
-        <form onSubmit={this.createUser}>
+        <Form onSubmit={this.createUser}>
           <label htmlFor="email">
             Email
             <input value={this.state.email} onChange={this.saveToState} name="email" type="text" placeholder="email" />
@@ -71,7 +72,7 @@ class Signup extends Component {
           </label>
 
           <button type="submit">Submit</button>
-        </form>
+        </Form>
       </div>
     );
   }

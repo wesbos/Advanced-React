@@ -3,7 +3,8 @@ import Title from './styles/Title';
 import styled from 'styled-components';
 import slugify from 'slugify';
 import { compose } from 'react-apollo';
-import { Link } from '../routes';
+// import { Link } from '../routes';
+import Link from 'next/link';
 import AddToCart from './AddToCart';
 import formatMoney from '../lib/formatMoney';
 import { removeItemMutation } from '../enhancers/enhancers';
@@ -70,10 +71,9 @@ class ItemComponent extends React.Component {
         {item.image ? <img src={item.image} alt={item.title} /> : null}
         <Title>
           <Link
-            route="item"
-            params={{
-              slug: slugify(item.title),
-              itemId: item.id,
+            href={{
+              pathname: '/item',
+              query: { id: item.id },
             }}
           >
             <a>{item.title}</a>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { REQUEST_RESET_MUTATION } from '../queries';
+import Form from './styles/Form';
 
 class ResetRequest extends Component {
   state = {
@@ -45,20 +46,16 @@ class ResetRequest extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.loading ? 'LOADING...' : 'Ready!'}
-
+      <Form onSubmit={this.requestReset}>
+        {this.state.loading ? 'LOADING...' : null}
         {this.state.errors ? this.state.errors.map(err => <p>{err.message}</p>) : null}
-        <h2>Request a Reset</h2>
-        <form onSubmit={this.requestReset}>
-          <label htmlFor="email">
-            Email
+        <label htmlFor="email">
+          Email
             <input value={this.state.email} onChange={this.saveToState} name="email" type="text" placeholder="email" />
-          </label>
+        </label>
 
-          <button type="submit">Request Reset!</button>
-        </form>
-      </div>
+        <button type="submit">Request Reset!</button>
+      </Form>
     );
   }
 }

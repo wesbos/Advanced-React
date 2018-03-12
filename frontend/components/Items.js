@@ -1,15 +1,9 @@
-import { Component } from 'react';
-import { withApollo, graphql, compose } from 'react-apollo';
+import React from 'react';
+import { compose } from 'react-apollo';
 import styled from 'styled-components';
 import Pagination from './Pagination';
 import Item from './Item';
 import { itemEnhancer } from '../enhancers/enhancers';
-
-import { ALL_ITEMS_QUERY, DELETE_ITEM_MUTATION } from '../queries';
-
-const Title = styled.h1`
-  font-size: 10px;
-`;
 
 const Items = styled.div`
   display: grid;
@@ -19,38 +13,21 @@ const Items = styled.div`
   margin: 0 auto;
 `;
 
-class ItemList extends Component {
-  componentDidMount() {
-    this.prefetchNextItems(this.props.page);
-  }
+const Center = styled.div`
+  text-align: center;
+`;
 
-  componentWillReceiveProps(nextProps) {
-    // update the next items if the page prop changed
-    if (this.props.page !== nextProps.page) {
-      this.prefetchNextItems(nextProps.page);
-    }
-  }
-
-  prefetchNextItems = currentPage => {
-    const page = currentPage + 1;
-    console.log(`Prefetching Next items! Page ${page}`);
-    this.props.client.query({
-      query: ALL_ITEMS_QUERY,
-      variables: {
-        skip: page * 3 - 3,
-      },
-    });
-  };
-
+class ItemList extends React.Component {
+  something() { }
   render() {
-    console.log(this.props);
+    const { loading, error } = this.props.itemsQuery;
     // 1
-    if (this.props.itemsQuery && this.props.itemsQuery.loading) {
+    if (loading) {
       return <div>Loading</div>;
     }
 
     // 2
-    if (this.props.itemsQuery && this.props.itemsQuery.error) {
+    if (error) {
       console.log(this.props.itemsQuery.error);
       return <div>Error</div>;
     }
@@ -59,13 +36,13 @@ class ItemList extends Component {
     const itemsToRender = this.props.itemsQuery.items;
 
     return (
-      <div>
+      <Center>
         <Pagination page={this.props.page} />
-        <Title>Items For Sale</Title>
         <Items key={this.props.page}>{itemsToRender.map((item, i) => <Item key={item.id} item={item} />)}</Items>
-      </div>
+        <Pagination page={this.props.page} />
+      </Center>
     );
   }
 }
 
-export default withApollo(compose(itemEnhancer)(ItemList));
+export default compose(itemEnhancer)(ItemList);

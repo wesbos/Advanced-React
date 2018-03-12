@@ -3,8 +3,8 @@ import { itemDetails } from './fragments';
 
 export const CREATE_ITEM_MUTATION = gql`
   ${itemDetails}
-  mutation createItem($description: String!, $title: String!, $price: Int!, $image: String) {
-    createItem(description: $description, title: $title, price: $price, image: $image) {
+  mutation createItem($description: String!, $title: String!, $price: Int!, $image: String, $largeImage: String) {
+    createItem(description: $description, title: $title, price: $price, image: $image, largeImage: $largeImage) {
       ...itemDetails
     }
   }
@@ -76,10 +76,6 @@ export const ALL_ITEMS_QUERY = gql`
   ${itemDetails}
   query AllItemsQuery($skip: Int = 0, $first: Int = 3) {
     itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-      }
       aggregate {
         count
       }
@@ -161,6 +157,15 @@ export const UPDATE_LINK_MUTATION = gql`
       # fullPrice: $fullPrice
     ) {
       ...itemDetails
+    }
+  }
+`;
+
+// TODO: Can't this accept an updates object??
+export const UPDATE_USER_MUTATION = gql`
+  mutation UpdateUser($name: String!) {
+    updateUser(name: $name) {
+      name
     }
   }
 `;

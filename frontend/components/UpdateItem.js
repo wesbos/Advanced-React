@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, gql, compose } from 'react-apollo';
 import { SINGLE_ITEM_QUERY, UPDATE_LINK_MUTATION } from '../queries';
+import Form from './styles/Form';
 
 import { singleItemEnhancer } from '../enhancers/enhancers';
 
@@ -51,9 +52,9 @@ class UpdateItem extends Component {
     const item = this.props.findItem.items[0];
     return (
       <div>
-        <h2>Edit {this.props.id}</h2>
-        {this.state.loading ? 'LOADING...' : 'Ready!'}
-        <form onSubmit={this.updateItem}>
+        <Form onSubmit={this.updateItem}>
+          <h2>Edit {item.title}</h2>
+          {this.state.loading ? 'LOADING...' : 'Ready!'}
           <fieldset disabled={this.state.loading}>
             <label htmlFor="title">
               Title
@@ -71,7 +72,7 @@ class UpdateItem extends Component {
             </label>
             <button type="submit">Save...</button>
           </fieldset>
-        </form>
+        </Form>
       </div>
     );
   }

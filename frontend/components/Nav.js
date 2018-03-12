@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import styled from 'styled-components';
+import { Fragment } from 'react';
 import { userEnhancer } from '../enhancers/enhancers';
 import { compose } from 'react-apollo';
-import ToggleCart from './ToggleCart';
+import CartCount from './CartCount';
+import Signout from './Signout';
+import { UIContext } from './UIContext';
 
 const StyledUl = styled.ul`
   margin: 0;
@@ -20,6 +23,7 @@ const StyledUl = styled.ul`
     font-size: 2rem;
     background: none;
     border: 0;
+    cursor: pointer;
     &:before {
       content: '';
       width: 1px;
@@ -51,45 +55,54 @@ const StyledUl = styled.ul`
       }
     }
   }
-  .cart-count {
-    background: ${props => props.theme.red};
-    color: white;
-    border-radius: 50%;
-    padding: 5px;
-    margin-left: 1rem;
-    font-weight: 100;
-    font-feature-settings: 'tnum';
-    font-variant-numeric: tabular-nums;
-  }
 `;
 
-const Nav = ({ currentUser }) => (
-  <StyledUl>
-    <Link prefetch href="/items">
-      <a>Shop</a>
-    </Link>
-    <Link prefetch href="/add">
-      <a>Sell</a>
-    </Link>
-    <Link prefetch href="/signup">
-      <a>Sign Up</a>
-    </Link>
-    <Link prefetch href="/orders">
-      <a>Orders</a>
-    </Link>
-    {currentUser.me ? (
-      <ToggleCart
-        render={toggle => (
-          <button onClick={toggle}>
-            My Cart
-            <span className="cart-count">
-              {currentUser.me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}
-            </span>
-          </button>
+class Nav extends React.Component {
+  componentDidMount() {
+    this.props.currentUser.refetch();
+  }
+  render() {
+    const { currentUser } = this.props;
+    return (
+      <StyledUl>
+        <Link prefetch href="/items">
+          <a>Shop</a>
+        </Link>
+        <Link prefetch href="/add">
+          <a>Sell</a>
+        </Link>
+
+        {!currentUser.me && (
+          <Link prefetch href="/signup">
+            <a>Sign In</a>
+          </Link>
         )}
-      />
-    ) : null}
-  </StyledUl>
-);
+
+        {currentUser.me && (
+          <Fragment>
+            <Link href="/orders">
+              <a>Orders</a>
+            </Link>
+            <Link href="/me">
+              <a>My Account</a>
+            </Link>
+            <Signout />
+            <UIContext>
+              {context => (
+                <button onClick={context.toggle}>
+                  My Cart
+                  <CartCount
+                    className="cart-count"
+                    count={currentUser.me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}
+                  />
+                </button>
+              )}
+            </UIContext>
+          </Fragment>
+        )}
+      </StyledUl>
+    );
+  }
+}
 
 export default compose(userEnhancer)(Nav);

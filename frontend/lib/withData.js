@@ -12,6 +12,7 @@ function getComponentDisplayName(Component) {
 export default ComposedComponent =>
   class WithData extends React.Component {
     static displayName = `WithData(${getComponentDisplayName(ComposedComponent)})`;
+
     static propTypes = {
       serverState: PropTypes.object.isRequired,
     };
@@ -61,10 +62,7 @@ export default ComposedComponent =>
       };
     }
 
-    constructor(props) {
-      super(props);
-      this.apollo = initApollo(this.props.serverState.apollo.data);
-    }
+    apollo = initApollo(this.props.serverState.apollo.data);
 
     render() {
       return (

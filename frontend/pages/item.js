@@ -4,7 +4,7 @@ import SingleItem from '../components/SingleItem';
 
 const ItemPage = props => (
   <Page>
-    <SingleItem id={props.url.query.itemId} />
+    <SingleItem id={props.url.query.id} />
   </Page>
 );
 

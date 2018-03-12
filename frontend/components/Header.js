@@ -5,7 +5,6 @@ import NProgress from 'nprogress';
 import Router from 'next/router';
 import styled from 'styled-components';
 import Link from 'next/link';
-import Signout from './Signout';
 import Cart from './Cart';
 import Search from './Search';
 import Nav from './Nav';
@@ -56,7 +55,6 @@ const Header = props => (
     </div>
     <div className="sub-bar">
       <Search />
-      <Signout />
     </div>
     <Cart />
   </StyledHeader>

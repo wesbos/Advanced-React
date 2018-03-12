@@ -26,12 +26,17 @@ type Mutation {
   signin(email: String!, password: String!): AuthPayload!
   requestReset(email: String!): User
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): AuthPayload!
-  createItem(title: String, description: String, price: Int, image: String): Item!
+  createItem(title: String, description: String, price: Int, image: String, largeImage: String): Item!
   deleteItem(id: ID!): Item!
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
   addToCart(id: ID!): CartItem
   removeFromCart(id: ID!): CartItem
   createOrder(token: String!): Order!
+  updateUser(name: String): User
+}
+
+input UserInput {
+  name: String
 }
 
 type AuthPayload {

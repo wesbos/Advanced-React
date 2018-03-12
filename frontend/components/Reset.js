@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { RESET_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import Form from './styles/Form';
 
 class Reset extends Component {
   state = {
@@ -49,7 +50,7 @@ class Reset extends Component {
 
         {this.state.errors ? this.state.errors.map((err, i) => <p key={i}>{err.message}</p>) : null}
 
-        <form onSubmit={this.resetPassword}>
+        <Form onSubmit={this.resetPassword}>
           <label htmlFor="password">
             password
             <input
@@ -72,7 +73,7 @@ class Reset extends Component {
           </label>
 
           <button type="submit">Request Reset!</button>
-        </form>
+        </Form>
       </div>
     );
   }

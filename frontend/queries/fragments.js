@@ -7,5 +7,6 @@ export const itemDetails = gql`
     price
     description
     image
+    largeImage
   }
 `;

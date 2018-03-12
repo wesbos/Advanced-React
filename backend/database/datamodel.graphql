@@ -38,6 +38,7 @@ type Item {
   title: String!
   description: String!
   image: String
+  largeImage: String
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -48,6 +49,7 @@ type OrderItem {
   title: String!
   description: String!
   image: String
+  largeImage: String
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!

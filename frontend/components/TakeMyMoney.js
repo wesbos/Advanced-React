@@ -24,7 +24,7 @@ class TakeMyMoney extends Component {
 
   render() {
     const { me } = this.props.currentUserQuery;
-    if (!me.cart.length) return null;
+    if (!me || !me.cart.length) return null;
     const total = me.cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
     const totalItems = me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
     return (

@@ -12,7 +12,7 @@ class Signout extends Component {
   render() {
     const { me, loading, error } = this.props.currentUser;
     if (!me || loading || error) return null;
-    return <button onClick={this.signout}>Sign Out of {me.id}👋 🏻</button>;
+    return <button onClick={this.signout}>Sign Out</button>;
   }
 }
 

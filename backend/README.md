@@ -35,3 +35,4 @@ if in trouble, run `prisma local nuke`
 ## TODO:
 1. When an item is deleted, the cartItems need to be deleted as well
 1. When an order goes through, delete cartItems
+

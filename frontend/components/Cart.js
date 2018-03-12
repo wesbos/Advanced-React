@@ -5,9 +5,8 @@ import Title from './styles/Title';
 import { updateUIEnhancer, userEnhancer, uiEnhancer } from '../enhancers/enhancers';
 import RemoveFromCart from './RemoveFromCart';
 import TakeMyMoney from './TakeMyMoney';
-import ToggleCart from './ToggleCart';
 import formatMoney from '../lib/formatMoney';
-
+import { UIContext } from './UIContext';
 import CartItem from './CartItem';
 
 const CartStyles = styled.div`
@@ -91,31 +90,32 @@ class Cart extends Component {
     const totalPrice = me.cart.reduce((tally, cartItem) => tally + cartItem.quantity * cartItem.item.price, 0);
 
     return (
-      <CartStyles open={this.props.ui.uiData.isCartOpen}>
-        <header>
-          <ToggleCart
-            render={toggle => (
-              <CloseButton title="close" onClick={toggle}>
+      <UIContext>
+        {context => (
+          <CartStyles open={context.state.isCartOpen}>
+            <header>
+              <CloseButton title="close" onClick={context.toggle}>
                 &times;
               </CloseButton>
-            )}
-          />
-          <Supreme>Your Cart.</Supreme>
-          <p>
-            You have {itemCount} item{itemCount === 1 ? '' : 's'} in your cart. S{'I'.repeat(quantityCount)}CK
-          </p>
-        </header>
 
-        <CartUl>{me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}</CartUl>
-        <footer>
-          <p>{formatMoney(totalPrice)}</p>
-          <TakeMyMoney>
-            <button>Checkout</button>
-          </TakeMyMoney>
-        </footer>
-      </CartStyles>
+              <Supreme>{me.name}'s Cart.</Supreme>
+              <p>
+                You have {itemCount} item{itemCount === 1 ? '' : 's'} in your cart.
+              </p>
+            </header>
+
+            <CartUl>{me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}</CartUl>
+            <footer>
+              <p>{formatMoney(totalPrice)}</p>
+              <TakeMyMoney>
+                <button>Checkout</button>
+              </TakeMyMoney>
+            </footer>
+          </CartStyles>
+        )}
+      </UIContext>
     );
   }
 }
 
-export default compose(userEnhancer, uiEnhancer)(Cart);
+export default compose(userEnhancer)(Cart);

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { SIGNIN_MUTATION, CURRENT_USER_QUERY } from '../queries';
 
+import Form from './styles/Form';
+
 class Signin extends Component {
   state = {
     email: `wesbos@gmail.com`,
@@ -41,7 +43,7 @@ class Signin extends Component {
 
         {this.state.errors ? this.state.errors.map(err => <p>{err.message}</p>) : null}
 
-        <form onSubmit={this.loginUser}>
+        <Form onSubmit={this.loginUser}>
           <label htmlFor="email">
             Email
             <input value={this.state.email} onChange={this.saveToState} name="email" type="text" placeholder="email" />
@@ -61,7 +63,7 @@ class Signin extends Component {
           </label>
 
           <button type="submit">Sign In!</button>
-        </form>
+        </Form>
       </div>
     );
   }

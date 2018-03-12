@@ -9,14 +9,17 @@ import {
   UPDATE_UI,
   GET_UI_STATE,
   TOGGLE_CART,
+  UPDATE_USER_MUTATION,
 } from '../queries/index';
+import { perPage } from '../config';
 
 export const itemEnhancer = graphql(ALL_ITEMS_QUERY, {
   name: 'itemsQuery',
   options({ page }) {
     return {
       variables: {
-        skip: page * 3 - 3,
+        skip: page * perPage - perPage,
+        first: perPage,
       },
     };
   },
@@ -79,6 +82,10 @@ export const addtoCartEnhancer = graphql(ADD_TO_CART_MUTATION, {
 export const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });
 
 export const uiEnhancer = graphql(GET_UI_STATE, { name: 'ui' });
+
+export const updateUserEnhancer = graphql(UPDATE_USER_MUTATION, {
+  name: 'updateUser',
+});
 
 export const updateUIEnhancer = graphql(UPDATE_UI, {
   props: data => ({

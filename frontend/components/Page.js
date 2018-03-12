@@ -4,7 +4,7 @@ import Meta from './Meta';
 import Nav from './Nav';
 import CartList from './CartList';
 import { Component } from 'react';
-
+import { UIProvider } from './UIContext';
 // Global Style
 
 const theme = {
@@ -16,7 +16,7 @@ const theme = {
   maxWidth: '1300px',
 };
 
-const globals = injectGlobal`
+injectGlobal`
   html {
    box-sizing: border-box;
    font-size: 10px;
@@ -44,13 +44,15 @@ const StyledPage = styled.div`
 `;
 
 const Page = ({ children }) => (
-  <ThemeProvider theme={theme}>
-    <StyledPage className="main">
-      <Meta />
-      <Header />
-      {children}
-    </StyledPage>
-  </ThemeProvider>
+  <UIProvider>
+    <ThemeProvider theme={theme}>
+      <StyledPage className="main">
+        <Meta />
+        <Header />
+        {children}
+      </StyledPage>
+    </ThemeProvider>
+  </UIProvider>
 );
 
 export default Page;

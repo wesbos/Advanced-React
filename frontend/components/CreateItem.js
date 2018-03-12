@@ -3,12 +3,14 @@ import { graphql, gql } from 'react-apollo';
 import { ALL_ITEMS_QUERY, CREATE_ITEM_MUTATION } from '../queries';
 import ErrorMessage from './ErrorMessage';
 import { fileEndpoint } from '../config';
+import Form from './styles/Form';
 
 class CreateLink extends Component {
   state = {
     description: 'test',
     title: 'testing title',
     image: '',
+    largeImage: '',
     price: 500,
     fullPrice: 0,
     loading: false,
@@ -37,13 +39,13 @@ class CreateLink extends Component {
     });
     const file = await res.json();
     console.log(file);
-    this.setState({ image: file.secure_url, loading: false });
+    this.setState({ image: file.secure_url, largeImage: file.eager[0].secure_url, loading: false });
   };
 
-  _createLink = async e => {
+  createItem = async e => {
     e.preventDefault();
     // pull the values from state
-    const { description, title, price, image } = this.state;
+    const { description, title, price, image, largeImage } = this.state;
     // create a mutation
     // TODO: handle any errors
     // turn loading on
@@ -56,6 +58,7 @@ class CreateLink extends Component {
           description,
           title,
           image,
+          largeImage,
           price: parseInt(price),
         },
       });
@@ -69,10 +72,9 @@ class CreateLink extends Component {
   render() {
     return (
       <div>
-        {this.state.loading ? 'LOADING...' : 'Ready!'}
-
-        <ErrorMessage error={this.state.error} onButtonClick={() => this.setState({ error: {} })} />
-        <form onSubmit={this._createLink}>
+        <Form onSubmit={this.createItem}>
+          {this.state.loading ? 'LOADING...' : null}
+          <ErrorMessage error={this.state.error} onButtonClick={() => this.setState({ error: {} })} />
           <p>
             Image
             <input onChange={this.uploadFile} type="file" accept=".png, .jpg, .jpeg" />
@@ -101,34 +103,18 @@ class CreateLink extends Component {
             type="text"
             placeholder="The desc for this item"
           />
-          <button disabled={!this.state.loading} type="submit">
+          <button disabled={this.state.loading} type="submit">
             Submit
           </button>
-        </form>
+        </Form>
       </div>
     );
   }
 }
 
-// TODO: The create item should only be allowed
-
-// When we submit this mutation, we need to update our store - we have a few ways to do that:
-// One - we can go nucular and run refetchQueries() which will just go get everything - this is easy, but at the cost of efficiency.
 export default graphql(CREATE_ITEM_MUTATION, {
   name: 'createItemMutation',
   options: {
-    // Easy, but slow
-    // refetchQueries: ['AllLinksQuery']
-    // This is much Better / efficient
-    // Notice how the variable is called createItem - that is because createItem is the name of the query!
-    update: (proxy, { data: { createItem } }) => {
-      console.log('UPDATING');
-      const data = proxy.readQuery({ query: ALL_ITEMS_QUERY });
-      // data is our store, allItems is our sub-"state", it's just an array. We can just add it to
-      console.log({ createItem });
-      data.allItems = [createItem, ...data.allItems.slice(1, 3)];
-      // and then "set state", so it will update on the page. This will update the cache for us!
-      proxy.writeQuery({ query: ALL_ITEMS_QUERY, data });
-    },
+    refetchQueries: ['AllItemsQuery'],
   },
 })(CreateLink);

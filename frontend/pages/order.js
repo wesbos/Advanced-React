@@ -6,7 +6,7 @@ import Order from '../components/Order';
 const OrderPage = props => (
   <Page>
     <h2>Single Order:</h2>
-    <Order id={props.url.query.orderId} />
+    <Order id={props.url.query.id} />
   </Page>
 );
 

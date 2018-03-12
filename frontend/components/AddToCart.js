@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import { CURRENT_USER_QUERY, SINGLE_ITEM_QUERY } from '../queries';
 import { removeFromCartEnhancer, userEnhancer, addtoCartEnhancer } from '../enhancers/enhancers';
 
-console.log(addtoCartEnhancer);
-
 const JumpImg = styled.img`
   border: 0 solid black;
   max-width: 100px;

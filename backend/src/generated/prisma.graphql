@@ -19,6 +19,7 @@ type Item implements Node {
   title: String!
   description: String!
   image: String
+  largeImage: String
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -39,6 +40,7 @@ type OrderItem implements Node {
   title: String!
   description: String!
   image: String
+  largeImage: String
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -260,6 +262,7 @@ input ItemCreateInput {
   title: String!
   description: String!
   image: String
+  largeImage: String
   price: Int!
 }
 
@@ -282,6 +285,8 @@ enum ItemOrderByInput {
   description_DESC
   image_ASC
   image_DESC
+  largeImage_ASC
+  largeImage_DESC
   price_ASC
   price_DESC
   createdAt_ASC
@@ -295,6 +300,7 @@ type ItemPreviousValues {
   title: String!
   description: String!
   image: String
+  largeImage: String
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -321,6 +327,7 @@ input ItemUpdateInput {
   title: String
   description: String
   image: String
+  largeImage: String
   price: Int
 }
 
@@ -390,6 +397,20 @@ input ItemWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  largeImage: String
+  largeImage_not: String
+  largeImage_in: [String!]
+  largeImage_not_in: [String!]
+  largeImage_lt: String
+  largeImage_lte: String
+  largeImage_gt: String
+  largeImage_gte: String
+  largeImage_contains: String
+  largeImage_not_contains: String
+  largeImage_starts_with: String
+  largeImage_not_starts_with: String
+  largeImage_ends_with: String
+  largeImage_not_ends_with: String
   price: Int
   price_not: Int
   price_in: [Int!]
@@ -510,6 +531,7 @@ input OrderItemCreateInput {
   title: String!
   description: String!
   image: String
+  largeImage: String
   price: Int!
   quantity: Int
   item: ItemCreateOneInput!
@@ -535,6 +557,8 @@ enum OrderItemOrderByInput {
   description_DESC
   image_ASC
   image_DESC
+  largeImage_ASC
+  largeImage_DESC
   price_ASC
   price_DESC
   createdAt_ASC
@@ -550,6 +574,7 @@ type OrderItemPreviousValues {
   title: String!
   description: String!
   image: String
+  largeImage: String
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -577,6 +602,7 @@ input OrderItemUpdateInput {
   title: String
   description: String
   image: String
+  largeImage: String
   price: Int
   quantity: Int
   item: ItemUpdateOneInput
@@ -649,6 +675,20 @@ input OrderItemWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  largeImage: String
+  largeImage_not: String
+  largeImage_in: [String!]
+  largeImage_not_in: [String!]
+  largeImage_lt: String
+  largeImage_lte: String
+  largeImage_gt: String
+  largeImage_gte: String
+  largeImage_contains: String
+  largeImage_not_contains: String
+  largeImage_starts_with: String
+  largeImage_not_starts_with: String
+  largeImage_ends_with: String
+  largeImage_not_ends_with: String
   price: Int
   price_not: Int
   price_in: [Int!]

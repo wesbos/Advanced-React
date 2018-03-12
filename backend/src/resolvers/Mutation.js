@@ -31,7 +31,6 @@ const mutations = {
     if (!valid) {
       throw new Error('Invalid password');
     }
-
     return {
       token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
       user,
@@ -321,6 +320,16 @@ const mutations = {
     return order;
     // 4. Send an email with their order
     // 5. Send the order back
+  },
+  async updateUser(parent, args, ctx, info) {
+    const userId = getUserId(ctx);
+    console.log(userId);
+    const updatedUser = await ctx.db.mutation.updateUser({
+      data: args,
+      where: { id: userId },
+    });
+    console.log(updatedUser);
+    return updatedUser;
   },
 };
 

@@ -31,7 +31,12 @@ class OrderList extends Component {
               <ul className="order-items">
                 <hr />
                 <h2>
-                  <Link href={`/order/${order.id}`} prefetch>
+                  <Link
+                    href={{
+                      pathname: '/order',
+                      query: { id: order.id },
+                    }}
+                  >
                     <a>{order.id}</a>
                   </Link>
                   <time dateTime={order.createdAt} title={format(order.createdAt, 'MMMM D, YYYY h:mm A')}>
