@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Pagination/> displays loading message 1`] = `
+<p>
+  Loading...
+</p>
+`;
+
+exports[`<Pagination/> renders pagination for 18 items 1`] = `
+<styled.div>
+  <Link
+    href={
+      Object {
+        "pathname": "items",
+        "query": Object {
+          "page": 0,
+        },
+      }
+    }
+    prefetch={true}
+  >
+    <a
+      aria-disabled={true}
+      className="prev"
+    >
+      ←Prev
+    </a>
+  </Link>
+  <p>
+    Page 
+    <strong>
+      1
+       
+    </strong>
+     of 
+    <strong
+      className="totalPages"
+    >
+      2
+    </strong>
+  </p>
+  <p>
+    <strong>
+      18
+    </strong>
+     Items Total
+  </p>
+  <Link
+    href={
+      Object {
+        "pathname": "items",
+        "query": Object {
+          "page": 2,
+        },
+      }
+    }
+    prefetch={true}
+  >
+    <a
+      aria-disabled={false}
+      className="next"
+    >
+      Next →
+    </a>
+  </Link>
+</styled.div>
+`;

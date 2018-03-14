@@ -1,8 +1,9 @@
+import React, { Fragment } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { Fragment } from 'react';
-import { userEnhancer } from '../enhancers/enhancers';
 import { compose } from 'react-apollo';
+import PropTypes from 'prop-types';
+import { userEnhancer } from '../enhancers/enhancers';
 import CartCount from './CartCount';
 import Signout from './Signout';
 import { UIContext } from './UIContext';
@@ -58,6 +59,9 @@ const StyledUl = styled.ul`
 `;
 
 class Nav extends React.Component {
+  static propTypes = {
+    currentUser: PropTypes.object.isRequired,
+  };
   componentDidMount() {
     this.props.currentUser.refetch();
   }
@@ -106,3 +110,4 @@ class Nav extends React.Component {
 }
 
 export default compose(userEnhancer)(Nav);
+export { Nav };

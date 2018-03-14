@@ -61,7 +61,7 @@ export const removeFromCartEnhancer = graphql(REMOVE_FROM_CART_MUTATION, {
   },
 });
 
-export const addtoCartEnhancer = graphql(ADD_TO_CART_MUTATION, {
+export const addToCartEnhancer = graphql(ADD_TO_CART_MUTATION, {
   name: 'addToCart',
   options: {
     update: (proxy, payload) => {

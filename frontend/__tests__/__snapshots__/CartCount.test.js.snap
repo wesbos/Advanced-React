@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CartCount></CartCount> matches snapshot 1`] = `
+<styled.span>
+  <TransitionGroup
+    childFactory={[Function]}
+    component="div"
+  >
+    <CSSTransition
+      className="count"
+      classNames="count"
+      key="10"
+      timeout={
+        Object {
+          "enter": 2000,
+          "exit": 2000,
+        }
+      }
+    >
+      <styled.div>
+        10
+      </styled.div>
+    </CSSTransition>
+  </TransitionGroup>
+</styled.span>
+`;
+
+exports[`<CartCount></CartCount> updates via props 1`] = `
+<CartCount
+  count="50"
+>
+  <styled.span>
+    <span
+      className="sc-bwzfXH fWZfOZ"
+    >
+      <TransitionGroup
+        childFactory={[Function]}
+        component="div"
+      >
+        <div>
+          <CSSTransition
+            className="count"
+            classNames="count"
+            in={true}
+            key=".$50"
+            onExited={[Function]}
+            timeout={
+              Object {
+                "enter": 2000,
+                "exit": 2000,
+              }
+            }
+          >
+            <Transition
+              appear={false}
+              className="count"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={
+                Object {
+                  "enter": 2000,
+                  "exit": 2000,
+                }
+              }
+              unmountOnExit={false}
+            >
+              <styled.div
+                className="count"
+              >
+                <div
+                  className="count sc-bdVaJa cYFOmX"
+                >
+                  50
+                </div>
+              </styled.div>
+            </Transition>
+          </CSSTransition>
+        </div>
+      </TransitionGroup>
+    </span>
+  </styled.span>
+</CartCount>
+`;
+
+exports[`<CartCount></CartCount> updates via props 2`] = `
+<CartCount
+  count={10}
+>
+  <styled.span>
+    <span
+      className="sc-bwzfXH fWZfOZ"
+    >
+      <TransitionGroup
+        childFactory={[Function]}
+        component="div"
+      >
+        <div>
+          <CSSTransition
+            className="count"
+            classNames="count"
+            in={true}
+            key=".$10"
+            onExited={[Function]}
+            timeout={
+              Object {
+                "enter": 2000,
+                "exit": 2000,
+              }
+            }
+          >
+            <Transition
+              appear={false}
+              className="count"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={
+                Object {
+                  "enter": 2000,
+                  "exit": 2000,
+                }
+              }
+              unmountOnExit={false}
+            >
+              <styled.div
+                className="count"
+              >
+                <div
+                  className="count sc-bdVaJa cYFOmX"
+                >
+                  10
+                </div>
+              </styled.div>
+            </Transition>
+          </CSSTransition>
+          <CSSTransition
+            className="count"
+            classNames="count"
+            in={false}
+            key=".$50"
+            onExited={[Function]}
+            timeout={
+              Object {
+                "enter": 2000,
+                "exit": 2000,
+              }
+            }
+          >
+            <Transition
+              appear={false}
+              className="count"
+              enter={true}
+              exit={true}
+              in={false}
+              mountOnEnter={false}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={
+                Object {
+                  "enter": 2000,
+                  "exit": 2000,
+                }
+              }
+              unmountOnExit={false}
+            >
+              <styled.div
+                className="count"
+              >
+                <div
+                  className="count sc-bdVaJa cYFOmX"
+                >
+                  50
+                </div>
+              </styled.div>
+            </Transition>
+          </CSSTransition>
+        </div>
+      </TransitionGroup>
+    </span>
+  </styled.span>
+</CartCount>
+`;

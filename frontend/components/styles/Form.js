@@ -37,4 +37,7 @@ const Form = styled.form`
     padding: 1rem 2rem;
   }
 `;
+
+Form.displayName = 'Form';
+
 export default Form;

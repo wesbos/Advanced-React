@@ -1,15 +1,15 @@
 import Downshift from 'downshift';
 import { graphql, compose } from 'react-apollo';
-import slugify from 'slugify';
 import styled from 'styled-components';
 import { SEARCH_ITEMS_QUERY } from '../queries';
 import { Router } from '../routes';
 
 function routeToItem(item) {
-  Router.pushRoute('item', {
-    slug: slugify(item.title),
-    itemId: item.id,
-  });
+  console.log('TODO: UPdate routeToItem function');
+  // Router.pushRoute('item', {
+  //   slug: slugify(item.title),
+  //   itemId: item.id,
+  // });
 }
 
 const DropDown = styled.div`

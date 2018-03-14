@@ -1,3 +1,4 @@
+// TODO THis is not needed
 import React, { Component } from 'react'
 import { graphql, gql } from 'react-apollo'
 
@@ -33,5 +34,4 @@ class Count extends Component {
 
 // We export the graphQL HOC - this will fetch the data and inject it into the Count compeont via props
 
-export { ALL_ITEMS_QUERY }
-export default graphql(ALL_ITEMS_QUERY, { name: 'allLinksQuery' }) (Count)
+export default graphql(ALL_ITEMS_QUERY, { name: 'allLinksQuery' })(Count)

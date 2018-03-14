@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Nav></Nav> Renders minimal nav when logged out 1`] = `
+<styled.ul>
+  <Link
+    href="/items"
+    prefetch={true}
+  >
+    <a>
+      Shop
+    </a>
+  </Link>
+  <Link
+    href="/add"
+    prefetch={true}
+  >
+    <a>
+      Sell
+    </a>
+  </Link>
+  <Link
+    href="/signup"
+    prefetch={true}
+  >
+    <a>
+      Sign In
+    </a>
+  </Link>
+</styled.ul>
+`;
+
+exports[`<Nav></Nav> renders full nav when logged in 1`] = `
+<styled.ul>
+  <Link
+    href="/items"
+    prefetch={true}
+  >
+    <a>
+      Shop
+    </a>
+  </Link>
+  <Link
+    href="/add"
+    prefetch={true}
+  >
+    <a>
+      Sell
+    </a>
+  </Link>
+  <React.Fragment>
+    <Link
+      href="/orders"
+    >
+      <a>
+        Orders
+      </a>
+    </Link>
+    <Link
+      href="/me"
+    >
+      <a>
+        My Account
+      </a>
+    </Link>
+    <Apollo(Signout) />
+    <[object Object] />
+  </React.Fragment>
+</styled.ul>
+`;

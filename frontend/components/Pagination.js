@@ -2,6 +2,7 @@ import React from 'react';
 import { compose } from 'react-apollo';
 import styled from 'styled-components';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import { itemEnhancer } from '../enhancers/enhancers';
 import { perPage } from '../config';
 
@@ -30,12 +31,11 @@ const PaginationStyles = styled.div`
 `;
 
 const Pagination = props => {
-  if (props.loading) return <p>Loading Item...</p>;
-  const { aggregate, pageInfo } = props.itemsQuery.itemsConnection;
+  if (props.loading) return <p>Loading...</p>;
+  const { aggregate } = props.itemsQuery.itemsConnection;
   const { page } = props;
-
   const pages = Math.ceil(aggregate.count / perPage);
-  console.log({ pageInfo });
+
   return (
     <PaginationStyles>
       <Link
@@ -45,10 +45,12 @@ const Pagination = props => {
           query: { page: page - 1 },
         }}
       >
-        <a aria-disabled={page <= 1}>←Prev</a>
+        <a className="prev" aria-disabled={page <= 1}>
+          ←Prev
+        </a>
       </Link>
       <p>
-        Page <strong>{page} </strong> of <strong>{pages} </strong>
+        Page <strong>{page} </strong> of <strong className="totalPages">{pages}</strong>
       </p>
       <p>
         <strong>{aggregate.count}</strong> Items Total
@@ -60,12 +62,24 @@ const Pagination = props => {
           query: { page: page + 1 },
         }}
       >
-        <a aria-disabled={page >= pages}>Next →</a>
+        <a className="next" aria-disabled={page >= pages}>
+          Next →
+        </a>
       </Link>
     </PaginationStyles>
   );
 };
 
-const ComponentWithMutations = compose(itemEnhancer)(Pagination);
+Pagination.propTypes = {
+  itemsQuery: PropTypes.shape({
+    itemsConnection: PropTypes.shape({
+      aggregate: PropTypes.shape({
+        count: PropTypes.number.isRequired,
+      }),
+    }),
+  }).isRequired,
+  page: PropTypes.number.isRequired,
+};
 
-export default ComponentWithMutations;
+export default compose(itemEnhancer)(Pagination);
+export { Pagination };

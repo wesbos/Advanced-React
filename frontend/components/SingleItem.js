@@ -1,13 +1,11 @@
-import { graphql, compose } from 'react-apollo';
-import { SINGLE_ITEM_QUERY } from '../queries';
+import { compose } from 'react-apollo';
 import { singleItemEnhancer } from '../enhancers/enhancers';
 
-const SingleItem = props => {
-  console.log(props);
-  if (props.loading) return <p>Loading...</p>;
-  if (props.error) return <p>Error...</p>;
-  const item = props.findItem.items[0];
-  console.log(item);
+const SingleItem = ({ findItem: { error, loading, items } }) => {
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>;
+  const item = items[0];
+
   return (
     <div>
       <img src={item.largeImage || item.image} alt={item.title} />
@@ -17,6 +15,4 @@ const SingleItem = props => {
   );
 };
 
-const ComponentWithMutations = compose(singleItemEnhancer)(SingleItem);
-
-export default ComponentWithMutations;
+export default compose(singleItemEnhancer)(SingleItem);

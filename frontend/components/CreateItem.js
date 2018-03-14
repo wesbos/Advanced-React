@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
 import { graphql, gql } from 'react-apollo';
-import { ALL_ITEMS_QUERY, CREATE_ITEM_MUTATION } from '../queries';
+import { CREATE_ITEM_MUTATION } from '../queries';
 import ErrorMessage from './ErrorMessage';
-import { fileEndpoint } from '../config';
 import Form from './styles/Form';
+import PropTypes from 'prop-types';
 
-class CreateLink extends Component {
+class CreateItem extends Component {
+  static propTypes = {
+    createItemMutation: PropTypes.func.isRequired,
+  };
+
   state = {
-    description: 'test',
-    title: 'testing title',
-    image: '',
-    largeImage: '',
-    price: 500,
-    fullPrice: 0,
+    item: {
+      title: '',
+      description: '',
+      image: '',
+      largeImage: '',
+      price: 0,
+    },
     loading: false,
     error: {
-      message: '',
+      message: null,
     },
   };
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
+  handleChange = e => {
+    const { name, value, type } = e.target;
+    const updatedItem = {
+      ...this.state.item,
+      [name]: type === 'number' ? parseFloat(value) : value,
+    };
+    this.setState({ item: updatedItem });
+  };
 
   uploadFile = async e => {
     this.setState({ loading: true });
-
     const files = e.currentTarget.files;
-
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', 'sickfits');
@@ -38,33 +46,23 @@ class CreateLink extends Component {
       body: data,
     });
     const file = await res.json();
-    console.log(file);
     this.setState({ image: file.secure_url, largeImage: file.eager[0].secure_url, loading: false });
   };
 
   createItem = async e => {
     e.preventDefault();
-    // pull the values from state
-    const { description, title, price, image, largeImage } = this.state;
-    // create a mutation
     // TODO: handle any errors
     // turn loading on
     this.setState({ loading: true });
     try {
-      console.log('About to call create item mutation');
       const res = await this.props.createItemMutation({
         // pass in those variables from state
         variables: {
-          description,
-          title,
-          image,
-          largeImage,
-          price: parseInt(price),
+          ...this.state.item,
         },
       });
     } catch (error) {
       this.setState({ error });
-      console.log(error);
     }
     this.setState({ loading: false });
   };
@@ -84,23 +82,29 @@ class CreateLink extends Component {
             Title
             <input
               value={this.state.title}
-              onChange={e => this.setState({ title: e.target.value })}
+              onChange={this.handleChange}
               type="text"
+              name="title"
+              id="title"
               placeholder="Title"
             />
           </p>
           <label>
-            Price<input
+            Price
+            <input
               type="number"
+              id="price"
+              name="price"
               min="0"
               value={this.state.price}
-              onChange={e => this.setState({ price: e.target.value })}
+              onChange={this.handleChange}
             />
           </label>
           <textarea
+            id="description"
+            name="description"
             value={this.state.description}
-            onChange={e => this.setState({ description: e.target.value })}
-            type="text"
+            onChange={this.handleChange}
             placeholder="The desc for this item"
           />
           <button disabled={this.state.loading} type="submit">
@@ -117,4 +121,6 @@ export default graphql(CREATE_ITEM_MUTATION, {
   options: {
     refetchQueries: ['AllItemsQuery'],
   },
-})(CreateLink);
+})(CreateItem);
+
+export { CreateItem };

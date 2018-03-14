@@ -18,7 +18,7 @@ const Center = styled.div`
 `;
 
 class ItemList extends React.Component {
-  something() { }
+  something() {}
   render() {
     const { loading, error } = this.props.itemsQuery;
     // 1
@@ -31,7 +31,6 @@ class ItemList extends React.Component {
       console.log(this.props.itemsQuery.error);
       return <div>Error</div>;
     }
-    console.log(this.props);
     // 3
     const itemsToRender = this.props.itemsQuery.items;
 

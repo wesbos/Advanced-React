@@ -1,10 +1,8 @@
 import React from 'react';
-import Title from './styles/Title';
 import styled from 'styled-components';
-import slugify from 'slugify';
 import { compose } from 'react-apollo';
-// import { Link } from '../routes';
 import Link from 'next/link';
+import Title from './styles/Title';
 import AddToCart from './AddToCart';
 import formatMoney from '../lib/formatMoney';
 import { removeItemMutation } from '../enhancers/enhancers';
@@ -101,4 +99,5 @@ class ItemComponent extends React.Component {
   }
 }
 
+export { ItemComponent };
 export default compose(removeItemMutation)(ItemComponent);

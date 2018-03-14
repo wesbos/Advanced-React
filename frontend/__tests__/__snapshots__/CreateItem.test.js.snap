@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Createitem/> renders the form out 1`] = `
+<div>
+  <Form
+    onSubmit={[Function]}
+  >
+    <DisplayError
+      error={
+        Object {
+          "message": null,
+        }
+      }
+      onButtonClick={[Function]}
+    />
+    <p>
+      Image
+      <input
+        accept=".png, .jpg, .jpeg"
+        onChange={[Function]}
+        type="file"
+      />
+    </p>
+    <p>
+      Title
+      <input
+        id="title"
+        name="title"
+        onChange={[Function]}
+        placeholder="Title"
+        type="text"
+      />
+    </p>
+    <label>
+      Price
+      <input
+        id="price"
+        min="0"
+        name="price"
+        onChange={[Function]}
+        type="number"
+      />
+    </label>
+    <textarea
+      id="description"
+      name="description"
+      onChange={[Function]}
+      placeholder="The desc for this item"
+    />
+    <button
+      disabled={false}
+      type="submit"
+    >
+      Submit
+    </button>
+  </Form>
+</div>
+`;
