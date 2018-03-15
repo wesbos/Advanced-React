@@ -1,8 +1,8 @@
+import React from 'react';
 import styled, { ThemeProvider, injectGlobal } from 'styled-components';
+import PropTypes from 'prop-types';
 import Header from './Header';
 import Meta from './Meta';
-import Nav from './Nav';
-import { Component } from 'react';
 import { UIProvider } from './UIContext';
 // Global Style
 
@@ -53,5 +53,9 @@ const Page = ({ children }) => (
     </ThemeProvider>
   </UIProvider>
 );
+
+Page.propTypes = {
+  children: PropTypes.object.isRequired,
+};
 
 export default Page;

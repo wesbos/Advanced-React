@@ -1,9 +1,15 @@
 import React from 'react';
+import { compose } from 'react-apollo';
+import PropTypes from 'prop-types';
 import Form from './styles/Form';
 import { userEnhancer, updateUserEnhancer } from '../enhancers/enhancers';
-import { compose } from 'react-apollo';
 
 class EditUser extends React.Component {
+  static propTypes = {
+    currentUser: PropTypes.object.isRequired,
+    updateUser: PropTypes.func.isRequired,
+  };
+
   state = {
     changes: {},
   };
@@ -22,7 +28,7 @@ class EditUser extends React.Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    const user = await this.props.updateUser({
+    await this.props.updateUser({
       variables: this.state.changes,
     });
     this.props.currentUser.refetch();
