@@ -1,9 +1,8 @@
-import { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
+import React from 'react';
+import { compose } from 'react-apollo';
 import styled from 'styled-components';
-import Title from './styles/Title';
-import { updateUIEnhancer, userEnhancer, uiEnhancer } from '../enhancers/enhancers';
-import RemoveFromCart from './RemoveFromCart';
+import PropTypes from 'prop-types';
+import { userEnhancer } from '../enhancers/enhancers';
 import TakeMyMoney from './TakeMyMoney';
 import formatMoney from '../lib/formatMoney';
 import { UIContext } from './UIContext';
@@ -74,48 +73,43 @@ const CloseButton = styled.button`
   right: 0;
 `;
 
-class Cart extends Component {
-  componentDidMount() {
-    // TODO listen for escape
-  }
+const Cart = props => {
+  const { me } = props.currentUser;
+  if (!me) return null;
+  const itemCount = me.cart.length;
+  const totalPrice = me.cart.reduce((tally, cartItem) => tally + cartItem.quantity * cartItem.item.price, 0);
 
-  componentWillUnmount() {
-    // TODO unlisten for escape
-  }
-  render() {
-    const { me } = this.props.currentUser;
-    if (!me) return null;
-    const itemCount = me.cart.length;
-    const quantityCount = me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
-    const totalPrice = me.cart.reduce((tally, cartItem) => tally + cartItem.quantity * cartItem.item.price, 0);
+  return (
+    <UIContext>
+      {context => (
+        <CartStyles open={context.state.isCartOpen}>
+          <header>
+            <CloseButton title="close" onClick={context.toggle}>
+              &times;
+            </CloseButton>
 
-    return (
-      <UIContext>
-        {context => (
-          <CartStyles open={context.state.isCartOpen}>
-            <header>
-              <CloseButton title="close" onClick={context.toggle}>
-                &times;
-              </CloseButton>
+            <Supreme>{me.name}'s Cart.</Supreme>
+            <p>
+              You have {itemCount} item{itemCount === 1 ? '' : 's'} in your cart.
+            </p>
+          </header>
 
-              <Supreme>{me.name}'s Cart.</Supreme>
-              <p>
-                You have {itemCount} item{itemCount === 1 ? '' : 's'} in your cart.
-              </p>
-            </header>
+          <CartUl>{me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}</CartUl>
+          <footer>
+            <p>{formatMoney(totalPrice)}</p>
+            <TakeMyMoney>
+              <button>Checkout</button>
+            </TakeMyMoney>
+          </footer>
+        </CartStyles>
+      )}
+    </UIContext>
+  );
+};
 
-            <CartUl>{me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}</CartUl>
-            <footer>
-              <p>{formatMoney(totalPrice)}</p>
-              <TakeMyMoney>
-                <button>Checkout</button>
-              </TakeMyMoney>
-            </footer>
-          </CartStyles>
-        )}
-      </UIContext>
-    );
-  }
-}
+Cart.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+};
 
 export default compose(userEnhancer)(Cart);
+export { Cart };

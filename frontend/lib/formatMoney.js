@@ -1,4 +1,4 @@
-export default function (amount) {
+export default function(amount) {
   const options = {
     style: 'currency',
     currency: 'USD',

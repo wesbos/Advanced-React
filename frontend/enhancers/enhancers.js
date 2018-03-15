@@ -10,6 +10,7 @@ import {
   GET_UI_STATE,
   TOGGLE_CART,
   UPDATE_USER_MUTATION,
+  CREATE_ORDER_MUTATION,
 } from '../queries/index';
 import { perPage } from '../config';
 
@@ -105,3 +106,6 @@ export const updateUIEnhancer = graphql(UPDATE_UI, {
       }),
   }),
 });
+
+// export const const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });
+export const createOrderEnhancer = graphql(CREATE_ORDER_MUTATION, { name: 'createOrder' });

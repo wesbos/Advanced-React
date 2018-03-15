@@ -1,10 +1,11 @@
 import { Component } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
-import { graphql, compose } from 'react-apollo';
-import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries';
-import formatMoney from '../lib/formatMoney';
+import { compose } from 'react-apollo';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import PropTypes from 'prop-types';
+// import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import { userEnhancer, createOrderEnhancer } from '../enhancers/enhancers';
 
 class TakeMyMoney extends Component {
   onToken = async res => {
@@ -23,7 +24,7 @@ class TakeMyMoney extends Component {
   };
 
   render() {
-    const { me } = this.props.currentUserQuery;
+    const { me } = this.props.currentUser;
     if (!me || !me.cart.length) return null;
     const total = me.cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
     const totalItems = me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
@@ -44,6 +45,10 @@ class TakeMyMoney extends Component {
   }
 }
 
-const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' });
-const createOrderEnhancer = graphql(CREATE_ORDER_MUTATION, { name: 'createOrder' });
+TakeMyMoney.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  createOrder: PropTypes.func.isRequired,
+};
+
 export default compose(userEnhancer, createOrderEnhancer)(TakeMyMoney);
+export { TakeMyMoney };

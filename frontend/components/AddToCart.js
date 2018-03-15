@@ -14,13 +14,11 @@ class AddToCart extends Component {
   }
 
   handleAddToCart = async () => {
-    console.log(`Gonna add this item to the cart! ${this.props.id}`);
     const res = await this.props.addToCart({
       variables: {
         id: this.props.id,
       },
     });
-    // this.props.currentUser.refetch();
   };
 
   render() {
@@ -28,4 +26,11 @@ class AddToCart extends Component {
   }
 }
 
+AddToCart.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  addToCart: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+};
+
 export default compose(userEnhancer, addToCartEnhancer)(AddToCart);
+export { AddToCart };
