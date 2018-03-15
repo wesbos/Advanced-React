@@ -2,7 +2,6 @@ import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 import Header from './Header';
 import Meta from './Meta';
 import Nav from './Nav';
-import CartList from './CartList';
 import { Component } from 'react';
 import { UIProvider } from './UIContext';
 // Global Style
