@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import { Cart } from '../components/Cart';
+import { UIProvider } from '../components/UIContext';
 
 const cartItem = {
   item: { price: 5000 },
@@ -17,14 +18,12 @@ const currentUser = {
 
 describe('<Cart/>', () => {
   it('renders', () => {
-    const wrapper = shallow(<Cart currentUser={currentUser} />);
-  });
+    const wrapper = mount(
+      <UIProvider>
+        <Cart currentUser={currentUser} />
+      </UIProvider>
+    );
 
-  xit('opens', () => {
-    const wrapper = shallow(<Cart currentUser={currentUser} />);
-    expect('wes').toEqual('figure out how to call test context');
+    expect(toJSON(wrapper)).toMatchSnapshot();
   });
-  // it('renders', () => {
-  //   shallow(<Cart currentUser={currentUserLoggedOut} />);
-  // });
 });

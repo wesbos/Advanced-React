@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { forwardTo } = require('prisma-binding');
 const { getUserId, Context } = require('../utils');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
@@ -137,7 +136,6 @@ const mutations = {
     if (!user) {
       throw new Error(`No user with the email ${args.email}`);
     }
-    console.log(user);
     // 2. Set a reset token, and a reset date
     const resetToken = (await promisify(randomBytes)(20)).toString('hex');
     const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
@@ -151,11 +149,12 @@ const mutations = {
     // 3. Send them their token via email
     const mailRes = await mail.sendMail({
       from: 'wesbos@gmail.com',
-      to: 'wesbos@gmail.com',
+      to: user.email,
       subject: 'Your password reset token',
+      // TODO: don't hardcore localhost here
       html: `Here is your reset link: http://localhost:3000/reset?resetToken=${resetToken}`,
     });
-
+    console.log(mailRes);
     return res.updateUser;
   },
 

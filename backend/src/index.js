@@ -30,7 +30,9 @@ const server = new GraphQLServer({
 //   next();
 // });
 
-server.start(() => console.log('Server is running on http://localhost:4000'));
+server.start(deets => {
+  console.log(`Server is running on http://localhost:${deets.port}`);
+});
 
 // overwrite console.log
 const chalk = require('chalk');
