@@ -16,3 +16,4 @@ const SingleItem = ({ findItem: { error, loading, items } }) => {
 };
 
 export default compose(singleItemEnhancer)(SingleItem);
+export { SingleItem };

@@ -13,6 +13,7 @@ class EditUser extends React.Component {
   state = {
     changes: {},
   };
+
   handleChange = e => {
     const { name, value } = e.target;
     const { me } = this.props.currentUser;
@@ -48,10 +49,11 @@ class EditUser extends React.Component {
         <strong>me:</strong>
         <pre>{JSON.stringify(me.name)}</pre>
         <strong>Change:</strong>
-        <pre>{JSON.stringify(this.state.changes)}</pre>
+        <pre data-test="change">{JSON.stringify(this.state.changes)}</pre>
       </Form>
     );
   }
 }
 
 export default compose(userEnhancer, updateUserEnhancer)(EditUser);
+export { EditUser };

@@ -9,7 +9,7 @@
     "start": "next start",
     "micro": "micro",
     "micro-dev": "micro-dev ./functions",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --watch"
   },
   "author": "",
   "license": "ISC",

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SingleItem/> renders 1`] = `
+<div>
+  <img
+    alt="Sneakers"
+    src="dog.jpg"
+  />
+  <h2>
+    Viewing 
+    Sneakers
+  </h2>
+  <p>
+    A cool set of shoes
+  </p>
+</div>
+`;

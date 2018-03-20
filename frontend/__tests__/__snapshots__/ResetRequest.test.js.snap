@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ResetRequest/> displays errors 1`] = `
+<Form
+  onSubmit={[Function]}
+>
+  <p
+    key="0"
+  >
+    Error!!!
+  </p>
+  <label
+    htmlFor="email"
+  >
+    Email
+    <input
+      name="email"
+      onChange={[Function]}
+      placeholder="email"
+      type="text"
+      value="wesbos@gmail.com"
+    />
+  </label>
+  <button
+    type="submit"
+  >
+    Request Reset!
+  </button>
+</Form>
+`;
+
+exports[`<ResetRequest/> renders and matches snapshot 1`] = `
+<Form
+  onSubmit={[Function]}
+>
+  <label
+    htmlFor="email"
+  >
+    Email
+    <input
+      name="email"
+      onChange={[Function]}
+      placeholder="email"
+      type="text"
+      value=""
+    />
+  </label>
+  <button
+    type="submit"
+  >
+    Request Reset!
+  </button>
+</Form>
+`;

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditUser/> asks you to log in when you arent logged in 1`] = `
+<p>
+  You must be logged in
+</p>
+`;
+
+exports[`<EditUser/> renders 1`] = `
+<Form
+  onSubmit={[Function]}
+>
+  <label
+    htmlFor="name"
+  >
+    Name:
+    <input
+      defaultValue="Wes Bos"
+      name="name"
+      onChange={[Function]}
+      type="text"
+    />
+  </label>
+  <button
+    type="submit"
+  >
+    Update
+  </button>
+  <strong>
+    me:
+  </strong>
+  <pre>
+    "Wes Bos"
+  </pre>
+  <strong>
+    Change:
+  </strong>
+  <pre
+    data-test="change"
+  >
+    {}
+  </pre>
+</Form>
+`;
