@@ -80,7 +80,7 @@ const Cart = props => {
   const totalPrice = me.cart.reduce((tally, cartItem) => tally + cartItem.quantity * cartItem.item.price, 0);
 
   return (
-    <UIContext>
+    <UIContext.Consumer>
       {context => (
         <CartStyles open={context.state.isCartOpen}>
           <header>
@@ -103,7 +103,7 @@ const Cart = props => {
           </footer>
         </CartStyles>
       )}
-    </UIContext>
+    </UIContext.Consumer>
   );
 };
 

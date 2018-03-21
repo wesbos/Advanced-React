@@ -18,12 +18,7 @@ const currentUser = {
 
 describe('<Cart/>', () => {
   it('renders', () => {
-    const wrapper = mount(
-      <UIProvider>
-        <Cart currentUser={currentUser} />
-      </UIProvider>
-    );
-
-    expect(toJSON(wrapper)).toMatchSnapshot();
+    const wrapper = shallow(<Cart currentUser={currentUser} />);
+    console.log(wrapper.first());
   });
 });

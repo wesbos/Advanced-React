@@ -17,6 +17,7 @@
     "stripe": "^5.4.0"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.6.1",
     "chalk": "^2.3.0",
     "dotenv": "5.0.0",
     "graphql-cli": "2.14.0",
@@ -29,5 +30,10 @@
   "license": "MIT",
   "repository": {
     "url": "wesbos.com"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   }
 }

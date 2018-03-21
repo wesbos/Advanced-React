@@ -1,9 +1,25 @@
 const { request } = require('graphql-request');
+const createServer = require('../src/createServer');
 
-let id;
+let server;
+const port = 2342;
+const endpoint = `http://localhost:${port}`;
 
-test('Creating an item', async () => {
-  const query = `
+const wait = amount => new Promise(resolve => setTimeout(resolve, amount));
+
+beforeAll(async () => {
+  server = await createServer().start({ port });
+});
+
+afterAll(async () => {
+  server.close();
+});
+
+describe('Item C.R.U.D. Operations', () => {
+  let id;
+
+  it('Creating an item', async () => {
+    const query = `
     mutation createItem {
       createItem(title: "wes", description:"Bos", price: 500) {
         title
@@ -14,17 +30,17 @@ test('Creating an item', async () => {
     }
   `;
 
-  const { createItem } = await request('http://localhost:4000', query);
+    const { createItem } = await request(endpoint, query);
 
-  expect(createItem.title).toEqual('wes');
-  expect(createItem.description).toEqual('Bos');
-  expect(createItem).toHaveProperty('id');
-  expect(createItem.price).toEqual(500);
-  id = createItem.id;
-});
+    expect(createItem.title).toEqual('wes');
+    expect(createItem.description).toEqual('Bos');
+    expect(createItem).toHaveProperty('id');
+    expect(createItem.price).toEqual(500);
+    id = createItem.id;
+  });
 
-test('Get an array of items', async () => {
-  const query = `
+  it('Get an array of items', async () => {
+    const query = `
     query getAllItems {
       items {
         title
@@ -35,12 +51,12 @@ test('Get an array of items', async () => {
     }
   `;
 
-  const { items } = await request('http://localhost:4000', query);
-  expect(items.length).toBeGreaterThan(0);
-});
+    const { items } = await request(endpoint, query);
+    expect(items.length).toBeGreaterThan(0);
+  });
 
-test('Query a specific item', async () => {
-  const query = `
+  it('Query a specific item', async () => {
+    const query = `
     query findAnItem {
       items(where: {
         id: "${id}"
@@ -53,29 +69,37 @@ test('Query a specific item', async () => {
     }
   `;
 
-  const { items } = await request('http://localhost:4000', query);
-  const item = items[0];
-  expect(item.title).toEqual('wes');
-  expect(item.description).toEqual('Bos');
-  expect(item.price).toEqual(500);
-});
+    const { items } = await request(endpoint, query);
+    const item = items[0];
+    expect(item.title).toEqual('wes');
+    expect(item.description).toEqual('Bos');
+    expect(item.price).toEqual(500);
+  });
 
-// Test Delete that item
-test('delete an item', async () => {
-  const query = `
+  it('updates an item', async () => {
+    const query = `
+  mutation updateItem {
+    updateItem(id: "${id}", title: "Updated Title") {
+      id
+      title
+    }
+  }
+  `;
+    const { updateItem } = await request(endpoint, query);
+    expect(updateItem.id).toBe(id);
+    expect(updateItem.title).toBe('Updated Title');
+  });
+
+  // Test Delete that item
+  it('delete an item', async () => {
+    const query = `
   mutation remove {
     deleteItem(id: "${id}") {
       id
     }
   }
   `;
-  const res = await request('http://localhost:4000', query);
-  expect(res.deleteItem.id).toEqual(id);
+    const res = await request(endpoint, query);
+    expect(res.deleteItem.id).toEqual(id);
+  });
 });
-
-// mutation updateItem {
-//   updateItem(id: "cjd21afpr47m00172nigtlkw8", title: "WES from playground") {
-//     id
-//     title
-//   }
-// }

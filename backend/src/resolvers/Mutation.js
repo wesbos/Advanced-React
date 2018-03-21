@@ -66,68 +66,6 @@ const mutations = {
     });
   },
 
-  // async createDraft(parent, { title, text }, ctx, info) {
-  //   // const userId = getUserId(ctx);
-  //   const userId = getUserId(ctx);
-  //   return ctx.db.mutation.createPost(
-  //     {
-  //       data: {
-  //         title,
-  //         text,
-  //         isPublished: false,
-  //         author: {
-  //           connect: { id: userId },
-  //         },
-  //       },
-  //     },
-  //     info
-  //   );
-  // },
-
-  // async publish(parent, { id }, ctx, info) {
-  //   const userId = getUserId(ctx);
-  //   const postExists = await ctx.db.exists.Post({
-  //     id,
-  //     author: { id: userId },
-  //   });
-  //   if (!postExists) {
-  //     throw new Error(`Post not found or you're not the author`);
-  //   }
-
-  //   return ctx.db.mutation.updatePost(
-  //     {
-  //       where: { id },
-  //       data: { isPublished: true },
-  //     },
-  //     info
-  //   );
-  // },
-
-  // async deletePost(parent, { id }, ctx, info) {
-  //   const userId = getUserId(ctx);
-  //   const postExists = await ctx.db.exists.Post({
-  //     id,
-  //     author: { id: userId },
-  //   });
-  //   if (!postExists) {
-  //     throw new Error(`Post not found or you're not the author`);
-  //   }
-
-  //   return ctx.db.mutation.deletePost({ where: { id } });
-  // },
-
-  // // Wes Added this brand new one!
-  // async updatePost(parent, args, ctx, info) {
-  //   const updatedPost = await ctx.db.mutation.updatePost({
-  //     where: { id: args.id },
-  //     data: {
-  //       title: args.title,
-  //       text: args.text,
-  //     },
-  //   });
-  //   return updatedPost;
-  // },
-
   // Send password request
   async requestReset(parent, args, ctx, info) {
     // 1. find if there is a user with that email
@@ -307,18 +245,15 @@ const mutations = {
     // 6. Clean up, clear the users cart adn send back { user, order }
     // Delete the users current cart items
     const cartItemIds = user.cart.map(cartItem => cartItem.id);
-    const deletedCartItems = await ctx.db.mutation.deleteManyCartItems({
+    await ctx.db.mutation.deleteManyCartItems({
       where: {
         id_in: cartItemIds,
       },
     });
 
-    console.l('--------ORDER-------------');
-    console.log(order);
-    console.l('--------ORDER-------------');
+    // 5. Send the order back to the client
     return order;
-    // 4. Send an email with their order
-    // 5. Send the order back
+    // 4. TODO: Send an email with their order
   },
   async updateUser(parent, args, ctx, info) {
     const userId = getUserId(ctx);

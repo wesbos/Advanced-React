@@ -3,6 +3,8 @@ import React from 'react';
 const UIContext = React.createContext();
 
 class UIProvider extends React.Component {
+  displayName: 'OMGME';
+
   state = {
     isCartOpen: false,
   };

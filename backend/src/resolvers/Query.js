@@ -8,31 +8,11 @@ const Query = {
   },
 
   itemsConnection: forwardTo('db'),
+
+  // TODO: Make sure they own this order before looking it up
   order: forwardTo('db'),
 
-  // feed(parent, args, ctx, info) {
-  //   return ctx.db.query.posts({}, info);
-  // },
-
-  // drafts(parent, args, ctx, info) {
-  //   // const id = getUserId(ctx);
-
-  //   const where = {
-  //     isPublished: false,
-  //     // author: {
-  //     //   id,
-  //     // },
-  //   };
-
-  //   return ctx.db.query.posts({ where }, info);
-  // },
-
-  // post(parent, { id }, ctx, info) {
-  //   return ctx.db.query.post({ where: { id } }, info);
-  // },
-
   me(parent, args, ctx, info) {
-    console.l('me!');
     const Authorization = ctx.request.get('Authorization');
     if (!Authorization || Authorization === 'null') {
       console.log('Authorization is null');
@@ -41,6 +21,7 @@ const Query = {
     const id = getUserId(ctx);
     return ctx.db.query.user({ where: { id } }, info);
   },
+
   async orders(parent, args, ctx, info) {
     const userId = getUserId(ctx);
     return ctx.db.query.orders(
