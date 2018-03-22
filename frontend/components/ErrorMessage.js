@@ -4,29 +4,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const StyledError = styled.div`
-  background: pink;
-  border: 2px solid red;
-  padding: 20px;
-  display: flex;
+  padding: 2rem;
+  background: white;
+  margin: 2rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-left: 5px solid red;
   p {
     margin: 0;
-    flex: 1 0 auto;
+    font-weight: 100;
+  }
+  strong {
+    margin-right: 1rem;
   }
 `;
 
-const DisplayError = props => {
-  if (!props.error || !props.error.message) return null;
+const DisplayError = ({ error }) => {
+  if (!error || !error.message) return null;
   return (
     <StyledError>
-      <p>{props.error.message}</p>
-      <button onClick={props.onButtonClick}>&times;</button>
+      <p>
+        <strong>Shoot!</strong>
+        {error.message}
+      </p>
     </StyledError>
   );
 };
 
 DisplayError.propTypes = {
-  error: PropTypes.object.isRequired,
-  onButtonClick: PropTypes.func.isRequired,
+  error: PropTypes.object,
 };
 
 export default DisplayError;

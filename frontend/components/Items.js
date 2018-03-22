@@ -1,9 +1,20 @@
 import React from 'react';
-import { compose } from 'react-apollo';
+import { Query } from 'react-apollo';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Pagination from './Pagination';
 import Item from './Item';
-import { itemEnhancer } from '../enhancers/enhancers';
+import { perPage } from '../config';
+import { ALL_ITEMS_QUERY } from '../queries/index';
+
+// export const itemEnhancer = graphql(ALL_ITEMS_QUERY, {
+//   name: 'itemsQuery',
+//   options({ page }) {
+//     return {
+//       variables: ,
+//     };
+//   },
+// });
 
 const Items = styled.div`
   display: grid;
@@ -18,30 +29,38 @@ const Center = styled.div`
 `;
 
 class ItemList extends React.Component {
-  something() {}
+  static propTypes = {
+    page: PropTypes.number.isRequired,
+  };
+  componentDidUpdate(lastProps) {
+    if (lastProps.page === this.props.page) return;
+    // update the query
+    console.log('This fires, and should update the query');
+  }
   render() {
-    const { loading, error } = this.props.itemsQuery;
-    // 1
-    if (loading) {
-      return <div>Loading</div>;
-    }
-
-    // 2
-    if (error) {
-      console.log(this.props.itemsQuery.error);
-      return <div>Error</div>;
-    }
-    // 3
-    const itemsToRender = this.props.itemsQuery.items;
-
     return (
-      <Center>
+      <Center key={this.props.page}>
         <Pagination page={this.props.page} />
-        <Items key={this.props.page}>{itemsToRender.map((item, i) => <Item key={item.id} item={item} />)}</Items>
+        <Query
+          query={ALL_ITEMS_QUERY}
+          variables={{
+            skip: this.props.page * perPage - perPage,
+            first: perPage,
+          }}
+        >
+          {({ data, error, loading, variables }) => {
+            if (loading) return <div>Loading</div>;
+            if (error) return <div>Error</div>;
+            return (
+              <Items key={this.props.page}>{data.items.map((item, i) => <Item key={item.id} item={item} />)}</Items>
+            );
+          }}
+        </Query>
         <Pagination page={this.props.page} />
       </Center>
     );
   }
 }
 
-export default compose(itemEnhancer)(ItemList);
+// export default compose(itemEnhancer)(ItemList);
+export default ItemList;

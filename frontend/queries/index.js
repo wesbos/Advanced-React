@@ -75,12 +75,12 @@ export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
   ${itemDetails}
   query AllItemsQuery($skip: Int = 0, $first: Int = 3) {
-    itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+    itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) @connection(key: "itemsConnection") {
       aggregate {
         count
       }
     }
-    items(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+    items(orderBy: createdAt_DESC, first: $first, skip: $skip) @connection(key: "items") {
       ...itemDetails
     }
   }
@@ -161,7 +161,6 @@ export const UPDATE_LINK_MUTATION = gql`
   }
 `;
 
-// TODO: Can't this accept an updates object??
 export const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($name: String!) {
     updateUser(name: $name) {

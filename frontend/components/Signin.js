@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import { SIGNIN_MUTATION, CURRENT_USER_QUERY } from '../queries';
-
+import Error from './ErrorMessage';
 import Form from './styles/Form';
 
 class Signin extends Component {
   state = {
     email: `wesbos@gmail.com`,
     password: 'abc123',
-    errors: [],
   };
 
-  loginUser = async e => {
+  loginUser = async (e, signin) => {
     e.preventDefault();
-    // pull the values from state
-    const { email, password } = this.state;
-    this.setState({ loading: true, errors: [] });
-    const res = await this.props.signin({
-      // pass in those variables from state
-      variables: { name, email, password },
-    });
-    if (res.errors) {
-      this.setState({ errors: res.errors });
-      return;
-    }
+    const res = await signin();
     localStorage.setItem('token', res.data.signin.token);
+    return Promise.resolve('it worked');
     // TODO refetch current user query
-    this.props.currentUser.refetch();
-
-    this.setState({ loading: false });
   };
 
   saveToState = e => {
@@ -38,41 +25,42 @@ class Signin extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.loading ? 'LOADING...' : null}
+      <Mutation mutation={SIGNIN_MUTATION} variables={this.state} refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
+        {(signin, { data, loading, error }) => (
+          <Form onSubmit={e => this.loginUser(e, signin)}>
+            <Error error={error} />
+            <fieldset disabled={loading} aria-busy={loading}>
+              <label htmlFor="email">
+                Email
+                <input
+                  value={this.state.email}
+                  onChange={this.saveToState}
+                  name="email"
+                  type="text"
+                  placeholder="email"
+                />
+              </label>
 
-        {this.state.errors ? this.state.errors.map(err => <p>{err.message}</p>) : null}
+              <label htmlFor="password">
+                Password
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="password"
+                  placeholder="password"
+                  value={this.state.password}
+                  onChange={this.saveToState}
+                />
+              </label>
 
-        <Form onSubmit={this.loginUser}>
-          <label htmlFor="email">
-            Email
-            <input value={this.state.email} onChange={this.saveToState} name="email" type="text" placeholder="email" />
-          </label>
-
-          <label htmlFor="password">
-            Password
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="password"
-              placeholder="password"
-              value={this.state.password}
-              onChange={this.saveToState}
-            />
-          </label>
-
-          <button type="submit">Sign In!</button>
-        </Form>
-      </div>
+              <button type="submit">Sign In!</button>
+            </fieldset>
+          </Form>
+        )}
+      </Mutation>
     );
   }
 }
 
-// When we submit this mutation, we need to update our store - we have a few ways to do that:
-// One - we can go nucular and run refetchQueries() which will just go get everything - this is easy, but at the cost of efficiency.
-
-const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });
-const signinEnhancer = graphql(SIGNIN_MUTATION, { name: 'signin' });
-
-export default compose(signinEnhancer, userEnhancer)(Signin);
+export default Signin;

@@ -14,6 +14,8 @@ import {
 } from '../queries/index';
 import { perPage } from '../config';
 
+// THESE ARE CALLED CONNECTIONS, NOT ENHANCERS
+
 export const itemEnhancer = graphql(ALL_ITEMS_QUERY, {
   name: 'itemsQuery',
   options({ page }) {
@@ -50,61 +52,41 @@ export const singleItemEnhancer = graphql(SINGLE_ITEM_QUERY, {
   }),
 });
 
-export const removeFromCartEnhancer = graphql(REMOVE_FROM_CART_MUTATION, {
-  name: 'removeFromCart',
-  options: {
-    update: (proxy, payload) => {
-      const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
-      const cartItemId = payload.data.removeFromCart.id;
-      data.me.cart = data.me.cart.filter(item => item.id !== cartItemId);
-      proxy.writeQuery({ query: CURRENT_USER_QUERY, data });
-    },
-  },
-});
+// export const removeFromCartEnhancer = graphql(REMOVE_FROM_CART_MUTATION, {
+//   name: 'removeFromCart',
+//   options: {
+//     update: (proxy, payload) => {
+//       const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
+//       const cartItemId = payload.data.removeFromCart.id;
+//       data.me.cart = data.me.cart.filter(item => item.id !== cartItemId);
+//       proxy.writeQuery({ query: CURRENT_USER_QUERY, data });
+//     },
+//   },
+// });
 
-export const addToCartEnhancer = graphql(ADD_TO_CART_MUTATION, {
-  name: 'addToCart',
-  options: {
-    update: (proxy, payload) => {
-      const newCartItem = payload.data.addToCart;
-      const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
-      const existingIndex = data.me.cart.findIndex(cartItem => cartItem.id === newCartItem.id);
-      if (existingIndex >= 0) {
-        // already in cache, just replace it
-        data.me.cart = [...data.me.cart.slice(0, existingIndex), newCartItem, ...data.me.cart.slice(existingIndex + 1)];
-      } else {
-        data.me.cart = [...data.me.cart, newCartItem];
-      }
-      proxy.writeQuery({ query: CURRENT_USER_QUERY, data });
-    },
-  },
-});
+// export const addToCartEnhancer = graphql(ADD_TO_CART_MUTATION, {
+//   name: 'addToCart',
+//   options: {
+//     update: (proxy, payload) => {
+//       console.log('UODATEING CART ENAHACNER');
+//       const newCartItem = payload.data.addToCart;
+//       const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
+//       const existingIndex = data.me.cart.findIndex(cartItem => cartItem.id === newCartItem.id);
+//       if (existingIndex >= 0) {
+//         // already in cache, just replace it
+//         data.me.cart = [...data.me.cart.slice(0, existingIndex), newCartItem, ...data.me.cart.slice(existingIndex + 1)];
+//       } else {
+//         data.me.cart = [...data.me.cart, newCartItem];
+//       }
+//       proxy.writeQuery({ query: CURRENT_USER_QUERY, data });
+//     },
+//   },
+// });
 
 export const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });
 
-export const uiEnhancer = graphql(GET_UI_STATE, { name: 'ui' });
-
 export const updateUserEnhancer = graphql(UPDATE_USER_MUTATION, {
   name: 'updateUser',
-});
-
-export const updateUIEnhancer = graphql(UPDATE_UI, {
-  props: data => ({
-    updateNetworkStatus: isConnected =>
-      data.mutate({
-        variables: {
-          ...data.ownProps.ui.uiData,
-          isConnected,
-        },
-      }),
-    toggleCart: isCartOpen =>
-      data.mutate({
-        variables: {
-          ...data.ownProps.ui.uiData,
-          isCartOpen,
-        },
-      }),
-  }),
 });
 
 // export const const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });

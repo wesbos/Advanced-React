@@ -1,15 +1,16 @@
 import Downshift from 'downshift';
-import { graphql, compose } from 'react-apollo';
+import { Query } from 'react-apollo';
+import Router from 'next/router';
 import styled from 'styled-components';
 import { SEARCH_ITEMS_QUERY } from '../queries';
-import { Router } from '../routes';
 
 function routeToItem(item) {
-  console.log('TODO: UPdate routeToItem function');
-  // Router.pushRoute('item', {
-  //   slug: slugify(item.title),
-  //   itemId: item.id,
-  // });
+  Router.push({
+    pathname: '/item',
+    query: {
+      id: item.id,
+    },
+  });
 }
 
 const DropDown = styled.div`
@@ -52,7 +53,6 @@ function AutoComplete(props) {
               placeholder: 'Search For Item',
               id: 'search',
               onChange: e => {
-                console.log('Change happened');
                 props.refetch({ searchTerm: e.target.value });
               },
               style: { fontSize: '20px', padding: '10px', display: 'block', width: '100%' },
@@ -75,21 +75,15 @@ function AutoComplete(props) {
   );
 }
 
-const Search = props => (
+// TODO: This should not fire a queryon page load
+const Search = () => (
   <SearchStyles>
-    <AutoComplete
-      items={props.searchItems.items}
-      onChange={selectedItem => console.log(selectedItem)}
-      refetch={props.searchItems.refetch}
-    />
+    <Query query={SEARCH_ITEMS_QUERY} variables={{ searchTerm: '' }}>
+      {({ data, error, refetch }) => (
+        <AutoComplete items={data.items || []} onChange={selectedItem => console.log(selectedItem)} refetch={refetch} />
+      )}
+    </Query>
   </SearchStyles>
 );
 
-const searchEnhancer = graphql(SEARCH_ITEMS_QUERY, {
-  name: 'searchItems',
-  options: {
-    // TODO: Why is this camo
-    variables: { searchTerm: 'camo' },
-  },
-});
-export default compose(searchEnhancer)(Search);
+export default Search;

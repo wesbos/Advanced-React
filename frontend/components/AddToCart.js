@@ -1,36 +1,34 @@
 import { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
-import styled from 'styled-components';
+import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { removeFromCartEnhancer, userEnhancer, addToCartEnhancer, singleItemEnhancer } from '../enhancers/enhancers';
+import { ADD_TO_CART_MUTATION, CURRENT_USER_QUERY } from '../queries/index';
 
 class AddToCart extends Component {
   static propTypes = {
-    currentUser: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
   };
 
-  componentDidMount() {
-    this.props.currentUser.refetch();
-  }
-
-  handleAddToCart = async () => {
-    const res = await this.props.addToCart({
-      variables: {
-        id: this.props.id,
-      },
-    });
+  update = (proxy, payload) => {
+    const newCartItem = payload.data.addToCart;
+    const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
+    const existingIndex = data.me.cart.findIndex(cartItem => cartItem.id === newCartItem.id);
+    if (existingIndex >= 0) {
+      // already in cache, just replace it
+      data.me.cart = [...data.me.cart.slice(0, existingIndex), newCartItem, ...data.me.cart.slice(existingIndex + 1)];
+    } else {
+      data.me.cart = [...data.me.cart, newCartItem];
+    }
+    proxy.writeQuery({ query: CURRENT_USER_QUERY, data });
   };
 
   render() {
-    return <button onClick={this.handleAddToCart}>🛒 Add To Cart</button>;
+    const { id } = this.props;
+    return (
+      <Mutation mutation={ADD_TO_CART_MUTATION} variables={{ id }} update={this.update}>
+        {addToCart => <button onClick={addToCart}>🛒 Add To Cart</button>}
+      </Mutation>
+    );
   }
 }
 
-AddToCart.propTypes = {
-  currentUser: PropTypes.object.isRequired,
-  addToCart: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-};
-
-export default compose(userEnhancer, addToCartEnhancer)(AddToCart);
-export { AddToCart };
+export default AddToCart;

@@ -1,6 +1,4 @@
-import { Component } from 'react';
-import { compose } from 'react-apollo';
-import { userEnhancer } from '../enhancers/enhancers';
+import React from 'react';
 import NProgress from 'nprogress';
 import Router from 'next/router';
 import styled from 'styled-components';
@@ -60,5 +58,4 @@ const Header = props => (
   </StyledHeader>
 );
 
-export default compose(userEnhancer)(Header);
-// export default Header;
+export default Header;

@@ -1,16 +1,23 @@
 import { Component } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
-import { compose } from 'react-apollo';
+import { compose, Mutation, Query } from 'react-apollo';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import PropTypes from 'prop-types';
-// import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries';
-import { userEnhancer, createOrderEnhancer } from '../enhancers/enhancers';
+import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries';
+
+function totalItems(cart) {
+  return cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
+}
+
+function total(cart) {
+  return cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
+}
 
 class TakeMyMoney extends Component {
-  onToken = async res => {
+  onToken = async (res, createOrder) => {
     NProgress.start();
-    const order = await this.props.createOrder({
+    const order = await createOrder({
       variables: {
         token: res.id,
       },
@@ -18,29 +25,33 @@ class TakeMyMoney extends Component {
     // Route them to that order page
     const { id } = order.data.createOrder;
     Router.push({
-      pathname: `/order/${id}`,
+      pathname: `/order`,
       query: { id },
     });
   };
-
+  // TODO - refetchQueries after an order is created
   render() {
-    const { me } = this.props.currentUser;
-    if (!me || !me.cart.length) return null;
-    const total = me.cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
-    const totalItems = me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
     return (
-      <StripeCheckout
-        amount={total}
-        name="Sick Fits Haul"
-        description={`Order of ${totalItems} Items From Sick Fits`}
-        image={me.cart[0].item.image}
-        token={this.onToken}
-        stripeKey="pk_lclTtThFp8CnO3QtEZSd8HA9mFUps"
-        currency="USD"
-        email={me.email}
-      >
-        {this.props.children}
-      </StripeCheckout>
+      <Query query={CURRENT_USER_QUERY}>
+        {({ data: { me } }) => (
+          <Mutation mutation={CREATE_ORDER_MUTATION}>
+            {createOrder => (
+              <StripeCheckout
+                amount={total(me.cart)}
+                name="Sick Fits Haul"
+                description={`Order of ${totalItems(me.cart)} Items From Sick Fits`}
+                image={me.cart[0].item.image}
+                token={res => this.onToken(res, createOrder)}
+                stripeKey="pk_lclTtThFp8CnO3QtEZSd8HA9mFUps"
+                currency="USD"
+                email={me.email}
+              >
+                {this.props.children}
+              </StripeCheckout>
+            )}
+          </Mutation>
+        )}
+      </Query>
     );
   }
 }
@@ -50,5 +61,7 @@ TakeMyMoney.propTypes = {
   createOrder: PropTypes.func.isRequired,
 };
 
-export default compose(userEnhancer, createOrderEnhancer)(TakeMyMoney);
-export { TakeMyMoney };
+// export default compose(userEnhancer, createOrderEnhancer)(TakeMyMoney);
+// export { TakeMyMoney };
+
+export default TakeMyMoney;

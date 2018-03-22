@@ -6,6 +6,10 @@ const SingleItem = ({ findItem: { error, loading, items } }) => {
   if (error) return <p>Error...</p>;
   const item = items[0];
 
+  if (!item) {
+    return <p>No Item Found</p>;
+  }
+
   return (
     <div>
       <img src={item.largeImage || item.image} alt={item.title} />

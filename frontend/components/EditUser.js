@@ -1,59 +1,64 @@
 import React from 'react';
-import { compose } from 'react-apollo';
-import PropTypes from 'prop-types';
+import { Query, Mutation } from 'react-apollo';
 import Form from './styles/Form';
-import { userEnhancer, updateUserEnhancer } from '../enhancers/enhancers';
+import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/index';
+import Error from './ErrorMessage';
 
 class EditUser extends React.Component {
-  static propTypes = {
-    currentUser: PropTypes.object.isRequired,
-    updateUser: PropTypes.func.isRequired,
-  };
-
   state = {
     changes: {},
   };
 
   handleChange = e => {
     const { name, value } = e.target;
-    const { me } = this.props.currentUser;
     const changes = {
       ...this.state.changes,
       [name]: value,
     };
-    if (value === me[e.target.name]) {
-      delete changes[name];
-    }
     this.setState({ changes });
   };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e, updateUser) => {
     e.preventDefault();
-    await this.props.updateUser({
-      variables: this.state.changes,
-    });
-    this.props.currentUser.refetch();
+    // only submit if there are real changes
+    if (Object.keys(this.state.changes).length === 0) return;
+    await updateUser();
     this.setState({ changes: {} });
   };
 
   render() {
-    const { me } = this.props.currentUser;
-    if (!me) return <p>You must be logged in</p>;
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <label htmlFor="name">
-          Name:
-          <input type="text" name="name" defaultValue={me.name} onChange={this.handleChange} />
-        </label>
-        <button type="submit">Update</button>
-        <strong>me:</strong>
-        <pre>{JSON.stringify(me.name)}</pre>
-        <strong>Change:</strong>
-        <pre data-test="change">{JSON.stringify(this.state.changes)}</pre>
-      </Form>
+      <Query query={CURRENT_USER_QUERY}>
+        {({ data: { me } }) => {
+          if (!me) return <p>You must be logged in</p>;
+          return (
+            <Mutation
+              mutation={UPDATE_USER_MUTATION}
+              refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+              variables={this.state.changes}
+            >
+              {(updateUser, { loading, error, called, data }) => (
+                <Form onSubmit={e => this.handleSubmit(e, updateUser)}>
+                  <Error error={error} />
+                  <fieldset disabled={loading} aria-busy={loading}>
+                    <label htmlFor="name">
+                      Name:
+                      <input type="text" name="name" defaultValue={me.name} onChange={this.handleChange} />
+                    </label>
+                    <button type="submit">Update</button>
+                    <strong>me:</strong>
+                    <pre>{JSON.stringify(me.name)}</pre>
+                    <strong>Change:</strong>
+                    <pre data-test="change">{JSON.stringify(this.state.changes)}</pre>
+                  </fieldset>
+                </Form>
+              )}
+            </Mutation>
+          );
+        }}
+      </Query>
     );
   }
 }
 
-export default compose(userEnhancer, updateUserEnhancer)(EditUser);
-export { EditUser };
+export default EditUser;

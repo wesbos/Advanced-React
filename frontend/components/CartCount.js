@@ -50,4 +50,3 @@ const CartCount = ({ count }) => (
 );
 
 export default CartCount;
-export { CartCount };

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { compose } from 'react-apollo';
 import Link from 'next/link';
 import Title from './styles/Title';
 import AddToCart from './AddToCart';
+import DeleteItem from './DeleteItem';
 import formatMoney from '../lib/formatMoney';
-import { removeItemMutation } from '../enhancers/enhancers';
+import PropTypes from 'prop-types';
 
 const Item = styled.div`
   background: white;
@@ -57,11 +57,10 @@ const PriceTag = styled.span`
 `;
 
 class ItemComponent extends React.Component {
-  removeItem = () => {
-    if (confirm('Are you sure you want to delete this item?')) {
-      this.props.removeItem({ variables: { id: this.props.item.id } });
-    }
+  static propTypes = {
+    item: PropTypes.object.isRequired,
   };
+
   render() {
     const item = this.props.item;
     return (
@@ -92,12 +91,11 @@ class ItemComponent extends React.Component {
             <a>Edit ✏️</a>
           </Link>
           <AddToCart id={item.id} />
-          <button onClick={this.removeItem}>&times; Delete item</button>
+          <DeleteItem id={item.id} />
         </div>
       </Item>
     );
   }
 }
 
-export { ItemComponent };
-export default compose(removeItemMutation)(ItemComponent);
+export default ItemComponent;

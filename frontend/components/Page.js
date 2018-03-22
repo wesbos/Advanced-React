@@ -53,9 +53,8 @@ const Page = ({ children }) => (
     </ThemeProvider>
   </UIProvider>
 );
-
 Page.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Page;

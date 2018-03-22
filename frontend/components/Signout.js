@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
+import { Query } from 'react-apollo';
 import { CURRENT_USER_QUERY } from '../queries';
 
 class Signout extends Component {
-  signout = () => {
+  signout = refetch => {
     console.log('Signing Out');
     localStorage.removeItem('token');
-    this.props.currentUser.refetch();
+    refetch();
   };
 
   render() {
-    const { me, loading, error } = this.props.currentUser;
-    if (!me || loading || error) return null;
-    return <button onClick={this.signout}>Sign Out</button>;
+    return (
+      <Query query={CURRENT_USER_QUERY}>
+        {({ refetch }) => <button onClick={() => this.signout(refetch)}>Sign Out</button>}
+      </Query>
+    );
   }
 }
 
-const userEnhancer = graphql(CURRENT_USER_QUERY, { name: 'currentUser' });
-export default compose(userEnhancer)(Signout);
+export default Signout;

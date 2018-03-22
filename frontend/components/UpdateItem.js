@@ -9,9 +9,7 @@ class UpdateItem extends Component {
   state = {
     item: {},
   };
-  componentDidMount() {
-    console.log(this.props);
-  }
+
 
   saveToState = e => {
     let { name, value, type } = e.target;
