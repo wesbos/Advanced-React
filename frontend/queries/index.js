@@ -140,21 +140,19 @@ export const REMOVE_ITEM_MUTATION = gql`
   }
 `;
 
-export const UPDATE_LINK_MUTATION = gql`
+export const UPDATE_ITEM_MUTATION = gql`
   ${itemDetails}
   mutation UpdateItem(
     $id: ID!
-    $title: String!
-    $description: String!
-    $price: Int!
-    # $fullPrice: Int!
+    $title: String
+    $description: String
+    $price: Int
   ) {
     updateItem(
       id: $id
       description: $description
       title: $title
       price: $price
-      # fullPrice: $fullPrice
     ) {
       ...itemDetails
     }

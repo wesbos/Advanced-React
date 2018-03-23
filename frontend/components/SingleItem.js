@@ -1,23 +1,25 @@
-import { compose } from 'react-apollo';
-import { singleItemEnhancer } from '../enhancers/enhancers';
+import { Query } from 'react-apollo';
+import PropTypes from 'prop-types';
+import { SINGLE_ITEM_QUERY } from '../queries/index';
 
-const SingleItem = ({ findItem: { error, loading, items } }) => {
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error...</p>;
-  const item = items[0];
+const SingleItem = props => (
+  <Query query={SINGLE_ITEM_QUERY} variables={{ id: props.id }}>
+    {({ data: { items }, loading, error }) => {
+      if (loading || error) return null;
+      const [item] = items;
+      return (
+        <div>
+          <img src={item.largeImage || item.image} alt={item.title} />
+          <h2>Viewing {item.title}</h2>
+          <p>{item.description}</p>
+        </div>
+      );
+    }}
+  </Query>
+);
 
-  if (!item) {
-    return <p>No Item Found</p>;
-  }
-
-  return (
-    <div>
-      <img src={item.largeImage || item.image} alt={item.title} />
-      <h2>Viewing {item.title}</h2>
-      <p>{item.description}</p>
-    </div>
-  );
+SingleItem.propTypes = {
+  id: PropTypes.string.isRequired,
 };
 
-export default compose(singleItemEnhancer)(SingleItem);
-export { SingleItem };
+export default SingleItem;

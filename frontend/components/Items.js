@@ -7,15 +7,6 @@ import Item from './Item';
 import { perPage } from '../config';
 import { ALL_ITEMS_QUERY } from '../queries/index';
 
-// export const itemEnhancer = graphql(ALL_ITEMS_QUERY, {
-//   name: 'itemsQuery',
-//   options({ page }) {
-//     return {
-//       variables: ,
-//     };
-//   },
-// });
-
 const Items = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -48,12 +39,10 @@ class ItemList extends React.Component {
             first: perPage,
           }}
         >
-          {({ data, error, loading, variables }) => {
+          {({ data, error, loading }) => {
             if (loading) return <div>Loading</div>;
             if (error) return <div>Error</div>;
-            return (
-              <Items key={this.props.page}>{data.items.map((item, i) => <Item key={item.id} item={item} />)}</Items>
-            );
+            return <Items key={this.props.page}>{data.items.map(item => <Item key={item.id} item={item} />)}</Items>;
           }}
         </Query>
         <Pagination page={this.props.page} />
@@ -62,5 +51,4 @@ class ItemList extends React.Component {
   }
 }
 
-// export default compose(itemEnhancer)(ItemList);
 export default ItemList;

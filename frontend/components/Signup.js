@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { graphql, compose, Mutation } from 'react-apollo';
-import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import { Mutation } from 'react-apollo';
+import { SIGNUP_MUTATION } from '../queries';
 import Form from './styles/Form';
-import catchError from '../lib/catchError';
 import Error from './ErrorMessage';
 
 class Signup extends Component {
@@ -20,7 +19,7 @@ class Signup extends Component {
   render() {
     return (
       <Mutation mutation={SIGNUP_MUTATION} variables={this.state}>
-        {(signup, { data, loading, error }) => (
+        {(signup, { loading, error }) => (
           <Form
             onSubmit={e => {
               e.preventDefault();

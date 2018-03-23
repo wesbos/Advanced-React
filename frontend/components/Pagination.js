@@ -1,9 +1,8 @@
 import React from 'react';
-import { compose, Query } from 'react-apollo';
+import { Query } from 'react-apollo';
 import styled from 'styled-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { itemEnhancer } from '../enhancers/enhancers';
 import { perPage } from '../config';
 import { ALL_ITEMS_QUERY } from '../queries/index';
 

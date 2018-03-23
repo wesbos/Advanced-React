@@ -7,7 +7,6 @@ class Home extends Component {
   render() {
     return (
       <Page>
-        <p>Update You Item!</p>
         <UpdateItem id={this.props.url.query.id} />
       </Page>
     );
