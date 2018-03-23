@@ -14,8 +14,11 @@ class Signin extends Component {
     e.preventDefault();
     const res = await signin();
     localStorage.setItem('token', res.data.signin.token);
-    return Promise.resolve('it worked');
     // TODO refetch current user query
+  };
+
+  update = (proxy, result) => {
+    console.log(proxy, result);
   };
 
   saveToState = e => {
@@ -25,7 +28,12 @@ class Signin extends Component {
 
   render() {
     return (
-      <Mutation mutation={SIGNIN_MUTATION} variables={this.state} refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
+      <Mutation
+        update={this.update}
+        mutation={SIGNIN_MUTATION}
+        variables={this.state}
+        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+      >
         {(signin, { data, loading, error }) => (
           <Form onSubmit={e => this.loginUser(e, signin)}>
             <Error error={error} />

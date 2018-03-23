@@ -6,6 +6,7 @@ import formatMoney from '../lib/formatMoney';
 import { UIContext } from './UIContext';
 import CartItem from './CartItem';
 import { CURRENT_USER_QUERY } from '../queries/index';
+import calcTotalPrice from '../lib/calcTotalPrice';
 
 const CartStyles = styled.div`
   padding: 20px;
@@ -71,10 +72,6 @@ const CloseButton = styled.button`
   z-index: 2;
   right: 0;
 `;
-
-function calcTotalPrice(cart) {
-  return cart.reduce((tally, cartItem) => tally + cartItem.quantity * cartItem.item.price, 0);
-}
 
 const Cart = props => (
   <UIContext.Consumer>

@@ -8,7 +8,7 @@
 type CartItem implements Node {
   id: ID!
   quantity: Int!
-  item(where: ItemWhereInput): Item!
+  item(where: ItemWhereInput): Item
   user(where: UserWhereInput): User!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -116,7 +116,7 @@ type CartItemConnection {
 
 input CartItemCreateInput {
   quantity: Int
-  item: ItemCreateOneInput!
+  item: ItemCreateOneInput
   user: UserCreateOneWithoutCartInput!
 }
 
@@ -127,7 +127,7 @@ input CartItemCreateManyWithoutUserInput {
 
 input CartItemCreateWithoutUserInput {
   quantity: Int
-  item: ItemCreateOneInput!
+  item: ItemCreateOneInput
 }
 
 type CartItemEdge {

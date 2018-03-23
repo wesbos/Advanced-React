@@ -205,25 +205,6 @@ export const USER_ORDERS_QUERY = gql`
         image
       }
     }
-    # user {
-    #   # grab the current user
-    #   id
-    #   orders {
-    #     # and a all their orders
-    #     id
-    #     amount
-    #     charge
-    #     item {
-    #       # populate the details about the item they bought with the image, description and title
-    #       image {
-    #         id
-    #         secret
-    #       }
-    #       description
-    #       title
-    #     }
-    #   }
-    # }
   }
 `;
 

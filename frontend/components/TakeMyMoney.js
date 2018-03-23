@@ -4,13 +4,10 @@ import { Mutation, Query } from 'react-apollo';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import calcTotalPrice from '../lib/calcTotalPrice';
 
 function totalItems(cart) {
   return cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
-}
-
-function total(cart) {
-  return cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
 }
 
 class TakeMyMoney extends Component {
@@ -38,10 +35,10 @@ class TakeMyMoney extends Component {
             <Mutation mutation={CREATE_ORDER_MUTATION}>
               {createOrder => (
                 <StripeCheckout
-                  amount={total(me.cart)}
+                  amount={calcTotalPrice(me.cart)}
                   name="Sick Fits Haul"
                   description={`Order of ${totalItems(me.cart)} Items From Sick Fits`}
-                  image={me.cart[0].item.image}
+                  image={me.cart[0].item && me.cart[0].item.image}
                   token={res => this.onToken(res, createOrder)}
                   stripeKey="pk_lclTtThFp8CnO3QtEZSd8HA9mFUps"
                   currency="USD"

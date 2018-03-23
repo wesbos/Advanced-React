@@ -42,7 +42,13 @@ const AnimationStyles = styled.span`
 const CartCount = ({ count }) => (
   <AnimationStyles>
     <TransitionGroup>
-      <CSSTransition className="count" classNames="count" key={count} timeout={{ enter: 2000, exit: 2000 }}>
+      <CSSTransition
+        unmountOnExit
+        className="count"
+        classNames="count"
+        key={count}
+        timeout={{ enter: 400, exit: 400 }}
+      >
         <Dot>{count}</Dot>
       </CSSTransition>
     </TransitionGroup>
