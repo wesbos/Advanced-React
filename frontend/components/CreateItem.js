@@ -60,12 +60,13 @@ class CreateItem extends Component {
             <fieldset disabled={loading} aria-busy={loading}>
               <label>
                 Image
-                <input onChange={this.uploadFile} type="file" accept=".png, .jpg, .jpeg" />
+                <input required onChange={this.uploadFile} type="file" accept=".png, .jpg, .jpeg" />
                 {this.state.image ? <img src={this.state.image} width="100" alt={this.state.title} /> : null}
               </label>
               <label>
                 Title
                 <input
+                  required
                   value={this.state.title}
                   onChange={this.handleChange}
                   type="text"
@@ -77,6 +78,7 @@ class CreateItem extends Component {
               <label>
                 Price
                 <input
+                  required
                   type="number"
                   id="price"
                   name="price"
@@ -87,6 +89,7 @@ class CreateItem extends Component {
               </label>
               <textarea
                 id="description"
+                required
                 name="description"
                 value={this.state.description}
                 onChange={this.handleChange}

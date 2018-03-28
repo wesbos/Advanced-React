@@ -10,11 +10,10 @@ import PropTypes from 'prop-types';
 const Item = styled.div`
   background: white;
   border: 1px solid ${props => props.theme.offWhite};
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.09);
+  box-shadow: ${props => props.theme.bs};
   position: relative;
   display: grid;
   align-content: start;
-  /* grid-template-rows: repeat(auto-fit, minmax(100px,)); */
   grid-auto-rows: fit-content;
   img {
     width: 100%;

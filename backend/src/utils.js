@@ -7,8 +7,24 @@ function getUserId(ctx) {
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
     return userId;
   }
+  // TODO: Don't throw when they aren't logged in
+  // throw new Error('Sorry, you must be logged in to do that!');
+}
 
-  throw new AuthError();
+function hasPermission(user, permissionsNeeded) {
+  const matchedPermissions = user.permissions.filter(permissionTheyHave =>
+    permissionsNeeded.includes(permissionTheyHave)
+  );
+  if (!matchedPermissions.length) {
+    throw new Error(`You do not have sufficient permissions
+
+      : ${permissionsNeeded}
+
+      You Have:
+
+      ${user.permissions}
+      `);
+  }
 }
 
 function checkForUserId(ctx) {
@@ -30,4 +46,5 @@ module.exports = {
   getUserId,
   AuthError,
   checkForUserId,
+  hasPermission,
 };

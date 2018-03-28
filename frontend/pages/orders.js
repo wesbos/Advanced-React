@@ -7,7 +7,6 @@ class Orders extends Component {
   render() {
     return (
       <Page>
-        <h2>My Orders</h2>
         <OrderList />
       </Page>
     );

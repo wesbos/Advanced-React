@@ -9,6 +9,7 @@ class AddToCart extends Component {
   };
 
   update = (proxy, payload) => {
+    console.log('Updating!');
     const newCartItem = payload.data.addToCart;
     const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
     const existingIndex = data.me.cart.findIndex(cartItem => cartItem.id === newCartItem.id);
@@ -25,7 +26,11 @@ class AddToCart extends Component {
     const { id } = this.props;
     return (
       <Mutation mutation={ADD_TO_CART_MUTATION} variables={{ id }} update={this.update}>
-        {addToCart => <button onClick={addToCart}>🛒 Add To Cart</button>}
+        {(addToCart, { loading }) => (
+          <button disabled={loading} onClick={addToCart}>
+            🛒 Add{loading && 'ing'} To Cart
+          </button>
+        )}
       </Mutation>
     );
   }

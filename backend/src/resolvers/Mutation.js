@@ -1,17 +1,24 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { getUserId, Context } = require('../utils');
+const { getUserId, Context, hasPermission } = require('../utils');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const mail = require('../mail');
 const stripe = require('../stripe');
 
+const wait = amount => new Promise(resolve => setTimeout(resolve, amount));
+
 const mutations = {
   // Signup Mutations
   async signup(parent, args, ctx, info) {
+    args.email = args.email.toLowerCase();
     const password = await bcrypt.hash(args.password, 10);
     const user = await ctx.db.mutation.createUser({
-      data: { ...args, password },
+      data: {
+        ...args,
+        password,
+        permissions: { set: ['USER'] },
+      },
     });
 
     return {
@@ -38,13 +45,27 @@ const mutations = {
 
   // Creation of Post Mutations
   async createItem(parent, args, ctx, info) {
-    // TODO - they should be signed in when creating an item for sale
-    // TODO: The user should be saved to the item so they can manage it
-    return ctx.db.mutation.createItem({ data: { ...args } }, info);
+    const userId = getUserId(ctx);
+    const item = await ctx.db.mutation.createItem(
+      {
+        data: {
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          ...args,
+        },
+      },
+      info
+    );
+    console.log(item);
+    return item;
   },
 
   async deleteItem(parent, args, ctx, info) {
     // TODO - handle auth for deleting an item
+    // You Should Either Own this item, or have CAN_DELETE in roles
     return ctx.db.mutation.deleteItem(
       {
         where: {
@@ -264,6 +285,26 @@ const mutations = {
     });
     console.log(updatedUser);
     return updatedUser;
+  },
+
+  async updatePermissions(parent, args, ctx, info) {
+    const userId = getUserId(ctx);
+    await wait(20000);
+    const currentUser = await ctx.db.query.user({ where: { id: userId } }, info);
+    console.log(currentUser);
+    if (!currentUser) throw new Error('You Must be logged in to updat permissions!');
+    hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE']);
+    return ctx.db.mutation.updateUser(
+      {
+        data: {
+          permissions: {
+            set: args.permissions,
+          },
+        },
+        where: { id: args.userId },
+      },
+      info
+    );
   },
 };
 

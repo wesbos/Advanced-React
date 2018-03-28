@@ -12,13 +12,13 @@ function getComponentDisplayName(Component) {
 export default ComposedComponent =>
   class WithData extends React.Component {
     static displayName = `WithData(${getComponentDisplayName(ComposedComponent)})`;
-
     static propTypes = {
       serverState: PropTypes.object.isRequired,
     };
 
     static async getInitialProps(ctx) {
-      let serverState = { apollo: {} };
+      // Initial serverState with apollo (empty)
+      let serverState;
 
       // Evaluate the composed component's getInitialProps()
       let composedInitialProps = {};
@@ -28,33 +28,43 @@ export default ComposedComponent =>
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
+      console.log('Trying...');
+      console.log(ctx.query);
+      const apollo = initApollo();
+      try {
+        // Run all GraphQL queries
+        const data = await getDataFromTree(<ComposedComponent ctx={ctx} {...composedInitialProps} />, {
+          router: {
+            asPath: ctx.asPath,
+            pathname: ctx.pathname,
+            query: ctx.query,
+          },
+          client: apollo,
+        }).catch(err => {
+          console.log('CAUGHT HERE');
+          console.log(err);
+        });
+      } catch (error) {
+        // console.log(ctx.query);
+        console.log('An error Happened SSR');
+        console.log(error);
+        // Prevent Apollo Client GraphQL errors from crashing SSR.
+        // Handle them in components via the data.error prop:
+        // http://dev.apollodata.com/react/api-queries.html#graphql-query-data-error
+      }
+
       if (!process.browser) {
-        const apollo = initApollo();
-        // Provide the `url` prop data in case a GraphQL query uses it
-        const url = { query: ctx.query, pathname: ctx.pathname };
-        try {
-          // Run all GraphQL queries
-          await getDataFromTree(
-            <ApolloProvider client={apollo}>
-              <ComposedComponent url={url} {...composedInitialProps} />
-            </ApolloProvider>
-          );
-        } catch (error) {
-          // Prevent Apollo Client GraphQL errors from crashing SSR.
-          // Handle them in components via the data.error prop:
-          // http://dev.apollodata.com/react/api-queries.html#graphql-query-data-error
-        }
         // getDataFromTree does not call componentWillUnmount
         // head side effect therefore need to be cleared manually
         Head.rewind();
-
-        // Extract query data from the Apollo store
-        serverState = {
-          apollo: {
-            data: apollo.cache.extract(),
-          },
-        };
       }
+
+      // Extract query data from the Apollo store
+      serverState = {
+        apollo: {
+          data: apollo.cache.extract(),
+        },
+      };
 
       return {
         serverState,
@@ -62,7 +72,10 @@ export default ComposedComponent =>
       };
     }
 
-    apollo = initApollo(this.props.serverState.apollo.data);
+    constructor(props) {
+      super(props);
+      this.apollo = initApollo(this.props.serverState.apollo.data);
+    }
 
     render() {
       return (

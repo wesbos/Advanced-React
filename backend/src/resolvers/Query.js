@@ -24,6 +24,7 @@ const Query = {
 
   async orders(parent, args, ctx, info) {
     const userId = getUserId(ctx);
+    console.log(info);
     return ctx.db.query.orders(
       {
         where: {
@@ -32,6 +33,12 @@ const Query = {
       },
       info
     );
+  },
+
+  async users(parent, args, ctx, info) {
+    console.log('TODO: check their permissions');
+    const userId = getUserId(ctx);
+    return ctx.db.query.users({}, info);
   },
 };
 

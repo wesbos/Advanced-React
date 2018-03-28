@@ -16,5 +16,6 @@ datamodel: datamodel.graphql
 #   import: seed.graphql
 
 # cluster: ${env:PRISMA_CLUSTER}
-cluster: local
+# cluster: local
 
+# cluster: wesbos/prisma-us1

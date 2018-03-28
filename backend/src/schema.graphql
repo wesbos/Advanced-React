@@ -1,4 +1,4 @@
-# import Order, OrderItem, CartItem, ItemWhereInput, ItemOrderByInput, allItems, Item, ItemCreateInput, ItemOrderByInput, ItemWhereInput, Query.order, Query.orders from './generated/prisma.graphql'
+# import Permission, Order, OrderItem, CartItem, ItemWhereInput, ItemOrderByInput, allItems, Item, ItemCreateInput, ItemOrderByInput, ItemWhereInput, Query.order, Query.orders, Query.users from './generated/prisma.graphql'
 
 type Query {
   me: User
@@ -33,6 +33,7 @@ type Mutation {
   removeFromCart(id: ID!): CartItem
   createOrder(token: String!): Order!
   updateUser(name: String): User
+  updatePermissions(permissions: [Permission], userId: ID!): User
 }
 
 input UserInput {
@@ -50,4 +51,5 @@ type User {
   name: String!
   orders: [Order!]!
   cart: [CartItem!]!
+  permissions: [Permission]!
 }

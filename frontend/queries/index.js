@@ -90,6 +90,11 @@ export const SINGLE_ITEM_QUERY = gql`
   ${itemDetails}
   query FindItem($id: ID!) {
     items(where: { id: $id }) {
+      user {
+        id
+        email
+        name
+      }
       ...itemDetails
     }
   }
@@ -202,6 +207,7 @@ export const USER_ORDERS_QUERY = gql`
         title
         price
         description
+        quantity
         image
       }
     }
@@ -232,25 +238,24 @@ export const REMOVE_FROM_CART_MUTATION = gql`
   }
 `;
 
-export const GET_CART_STATE = gql`
-  query {
-    ui {
-      isCartOpen
+export const ALL_USERS_QUERY = gql`
+  query Users {
+    users {
+      id
+      name
+      email
+      permissions
     }
   }
 `;
 
-export const UPDATE_UI = gql`
-  mutation setLocalData($isConnected: Boolean, $isCartOpen: Boolean) {
-    setLocalData(isConnected: $isConnected, isCartOpen: $isCartOpen) @client
-  }
-`;
-
-export const GET_UI_STATE = gql`
-  query cartState {
-    uiData @client {
-      isConnected
-      isCartOpen
+export const UPDATE_PERMISSIONS_MUTATION = gql`
+  mutation updatePermissions($permissions: [Permission], $userId: ID!) {
+    updatePermissions(permissions: $permissions, userId: $userId) {
+      id
+      permissions
+      name
+      email
     }
   }
 `;

@@ -23,6 +23,7 @@ type Item implements Node {
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
+  user(where: UserWhereInput): User!
 }
 
 type Order implements Node {
@@ -49,30 +50,18 @@ type OrderItem implements Node {
   user(where: UserWhereInput): User!
 }
 
-type Post implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  isPublished: Boolean!
-  title: String!
-  text: String!
-  author(where: UserWhereInput): User!
-}
-
 type User implements Node {
   id: ID!
   email: String!
   password: String!
   name: String!
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
   cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
   createdAt: DateTime!
   updatedAt: DateTime!
+  permissions: [Permission!]
 }
 
 
@@ -96,20 +85,28 @@ type AggregateOrderItem {
   count: Int!
 }
 
-type AggregatePost {
-  count: Int!
-}
-
 type AggregateUser {
   count: Int!
 }
 
 type BatchPayload {
+  """
+  The number of nodes that have been affected by the Batch operation.
+  """
   count: Long!
 }
 
+"""
+A connection to a list of items.
+"""
 type CartItemConnection {
+  """
+  Information to aid in pagination.
+  """
   pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
   edges: [CartItemEdge]!
   aggregate: AggregateCartItem!
 }
@@ -130,8 +127,17 @@ input CartItemCreateWithoutUserInput {
   item: ItemCreateOneInput
 }
 
+"""
+An edge in a connection.
+"""
 type CartItemEdge {
+  """
+  The item at the end of the edge.
+  """
   node: CartItem!
+  """
+  A cursor for use in pagination.
+  """
   cursor: String!
 }
 
@@ -161,11 +167,29 @@ type CartItemSubscriptionPayload {
 }
 
 input CartItemSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [CartItemSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [CartItemSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
   updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
   updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
   updatedFields_contains_some: [String!]
   node: CartItemWhereInput
 }
@@ -202,45 +226,153 @@ input CartItemUpsertWithoutUserInput {
 }
 
 input CartItemWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [CartItemWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [CartItemWhereInput!]
   id: ID
+  """
+  All values that are not equal to given value.
+  """
   id_not: ID
+  """
+  All values that are contained in given list.
+  """
   id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
   id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
   id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
   id_lte: ID
+  """
+  All values greater than the given value.
+  """
   id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
   id_gte: ID
+  """
+  All values containing the given string.
+  """
   id_contains: ID
+  """
+  All values not containing the given string.
+  """
   id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
   id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
   id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
   id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
   id_not_ends_with: ID
   quantity: Int
+  """
+  All values that are not equal to given value.
+  """
   quantity_not: Int
+  """
+  All values that are contained in given list.
+  """
   quantity_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
   quantity_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
   quantity_lt: Int
+  """
+  All values less than or equal the given value.
+  """
   quantity_lte: Int
+  """
+  All values greater than the given value.
+  """
   quantity_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
   quantity_gte: Int
   createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   createdAt_gte: DateTime
   updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   updatedAt_gte: DateTime
   item: ItemWhereInput
   user: UserWhereInput
@@ -252,8 +384,17 @@ input CartItemWhereUniqueInput {
 
 scalar DateTime
 
+"""
+A connection to a list of items.
+"""
 type ItemConnection {
+  """
+  Information to aid in pagination.
+  """
   pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
   edges: [ItemEdge]!
   aggregate: AggregateItem!
 }
@@ -264,6 +405,7 @@ input ItemCreateInput {
   image: String
   largeImage: String
   price: Int!
+  user: UserCreateOneInput!
 }
 
 input ItemCreateOneInput {
@@ -271,8 +413,17 @@ input ItemCreateOneInput {
   connect: ItemWhereUniqueInput
 }
 
+"""
+An edge in a connection.
+"""
 type ItemEdge {
+  """
+  The item at the end of the edge.
+  """
   node: Item!
+  """
+  A cursor for use in pagination.
+  """
   cursor: String!
 }
 
@@ -314,11 +465,29 @@ type ItemSubscriptionPayload {
 }
 
 input ItemSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [ItemSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [ItemSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
   updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
   updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
   updatedFields_contains_some: [String!]
   node: ItemWhereInput
 }
@@ -329,6 +498,7 @@ input ItemUpdateInput {
   image: String
   largeImage: String
   price: Int
+  user: UserUpdateOneInput
 }
 
 input ItemUpdateOneInput {
@@ -339,142 +509,405 @@ input ItemUpdateOneInput {
 }
 
 input ItemWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [ItemWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [ItemWhereInput!]
   id: ID
+  """
+  All values that are not equal to given value.
+  """
   id_not: ID
+  """
+  All values that are contained in given list.
+  """
   id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
   id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
   id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
   id_lte: ID
+  """
+  All values greater than the given value.
+  """
   id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
   id_gte: ID
+  """
+  All values containing the given string.
+  """
   id_contains: ID
+  """
+  All values not containing the given string.
+  """
   id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
   id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
   id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
   id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
   id_not_ends_with: ID
   title: String
+  """
+  All values that are not equal to given value.
+  """
   title_not: String
+  """
+  All values that are contained in given list.
+  """
   title_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   title_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   title_lt: String
+  """
+  All values less than or equal the given value.
+  """
   title_lte: String
+  """
+  All values greater than the given value.
+  """
   title_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   title_gte: String
+  """
+  All values containing the given string.
+  """
   title_contains: String
+  """
+  All values not containing the given string.
+  """
   title_not_contains: String
+  """
+  All values starting with the given string.
+  """
   title_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   title_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   title_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   title_not_ends_with: String
   description: String
+  """
+  All values that are not equal to given value.
+  """
   description_not: String
+  """
+  All values that are contained in given list.
+  """
   description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   description_lt: String
+  """
+  All values less than or equal the given value.
+  """
   description_lte: String
+  """
+  All values greater than the given value.
+  """
   description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   description_gte: String
+  """
+  All values containing the given string.
+  """
   description_contains: String
+  """
+  All values not containing the given string.
+  """
   description_not_contains: String
+  """
+  All values starting with the given string.
+  """
   description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   description_not_ends_with: String
   image: String
+  """
+  All values that are not equal to given value.
+  """
   image_not: String
+  """
+  All values that are contained in given list.
+  """
   image_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   image_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   image_lt: String
+  """
+  All values less than or equal the given value.
+  """
   image_lte: String
+  """
+  All values greater than the given value.
+  """
   image_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   image_gte: String
+  """
+  All values containing the given string.
+  """
   image_contains: String
+  """
+  All values not containing the given string.
+  """
   image_not_contains: String
+  """
+  All values starting with the given string.
+  """
   image_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   image_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   image_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   image_not_ends_with: String
   largeImage: String
+  """
+  All values that are not equal to given value.
+  """
   largeImage_not: String
+  """
+  All values that are contained in given list.
+  """
   largeImage_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   largeImage_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   largeImage_lt: String
+  """
+  All values less than or equal the given value.
+  """
   largeImage_lte: String
+  """
+  All values greater than the given value.
+  """
   largeImage_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   largeImage_gte: String
+  """
+  All values containing the given string.
+  """
   largeImage_contains: String
+  """
+  All values not containing the given string.
+  """
   largeImage_not_contains: String
+  """
+  All values starting with the given string.
+  """
   largeImage_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   largeImage_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   largeImage_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   largeImage_not_ends_with: String
   price: Int
+  """
+  All values that are not equal to given value.
+  """
   price_not: Int
+  """
+  All values that are contained in given list.
+  """
   price_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
   price_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
   price_lt: Int
+  """
+  All values less than or equal the given value.
+  """
   price_lte: Int
+  """
+  All values greater than the given value.
+  """
   price_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
   price_gte: Int
   createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   createdAt_gte: DateTime
   updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   updatedAt_gte: DateTime
+  user: UserWhereInput
 }
 
 input ItemWhereUniqueInput {
   id: ID
 }
 
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
 scalar Long
 
 type Mutation {
-  createPost(data: PostCreateInput!): Post!
   createUser(data: UserCreateInput!): User!
   createCartItem(data: CartItemCreateInput!): CartItem!
   createItem(data: ItemCreateInput!): Item!
   createOrderItem(data: OrderItemCreateInput!): OrderItem!
   createOrder(data: OrderCreateInput!): Order!
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
   updateOrderItem(data: OrderItemUpdateInput!, where: OrderItemWhereUniqueInput!): OrderItem
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
-  deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteItem(where: ItemWhereUniqueInput!): Item
   deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
   deleteOrder(where: OrderWhereUniqueInput!): Order
-  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
   upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
-  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
   updateManyCartItems(data: CartItemUpdateInput!, where: CartItemWhereInput!): BatchPayload!
   updateManyItems(data: ItemUpdateInput!, where: ItemWhereInput!): BatchPayload!
   updateManyOrderItems(data: OrderItemUpdateInput!, where: OrderItemWhereInput!): BatchPayload!
   updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
-  deleteManyPosts(where: PostWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
   deleteManyCartItems(where: CartItemWhereInput!): BatchPayload!
   deleteManyItems(where: ItemWhereInput!): BatchPayload!
@@ -488,12 +921,27 @@ enum MutationType {
   DELETED
 }
 
+"""
+An object with an ID
+"""
 interface Node {
+  """
+  The id of the object.
+  """
   id: ID!
 }
 
+"""
+A connection to a list of items.
+"""
 type OrderConnection {
+  """
+  Information to aid in pagination.
+  """
   pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
   edges: [OrderEdge]!
   aggregate: AggregateOrder!
 }
@@ -516,13 +964,31 @@ input OrderCreateWithoutUserInput {
   items: OrderItemCreateManyInput
 }
 
+"""
+An edge in a connection.
+"""
 type OrderEdge {
+  """
+  The item at the end of the edge.
+  """
   node: Order!
+  """
+  A cursor for use in pagination.
+  """
   cursor: String!
 }
 
+"""
+A connection to a list of items.
+"""
 type OrderItemConnection {
+  """
+  Information to aid in pagination.
+  """
   pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
   edges: [OrderItemEdge]!
   aggregate: AggregateOrderItem!
 }
@@ -543,8 +1009,17 @@ input OrderItemCreateManyInput {
   connect: [OrderItemWhereUniqueInput!]
 }
 
+"""
+An edge in a connection.
+"""
 type OrderItemEdge {
+  """
+  The item at the end of the edge.
+  """
   node: OrderItem!
+  """
+  A cursor for use in pagination.
+  """
   cursor: String!
 }
 
@@ -589,11 +1064,29 @@ type OrderItemSubscriptionPayload {
 }
 
 input OrderItemSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [OrderItemSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [OrderItemSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
   updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
   updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
   updatedFields_contains_some: [String!]
   node: OrderItemWhereInput
 }
@@ -617,109 +1110,394 @@ input OrderItemUpdateManyInput {
 }
 
 input OrderItemWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [OrderItemWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [OrderItemWhereInput!]
   id: ID
+  """
+  All values that are not equal to given value.
+  """
   id_not: ID
+  """
+  All values that are contained in given list.
+  """
   id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
   id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
   id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
   id_lte: ID
+  """
+  All values greater than the given value.
+  """
   id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
   id_gte: ID
+  """
+  All values containing the given string.
+  """
   id_contains: ID
+  """
+  All values not containing the given string.
+  """
   id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
   id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
   id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
   id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
   id_not_ends_with: ID
   title: String
+  """
+  All values that are not equal to given value.
+  """
   title_not: String
+  """
+  All values that are contained in given list.
+  """
   title_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   title_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   title_lt: String
+  """
+  All values less than or equal the given value.
+  """
   title_lte: String
+  """
+  All values greater than the given value.
+  """
   title_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   title_gte: String
+  """
+  All values containing the given string.
+  """
   title_contains: String
+  """
+  All values not containing the given string.
+  """
   title_not_contains: String
+  """
+  All values starting with the given string.
+  """
   title_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   title_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   title_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   title_not_ends_with: String
   description: String
+  """
+  All values that are not equal to given value.
+  """
   description_not: String
+  """
+  All values that are contained in given list.
+  """
   description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   description_lt: String
+  """
+  All values less than or equal the given value.
+  """
   description_lte: String
+  """
+  All values greater than the given value.
+  """
   description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   description_gte: String
+  """
+  All values containing the given string.
+  """
   description_contains: String
+  """
+  All values not containing the given string.
+  """
   description_not_contains: String
+  """
+  All values starting with the given string.
+  """
   description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   description_not_ends_with: String
   image: String
+  """
+  All values that are not equal to given value.
+  """
   image_not: String
+  """
+  All values that are contained in given list.
+  """
   image_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   image_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   image_lt: String
+  """
+  All values less than or equal the given value.
+  """
   image_lte: String
+  """
+  All values greater than the given value.
+  """
   image_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   image_gte: String
+  """
+  All values containing the given string.
+  """
   image_contains: String
+  """
+  All values not containing the given string.
+  """
   image_not_contains: String
+  """
+  All values starting with the given string.
+  """
   image_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   image_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   image_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   image_not_ends_with: String
   largeImage: String
+  """
+  All values that are not equal to given value.
+  """
   largeImage_not: String
+  """
+  All values that are contained in given list.
+  """
   largeImage_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   largeImage_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   largeImage_lt: String
+  """
+  All values less than or equal the given value.
+  """
   largeImage_lte: String
+  """
+  All values greater than the given value.
+  """
   largeImage_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   largeImage_gte: String
+  """
+  All values containing the given string.
+  """
   largeImage_contains: String
+  """
+  All values not containing the given string.
+  """
   largeImage_not_contains: String
+  """
+  All values starting with the given string.
+  """
   largeImage_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   largeImage_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   largeImage_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   largeImage_not_ends_with: String
   price: Int
+  """
+  All values that are not equal to given value.
+  """
   price_not: Int
+  """
+  All values that are contained in given list.
+  """
   price_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
   price_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
   price_lt: Int
+  """
+  All values less than or equal the given value.
+  """
   price_lte: Int
+  """
+  All values greater than the given value.
+  """
   price_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
   price_gte: Int
   createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   createdAt_gte: DateTime
   updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   updatedAt_gte: DateTime
   quantity: Int
+  """
+  All values that are not equal to given value.
+  """
   quantity_not: Int
+  """
+  All values that are contained in given list.
+  """
   quantity_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
   quantity_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
   quantity_lt: Int
+  """
+  All values less than or equal the given value.
+  """
   quantity_lte: Int
+  """
+  All values greater than the given value.
+  """
   quantity_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
   quantity_gte: Int
   item: ItemWhereInput
   user: UserWhereInput
@@ -758,11 +1536,29 @@ type OrderSubscriptionPayload {
 }
 
 input OrderSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [OrderSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [OrderSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
   updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
   updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
   updatedFields_contains_some: [String!]
   node: OrderWhereInput
 }
@@ -801,59 +1597,206 @@ input OrderUpsertWithoutUserInput {
 }
 
 input OrderWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [OrderWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [OrderWhereInput!]
   id: ID
+  """
+  All values that are not equal to given value.
+  """
   id_not: ID
+  """
+  All values that are contained in given list.
+  """
   id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
   id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
   id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
   id_lte: ID
+  """
+  All values greater than the given value.
+  """
   id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
   id_gte: ID
+  """
+  All values containing the given string.
+  """
   id_contains: ID
+  """
+  All values not containing the given string.
+  """
   id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
   id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
   id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
   id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
   id_not_ends_with: ID
   total: Int
+  """
+  All values that are not equal to given value.
+  """
   total_not: Int
+  """
+  All values that are contained in given list.
+  """
   total_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
   total_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
   total_lt: Int
+  """
+  All values less than or equal the given value.
+  """
   total_lte: Int
+  """
+  All values greater than the given value.
+  """
   total_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
   total_gte: Int
   createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   createdAt_gte: DateTime
   updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   updatedAt_gte: DateTime
   charge: String
+  """
+  All values that are not equal to given value.
+  """
   charge_not: String
+  """
+  All values that are contained in given list.
+  """
   charge_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   charge_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   charge_lt: String
+  """
+  All values less than or equal the given value.
+  """
   charge_lte: String
+  """
+  All values greater than the given value.
+  """
   charge_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   charge_gte: String
+  """
+  All values containing the given string.
+  """
   charge_contains: String
+  """
+  All values not containing the given string.
+  """
   charge_not_contains: String
+  """
+  All values starting with the given string.
+  """
   charge_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   charge_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   charge_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   charge_not_ends_with: String
   items_every: OrderItemWhereInput
   items_some: OrderItemWhereInput
@@ -865,210 +1808,64 @@ input OrderWhereUniqueInput {
   id: ID
 }
 
+"""
+Information about pagination in a connection.
+"""
 type PageInfo {
+  """
+  When paginating forwards, are there more items?
+  """
   hasNextPage: Boolean!
+  """
+  When paginating backwards, are there more items?
+  """
   hasPreviousPage: Boolean!
+  """
+  When paginating backwards, the cursor to continue.
+  """
   startCursor: String
+  """
+  When paginating forwards, the cursor to continue.
+  """
   endCursor: String
 }
 
-type PostConnection {
-  pageInfo: PageInfo!
-  edges: [PostEdge]!
-  aggregate: AggregatePost!
-}
-
-input PostCreateInput {
-  isPublished: Boolean
-  title: String!
-  text: String!
-  author: UserCreateOneWithoutPostsInput!
-}
-
-input PostCreateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
-}
-
-input PostCreateWithoutAuthorInput {
-  isPublished: Boolean
-  title: String!
-  text: String!
-}
-
-type PostEdge {
-  node: Post!
-  cursor: String!
-}
-
-enum PostOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  isPublished_ASC
-  isPublished_DESC
-  title_ASC
-  title_DESC
-  text_ASC
-  text_DESC
-}
-
-type PostPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  isPublished: Boolean!
-  title: String!
-  text: String!
-}
-
-type PostSubscriptionPayload {
-  mutation: MutationType!
-  node: Post
-  updatedFields: [String!]
-  previousValues: PostPreviousValues
-}
-
-input PostSubscriptionWhereInput {
-  AND: [PostSubscriptionWhereInput!]
-  OR: [PostSubscriptionWhereInput!]
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: PostWhereInput
-}
-
-input PostUpdateInput {
-  isPublished: Boolean
-  title: String
-  text: String
-  author: UserUpdateOneWithoutPostsInput
-}
-
-input PostUpdateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
-  disconnect: [PostWhereUniqueInput!]
-  delete: [PostWhereUniqueInput!]
-  update: [PostUpdateWithoutAuthorInput!]
-  upsert: [PostUpsertWithoutAuthorInput!]
-}
-
-input PostUpdateWithoutAuthorDataInput {
-  isPublished: Boolean
-  title: String
-  text: String
-}
-
-input PostUpdateWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  data: PostUpdateWithoutAuthorDataInput!
-}
-
-input PostUpsertWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  update: PostUpdateWithoutAuthorDataInput!
-  create: PostCreateWithoutAuthorInput!
-}
-
-input PostWhereInput {
-  AND: [PostWhereInput!]
-  OR: [PostWhereInput!]
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  isPublished: Boolean
-  isPublished_not: Boolean
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  author: UserWhereInput
-}
-
-input PostWhereUniqueInput {
-  id: ID
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+  NUKE
 }
 
 type Query {
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   orderItems(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
-  post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   item(where: ItemWhereUniqueInput!): Item
   orderItem(where: OrderItemWhereUniqueInput!): OrderItem
   order(where: OrderWhereUniqueInput!): Order
-  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
   orderItemsConnection(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
-  node(id: ID!): Node
+  """
+  Fetches an object given its ID
+  """
+  node("""
+  The ID of an object
+  """
+  id: ID!): Node
 }
 
 type Subscription {
-  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
@@ -1076,8 +1873,17 @@ type Subscription {
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
 }
 
+"""
+A connection to a list of items.
+"""
 type UserConnection {
+  """
+  Information to aid in pagination.
+  """
   pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
   edges: [UserEdge]!
   aggregate: AggregateUser!
 }
@@ -1086,11 +1892,9 @@ input UserCreateInput {
   email: String!
   password: String!
   name: String!
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
-  posts: PostCreateManyWithoutAuthorInput
+  permissions: UserCreatepermissionsInput
   orders: OrderCreateManyWithoutUserInput
   cart: CartItemCreateManyWithoutUserInput
 }
@@ -1110,20 +1914,17 @@ input UserCreateOneWithoutOrdersInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
+input UserCreatepermissionsInput {
+  set: [Permission!]
 }
 
 input UserCreateWithoutCartInput {
   email: String!
   password: String!
   name: String!
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
-  posts: PostCreateManyWithoutAuthorInput
+  permissions: UserCreatepermissionsInput
   orders: OrderCreateManyWithoutUserInput
 }
 
@@ -1131,28 +1932,23 @@ input UserCreateWithoutOrdersInput {
   email: String!
   password: String!
   name: String!
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
-  posts: PostCreateManyWithoutAuthorInput
+  permissions: UserCreatepermissionsInput
   cart: CartItemCreateManyWithoutUserInput
 }
 
-input UserCreateWithoutPostsInput {
-  email: String!
-  password: String!
-  name: String!
-  website: String
-  age: Int
-  resetToken: String
-  resetTokenExpiry: String
-  orders: OrderCreateManyWithoutUserInput
-  cart: CartItemCreateManyWithoutUserInput
-}
-
+"""
+An edge in a connection.
+"""
 type UserEdge {
+  """
+  The item at the end of the edge.
+  """
   node: User!
+  """
+  A cursor for use in pagination.
+  """
   cursor: String!
 }
 
@@ -1165,10 +1961,6 @@ enum UserOrderByInput {
   password_DESC
   name_ASC
   name_DESC
-  website_ASC
-  website_DESC
-  age_ASC
-  age_DESC
   resetToken_ASC
   resetToken_DESC
   resetTokenExpiry_ASC
@@ -1184,12 +1976,11 @@ type UserPreviousValues {
   email: String!
   password: String!
   name: String!
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
   createdAt: DateTime!
   updatedAt: DateTime!
+  permissions: [Permission!]
 }
 
 type UserSubscriptionPayload {
@@ -1200,11 +1991,29 @@ type UserSubscriptionPayload {
 }
 
 input UserSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [UserSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [UserSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
   mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
   updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
   updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
   updatedFields_contains_some: [String!]
   node: UserWhereInput
 }
@@ -1213,11 +2022,9 @@ input UserUpdateInput {
   email: String
   password: String
   name: String
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
-  posts: PostUpdateManyWithoutAuthorInput
+  permissions: UserUpdatepermissionsInput
   orders: OrderUpdateManyWithoutUserInput
   cart: CartItemUpdateManyWithoutUserInput
 }
@@ -1247,24 +2054,17 @@ input UserUpdateOneWithoutOrdersInput {
   upsert: UserUpsertWithoutOrdersInput
 }
 
-input UserUpdateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
-  disconnect: UserWhereUniqueInput
-  delete: UserWhereUniqueInput
-  update: UserUpdateWithoutPostsInput
-  upsert: UserUpsertWithoutPostsInput
+input UserUpdatepermissionsInput {
+  set: [Permission!]
 }
 
 input UserUpdateWithoutCartDataInput {
   email: String
   password: String
   name: String
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
-  posts: PostUpdateManyWithoutAuthorInput
+  permissions: UserUpdatepermissionsInput
   orders: OrderUpdateManyWithoutUserInput
 }
 
@@ -1277,34 +2077,15 @@ input UserUpdateWithoutOrdersDataInput {
   email: String
   password: String
   name: String
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
-  posts: PostUpdateManyWithoutAuthorInput
+  permissions: UserUpdatepermissionsInput
   cart: CartItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutOrdersInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutOrdersDataInput!
-}
-
-input UserUpdateWithoutPostsDataInput {
-  email: String
-  password: String
-  name: String
-  website: String
-  age: Int
-  resetToken: String
-  resetTokenExpiry: String
-  orders: OrderUpdateManyWithoutUserInput
-  cart: CartItemUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithoutPostsInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutPostsDataInput!
 }
 
 input UserUpsertWithoutCartInput {
@@ -1319,140 +2100,391 @@ input UserUpsertWithoutOrdersInput {
   create: UserCreateWithoutOrdersInput!
 }
 
-input UserUpsertWithoutPostsInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutPostsDataInput!
-  create: UserCreateWithoutPostsInput!
-}
-
 input UserWhereInput {
+  """
+  Logical AND on all given filters.
+  """
   AND: [UserWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
   OR: [UserWhereInput!]
   id: ID
+  """
+  All values that are not equal to given value.
+  """
   id_not: ID
+  """
+  All values that are contained in given list.
+  """
   id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
   id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
   id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
   id_lte: ID
+  """
+  All values greater than the given value.
+  """
   id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
   id_gte: ID
+  """
+  All values containing the given string.
+  """
   id_contains: ID
+  """
+  All values not containing the given string.
+  """
   id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
   id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
   id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
   id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
   id_not_ends_with: ID
   email: String
+  """
+  All values that are not equal to given value.
+  """
   email_not: String
+  """
+  All values that are contained in given list.
+  """
   email_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   email_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   email_lt: String
+  """
+  All values less than or equal the given value.
+  """
   email_lte: String
+  """
+  All values greater than the given value.
+  """
   email_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   email_gte: String
+  """
+  All values containing the given string.
+  """
   email_contains: String
+  """
+  All values not containing the given string.
+  """
   email_not_contains: String
+  """
+  All values starting with the given string.
+  """
   email_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   email_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   email_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   email_not_ends_with: String
   password: String
+  """
+  All values that are not equal to given value.
+  """
   password_not: String
+  """
+  All values that are contained in given list.
+  """
   password_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   password_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   password_lt: String
+  """
+  All values less than or equal the given value.
+  """
   password_lte: String
+  """
+  All values greater than the given value.
+  """
   password_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   password_gte: String
+  """
+  All values containing the given string.
+  """
   password_contains: String
+  """
+  All values not containing the given string.
+  """
   password_not_contains: String
+  """
+  All values starting with the given string.
+  """
   password_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   password_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   password_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   password_not_ends_with: String
   name: String
+  """
+  All values that are not equal to given value.
+  """
   name_not: String
+  """
+  All values that are contained in given list.
+  """
   name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   name_lt: String
+  """
+  All values less than or equal the given value.
+  """
   name_lte: String
+  """
+  All values greater than the given value.
+  """
   name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   name_gte: String
+  """
+  All values containing the given string.
+  """
   name_contains: String
+  """
+  All values not containing the given string.
+  """
   name_not_contains: String
+  """
+  All values starting with the given string.
+  """
   name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   name_not_ends_with: String
-  website: String
-  website_not: String
-  website_in: [String!]
-  website_not_in: [String!]
-  website_lt: String
-  website_lte: String
-  website_gt: String
-  website_gte: String
-  website_contains: String
-  website_not_contains: String
-  website_starts_with: String
-  website_not_starts_with: String
-  website_ends_with: String
-  website_not_ends_with: String
-  age: Int
-  age_not: Int
-  age_in: [Int!]
-  age_not_in: [Int!]
-  age_lt: Int
-  age_lte: Int
-  age_gt: Int
-  age_gte: Int
   resetToken: String
+  """
+  All values that are not equal to given value.
+  """
   resetToken_not: String
+  """
+  All values that are contained in given list.
+  """
   resetToken_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   resetToken_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   resetToken_lt: String
+  """
+  All values less than or equal the given value.
+  """
   resetToken_lte: String
+  """
+  All values greater than the given value.
+  """
   resetToken_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   resetToken_gte: String
+  """
+  All values containing the given string.
+  """
   resetToken_contains: String
+  """
+  All values not containing the given string.
+  """
   resetToken_not_contains: String
+  """
+  All values starting with the given string.
+  """
   resetToken_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   resetToken_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   resetToken_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   resetToken_not_ends_with: String
   resetTokenExpiry: String
+  """
+  All values that are not equal to given value.
+  """
   resetTokenExpiry_not: String
+  """
+  All values that are contained in given list.
+  """
   resetTokenExpiry_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
   resetTokenExpiry_not_in: [String!]
+  """
+  All values less than the given value.
+  """
   resetTokenExpiry_lt: String
+  """
+  All values less than or equal the given value.
+  """
   resetTokenExpiry_lte: String
+  """
+  All values greater than the given value.
+  """
   resetTokenExpiry_gt: String
+  """
+  All values greater than or equal the given value.
+  """
   resetTokenExpiry_gte: String
+  """
+  All values containing the given string.
+  """
   resetTokenExpiry_contains: String
+  """
+  All values not containing the given string.
+  """
   resetTokenExpiry_not_contains: String
+  """
+  All values starting with the given string.
+  """
   resetTokenExpiry_starts_with: String
+  """
+  All values not starting with the given string.
+  """
   resetTokenExpiry_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
   resetTokenExpiry_ends_with: String
+  """
+  All values not ending with the given string.
+  """
   resetTokenExpiry_not_ends_with: String
   createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   createdAt_gte: DateTime
   updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
   updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
   updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
   updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
   updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
   updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
   updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
   updatedAt_gte: DateTime
-  posts_every: PostWhereInput
-  posts_some: PostWhereInput
-  posts_none: PostWhereInput
   orders_every: OrderWhereInput
   orders_some: OrderWhereInput
   orders_none: OrderWhereInput

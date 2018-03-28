@@ -39,16 +39,18 @@
     "react": "^16.3.0-alpha.1",
     "react-apollo": "^2.1.0",
     "react-dom": "^16.3.0-alpha.1",
+    "react-spinners": "^0.2.6",
     "react-stripe-checkout": "^2.6.3",
     "react-transition-group": "^2.2.1",
     "stripe": "^5.5.0",
     "styled-components": "^3.2.3"
   },
   "devDependencies": {
+    "babel-plugin-module-resolver": "^3.1.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "jest": "^22.4.3",
-    "enzyme-to-json": "^3.3.3"
+    "enzyme-to-json": "^3.3.3",
+    "jest": "^22.4.3"
   },
   "//": "This is out babel config, I prefer this over a .babelrc file",
   "jest": {
@@ -61,6 +63,16 @@
     ]
   },
   "babel": {
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "alias": {
+            "react-apollo": "react-apollo/react-apollo.browser.umd.js"
+          }
+        }
+      ]
+    ],
     "env": {
       "development": {
         "presets": [

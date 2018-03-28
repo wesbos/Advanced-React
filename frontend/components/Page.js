@@ -13,6 +13,7 @@ const theme = {
   lightgrey: '#E1E1E1',
   offWhite: '#EDEDED',
   maxWidth: '1300px',
+  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
 };
 
 injectGlobal`
@@ -26,6 +27,7 @@ injectGlobal`
    background-color: #ffffff;
    margin: 0;
    font-size: 1.5rem;
+   line-height: 2;
    background: red;
   }
   *, *:before, *:after {
@@ -35,6 +37,12 @@ injectGlobal`
     color: ${theme.black};
     text-decoration: none;
   }
+`;
+
+const Inner = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
 `;
 
 const StyledPage = styled.div`
@@ -48,7 +56,7 @@ const Page = ({ children }) => (
       <StyledPage className="main">
         <Meta />
         <Header />
-        {children}
+        <Inner>{children}</Inner>
       </StyledPage>
     </ThemeProvider>
   </UIProvider>

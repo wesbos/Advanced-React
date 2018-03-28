@@ -1,11 +1,11 @@
-type Post {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  isPublished: Boolean! @default(value: "false")
-  title: String!
-  text: String!
-  author: User!
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+  NUKE
 }
 
 type User {
@@ -13,15 +13,13 @@ type User {
   email: String! @unique
   password: String!
   name: String!
-  posts: [Post!]!
   orders: [Order!]!
-  website: String
-  age: Int
   resetToken: String
   resetTokenExpiry: String
   cart: [CartItem!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  permissions: [Permission!]!
 }
 
 type CartItem {
@@ -42,6 +40,7 @@ type Item {
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: User! # Relationship to a user
 }
 
 type OrderItem {
