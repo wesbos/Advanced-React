@@ -10,6 +10,8 @@ function getComponentDisplayName(Component) {
   return Component.displayName || Component.name || 'Unknown';
 }
 
+let myApollo;
+
 export default ComposedComponent =>
   class WithData extends React.Component {
     static displayName = `WithData(${getComponentDisplayName(ComposedComponent)})`;
@@ -29,12 +31,19 @@ export default ComposedComponent =>
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      console.log('Trying...');
-      console.log(ctx.query);
+
       const apollo = initApollo();
+      myApollo = apollo;
+
       try {
+        console.log('Rendering SSR');
+        const url = {
+          query: ctx.query,
+          asPath: ctx.asPath,
+          pathname: ctx.pathname,
+        };
         // Run all GraphQL queries
-        await getDataFromTree(<ComposedComponent ctx={ctx} {...composedInitialProps} />, {
+        await getDataFromTree(<ComposedComponent ctx={ctx} url={url} {...composedInitialProps} />, {
           router: {
             asPath: ctx.asPath,
             pathname: ctx.pathname,
@@ -43,8 +52,7 @@ export default ComposedComponent =>
           client: apollo,
         });
       } catch (error) {
-        // console.log(ctx.query);
-        console.log('An error Happened SSR');
+        console.log('An error Happened with Server Side Rendering');
         console.log(error);
         // Prevent Apollo Client GraphQL errors from crashing SSR.
         // Handle them in components via the data.error prop:
@@ -70,14 +78,15 @@ export default ComposedComponent =>
       };
     }
 
-    constructor(props) {
-      super(props);
-      this.apollo = initApollo(this.props.serverState.apollo.data);
-    }
-
+    // constructor(props) {
+    //   super(props);
+    //   this.apollo = initApollo(this.props.serverState.apollo.data);
+    // }
     render() {
+      console.log('Second RENDER');
+      console.log(myApollo);
       return (
-        <ApolloProvider client={this.apollo}>
+        <ApolloProvider client={myApollo}>
           <ComposedComponent {...this.props} />
         </ApolloProvider>
       );

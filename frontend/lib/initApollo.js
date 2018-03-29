@@ -1,4 +1,5 @@
 import ApolloClient from 'apollo-boost';
+import { InMemoryCache } from 'apollo-boost';
 import fetch from 'isomorphic-fetch';
 import { endpoint } from '../config';
 
@@ -12,6 +13,8 @@ let apolloClient = null;
 function create(initialState) {
   return new ApolloClient({
     uri: endpoint,
+    cache: new InMemoryCache().restore(initialState || {}),
+    ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     request: operation => {
       if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
         operation.setContext({
