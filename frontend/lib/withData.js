@@ -1,94 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import withApollo from 'next-with-apollo';
+import ApolloClient from 'apollo-boost';
 
-import Head from 'next/head';
-import initApollo from './initApollo';
+// can also be a function that accepts a `headers` object (SSR only) and returns a config
 
-// Gets the display name of a JSX component for dev tools
-function getComponentDisplayName(Component) {
-  return Component.displayName || Component.name || 'Unknown';
-}
-
-let myApollo;
-
-export default ComposedComponent =>
-  class WithData extends React.Component {
-    static displayName = `WithData(${getComponentDisplayName(ComposedComponent)})`;
-    static propTypes = {
-      serverState: PropTypes.object.isRequired,
-    };
-
-    static async getInitialProps(ctx) {
-      // Initial serverState with apollo (empty)
-      let serverState;
-
-      // Evaluate the composed component's getInitialProps()
-      let composedInitialProps = {};
-      if (ComposedComponent.getInitialProps) {
-        composedInitialProps = await ComposedComponent.getInitialProps(ctx);
-      }
-
-      // Run all GraphQL queries in the component tree
-      // and extract the resulting data
-
-      const apollo = initApollo();
-      myApollo = apollo;
-
-      try {
-        console.log('Rendering SSR');
-        const url = {
-          query: ctx.query,
-          asPath: ctx.asPath,
-          pathname: ctx.pathname,
-        };
-        // Run all GraphQL queries
-        await getDataFromTree(<ComposedComponent ctx={ctx} url={url} {...composedInitialProps} />, {
-          router: {
-            asPath: ctx.asPath,
-            pathname: ctx.pathname,
-            query: ctx.query,
+export default withApollo({
+  client: new ApolloClient({
+    uri: 'http://localhost:4444',
+    // cache: new InMemoryCache().restore(initialState || {}),
+    // ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
+    request: operation => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
+        operation.setContext({
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
           },
-          client: apollo,
         });
-      } catch (error) {
-        console.log('An error Happened with Server Side Rendering');
-        console.log(error);
-        // Prevent Apollo Client GraphQL errors from crashing SSR.
-        // Handle them in components via the data.error prop:
-        // http://dev.apollodata.com/react/api-queries.html#graphql-query-data-error
       }
-
-      if (!process.browser) {
-        // getDataFromTree does not call componentWillUnmount
-        // head side effect therefore need to be cleared manually
-        Head.rewind();
-      }
-
-      // Extract query data from the Apollo store
-      serverState = {
-        apollo: {
-          data: apollo.cache.extract(),
-        },
-      };
-
-      return {
-        serverState,
-        ...composedInitialProps,
-      };
-    }
-
-    // constructor(props) {
-    //   super(props);
-    //   this.apollo = initApollo(this.props.serverState.apollo.data);
-    // }
-    render() {
-      console.log('Second RENDER');
-      console.log(myApollo);
-      return (
-        <ApolloProvider client={myApollo}>
-          <ComposedComponent {...this.props} />
-        </ApolloProvider>
-      );
-    }
-  };
+    },
+  }),
+});
