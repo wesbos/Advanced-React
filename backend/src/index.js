@@ -2,6 +2,11 @@ const createServer = require('./createServer');
 
 const server = createServer();
 
+server.express.use((req, res, next, db) => {
+  console.log('MIDDLEWARE!');
+  next();
+});
+
 server.start({ port: 4444 }, deets => {
   console.log(`Server is running on http://localhost:${deets.port}`);
 });

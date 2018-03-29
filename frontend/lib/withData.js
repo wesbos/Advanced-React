@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
+
 import Head from 'next/head';
 import initApollo from './initApollo';
 
@@ -33,16 +34,13 @@ export default ComposedComponent =>
       const apollo = initApollo();
       try {
         // Run all GraphQL queries
-        const data = await getDataFromTree(<ComposedComponent ctx={ctx} {...composedInitialProps} />, {
+        await getDataFromTree(<ComposedComponent ctx={ctx} {...composedInitialProps} />, {
           router: {
             asPath: ctx.asPath,
             pathname: ctx.pathname,
             query: ctx.query,
           },
           client: apollo,
-        }).catch(err => {
-          console.log('CAUGHT HERE');
-          console.log(err);
         });
       } catch (error) {
         // console.log(ctx.query);

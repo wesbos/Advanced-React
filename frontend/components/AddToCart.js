@@ -10,8 +10,11 @@ class AddToCart extends Component {
 
   update = (proxy, payload) => {
     console.log('Updating!');
+    console.log(payload);
     const newCartItem = payload.data.addToCart;
     const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
+    console.log(newCartItem);
+
     const existingIndex = data.me.cart.findIndex(cartItem => cartItem.id === newCartItem.id);
     if (existingIndex >= 0) {
       // already in cache, just replace it

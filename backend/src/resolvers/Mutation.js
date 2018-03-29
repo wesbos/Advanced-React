@@ -177,6 +177,7 @@ const mutations = {
     });
 
     if (existingCartItem) {
+      console.log('Existing');
       return ctx.db.mutation.updateCartItem(
         {
           where: { id: existingCartItem.id },
@@ -278,20 +279,16 @@ const mutations = {
   },
   async updateUser(parent, args, ctx, info) {
     const userId = getUserId(ctx);
-    console.log(userId);
     const updatedUser = await ctx.db.mutation.updateUser({
       data: args,
       where: { id: userId },
     });
-    console.log(updatedUser);
     return updatedUser;
   },
 
   async updatePermissions(parent, args, ctx, info) {
     const userId = getUserId(ctx);
-    await wait(20000);
     const currentUser = await ctx.db.query.user({ where: { id: userId } }, info);
-    console.log(currentUser);
     if (!currentUser) throw new Error('You Must be logged in to updat permissions!');
     hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE']);
     return ctx.db.mutation.updateUser(
