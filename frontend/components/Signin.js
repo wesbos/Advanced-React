@@ -19,7 +19,6 @@ class Signin extends Component {
   };
 
   update = (proxy, payload) => {
-    console.log(proxy);
     const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
     data.me = payload.data.signin.user;
     proxy.writeQuery({ query: CURRENT_USER_QUERY, data });

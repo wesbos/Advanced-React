@@ -6,6 +6,7 @@ import { CURRENT_USER_QUERY } from '../queries/index';
 import CartCount from './CartCount';
 import Signout from './Signout';
 import { UIContext } from './UIContext';
+import Dump from './Dump';
 
 const StyledUl = styled.ul`
   margin: 0;
@@ -61,11 +62,22 @@ class Nav extends React.Component {
   render() {
     return (
       <Query query={CURRENT_USER_QUERY}>
-        {({ data: { me } }) => (
+        {({ data: { me }, refetch, loading, error }) => (
           <StyledUl>
             <Link prefetch href="/items">
               <a>Shop</a>
             </Link>
+            <button
+              onClick={() => {
+                console.log('refetching!!');
+                refetch()
+                  .then(console.log)
+                  .catch(console.error);
+                console.log('done');
+              }}
+            >
+              Refetch User
+            </button>
             <Link prefetch href="/add">
               <a>Sell</a>
             </Link>

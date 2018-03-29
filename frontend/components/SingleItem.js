@@ -24,10 +24,6 @@ const SingleItem = props => (
   <Query query={SINGLE_ITEM_QUERY} variables={{ id: props.id }}>
     {({ data: { items }, loading, error }) => {
       if (loading) return <p>Loading...</p>;
-      {
-        console.log(`---Loading: ${loading}-----`);
-        console.log('--------\n\n\n');
-      }
       const [item] = items;
       return (
         <SingleItemStyles>
