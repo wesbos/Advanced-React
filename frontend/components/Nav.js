@@ -61,23 +61,12 @@ const StyledUl = styled.ul`
 class Nav extends React.Component {
   render() {
     return (
-      <Query query={CURRENT_USER_QUERY}>
-        {({ data: { me }, refetch, loading, error }) => (
+      <Query query={CURRENT_USER_QUERY} ssr={false}>
+        {({ data: { me } }) => (
           <StyledUl>
             <Link prefetch href="/items">
               <a>Shop</a>
             </Link>
-            <button
-              onClick={() => {
-                console.log('refetching!!');
-                refetch()
-                  .then(console.log)
-                  .catch(console.error);
-                console.log('done');
-              }}
-            >
-              Refetch User
-            </button>
             <Link prefetch href="/add">
               <a>Sell</a>
             </Link>

@@ -34,15 +34,30 @@ class ItemList extends React.Component {
         <Pagination page={this.props.page} />
         <Query
           query={ALL_ITEMS_QUERY}
+          fetchPolicy="cache-and-network"
+          ssr={false}
           variables={{
             skip: this.props.page * perPage - perPage,
             first: perPage,
           }}
         >
-          {({ data, error, loading }) => {
+          {({ data, error, loading, variables, refetch }) => {
             if (loading) return <div>Loading</div>;
             if (error) return <div>Error</div>;
-            return <Items key={this.props.page}>{data.items.map(item => <Item key={item.id} item={item} />)}</Items>;
+            return (
+              <Items key={this.props.page}>
+                {data.items.map(item => <Item key={item.id} item={item} />)}
+                <button
+                  onClick={() => {
+                    console.log('Refetching..');
+                    console.log(refetch);
+                    refetch();
+                  }}
+                >
+                  refetch
+                </button>
+              </Items>
+            );
           }}
         </Query>
         <Pagination page={this.props.page} />

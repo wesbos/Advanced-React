@@ -5,6 +5,7 @@ import Error from './ErrorMessage';
 import Form from './styles/Form';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import formatMoney from '../lib/formatMoney';
 
 class CreateItem extends Component {
   state = {
@@ -76,7 +77,7 @@ class CreateItem extends Component {
                 />
               </label>
               <label>
-                Price
+                Price {this.state.price && formatMoney(this.state.price)}
                 <input
                   required
                   type="number"

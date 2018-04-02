@@ -7,11 +7,10 @@ export default withApollo({
   client: new ApolloClient({
     uri: 'http://localhost:4444',
     // cache: new InMemoryCache().restore(initialState || {}),
-    // ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
+    ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     request: operation => {
-      console.log('hey');
+      console.log(operation);
       if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
-        console.log('heyyy');
         console.log(`Bearer ${localStorage.getItem('token')}`);
         operation.setContext({
           headers: {
