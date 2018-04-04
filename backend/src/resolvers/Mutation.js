@@ -29,6 +29,7 @@ const mutations = {
 
   async signin(parent, { email, password }, ctx, info) {
     const user = await ctx.db.query.user({ where: { email } });
+    console.log(user);
     if (!user) {
       throw new Error(`No such user found for email: ${email}`);
     }
@@ -64,16 +65,18 @@ const mutations = {
   },
 
   async deleteItem(parent, args, ctx, info) {
-    // TODO - handle auth for deleting an item
-    // You Should Either Own this item, or have CAN_DELETE in roles
-    return ctx.db.mutation.deleteItem(
-      {
-        where: {
-          id: args.id,
-        },
-      },
-      info
-    );
+    const where = {
+      id: args.id,
+    };
+    // 1. find the item
+    const item = await ctx.db.query.item({ where }, `{ user {id}, title, id, description }`);
+    // 2. Make sure they own it, or are an admin
+    if (item.user.id !== ctx.request.user.id || !ctx.request.user.permissions.includes('ADMIN')) {
+      throw new Error("You aren't allowed to delete that item!");
+    }
+
+    // You Should Either Own this item, or have ITEMDELETE in roles
+    return ctx.db.mutation.deleteItem({ where }, info);
   },
 
   async updateItem(parent, args, ctx, info) {
@@ -204,12 +207,15 @@ const mutations = {
       info
     );
   },
+
   // delete that cart item
   async removeFromCart(parent, args, ctx, info) {
+    // TODO: add userId to where
     return ctx.db.mutation.deleteCartItem({
       where: { id: args.id },
     });
   },
+
   async createOrder(parent, args, ctx, info) {
     const userId = getUserId(ctx);
     const user = await ctx.db.query.user(

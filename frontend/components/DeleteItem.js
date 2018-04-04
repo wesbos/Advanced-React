@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { REMOVE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries/index';
+import Error from './ErrorMessage';
 
 class DeleteItem extends React.Component {
   static propTypes = {
@@ -20,7 +21,7 @@ class DeleteItem extends React.Component {
   render() {
     return (
       <Mutation mutation={REMOVE_ITEM_MUTATION} variables={{ id: this.props.id }} update={this.update}>
-        {removeItem => (
+        {(removeItem, { error }) => (
           <button
             onClick={() => {
               if (confirm('Are you sure you want to delete this item?')) {
@@ -28,7 +29,7 @@ class DeleteItem extends React.Component {
               }
             }}
           >
-            &times; Delete item
+            {error ? error.message : '× Delete Item'}
           </button>
         )}
       </Mutation>
