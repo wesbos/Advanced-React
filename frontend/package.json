@@ -22,7 +22,7 @@
     "apollo-link-state": "^0.4.1",
     "babel-plugin-styled-components": "^1.5.1",
     "date-fns": "^2.0.0-alpha.7",
-    "downshift": "^1.31.2",
+    "downshift": "^1.31.3",
     "express": "^4.16.3",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
@@ -33,13 +33,13 @@
     "next-with-apollo": "^1.0.6",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.1",
-    "react": "^16.3.0-alpha.1",
-    "react-apollo": "^2.1.0",
-    "react-dom": "^16.3.0-alpha.1",
-    "react-spinners": "^0.2.6",
+    "react": "^16.3.1",
+    "react-apollo": "^2.1.2",
+    "react-dom": "^16.3.1",
+    "react-spinners": "^0.3.1",
     "react-stripe-checkout": "^2.6.3",
     "react-transition-group": "^2.3.0",
-    "styled-components": "^3.2.3"
+    "styled-components": "^3.2.5"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.1.1",

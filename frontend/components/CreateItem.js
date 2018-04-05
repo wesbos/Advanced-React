@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import { CREATE_ITEM_MUTATION } from '../queries';
+import { CREATE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
 import PropTypes from 'prop-types';
@@ -42,9 +42,22 @@ class CreateItem extends Component {
     });
   };
 
+  // TODO: Problem here - if I refetch page 1, page 2 to infinity are still out of date. I need to refetch all the pages somehow? without @connection
   render() {
     return (
-      <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={CREATE_ITEM_MUTATION}
+        variables={this.state}
+        refetchQueries={[
+          {
+            query: ALL_ITEMS_QUERY,
+            variables: {
+              skip: 0,
+              first: 2,
+            },
+          },
+        ]}
+      >
         {(createItem, { loading, error }) => (
           <Form
             onSubmit={async e => {
@@ -62,7 +75,9 @@ class CreateItem extends Component {
               <label>
                 Image
                 <input required onChange={this.uploadFile} type="file" accept=".png, .jpg, .jpeg" />
-                {this.state.image ? <img src={this.state.image} width="100" alt={this.state.title} /> : null}
+                {this.state.image ? (
+                  <img src={this.state.image} width="100" alt={this.state.title} />
+                ) : null}
               </label>
               <label>
                 Title

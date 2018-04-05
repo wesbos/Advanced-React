@@ -9,24 +9,24 @@
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
-    "graphql": "^0.12.3",
-    "graphql-yoga": "1.2.4",
-    "jsonwebtoken": "8.1.1",
-    "nodemailer": "^4.4.2",
-    "prisma-binding": "1.5.7",
+    "graphql": "^0.13.2",
+    "graphql-yoga": "1.7.1",
+    "jsonwebtoken": "8.2.1",
+    "nodemailer": "^4.6.4",
+    "prisma-binding": "1.5.16",
     "react-debounce-input": "^3.2.0",
-    "stripe": "^5.4.0"
+    "stripe": "^5.8.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
-    "chalk": "^2.3.0",
-    "dotenv": "5.0.0",
-    "graphql-cli": "2.14.0",
-    "graphql-request": "^1.4.1",
-    "jest-cli": "^22.1.4",
-    "nodemon": "1.14.12",
+    "chalk": "^2.3.2",
+    "dotenv": "5.0.1",
+    "graphql-cli": "2.15.8",
+    "graphql-request": "^1.5.1",
+    "jest-cli": "^22.4.3",
+    "nodemon": "1.17.3",
     "npm-run-all": "4.1.2",
-    "prisma": "1.2.0"
+    "prisma": "1.5.3"
   },
   "license": "MIT",
   "repository": {

@@ -4,6 +4,7 @@ import { CURRENT_USER_QUERY } from '../queries';
 
 class Signout extends Component {
   signout = refetch => {
+    console.log(refetch);
     console.log('Signing Out');
     localStorage.removeItem('token');
     refetch();

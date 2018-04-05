@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { perPage } from '../config';
-import { ALL_ITEMS_QUERY } from '../queries/index';
+import { ALL_ITEMS_QUERY, ITEM_COUNT_QUERY } from '../queries/index';
 
 const PaginationStyles = styled.div`
   text-align: center;

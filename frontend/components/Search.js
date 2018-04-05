@@ -1,9 +1,8 @@
 import Downshift from 'downshift';
-import { Query } from 'react-apollo';
 import Router from 'next/router';
 import styled from 'styled-components';
 import debounce from 'lodash.debounce';
-
+import { client } from '../lib/withData';
 import { SEARCH_ITEMS_QUERY } from '../queries';
 
 function routeToItem(item) {
@@ -43,77 +42,72 @@ const SearchStyles = styled.div`
     padding: 10px;
     border: 0;
     font-size: 2rem;
+    &.loading {
+      background: red;
+    }
   }
 `;
 
-function AutoComplete(props) {
-  const { items, onChange, loading } = props;
-  return (
-    <Downshift onChange={routeToItem} itemToString={i => (i === null ? '' : i.title)}>
-      {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
-        <div>
-          {/* This is the searchInput */}
-          {loading && 'LOADING'}
-          <input
-            {...getInputProps({
-              placeholder: 'Search For Item',
-              id: 'search',
-              onChange: e => {
-                props.refetch({ searchTerm: e.target.value });
-              },
-            })}
-          />
-          {isOpen ? (
-            <DropDown>
-              {/* This is the Dropdown */}
-              {items.map((item, index) => (
-                <DropDownItem
-                  {...getItemProps({ item })}
-                  key={item.id}
-                  highlighted={highlightedIndex === index}
-                >
-                  <img width="50" src={item.image} alt={item.title} />
-                  {item.title}
-                </DropDownItem>
-              ))}
-              {!items.length && <DropDownItem>Nothing Found for {inputValue}...</DropDownItem>}
-            </DropDown>
-          ) : null}
-        </div>
-      )}
-    </Downshift>
-  );
-}
-
-// TODO: This should not fire a queryon page load
-class Search extends React.Component {
+class AutoComplete extends React.Component {
   state = {
-    skip: true,
+    items: [],
+    loading: false,
   };
-  componentDidMount() {
-    this.setState({ skip: false });
-  }
+  onChange = debounce(async e => {
+    if (!e.target.value) {
+      return this.setState({ items: [] });
+    }
+    this.setState({ loading: true });
+    const res = await client.query({
+      query: SEARCH_ITEMS_QUERY,
+      variables: { searchTerm: e.target.value },
+    });
+    this.setState({ items: res.data.items, loading: false });
+  }, 350);
+
   render() {
     return (
       <SearchStyles>
-        <Query
-          skip={this.state.skip}
-          query={SEARCH_ITEMS_QUERY}
-          variables={{ searchTerm: '' }}
-          fetchPolicy="network-only"
-        >
-          {({ data, error, loading, refetch }) =>
-            console.log('QUERY', data.items) || (
-              <AutoComplete
-                loading={loading}
-                items={data.items || []}
-                refetch={debounce(refetch, 300)}
+        <Downshift onChange={routeToItem} itemToString={i => (i === null ? '' : i.title)}>
+          {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
+            <div>
+              {/* This is the searchInput */}
+              <input
+                {...getInputProps({
+                  placeholder: 'Search For Item',
+                  id: 'search',
+                  className: this.state.loading ? 'loading' : '',
+                  onChange: e => {
+                    e.persist();
+                    this.onChange(e);
+                  },
+                })}
               />
-            )}
-        </Query>
+              {/* This is the Dropdown */}
+              {isOpen && (
+                <DropDown>
+                  {this.state.items.map((item, index) => (
+                    <DropDownItem
+                      {...getItemProps({ item })}
+                      key={item.id}
+                      highlighted={highlightedIndex === index}
+                    >
+                      <img width="50" src={item.image} alt={item.title} />
+                      {item.title}
+                    </DropDownItem>
+                  ))}
+                  {/* Found Nothing State */}
+                  {!this.state.items.length && (
+                    <DropDownItem>Nothing Found for {inputValue}...</DropDownItem>
+                  )}
+                </DropDown>
+              )}
+            </div>
+          )}
+        </Downshift>
       </SearchStyles>
     );
   }
 }
 
-export default Search;
+export default AutoComplete;

@@ -3,6 +3,7 @@ const { forwardTo } = require('prisma-binding');
 
 const Query = {
   items(parent, args, ctx, info) {
+    console.log('ITEMS!');
     // check auth
     return ctx.db.query.items({ ...args }, info);
   },
@@ -36,7 +37,7 @@ const Query = {
   },
 
   async users(parent, args, ctx, info) {
-    console.log('TODO: check their permissions');
+    // TODO Permissions
     const userId = getUserId(ctx);
     return ctx.db.query.users({}, info);
   },

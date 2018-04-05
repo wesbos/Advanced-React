@@ -15,8 +15,7 @@ class Signin extends Component {
     e.preventDefault();
     const res = await signin();
     localStorage.setItem('token', res.data.signin.token);
-    // client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
-    client.query({ query: CURRENT_USER_QUERY });
+    client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
   };
 
   saveToState = e => {

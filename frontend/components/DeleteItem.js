@@ -20,7 +20,11 @@ class DeleteItem extends React.Component {
 
   render() {
     return (
-      <Mutation mutation={REMOVE_ITEM_MUTATION} variables={{ id: this.props.id }} update={this.update}>
+      <Mutation
+        mutation={REMOVE_ITEM_MUTATION}
+        variables={{ id: this.props.id }}
+        update={this.update}
+      >
         {(removeItem, { error }) => (
           <button
             onClick={() => {

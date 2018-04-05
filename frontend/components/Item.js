@@ -35,7 +35,6 @@ const Item = styled.div`
     & > * {
       background: white;
       border: 0;
-      text-align: center;
       font-size: 1rem;
       padding: 1rem;
     }
@@ -44,10 +43,11 @@ const Item = styled.div`
 
 const PriceTag = styled.span`
   background: ${props => props.theme.red};
-  transform: rotate(2deg);
+  transform: rotate(3deg);
   color: white;
   font-weight: 600;
   padding: 5px;
+  line-height: 1;
   font-size: 3rem;
   display: inline-block;
   position: absolute;
