@@ -46,13 +46,16 @@ const mutations = {
 
   // Creation of Post Mutations
   async createItem(parent, args, ctx, info) {
-    const userId = getUserId(ctx);
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to create an item');
+    }
+
     const item = await ctx.db.mutation.createItem(
       {
         data: {
           user: {
             connect: {
-              id: userId,
+              id: ctx.request.userId,
             },
           },
           ...args,
@@ -80,7 +83,14 @@ const mutations = {
   },
 
   async updateItem(parent, args, ctx, info) {
+    const user = ctx.request.user;
+    const item = await ctx.db.query.item({ where: { id: args.id } }, `{ user { id } }`);
+    if (item.user.id !== user.id || !user.permissions.includes('ADMIN')) {
+      throw new Error('You are not allowed to update that item!');
+    }
+
     const updates = { ...args };
+    // remove the ID because you can't update that
     delete updates.id;
     return ctx.db.mutation.updateItem({
       where: { id: args.id },

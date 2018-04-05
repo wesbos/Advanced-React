@@ -9,7 +9,7 @@ import { ALL_ITEMS_QUERY } from '../queries/index';
 
 const Items = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr;
   grid-gap: 60px;
   max-width: ${props => props.theme.maxWidth};
   margin: 0 auto;
@@ -44,20 +44,7 @@ class ItemList extends React.Component {
           {({ data, error, loading, variables, refetch }) => {
             if (loading) return <div>Loading</div>;
             if (error) return <div>Error</div>;
-            return (
-              <Items key={this.props.page}>
-                {data.items.map(item => <Item key={item.id} item={item} />)}
-                <button
-                  onClick={() => {
-                    console.log('Refetching..');
-                    console.log(refetch);
-                    refetch();
-                  }}
-                >
-                  refetch
-                </button>
-              </Items>
-            );
+            return <Items key={this.props.page}>{data.items.map(item => <Item key={item.id} item={item} />)}</Items>;
           }}
         </Query>
         <Pagination page={this.props.page} />

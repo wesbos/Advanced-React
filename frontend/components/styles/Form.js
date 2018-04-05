@@ -17,20 +17,19 @@ const Form = styled.form`
   background: rgba(0, 0, 0, 0.02);
   border: 5px solid white;
   padding: 20px;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
   font-weight: 600;
   label {
-    margin-bottom: 1rem;
     display: block;
+    margin-bottom: 1rem;
   }
   input,
   textarea,
   select {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
     width: 100%;
-    padding: 1rem;
-    font-size: 2rem;
+    padding: 0.5rem;
+    font-size: 1rem;
     border: 1px solid black;
     &:focus {
       outline: 0;
@@ -45,7 +44,7 @@ const Form = styled.form`
     border: 0;
     font-size: 2rem;
     font-weight: 600;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1.2rem;
   }
   fieldset {
     border: 0;

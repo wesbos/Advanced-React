@@ -2,6 +2,8 @@ import Downshift from 'downshift';
 import { Query } from 'react-apollo';
 import Router from 'next/router';
 import styled from 'styled-components';
+import debounce from 'lodash.debounce';
+
 import { SEARCH_ITEMS_QUERY } from '../queries';
 
 function routeToItem(item) {
@@ -18,9 +20,6 @@ const DropDown = styled.div`
   width: 100%;
   z-index: 2;
   border: 1px solid ${props => props.theme.lightgrey};
-  input {
-    border: 0;
-  }
 `;
 
 const DropDownItem = styled.div`
@@ -39,15 +38,22 @@ const DropDownItem = styled.div`
 
 const SearchStyles = styled.div`
   position: relative;
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    font-size: 2rem;
+  }
 `;
 
 function AutoComplete(props) {
-  const { items, onChange } = props;
+  const { items, onChange, loading } = props;
   return (
     <Downshift onChange={routeToItem} itemToString={i => (i === null ? '' : i.title)}>
-      {({ getInputProps, getItemProps, isOpen, inputValue, selectedItem, highlightedIndex }) => (
+      {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
         <div>
           {/* This is the searchInput */}
+          {loading && 'LOADING'}
           <input
             {...getInputProps({
               placeholder: 'Search For Item',
@@ -55,18 +61,22 @@ function AutoComplete(props) {
               onChange: e => {
                 props.refetch({ searchTerm: e.target.value });
               },
-              style: { fontSize: '20px', padding: '10px', display: 'block', width: '100%' },
             })}
           />
           {isOpen ? (
             <DropDown>
               {/* This is the Dropdown */}
               {items.map((item, index) => (
-                <DropDownItem {...getItemProps({ item })} key={item.id} highlighted={highlightedIndex === index}>
+                <DropDownItem
+                  {...getItemProps({ item })}
+                  key={item.id}
+                  highlighted={highlightedIndex === index}
+                >
                   <img width="50" src={item.image} alt={item.title} />
                   {item.title}
                 </DropDownItem>
               ))}
+              {!items.length && <DropDownItem>Nothing Found for {inputValue}...</DropDownItem>}
             </DropDown>
           ) : null}
         </div>
@@ -76,14 +86,34 @@ function AutoComplete(props) {
 }
 
 // TODO: This should not fire a queryon page load
-const Search = () => (
-  <SearchStyles>
-    <Query query={SEARCH_ITEMS_QUERY} variables={{ searchTerm: '' }}>
-      {({ data, error, refetch }) => (
-        <AutoComplete items={data.items || []} onChange={selectedItem => console.log(selectedItem)} refetch={refetch} />
-      )}
-    </Query>
-  </SearchStyles>
-);
+class Search extends React.Component {
+  state = {
+    skip: true,
+  };
+  componentDidMount() {
+    this.setState({ skip: false });
+  }
+  render() {
+    return (
+      <SearchStyles>
+        <Query
+          skip={this.state.skip}
+          query={SEARCH_ITEMS_QUERY}
+          variables={{ searchTerm: '' }}
+          fetchPolicy="network-only"
+        >
+          {({ data, error, loading, refetch }) =>
+            console.log('QUERY', data.items) || (
+              <AutoComplete
+                loading={loading}
+                items={data.items || []}
+                refetch={debounce(refetch, 300)}
+              />
+            )}
+        </Query>
+      </SearchStyles>
+    );
+  }
+}
 
 export default Search;

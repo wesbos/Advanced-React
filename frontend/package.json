@@ -27,6 +27,7 @@
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
     "isomorphic-fetch": "^2.2.1",
+    "lodash.debounce": "^4.0.8",
     "next": "^5.1.0",
     "next-apollo": "^1.0.13",
     "next-with-apollo": "^1.0.6",

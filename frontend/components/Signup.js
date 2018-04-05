@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import { SIGNUP_MUTATION } from '../queries';
+import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
+import { client } from '../lib/withData';
 
 class Signup extends Component {
   state = {
@@ -21,9 +22,11 @@ class Signup extends Component {
       <Mutation mutation={SIGNUP_MUTATION} variables={this.state}>
         {(signup, { loading, error }) => (
           <Form
-            onSubmit={e => {
+            onSubmit={async e => {
               e.preventDefault();
-              signup();
+              const res = await signup();
+              localStorage.setItem('token', res.data.signup.token);
+              client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>

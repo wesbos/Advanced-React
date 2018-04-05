@@ -10,7 +10,6 @@ const client = new ApolloClient({
   request: operation => {
     console.log(operation);
     if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
-      console.log(`Bearer ${localStorage.getItem('token')}`);
       operation.setContext({
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`,

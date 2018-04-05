@@ -20,6 +20,10 @@ const StyledHeader = styled.header`
     grid-template-columns: auto 1fr;
     justify-content: space-between;
     align-items: stretch;
+    @media (max-width: 1300px) {
+      grid-template-columns: 1fr;
+      justify-content: center;
+    }
   }
   .sub-bar {
     display: grid;
@@ -31,13 +35,19 @@ const StyledHeader = styled.header`
 const Logo = styled.h1`
   font-size: 4rem;
   margin-left: 2rem;
-  transform: skew(-5deg);
+  position: relative;
+  z-index: 2;
+  transform: skew(-7deg);
   a {
-    padding: 1rem 1.5rem;
+    padding: 0.5rem 1rem;
     background: ${props => props.theme.red};
     color: white;
     letter-spacing: -2px;
     text-transform: uppercase;
+  }
+  @media (max-width: 1300px) {
+    margin: 0;
+    text-align: center;
   }
 `;
 
@@ -46,7 +56,7 @@ const Header = props => (
     <div className="bar">
       <Logo>
         <Link href="/">
-          <a>Sick Fits!</a>
+          <a>Sick&nbsp;Fits!</a>
         </Link>
       </Logo>
       <Nav />

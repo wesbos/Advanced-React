@@ -6,33 +6,33 @@ import { CURRENT_USER_QUERY } from '../queries/index';
 import CartCount from './CartCount';
 import Signout from './Signout';
 import { UIContext } from './UIContext';
-import Dump from './Dump';
 
 const StyledUl = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
   justify-self: end;
+  font-size: 2rem;
   a,
   button {
-    padding: 0 30px;
+    padding: 1rem 3rem;
     display: flex;
     align-items: center;
     position: relative;
     text-transform: uppercase;
     font-weight: 900;
-    font-size: 2rem;
+    font-size: 1em;
     background: none;
     border: 0;
     cursor: pointer;
     &:before {
       content: '';
-      width: 1px;
+      width: 2px;
       background: ${props => props.theme.lightgrey};
       height: 100%;
       left: 0;
       position: absolute;
-      transform: rotate(20deg);
+      transform: skew(-20deg);
       top: 0;
       bottom: 0;
     }
@@ -43,7 +43,7 @@ const StyledUl = styled.ul`
       width: 0;
       position: absolute;
       transform: translateX(-50%);
-      transition: width 0.6s;
+      transition: width 0.4s;
       transition-timing-function: cubic-bezier(1, -0.65, 0, 2.31);
       left: 50%;
       margin-top: 2rem;
@@ -55,6 +55,12 @@ const StyledUl = styled.ul`
         width: calc(100% - 60px);
       }
     }
+  }
+  @media (max-width: 1300px) {
+    border-top: 1px solid ${props => props.theme.lightgrey};
+    width: 100%;
+    justify-content: center;
+    font-size: 1.5rem;
   }
 `;
 

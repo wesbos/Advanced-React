@@ -14,6 +14,7 @@
     "jsonwebtoken": "8.1.1",
     "nodemailer": "^4.4.2",
     "prisma-binding": "1.5.7",
+    "react-debounce-input": "^3.2.0",
     "stripe": "^5.4.0"
   },
   "devDependencies": {
