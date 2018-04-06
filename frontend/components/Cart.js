@@ -1,11 +1,10 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import styled from 'styled-components';
 import TakeMyMoney from './TakeMyMoney';
 import formatMoney from '../lib/formatMoney';
-import { UIContext } from './UIContext';
 import CartItem from './CartItem';
-import { CURRENT_USER_QUERY } from '../queries/index';
+import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../queries/index';
 import calcTotalPrice from '../lib/calcTotalPrice';
 
 const CartStyles = styled.div`
@@ -74,37 +73,43 @@ const CloseButton = styled.button`
 `;
 
 const Cart = props => (
-  <UIContext.Consumer>
-    {context => (
-      <Query query={CURRENT_USER_QUERY}>
-        {({ data: { me }, error, loading }) => {
-          if (loading || error || !me) return null;
-          return (
-            <CartStyles open={context.state.isCartOpen}>
-              <header>
-                <CloseButton title="close" onClick={context.toggle}>
-                  &times;
-                </CloseButton>
+  <Mutation mutation={TOGGLE_CART_MUTATION}>
+    {toggle => (
+      <Query query={LOCAL_STATE_QUERY}>
+        {({ data }) => (
+          <Query query={CURRENT_USER_QUERY}>
+            {({ data: { me }, error, loading }) => {
+              if (loading || error || !me) return null;
+              return (
+                <CartStyles open={data.cartOpen}>
+                  <header>
+                    <CloseButton title="close" onClick={toggle}>
+                      &times;
+                    </CloseButton>
 
-                <Supreme>{me.name}'s Cart.</Supreme>
-                <p>
-                  You have {me.cart.length} item{me.cart.length === 1 ? '' : 's'} in your cart.
-                </p>
-              </header>
+                    <Supreme>{me.name}'s Cart.</Supreme>
+                    <p>
+                      You have {me.cart.length} item{me.cart.length === 1 ? '' : 's'} in your cart.
+                    </p>
+                  </header>
 
-              <CartUl>{me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}</CartUl>
-              <footer>
-                <p>{formatMoney(calcTotalPrice(me.cart))}</p>
-                <TakeMyMoney>
-                  <button>Checkout</button>
-                </TakeMyMoney>
-              </footer>
-            </CartStyles>
-          );
-        }}
+                  <CartUl>
+                    {me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}
+                  </CartUl>
+                  <footer>
+                    <p>{formatMoney(calcTotalPrice(me.cart))}</p>
+                    <TakeMyMoney>
+                      <button>Checkout</button>
+                    </TakeMyMoney>
+                  </footer>
+                </CartStyles>
+              );
+            }}
+          </Query>
+        )}
       </Query>
     )}
-  </UIContext.Consumer>
+  </Mutation>
 );
 
 export default Cart;

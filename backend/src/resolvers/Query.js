@@ -24,8 +24,10 @@ const Query = {
   },
 
   async orders(parent, args, ctx, info) {
-    const userId = getUserId(ctx);
-    console.log(info);
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error('You must be signed in to see your orders');
+    }
     return ctx.db.query.orders(
       {
         where: {

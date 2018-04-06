@@ -60,7 +60,6 @@ class Order extends Component {
               <Head>
                 <title>Sick Fits - Order {order.id}</title>
               </Head>
-              <Dump order={order} />
               <p>
                 <span>Order Id:</span>
                 <span>{order.id}</span>

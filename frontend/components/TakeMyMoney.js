@@ -32,7 +32,10 @@ class TakeMyMoney extends Component {
         {({ data: { me } }) => {
           if (!me || !me.cart.length) return null;
           return (
-            <Mutation mutation={CREATE_ORDER_MUTATION}>
+            <Mutation
+              mutation={CREATE_ORDER_MUTATION}
+              refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+            >
               {createOrder => (
                 <StripeCheckout
                   amount={calcTotalPrice(me.cart)}

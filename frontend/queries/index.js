@@ -259,3 +259,14 @@ export const UPDATE_PERMISSIONS_MUTATION = gql`
     }
   }
 `;
+
+export const LOCAL_STATE_QUERY = gql`
+  {
+    cartOpen @client
+  }
+`;
+export const TOGGLE_CART_MUTATION = gql`
+  mutation toggleCart {
+    toggleCart @client
+  }
+`;

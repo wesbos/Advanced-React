@@ -3,8 +3,8 @@ import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import Meta from './Meta';
-import { UIProvider } from './UIContext';
-// Global Style
+import { client } from '../lib/withData';
+import { CURRENT_USER_QUERY } from '../queries';
 
 const theme = {
   red: '#FF0000',
@@ -50,17 +50,24 @@ const StyledPage = styled.div`
   background: white;
 `;
 
-const Page = ({ children }) => (
-  <UIProvider>
-    <ThemeProvider theme={theme}>
-      <StyledPage className="main">
-        <Meta />
-        <Header />
-        <Inner>{children}</Inner>
-      </StyledPage>
-    </ThemeProvider>
-  </UIProvider>
-);
+class Page extends React.Component {
+  componentDidMount() {
+    // console.log('ComponentDidMount');
+    // When the page loads, re-refetch the current user query
+    // client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
+  }
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <StyledPage className="main">
+          <Meta />
+          <Header />
+          <Inner>{this.props.children}</Inner>
+        </StyledPage>
+      </ThemeProvider>
+    );
+  }
+}
 Page.propTypes = {
   children: PropTypes.node.isRequired,
 };

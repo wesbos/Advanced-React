@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Query } from 'react-apollo';
-import { CURRENT_USER_QUERY } from '../queries/index';
+import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY } from '../queries/index';
 import CartCount from './CartCount';
 import Signout from './Signout';
-import { UIContext } from './UIContext';
+import { ApolloConsumer } from 'react-apollo';
 
 const StyledUl = styled.ul`
   margin: 0;
@@ -69,10 +69,13 @@ const StyledUl = styled.ul`
 `;
 
 class Nav extends React.Component {
+  componentDidMount() {
+    console.log('NAV MOUNTED');
+  }
   render() {
     return (
       <Query query={CURRENT_USER_QUERY} ssr={false}>
-        {({ data: { me } }) => (
+        {({ data: { me }, refetch }) => (
           <StyledUl>
             <Link prefetch href="/items">
               <a>Shop</a>
@@ -96,7 +99,7 @@ class Nav extends React.Component {
                   <a>My Account</a>
                 </Link>
                 <Signout />
-                <UIContext>
+                {/* <UIContext>
                   {context => (
                     <button onClick={context.toggle}>
                       My Cart
@@ -106,7 +109,18 @@ class Nav extends React.Component {
                       />
                     </button>
                   )}
-                </UIContext>
+                </UIContext> */}
+                <ApolloConsumer>
+                  {cache => (
+                    <button onClick={() => cache.writeData({ data: { cartOpen: true } })}>
+                      My Cart
+                      <CartCount
+                        className="cart-count"
+                        count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}
+                      />
+                    </button>
+                  )}
+                </ApolloConsumer>
               </Fragment>
             )}
           </StyledUl>
