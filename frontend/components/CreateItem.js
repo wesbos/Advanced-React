@@ -42,21 +42,13 @@ class CreateItem extends Component {
     });
   };
 
-  // TODO: Problem here - if I refetch page 1, page 2 to infinity are still out of date. I need to refetch all the pages somehow? without @connection
+  // TODO: Problem here - if I refetch page 1, page 2 to infinity are still out of date. I need to refetch all the pages somehow? Or use @connection
   render() {
     return (
       <Mutation
         mutation={CREATE_ITEM_MUTATION}
         variables={this.state}
-        refetchQueries={[
-          {
-            query: ALL_ITEMS_QUERY,
-            variables: {
-              skip: 0,
-              first: 2,
-            },
-          },
-        ]}
+        refetchQueries={[{ query: ALL_ITEMS_QUERY }]}
       >
         {(createItem, { loading, error }) => (
           <Form
