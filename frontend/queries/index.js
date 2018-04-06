@@ -74,7 +74,7 @@ export const CREATE_ORDER_MUTATION = gql`
 export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
   ${itemDetails}
-  query AllItemsQuery($skip: Int = 0, $first: Int = 3) {
+  query AllItemsQuery($skip: Int = 0, $first: Int = 2) {
     itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) @connection(key: "itemsConnection") {
       aggregate {
         count
