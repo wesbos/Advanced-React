@@ -51,10 +51,15 @@ const StyledPage = styled.div`
 `;
 
 class Page extends React.Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+  };
   componentDidMount() {
-    // console.log('ComponentDidMount');
-    // When the page loads, re-refetch the current user query
-    // client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
+    // The first time we load in the client, we need to refetch the current user data
+    if (typeof window !== 'undefined' && !window.__CLIENTLOADED__) {
+      client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
+      window.__CLIENTLOADED__ = true;
+    }
   }
   render() {
     return (
@@ -68,8 +73,5 @@ class Page extends React.Component {
     );
   }
 }
-Page.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default Page;

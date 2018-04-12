@@ -3,6 +3,7 @@ import { Mutation } from 'react-apollo';
 import { REQUEST_RESET_MUTATION } from '../queries';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
+import Dump from './Dump';
 
 class ResetRequest extends React.Component {
   state = {
@@ -12,7 +13,7 @@ class ResetRequest extends React.Component {
   render() {
     return (
       <Mutation mutation={REQUEST_RESET_MUTATION} variables={this.state}>
-        {(resetMutation, { loading, error }) => (
+        {(resetMutation, { loading, error, called, data }) => (
           <Form
             onSubmit={async e => {
               e.preventDefault();
@@ -21,6 +22,7 @@ class ResetRequest extends React.Component {
             }}
           >
             <Error error={error} />
+            {!error && called && !loading && <p>Success! Check Your Email!</p>}
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="email">
                 Email

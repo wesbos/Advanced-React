@@ -18,14 +18,14 @@ const StyledError = styled.div`
   }
 `;
 
-const DisplayError = ({ error }) => {
+const DisplayError = ({ error, refetch }) => {
   if (!error || !error.message) return null;
   if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
     return error.networkError.result.errors.map((error, i) => (
       <StyledError key={i}>
         <p>
           <strong>Shoot!</strong>
-          {error.message}
+          {error.message.replace('GraphQL error: ', '')}
         </p>
       </StyledError>
     ));
@@ -34,7 +34,8 @@ const DisplayError = ({ error }) => {
     <StyledError>
       <p>
         <strong>Shoot!</strong>
-        {error.message}
+        {error.message.replace('GraphQL error: ', '')}
+        <button onClick={refetch}>Try Again</button>
       </p>
     </StyledError>
   );

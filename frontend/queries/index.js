@@ -102,11 +102,14 @@ export const SINGLE_ITEM_QUERY = gql`
 
 export const SINGLE_ORDER_QUERY = gql`
   query order($id: ID!) {
-    order(where: { id: $id }) {
+    order(id: $id) {
       id
       charge
       total
       createdAt
+      user {
+        id
+      }
       items {
         id
         title
@@ -179,6 +182,7 @@ export const CURRENT_USER_QUERY = gql`
       id
       email
       name
+      permissions
       orders {
         charge
         id

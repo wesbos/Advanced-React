@@ -18,7 +18,11 @@ class AddToCart extends Component {
     const existingIndex = data.me.cart.findIndex(cartItem => cartItem.id === newCartItem.id);
     if (existingIndex >= 0) {
       // already in cache, just replace it
-      data.me.cart = [...data.me.cart.slice(0, existingIndex), newCartItem, ...data.me.cart.slice(existingIndex + 1)];
+      data.me.cart = [
+        ...data.me.cart.slice(0, existingIndex),
+        newCartItem,
+        ...data.me.cart.slice(existingIndex + 1),
+      ];
     } else {
       data.me.cart = [...data.me.cart, newCartItem];
     }

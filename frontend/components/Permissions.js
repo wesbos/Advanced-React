@@ -1,44 +1,18 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
-import styled from 'styled-components';
-import { BarLoader } from 'react-spinners';
-import { perPage } from '../config';
 import { ALL_USERS_QUERY, UPDATE_PERMISSIONS_MUTATION } from '../queries/index';
 import Error from './ErrorMessage';
-import Form from './styles/Form';
 import SickButton from './styles/SickButton';
+import Table from './styles/Table';
 
-const PermissionsBox = styled.div`
-  border: 1px solid ${props => props.theme.offWhite};
-  box-shadow: ${props => props.theme.bs};
-  margin-bottom: 5rem;
-  padding: 2rem;
-  label {
-    cursor: pointer;
-    span {
-      transition: all 0.1s;
-      padding: 0 1rem;
-      display: block;
-      border: 1px solid ${props => props.theme.offWhite};
-      border-left-width: 20px;
-    }
-    input {
-      display: none;
-    }
-    input:checked + span {
-      border-color: red;
-    }
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-  }
-  .labels {
-    display: flex;
-    flex-wrap: wrap;
-    & > * {
-      flex: 0 1 auto;
-    }
-  }
-`;
+const possiblePermissions = [
+  'ADMIN',
+  'USER',
+  'ITEMCREATE',
+  'ITEMUPDATE',
+  'ITEMDELETE',
+  'PERMISSIONUPDATE',
+];
 
 class User extends React.Component {
   state = {
@@ -60,22 +34,12 @@ class User extends React.Component {
     return (
       <Mutation mutation={UPDATE_PERMISSIONS_MUTATION}>
         {(updatePermissions, { loading, error }) => (
-          <PermissionsBox key={user.id} className="user">
-            <BarLoader className="barLoader" width="100%" height={5} color="red" loading={loading} />
+          <tr key={user.id} className="user">
             <Error error={error} />
-            <h2>
-              {user.name} -- {user.email}
-            </h2>
-            <div className="labels">
-              {[
-                'ADMIN',
-                'USER',
-                'ITEMCREATE',
-                'ITEMUPDATE',
-                'ITEMDELETE',
-                'PERMISSIONUPDATE',
-                'NUKE',
-              ].map(permission => (
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            {possiblePermissions.map(permission => (
+              <td>
                 <label key={permission} htmlFor={`${user.id}-permission-${permission}`}>
                   <input
                     type="checkbox"
@@ -85,25 +49,26 @@ class User extends React.Component {
                     onChange={this.handlePermissionsChange}
                     value={permission}
                   />
-                  <span>{permission}</span>
                 </label>
-              ))}
-            </div>
-            <SickButton
-              type="button"
-              onClick={async () => {
-                const res = await updatePermissions({
-                  variables: {
-                    permissions: this.state.permissions,
-                    userId: this.props.user.id,
-                  },
-                });
-                console.log(res);
-              }}
-            >
-              Update Permissions
-            </SickButton>
-          </PermissionsBox>
+              </td>
+            ))}
+            <td>
+              <SickButton
+                type="button"
+                disabled={loading}
+                onClick={async () => {
+                  const res = await updatePermissions({
+                    variables: {
+                      permissions: this.state.permissions,
+                      userId: this.props.user.id,
+                    },
+                  });
+                }}
+              >
+                Updat{loading ? 'ing' : 'e'}
+              </SickButton>
+            </td>
+          </tr>
         )}
       </Mutation>
     );
@@ -118,7 +83,17 @@ const Permissions = () => (
       return (
         <div>
           <h1>Manage User Permissions</h1>
-          {data.users.map(user => <User key={user.id} user={user} />)}
+          <Table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                {possiblePermissions.map(p => <th>{p}</th>)}
+                <th>👇🏻</th>
+              </tr>
+            </thead>
+            <tbody>{data.users.map(user => <User key={user.id} user={user} />)}</tbody>
+          </Table>
         </div>
       );
     }}

@@ -1,6 +1,6 @@
 import Downshift from 'downshift';
 import Router from 'next/router';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import debounce from 'lodash.debounce';
 import { client } from '../lib/withData';
 import { SEARCH_ITEMS_QUERY } from '../queries';
@@ -35,6 +35,15 @@ const DropDownItem = styled.div`
   }
 `;
 
+const glow = keyframes`
+  from {
+    box-shadow: 0 0 0px yellow;
+  }
+
+  to {
+    box-shadow: 0 0 10px 1px yellow;
+  }
+`;
 const SearchStyles = styled.div`
   position: relative;
   input {
@@ -43,7 +52,7 @@ const SearchStyles = styled.div`
     border: 0;
     font-size: 2rem;
     &.loading {
-      background: red;
+      animation: ${glow} 0.5s ease-in-out infinite alternate;
     }
   }
 `;

@@ -40,7 +40,7 @@ class Reset extends React.Component {
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
-        {(resetMutation, { error, loading }) => (
+        {(resetMutation, { error, loading, called }) => (
           <Form onSubmit={e => this.resetPassword(e, resetMutation)}>
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>

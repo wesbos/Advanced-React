@@ -1,12 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { getUserId, Context, hasPermission } = require('../utils');
+const { hasPermission } = require('../utils');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const mail = require('../mail');
 const stripe = require('../stripe');
-
-const wait = amount => new Promise(resolve => setTimeout(resolve, amount));
 
 const mutations = {
   // Signup Mutations
@@ -29,7 +27,6 @@ const mutations = {
 
   async signin(parent, { email, password }, ctx, info) {
     const user = await ctx.db.query.user({ where: { email } });
-    console.log(user);
     if (!user) {
       throw new Error(`No such user found for email: ${email}`);
     }
@@ -44,7 +41,7 @@ const mutations = {
     };
   },
 
-  // Creation of Post Mutations
+  // Create An Item
   async createItem(parent, args, ctx, info) {
     if (!ctx.request.userId) {
       throw new Error('You must be logged in to create an item');
@@ -63,7 +60,6 @@ const mutations = {
       },
       info
     );
-    console.log(item);
     return item;
   },
 
@@ -85,19 +81,23 @@ const mutations = {
   async updateItem(parent, args, ctx, info) {
     const user = ctx.request.user;
     const item = await ctx.db.query.item({ where: { id: args.id } }, `{ user { id } }`);
-    if (item.user.id !== user.id || !user.permissions.includes('ADMIN')) {
+
+    if (item.user.id !== user.id || !hasPermission(user, ['ADMIN'])) {
       throw new Error('You are not allowed to update that item!');
     }
 
     const updates = { ...args };
     // remove the ID because you can't update that
     delete updates.id;
-    return ctx.db.mutation.updateItem({
-      where: { id: args.id },
-      data: {
-        ...updates,
+    return ctx.db.mutation.updateItem(
+      {
+        where: { id: args.id },
+        data: {
+          ...updates,
+        },
       },
-    });
+      info
+    );
   },
 
   // Send password request
@@ -117,14 +117,17 @@ const mutations = {
       data: { resetToken, resetTokenExpiry },
     });
 
-    console.log(res);
     // 3. Send them their token via email
-    const mailRes = await mail.sendMail({
+    const mailRes = await mail.transport.sendMail({
       from: 'wesbos@gmail.com',
       to: user.email,
       subject: 'Your password reset token',
       // TODO: don't hardcore localhost here
-      html: `Here is your reset link: http://localhost:3000/reset?resetToken=${resetToken}`,
+      html: mail.makeANiceEmail(
+        `Your password reset link is here! \n\n<a href="${ctx.request.protocol}://${ctx.request.get(
+          'host'
+        )}/reset?resetToken=${resetToken}">Click Here to reset</a>s`
+      ),
     });
     console.log(mailRes);
     return res.updateUser;
@@ -175,8 +178,8 @@ const mutations = {
     Add to cart
   */
   async addToCart(parent, args, ctx, info) {
-    console.l('Add to cart called');
-    const userId = getUserId(ctx);
+    const userId = ctx.request.userId;
+
     if (!userId) {
       throw new Error('You must be signed in to add to cart!');
     }
@@ -190,7 +193,6 @@ const mutations = {
     });
 
     if (existingCartItem) {
-      console.log('Existing');
       return ctx.db.mutation.updateCartItem(
         {
           where: { id: existingCartItem.id },
@@ -220,40 +222,46 @@ const mutations = {
 
   // delete that cart item
   async removeFromCart(parent, args, ctx, info) {
-    // TODO: add userId to where
-    return ctx.db.mutation.deleteCartItem({
-      where: { id: args.id },
-    });
+    return ctx.db.mutation.deleteManyCartItems(
+      {
+        where: {
+          id: args.id,
+          user: {
+            id: ctx.request.userId,
+          },
+        },
+      },
+      info
+    );
   },
 
   async createOrder(parent, args, ctx, info) {
-    const userId = getUserId(ctx);
+    const userId = ctx.request.userId;
     const user = await ctx.db.query.user(
       { where: { id: userId } },
       // TODO - can we just pass info here?
       '{ id, name, email, cart { id, quantity, item { title, price, id, description, image } }}'
     );
     // 1. Recalculate the total for the price
-    const amount = user.cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
-    // TODO Error Handling
-    // 2.1 Create a Stripe Customer
-    const customer = await stripe.customers.create({
-      email: user.email,
-    });
-    // 2.3 Charge the stripe token
+    const amount = user.cart.reduce(
+      (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
+      0
+    );
+    // 2. Create a stripe charge
     const charge = await stripe.charges.create({
       amount,
       currency: 'usd',
       source: args.token,
     });
 
+    // 3. convert the items they want to OrderItems
     const orderItems = user.cart.map(cartItem => {
       const orderItem = {
         quantity: cartItem.quantity,
         // copy all the item details so it's there forever
         ...cartItem.item,
         item: {
-          // realtionship to the Item incase we need it
+          // relationship to the Item incase we need it
           connect: { id: cartItem.item.id },
         },
         user: { connect: { id: user.id } },
@@ -263,7 +271,7 @@ const mutations = {
       return orderItem;
     });
 
-    // Create the Order
+    // 4. Create the Order
     const order = await ctx.db.mutation.createOrder({
       data: {
         total: charge.amount,
@@ -279,8 +287,8 @@ const mutations = {
         },
       },
     });
-    console.log('Gonna delete some items');
-    // 6. Clean up, clear the users cart adn send back { user, order }
+
+    // 5. Clean up, clear the users cart and send back { user, order }
     // Delete the users current cart items
     const cartItemIds = user.cart.map(cartItem => cartItem.id);
     await ctx.db.mutation.deleteManyCartItems({
@@ -289,21 +297,24 @@ const mutations = {
       },
     });
 
-    // 5. Send the order back to the client
+    // 6. Send the order back to the client
     return order;
-    // 4. TODO: Send an email with their order
   },
+
   async updateUser(parent, args, ctx, info) {
-    const userId = getUserId(ctx);
-    const updatedUser = await ctx.db.mutation.updateUser({
-      data: args,
-      where: { id: userId },
-    });
+    const userId = ctx.request.userId;
+    const updatedUser = await ctx.db.mutation.updateUser(
+      {
+        data: args,
+        where: { id: userId },
+      },
+      info
+    );
     return updatedUser;
   },
 
   async updatePermissions(parent, args, ctx, info) {
-    const userId = getUserId(ctx);
+    const userId = ctx.request.userId;
     const currentUser = await ctx.db.query.user({ where: { id: userId } }, info);
     if (!currentUser) throw new Error('You Must be logged in to updat permissions!');
     hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE']);

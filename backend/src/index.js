@@ -30,9 +30,3 @@ server.express.use(async (req, res, next) => {
 server.start({ port: 4444 }, deets => {
   console.log(`Server is running on http://localhost:${deets.port}`);
 });
-
-// overwrite console.log
-const chalk = require('chalk');
-
-// global.console.l = (...butta) => console.log(chalk.bold.yellow(...butta));
-global.console.l = console.log;

@@ -20,9 +20,16 @@ const PleaseSignIn = props => (
         // check if they NO permissions, or they don't meet the requmrenets
         if (
           !data.me.permissions ||
-          !props.allowedPermissions.some(permission => data.me.permissions.contains(permission))
+          !props.allowedPermissions.some(permission => data.me.permissions.includes(permission))
         ) {
-          return <p>Insufficient Permissions to Manage Permissions</p>;
+          return (
+            <p>
+              Insufficient Permissions to Manage Permissions. You have:
+              <strong>{data.me.permissions}</strong>
+              and you need
+              <strong>{props.allowedPermissions.join(' OR ')}</strong>
+            </p>
+          );
         }
       }
       return props.children;

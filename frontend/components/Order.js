@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { SINGLE_ORDER_QUERY } from '../queries';
 import formatMoney from '../lib/formatMoney';
 import Dump from './Dump';
+import Error from './ErrorMessage';
 
 const OrderStyles = styled.div`
   max-width: 1000px;
@@ -51,10 +52,15 @@ class Order extends Component {
 
   render() {
     return (
-      <Query query={SINGLE_ORDER_QUERY} variables={{ id: this.props.id }}>
-        {({ data: { order }, error, loading }) => {
+      <Query
+        query={SINGLE_ORDER_QUERY}
+        variables={{ id: this.props.id }}
+        fetchPolicy="network-only"
+      >
+        {({ data, error, loading, refetch }) => {
           if (loading) return <p>Loading...</p>;
-          if (!order || error) return <p>No Order Found!</p>;
+          if (error) return <Error error={error} refetch={refetch} />;
+          const order = data.order;
           return (
             <OrderStyles>
               <Head>

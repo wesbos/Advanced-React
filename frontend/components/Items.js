@@ -32,8 +32,6 @@ class ItemList extends React.Component {
   };
   render() {
     const fetchPolicy = this.state.refetch ? 'network-only' : 'cache-first';
-    console.log(this.state.refetch, this.props.page);
-    console.log(fetchPolicy);
     return (
       <Center key={this.props.page}>
         <Pagination page={this.props.page} />
@@ -46,13 +44,9 @@ class ItemList extends React.Component {
           fetchPolicy={fetchPolicy}
         >
           {({ data, error, loading }) => {
-            if (loading) return <div>Loading</div>;
+            if (loading) return null;
             if (error) return <div>Error</div>;
-            return (
-              <Items key={this.props.page}>
-                {data.items.map(item => <Item key={item.id} item={item} />)}
-              </Items>
-            );
+            return <Items>{data.items.map(item => <Item key={item.id} item={item} />)}</Items>;
           }}
         </Query>
         <Pagination page={this.props.page} />

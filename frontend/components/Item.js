@@ -83,7 +83,7 @@ class ItemComponent extends React.Component {
         <div className="buttonList">
           <Link
             href={{
-              pathname: '/admin/update',
+              pathname: '/update',
               query: { id: item.id },
             }}
           >

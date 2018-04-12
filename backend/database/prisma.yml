@@ -11,10 +11,6 @@ disableAuth: true
 # the file path pointing to your data model
 datamodel: datamodel.graphql
 
-# uncomment the following two lines to seed your service with initial data
-# seed:
-#   import: seed.graphql
-
 # cluster: ${env:PRISMA_CLUSTER}
 # cluster: local
 

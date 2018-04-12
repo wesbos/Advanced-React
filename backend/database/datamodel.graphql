@@ -5,7 +5,6 @@ enum Permission {
   ITEMUPDATE
   ITEMDELETE
   PERMISSIONUPDATE
-  NUKE
 }
 
 type User {
