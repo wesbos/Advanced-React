@@ -1,10 +1,8 @@
 {
   "name": "my-own",
   "scripts": {
-    "start": "nodemon -e js,graphql -x node -r dotenv/config src/index.js",
-    "debug": "nodemon -e js,graphql -x node --inspect -r dotenv/config src/index.js",
-    "playground": "graphql playground",
-    "dev": "npm-run-all --parallel start playground",
+    "start": "nodemon -e js,graphql -x node src/index.js",
+    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
     "test": "jest",
     "deploy": "prisma deploy"
   },
@@ -20,11 +18,9 @@
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
     "dotenv": "5.0.1",
-    "graphql-cli": "2.15.8",
     "graphql-request": "^1.5.1",
     "jest-cli": "^22.4.3",
     "nodemon": "1.17.3",
-    "npm-run-all": "4.1.2",
     "prisma": "1.5.3"
   },
   "license": "MIT",

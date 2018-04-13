@@ -1,3 +1,6 @@
+/* eslint-disable */
+require('dotenv').config({ path: 'variables.env' });
+/* eslint-enable */
 const jwt = require('jsonwebtoken');
 const createServer = require('./createServer');
 
