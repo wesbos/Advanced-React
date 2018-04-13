@@ -6,7 +6,6 @@ console.log(process.env.PRISMA_STAGE);
 
 const Mutation = require('./resolvers/Mutation');
 const Query = require('./resolvers/Query');
-const AuthPayload = require('./resolvers/AuthPayload');
 
 function createServer() {
   return new GraphQLServer({
@@ -15,7 +14,6 @@ function createServer() {
       // detail resolvers
       Mutation,
       Query,
-      AuthPayload,
     },
     context: req => ({
       ...req,
