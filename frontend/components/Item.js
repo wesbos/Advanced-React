@@ -17,6 +17,8 @@ const Item = styled.div`
   grid-auto-rows: fit-content;
   img {
     width: 100%;
+    height: 400px;
+    object-fit: cover;
   }
   p {
     font-size: 14px;
@@ -64,7 +66,7 @@ class ItemComponent extends React.Component {
     const item = this.props.item;
     return (
       <Item key={item.id}>
-        {item.image ? <img src={item.image} alt={item.title} /> : null}
+        {item.image && <img src={item.image} alt={item.title} />}
         <Title>
           <Link
             href={{

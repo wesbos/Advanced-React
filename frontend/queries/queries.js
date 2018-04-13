@@ -1,6 +1,16 @@
 import gql from 'graphql-tag';
-import { itemDetails } from './fragments';
 import { perPage } from '../config';
+
+const itemDetails = gql`
+  fragment itemDetails on Item {
+    id
+    title
+    price
+    description
+    image
+    largeImage
+  }
+`;
 
 export const CREATE_ITEM_MUTATION = gql`
   ${itemDetails}

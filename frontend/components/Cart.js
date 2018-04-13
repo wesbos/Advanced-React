@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import TakeMyMoney from './TakeMyMoney';
 import formatMoney from '../lib/formatMoney';
 import CartItem from './CartItem';
-import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../queries/index';
+import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../queries/queries';
 import calcTotalPrice from '../lib/calcTotalPrice';
 
 const CartStyles = styled.div`

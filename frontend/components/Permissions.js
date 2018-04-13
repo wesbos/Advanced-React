@@ -1,6 +1,6 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
-import { ALL_USERS_QUERY, UPDATE_PERMISSIONS_MUTATION } from '../queries/index';
+import { ALL_USERS_QUERY, UPDATE_PERMISSIONS_MUTATION } from '../queries/queries';
 import Error from './ErrorMessage';
 import SickButton from './styles/SickButton';
 import Table from './styles/Table';

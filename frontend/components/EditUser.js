@@ -1,7 +1,7 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
 import Form from './styles/Form';
-import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/index';
+import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/queries';
 import Error from './ErrorMessage';
 
 class EditUser extends React.Component {
@@ -43,7 +43,12 @@ class EditUser extends React.Component {
                   <fieldset disabled={loading} aria-busy={loading}>
                     <label htmlFor="name">
                       Name:
-                      <input type="text" name="name" defaultValue={me.name} onChange={this.handleChange} />
+                      <input
+                        type="text"
+                        name="name"
+                        defaultValue={me.name}
+                        onChange={this.handleChange}
+                      />
                     </label>
                     <button type="submit">Update</button>
                     <strong>me:</strong>

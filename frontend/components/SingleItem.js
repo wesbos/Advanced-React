@@ -1,6 +1,6 @@
 import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { SINGLE_ITEM_QUERY } from '../queries/index';
+import { SINGLE_ITEM_QUERY } from '../queries/queries';
 import Dump from './Dump';
 import styled from 'styled-components';
 import Link from 'next/link';

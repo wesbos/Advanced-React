@@ -1,7 +1,7 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { REMOVE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries/index';
+import { REMOVE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries/queries';
 import Error from './ErrorMessage';
 
 class DeleteItem extends React.Component {

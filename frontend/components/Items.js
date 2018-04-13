@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Pagination from './Pagination';
 import Item from './Item';
 import { perPage } from '../config';
-import { ALL_ITEMS_QUERY } from '../queries/index';
+import { ALL_ITEMS_QUERY } from '../queries/queries';
 
 const Items = styled.div`
   display: grid;
