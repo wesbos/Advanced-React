@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { itemDetails } from './fragments';
+import { perPage } from '../config';
 
 export const CREATE_ITEM_MUTATION = gql`
   ${itemDetails}
@@ -74,7 +75,7 @@ export const CREATE_ORDER_MUTATION = gql`
 export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
   ${itemDetails}
-  query AllItemsQuery($skip: Int = 0, $first: Int = 2) {
+  query AllItemsQuery($skip: Int = 0, $first: Int = ${perPage}) {
     itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) @connection(key: "itemsConnection") {
       aggregate {
         count

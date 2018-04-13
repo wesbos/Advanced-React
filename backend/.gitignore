@@ -4,5 +4,5 @@ node_modules
 .idea
 .vscode
 *.log
-.env*
+*.env*
 !.env-sample

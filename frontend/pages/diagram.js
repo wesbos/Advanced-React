@@ -6,6 +6,10 @@ const DiagramStyles = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-column-gap: 20px;
+  h1 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
   ul {
     margin: 0;
     padding: 0;
@@ -33,7 +37,7 @@ const DiagramStyles = styled.div`
     padding: 20px;
     min-height: 500px;
     grid-column: span 2;
-    grid-row: 3;
+    grid-row: 4;
     line-height: 1.7;
   }
 
@@ -41,20 +45,21 @@ const DiagramStyles = styled.div`
     grid-column: span 4;
     background: red;
     padding: 5px;
+    grid-row: 2;
     text-align: center;
     color: white;
     text-transform: uppercase;
   }
 
   .arrow {
-    font-size: 50px;
+    font-size: 30px;
     line-height: 1;
     transform: translateX(-10px) translateX(-50%);
     text-align: center;
-    grid-row: 2;
+    grid-row: 3;
     margin-bottom: -100%;
     background: white;
-    height: 60px;
+    height: 40px;
   }
   .arrow1 {
     grid-column: 3;
@@ -80,8 +85,9 @@ const DiagramStyles = styled.div`
 
 const Diagram = () => (
   <DiagramStyles>
+    <h1>The Pieces of our Application</h1>
     <span className="location frontend">Frontend</span>
-    <span className="location backend">Backend</span>
+    <span className=" location backend">Backend</span>
     <div className="slat slat1">
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/640px-React-icon.svg.png"
@@ -135,7 +141,7 @@ const Diagram = () => (
         src="https://camo.githubusercontent.com/389368863d9b9df25acd07644bad7642459c3533/68747470733a2f2f696d6775722e636f6d2f5376366a3042362e706e67"
         alt="React.js"
       />
-      <h2>YOGA Server</h2>
+      <h2>GraphQL Yoga</h2>
 
       <span className="for">An Express GraphQL Server For:</span>
       <ul>
@@ -165,7 +171,7 @@ const Diagram = () => (
         src="https://camo.githubusercontent.com/87336b0d10b0d1f27518e14c4a36f995babd6a2f/68747470733a2f2f696d6775722e636f6d2f485575313072482e706e67"
         alt="React.js"
       />
-      <h2>Prisma Server</h2>
+      <h2>Prisma</h2>
 
       <span className="for">A GraphQL Database Interface</span>
       <ul>

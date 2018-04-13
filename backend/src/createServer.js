@@ -1,6 +1,8 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { Prisma } = require('prisma-binding');
-require('dotenv').config();
+require('dotenv').config({ path: 'variables.env' });
+
+console.log(process.env.PRISMA_STAGE);
 
 const Mutation = require('./resolvers/Mutation');
 const Query = require('./resolvers/Query');
