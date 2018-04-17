@@ -9,6 +9,7 @@
   "dependencies": {
     "bcryptjs": "2.4.3",
     "graphql": "^0.13.2",
+    "graphql-import": "^0.5.0",
     "graphql-yoga": "1.7.1",
     "jsonwebtoken": "8.2.1",
     "nodemailer": "^4.6.4",

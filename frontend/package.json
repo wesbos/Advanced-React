@@ -18,6 +18,8 @@
     "date-fns": "^2.0.0-alpha.7",
     "downshift": "^1.31.3",
     "graphql": "^0.13.2",
+    "graphql-import": "^0.5.0",
+    "graphql-mock": "0.0.3",
     "graphql-tag": "^2.8.0",
     "lodash.debounce": "^4.0.8",
     "next": "^5.1.0",
@@ -33,10 +35,13 @@
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.1.1",
+    "casual": "^1.5.19",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
-    "jest": "^22.4.3"
+    "graphql-tools": "^2.24.0",
+    "jest": "^22.4.3",
+    "waait": "^1.0.1"
   },
   "//": "This is out babel config, I prefer this over a .babelrc file",
   "jest": {

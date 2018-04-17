@@ -1,17 +1,86 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SingleItem/> renders 1`] = `
-<div>
-  <img
-    alt="Sneakers"
-    src="dog.jpg"
-  />
-  <h2>
-    Viewing 
-    Sneakers
-  </h2>
-  <p>
-    A cool set of shoes
-  </p>
-</div>
+exports[`<SingleItem/> Renders with Proper Data 1`] = `
+Array [
+  <styled.div
+    data-test="SingleItem"
+  >
+    <div
+      className="sc-bwzfXH dFvSZo"
+      data-test="SingleItem"
+    >
+      <DisplayError />
+      <img
+        alt="Quo quis molestiae"
+        src="Hello World"
+      />
+      <div
+        className="details"
+      >
+        <h2>
+          Viewing 
+          Quo quis molestiae
+        </h2>
+        <p>
+          Omnis porro porro quos nihil omnis reiciendis velit. Culpa deleniti qui reprehenderit in nisi et qui. Odio dolore veritatis eligendi in.
+        </p>
+        <Link
+          href={
+            Object {
+              "pathname": "/admin/update",
+              "query": Object {
+                "id": "79c17dc9-5865-4045-9bad-f487a49d94a8",
+              },
+            }
+          }
+        >
+          <a
+            href="/admin/update?id=79c17dc9-5865-4045-9bad-f487a49d94a8"
+            onClick={[Function]}
+          >
+            Edit ✏️
+          </a>
+        </Link>
+      </div>
+    </div>
+  </styled.div>,
+  <div
+    className="sc-bwzfXH dFvSZo"
+    data-test="SingleItem"
+  >
+    <DisplayError />
+    <img
+      alt="Quo quis molestiae"
+      src="Hello World"
+    />
+    <div
+      className="details"
+    >
+      <h2>
+        Viewing 
+        Quo quis molestiae
+      </h2>
+      <p>
+        Omnis porro porro quos nihil omnis reiciendis velit. Culpa deleniti qui reprehenderit in nisi et qui. Odio dolore veritatis eligendi in.
+      </p>
+      <Link
+        href={
+          Object {
+            "pathname": "/admin/update",
+            "query": Object {
+              "id": "79c17dc9-5865-4045-9bad-f487a49d94a8",
+            },
+          }
+        }
+      >
+        <a
+          href="/admin/update?id=79c17dc9-5865-4045-9bad-f487a49d94a8"
+          onClick={[Function]}
+        >
+          Edit ✏️
+        </a>
+      </Link>
+    </div>
+  </div>,
+]
 `;

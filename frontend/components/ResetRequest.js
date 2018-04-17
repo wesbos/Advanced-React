@@ -1,9 +1,8 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { REQUEST_RESET_MUTATION } from '../queries';
+import { REQUEST_RESET_MUTATION } from '../queries/queries';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import Dump from './Dump';
 
 class ResetRequest extends React.Component {
   state = {
@@ -17,9 +16,11 @@ class ResetRequest extends React.Component {
           <Form
             onSubmit={async e => {
               e.preventDefault();
+              // I wanna spy on this
               const res = await resetMutation();
               console.log(res);
             }}
+            data-test="ResetRequest"
           >
             <Error error={error} />
             {!error && called && !loading && <p>Success! Check Your Email!</p>}

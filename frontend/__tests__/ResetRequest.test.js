@@ -1,33 +1,39 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import { ResetRequest } from '../components/ResetRequest';
-
-const wait = amount => new Promise(resolve => setTimeout(resolve, amount));
+import { ApolloProvider } from 'react-apollo';
+import ResetRequest from '../components/ResetRequest';
+import mountOptions from './mockMang';
 
 describe('<ResetRequest/>', () => {
-  it('renders and matches snapshot', () => {
-    const wrapper = shallow(<ResetRequest requestReset={() => {}} />);
+  it('renders and matches snapshot', async () => {
+    const wrapper = mount(<ResetRequest />, mountOptions);
+    const Form = wrapper.find("Form[data-test='ResetRequest']");
+    expect(toJSON(Form)).toMatchSnapshot();
+  });
+
+  it('calls the mutation', async () => {
+    const wrapper = mount(<ResetRequest />, mountOptions);
+    const mutation = wrapper.find('Mutation').instance();
+    const input = wrapper.find('input[name="email"]');
+    input.simulate('change', { target: { name: 'email', value: 'wesbos@gmail.com' } });
+    // Create a spy function on mutate
+    mutation.client.mutate = jest.fn();
+    mutation.forceUpdate();
+    wrapper.find('Form').simulate('submit');
+    expect(mutation.client.mutate.mock.calls[0][0].variables).toEqual({
+      email: 'wesbos@gmail.com',
+    });
     expect(toJSON(wrapper)).toMatchSnapshot();
   });
 
-  it('handles the reset request', async () => {
-    const resetSpy = jest.fn(() => Promise.resolve({}));
-    const wrapper = shallow(<ResetRequest requestReset={resetSpy} />);
-    const input = wrapper.find('input[name="email"]');
-    input.simulate('change', { target: { name: 'email', value: 'wesbos@gmail.com' } });
-    wrapper.simulate('submit', { preventDefault() {} });
-    expect(resetSpy).toHaveBeenCalledWith({ variables: { email: 'wesbos@gmail.com' } });
-  });
-
-  it('displays errors', async () => {
-    const resetSpy = jest.fn(() => Promise.resolve({ errors: [{ message: 'Error!!!' }] }));
-    const wrapper = shallow(<ResetRequest requestReset={resetSpy} />);
-    const input = wrapper.find('input[name="email"]');
-    input.simulate('change', { target: { name: 'email', value: 'wesbos@gmail.com' } });
-    wrapper.simulate('submit', { preventDefault() {} });
-    await wait(0);
+  it('renders errors', () => {
+    const wrapper = mount(<ResetRequest />, mountOptions);
+    const mutation = wrapper.find('Mutation').instance();
+    mutation.setState({ error: { message: 'Shit!' } });
     wrapper.update();
-    expect(toJSON(wrapper)).toMatchSnapshot();
+    const error = wrapper.find('DisplayError');
+    expect(error).toHaveLength(1);
+    expect(toJSON(error)).toMatchSnapshot();
   });
 });

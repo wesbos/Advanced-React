@@ -26,7 +26,7 @@ const SingleItem = props => (
       if (loading) return <p>Loading...</p>;
       const [item] = items;
       return (
-        <SingleItemStyles>
+        <SingleItemStyles data-test="SingleItem">
           <Error error={error} />
           <img src={item.largeImage || item.image} alt={item.title} />
           <div className="details">
