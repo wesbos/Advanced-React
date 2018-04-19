@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 expect.extend({
-  toBeCalledWithVariables(received, argument) {
+  toHaveBeenCalledWithVariables(received, argument) {
     const receivedVariables = received.mock.calls[0][0].variables;
     const pass = this.equals(receivedVariables, argument);
     const message = () =>

@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { ADD_TO_CART_MUTATION, CURRENT_USER_QUERY } from 'queries';
+import { ADD_TO_CART_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
 
 class AddToCart extends Component {
   static propTypes = {
@@ -29,13 +29,17 @@ class AddToCart extends Component {
   render() {
     const { id } = this.props;
     return (
-      <Mutation mutation={ADD_TO_CART_MUTATION} variables={{ id }} update={this.update}>
-        {(addToCart, { loading }) => (
-          <button disabled={loading} onClick={addToCart}>
-            🛒 Add{loading && 'ing'} To Cart
-          </button>
+      <Query query={CURRENT_USER_QUERY}>
+        {() => (
+          <Mutation mutation={ADD_TO_CART_MUTATION} variables={{ id }} update={this.update}>
+            {(addToCart, { loading }) => (
+              <button disabled={loading} onClick={addToCart}>
+                🛒 Add{loading && 'ing'} To Cart
+              </button>
+            )}
+          </Mutation>
         )}
-      </Mutation>
+      </Query>
     );
   }
 }

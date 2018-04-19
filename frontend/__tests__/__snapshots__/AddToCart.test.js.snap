@@ -2,8 +2,10 @@
 
 exports[`<AddtoCart/> renders and matches snapshot 1`] = `
 <button
+  disabled={false}
   onClick={[Function]}
 >
-  🛒 Add To Cart
+  🛒 Add
+   To Cart
 </button>
 `;
