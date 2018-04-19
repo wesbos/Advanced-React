@@ -7,8 +7,6 @@ import PropTypes from 'prop-types';
 // seed it so we get consistent results
 casual.seed(777);
 
-const typeDefs = importSchema('../backend/src/schema.graphql');
-
 // By default graphql-mock will generate random numbers, IDs, and Strings of "Hello World"
 // We can overwrite any of those if we need to
 
@@ -37,8 +35,22 @@ const mocks = {
   }),
 };
 
+const resolvers = {
+  // Query: {
+  //   cartOpen: () => true,
+  // },
+};
+
+const typeDefs = importSchema('../backend/src/schema.graphql');
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+  resolverValidationOptions: { requireResolversForResolveType: false },
+});
+
 // Creates a mocked client
-const mocked = new MockClient(typeDefs, mocks);
+const mocked = new MockClient(schema, mocks);
 
 const mountOptions = {
   context: {

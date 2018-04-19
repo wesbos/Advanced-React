@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation, ApolloConsumer } from 'react-apollo';
 import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import { client } from '../lib/withData';
 
 class Signup extends Component {
   state = {
@@ -19,59 +18,63 @@ class Signup extends Component {
 
   render() {
     return (
-      <Mutation mutation={SIGNUP_MUTATION} variables={this.state}>
-        {(signup, { loading, error }) => (
-          <Form
-            onSubmit={async e => {
-              e.preventDefault();
-              const res = await signup();
-              localStorage.setItem('token', res.data.signup.token);
-              client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
-            }}
-          >
-            <fieldset disabled={loading} aria-busy={loading}>
-              <Error error={error} />
-              <h2>Sign Up for an Account</h2>
-              <label htmlFor="email">
-                Email
-                <input
-                  value={this.state.email}
-                  onChange={this.saveToState}
-                  name="email"
-                  type="text"
-                  placeholder="email"
-                />
-              </label>
+      <ApolloConsumer>
+        {client => (
+          <Mutation mutation={SIGNUP_MUTATION} variables={this.state}>
+            {(signup, { loading, error }) => (
+              <Form
+                onSubmit={async e => {
+                  e.preventDefault();
+                  const res = await signup();
+                  localStorage.setItem('token', res.data.signup.token);
+                  client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
+                }}
+              >
+                <fieldset disabled={loading} aria-busy={loading}>
+                  <Error error={error} />
+                  <h2>Sign Up for an Account</h2>
+                  <label htmlFor="email">
+                    Email
+                    <input
+                      value={this.state.email}
+                      onChange={this.saveToState}
+                      name="email"
+                      type="text"
+                      placeholder="email"
+                    />
+                  </label>
 
-              <label htmlFor="name">
-                Name
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="name"
-                  value={this.state.name}
-                  onChange={this.saveToState}
-                />
-              </label>
+                  <label htmlFor="name">
+                    Name
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="name"
+                      value={this.state.name}
+                      onChange={this.saveToState}
+                    />
+                  </label>
 
-              <label htmlFor="signupPassword">
-                Password
-                <input
-                  type="password"
-                  name="password"
-                  id="signupPassword"
-                  className="password"
-                  placeholder="password"
-                  value={this.state.password}
-                  onChange={this.saveToState}
-                />
-              </label>
+                  <label htmlFor="signupPassword">
+                    Password
+                    <input
+                      type="password"
+                      name="password"
+                      id="signupPassword"
+                      className="password"
+                      placeholder="password"
+                      value={this.state.password}
+                      onChange={this.saveToState}
+                    />
+                  </label>
 
-              <button type="submit">Submit</button>
-            </fieldset>
-          </Form>
+                  <button type="submit">Submit</button>
+                </fieldset>
+              </Form>
+            )}
+          </Mutation>
         )}
-      </Mutation>
+      </ApolloConsumer>
     );
   }
 }
