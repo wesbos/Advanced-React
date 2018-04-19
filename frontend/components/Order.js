@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { SINGLE_ORDER_QUERY } from '../queries';
+import { SINGLE_ORDER_QUERY } from '../queries/queries';
 import formatMoney from '../lib/formatMoney';
 import Dump from './Dump';
 import Error from './ErrorMessage';
@@ -62,7 +62,7 @@ class Order extends Component {
           if (error) return <Error error={error} refetch={refetch} />;
           const order = data.order;
           return (
-            <OrderStyles>
+            <OrderStyles data-test="order">
               <Head>
                 <title>Sick Fits - Order {order.id}</title>
               </Head>

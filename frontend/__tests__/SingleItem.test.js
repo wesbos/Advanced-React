@@ -1,19 +1,13 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import wait from 'waait';
 import toJSON from 'enzyme-to-json';
 import SingleItem from '../components/SingleItem';
-import { ApolloProvider } from 'react-apollo';
-import mockClient from './mockMang';
-import { SINGLE_ITEM_QUERY } from '../queries/queries';
+import mountOptions from './mockMang';
 
 describe('<SingleItem/>', () => {
   it('Renders with Proper Data', async () => {
-    const wrapper = mount(
-      <ApolloProvider client={mockClient.client}>
-        <SingleItem id="123" />
-      </ApolloProvider>
-    );
+    const wrapper = mount(<SingleItem id="123" />, mountOptions);
     await wait();
     wrapper.update();
 
@@ -21,11 +15,7 @@ describe('<SingleItem/>', () => {
     expect(toJSON(Item)).toMatchSnapshot();
   });
 
-  it('Errors with a not found Item', async () => {
-    const wrapper = mount(
-      <ApolloProvider client={mockClient.client}>
-        <SingleItem id="123" />
-      </ApolloProvider>
-    );
+  xit('Errors with a not found Item', async () => {
+    const wrapper = mount(<SingleItem id="123" />, mountOptions);
   });
 });

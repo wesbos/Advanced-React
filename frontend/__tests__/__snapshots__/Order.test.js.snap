@@ -1,0 +1,262 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Order/> Renders with Proper Data 1`] = `
+Array [
+  <styled.div
+    data-test="order"
+  >
+    <div
+      className="sc-bwzfXH wJijb"
+      data-test="order"
+    >
+      <SideEffect(Head)>
+        <Head />
+      </SideEffect(Head)>
+      <p>
+        <span>
+          Order Id:
+        </span>
+        <span>
+          3a430a73-c9e9-4bcc-b46a-41618965ffea
+        </span>
+      </p>
+      <p>
+        <span>
+          Charge
+        </span>
+        <span>
+          Hello World
+        </span>
+      </p>
+      <p>
+        <span>
+          Date
+        </span>
+        <span>
+          May 13, 2014 12:53 PM
+        </span>
+      </p>
+      <p>
+        <span>
+          Order Total
+        </span>
+        <span>
+          $24.04
+        </span>
+      </p>
+      <p>
+        <span>
+          Item Count
+        </span>
+        <span>
+          2
+        </span>
+      </p>
+      <div
+        className="items"
+      >
+        <div
+          className="order-item"
+          key="f17558f5-7760-4116-acd2-76da805ab010"
+        >
+          <img
+            alt="Ut assumenda sint"
+            src="dog.jpg"
+          />
+          <div
+            className="item-details"
+          >
+            <h2>
+               
+              Ut assumenda sint
+               
+            </h2>
+            <p>
+              Qty: 
+              8
+            </p>
+            <p>
+              Each: 
+              $500
+            </p>
+            <p>
+              Subtotal: 
+              $4,000
+            </p>
+            <p>
+              SubTotal: 
+              Exercitationem omnis laborum exercitationem est sapiente laudantium. Assumenda quasi adipisci mollitia iste itaque omnis.
+            </p>
+            <p>
+              Exercitationem omnis laborum exercitationem est sapiente laudantium. Assumenda quasi adipisci mollitia iste itaque omnis.
+            </p>
+          </div>
+        </div>
+        <div
+          className="order-item"
+          key="f05cef40-52ca-4dca-b480-7618d01ced82"
+        >
+          <img
+            alt="Similique temporibus"
+            src="dog.jpg"
+          />
+          <div
+            className="item-details"
+          >
+            <h2>
+               
+              Similique temporibus
+               
+            </h2>
+            <p>
+              Qty: 
+              9
+            </p>
+            <p>
+              Each: 
+              $500
+            </p>
+            <p>
+              Subtotal: 
+              $4,500
+            </p>
+            <p>
+              SubTotal: 
+              Sapiente soluta corporis commodi. Nisi cum ducimus. Doloremque maiores esse atque et.
+            </p>
+            <p>
+              Sapiente soluta corporis commodi. Nisi cum ducimus. Doloremque maiores esse atque et.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </styled.div>,
+  <div
+    className="sc-bwzfXH wJijb"
+    data-test="order"
+  >
+    <SideEffect(Head)>
+      <Head />
+    </SideEffect(Head)>
+    <p>
+      <span>
+        Order Id:
+      </span>
+      <span>
+        3a430a73-c9e9-4bcc-b46a-41618965ffea
+      </span>
+    </p>
+    <p>
+      <span>
+        Charge
+      </span>
+      <span>
+        Hello World
+      </span>
+    </p>
+    <p>
+      <span>
+        Date
+      </span>
+      <span>
+        May 13, 2014 12:53 PM
+      </span>
+    </p>
+    <p>
+      <span>
+        Order Total
+      </span>
+      <span>
+        $24.04
+      </span>
+    </p>
+    <p>
+      <span>
+        Item Count
+      </span>
+      <span>
+        2
+      </span>
+    </p>
+    <div
+      className="items"
+    >
+      <div
+        className="order-item"
+        key="f17558f5-7760-4116-acd2-76da805ab010"
+      >
+        <img
+          alt="Ut assumenda sint"
+          src="dog.jpg"
+        />
+        <div
+          className="item-details"
+        >
+          <h2>
+             
+            Ut assumenda sint
+             
+          </h2>
+          <p>
+            Qty: 
+            8
+          </p>
+          <p>
+            Each: 
+            $500
+          </p>
+          <p>
+            Subtotal: 
+            $4,000
+          </p>
+          <p>
+            SubTotal: 
+            Exercitationem omnis laborum exercitationem est sapiente laudantium. Assumenda quasi adipisci mollitia iste itaque omnis.
+          </p>
+          <p>
+            Exercitationem omnis laborum exercitationem est sapiente laudantium. Assumenda quasi adipisci mollitia iste itaque omnis.
+          </p>
+        </div>
+      </div>
+      <div
+        className="order-item"
+        key="f05cef40-52ca-4dca-b480-7618d01ced82"
+      >
+        <img
+          alt="Similique temporibus"
+          src="dog.jpg"
+        />
+        <div
+          className="item-details"
+        >
+          <h2>
+             
+            Similique temporibus
+             
+          </h2>
+          <p>
+            Qty: 
+            9
+          </p>
+          <p>
+            Each: 
+            $500
+          </p>
+          <p>
+            Subtotal: 
+            $4,500
+          </p>
+          <p>
+            SubTotal: 
+            Sapiente soluta corporis commodi. Nisi cum ducimus. Doloremque maiores esse atque et.
+          </p>
+          <p>
+            Sapiente soluta corporis commodi. Nisi cum ducimus. Doloremque maiores esse atque et.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;

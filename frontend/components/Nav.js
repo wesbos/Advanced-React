@@ -99,17 +99,6 @@ class Nav extends React.Component {
                   <a>My Account</a>
                 </Link>
                 <Signout />
-                {/* <UIContext>
-                  {context => (
-                    <button onClick={context.toggle}>
-                      My Cart
-                      <CartCount
-                        className="cart-count"
-                        count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}
-                      />
-                    </button>
-                  )}
-                </UIContext> */}
                 <ApolloConsumer>
                   {cache => (
                     <button onClick={() => cache.writeData({ data: { cartOpen: true } })}>
