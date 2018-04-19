@@ -1,24 +1,16 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import { Cart } from '../components/Cart';
-import { UIProvider } from '../components/UIContext';
-
-const cartItem = {
-  item: { price: 5000 },
-  quantity: 10,
-};
-
-const currentUser = {
-  me: {
-    cart: [cartItem, cartItem, cartItem],
-  },
-  refetch() {},
-};
+import mountOptions from './mockMang';
+import wait from 'waait';
+import Cart from '../components/Cart';
 
 describe('<Cart/>', () => {
-  it('renders', () => {
-    const wrapper = shallow(<Cart currentUser={currentUser} />);
-    console.log(wrapper.first());
+  it('renders', async () => {
+    const wrapper = mount(<Cart />, mountOptions);
+    await wait();
+    wrapper.update();
+    expect(toJSON(wrapper.find('header'))).toMatchSnapshot();
+    expect(wrapper.find('CartItem')).toHaveLength(2);
   });
 });

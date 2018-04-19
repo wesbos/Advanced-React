@@ -1,3 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Cart/> renders 1`] = `<[object Object] />`;
+exports[`<Cart/> renders 1`] = `
+<header>
+  <styled.button
+    onClick={[Function]}
+    title="close"
+  >
+    <button
+      className="sc-EHOje jytiuo"
+      onClick={[Function]}
+      title="close"
+    >
+      ×
+    </button>
+  </styled.button>
+  <styled.h3>
+    <h3
+      className="sc-ifAKCX imryuh"
+    >
+      Miss Tillman Mitchell
+      's Cart.
+    </h3>
+  </styled.h3>
+  <p>
+    You have 
+    2
+     item
+    s
+     in your cart.
+  </p>
+</header>
+`;

@@ -1,5 +1,6 @@
 import { importSchema } from 'graphql-import';
-import GraphQLMock from 'graphql-mock';
+import { makeExecutableSchema } from 'graphql-tools';
+import MockClient from 'graphql-mock';
 import casual from 'casual';
 import PropTypes from 'prop-types';
 
@@ -13,6 +14,7 @@ const typeDefs = importSchema('../backend/src/schema.graphql');
 
 const mocks = {
   ID: () => casual.uuid,
+  Node: () => casual.uuid,
   DateTime: () => new Date(1400000000000),
   Int: () => casual.integer(400, 5500),
   OrderItem: () => ({
@@ -36,7 +38,7 @@ const mocks = {
 };
 
 // Creates a mocked client
-const mocked = new GraphQLMock(typeDefs, mocks);
+const mocked = new MockClient(typeDefs, mocks);
 
 const mountOptions = {
   context: {

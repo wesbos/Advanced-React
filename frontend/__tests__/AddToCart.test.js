@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import AddToCart from '../components/AddToCart';
 import mountOptions from './mockMang';
