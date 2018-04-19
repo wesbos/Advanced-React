@@ -4,6 +4,7 @@ import toJSON from 'enzyme-to-json';
 import { ApolloProvider } from 'react-apollo';
 import ResetRequest from '../components/ResetRequest';
 import mountOptions from './mockMang';
+import wait from 'waait';
 
 describe('<ResetRequest/>', () => {
   it('renders and matches snapshot', async () => {
@@ -21,9 +22,9 @@ describe('<ResetRequest/>', () => {
     mutation.client.mutate = jest.fn();
     mutation.forceUpdate();
     wrapper.find('Form').simulate('submit');
-    expect(mutation.client.mutate.mock.calls[0][0].variables).toEqual({
-      email: 'wesbos@gmail.com',
-    });
+
+    expect(mutation.client.mutate).toBeCalledWithVariables({ email: 'wesbos@gmail.com' });
+
     expect(toJSON(wrapper)).toMatchSnapshot();
   });
 

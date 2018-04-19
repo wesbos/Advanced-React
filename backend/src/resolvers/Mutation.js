@@ -129,7 +129,6 @@ const mutations = {
         )}/reset?resetToken=${resetToken}">Click Here to reset</a>s`
       ),
     });
-    console.log(mailRes);
     return res.updateUser;
   },
 

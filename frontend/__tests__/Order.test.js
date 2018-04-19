@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import wait from 'waait';
 import toJSON from 'enzyme-to-json';
 import Order from '../components/Order';
