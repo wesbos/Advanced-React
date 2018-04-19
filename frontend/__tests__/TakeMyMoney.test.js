@@ -2,54 +2,61 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import NProgress from 'nprogress';
-import { TakeMyMoney } from '../components/TakeMyMoney';
+import TakeMyMoney from '../components/TakeMyMoney';
 import Router from 'next/router';
-
-const wait = amount => new Promise(resolve => setTimeout(resolve, amount));
+import wait from 'waait';
+import mountOptions from './mockMang';
 
 Router.router = { push() {} };
 
-const cartItem = {
-  item: { price: 5000 },
-  quantity: 10,
-};
-
-const currentUser = {
-  me: {
-    cart: [cartItem, cartItem, cartItem],
-  },
-  refetch() {},
-};
-
 describe('<TakeMyMoney />', () => {
-  it('renders', () => {
-    const wrapper = shallow(<TakeMyMoney createOrder={() => {}} currentUser={currentUser} />);
-    expect(toJSON(wrapper)).toMatchSnapshot();
+  it('renders', async () => {
+    const wrapper = mount(<TakeMyMoney />, mountOptions);
+    // wait for it to load
+    await wait();
+    wrapper.update();
+    // find the button
+    const checkoutButton = wrapper.find('ReactStripeCheckout');
+    expect(toJSON(checkoutButton)).toMatchSnapshot();
   });
 
-  it('creates an order onToken', () => {
-    const createOrderSpy = jest.fn(() => Promise.resolve({ data: { createOrder: { id: 'xyz789' } } }));
-    const wrapper = shallow(<TakeMyMoney createOrder={createOrderSpy} currentUser={currentUser} />);
+  it('creates an order onToken', async () => {
+    // TODO can this be done with a resolve jest fn?
+    const createOrderSpy = jest.fn(() =>
+      Promise.resolve({ data: { createOrder: { id: 'xyz789' } } })
+    );
+    const wrapper = mount(<TakeMyMoney />, mountOptions);
     // manually run onToken
-    wrapper.instance().onToken({ id: 'abc123' });
+    wrapper.instance().onToken({ id: 'abc123' }, createOrderSpy);
+    // check it
     expect(createOrderSpy).toBeCalled();
     expect(createOrderSpy).toBeCalledWith({ variables: { token: 'abc123' } });
   });
 
   it('turns the progress bar on', () => {
-    const createOrderSpy = jest.fn(() => Promise.resolve({ data: { createOrder: { id: 'xyz789' } } }));
+    const createOrderSpy = jest.fn().mockResolvedValue({
+      data: { createOrder: { id: 'xyz789' } },
+    });
+
+    // spy on .start()
     NProgress.start = jest.fn();
-    const wrapper = shallow(<TakeMyMoney createOrder={createOrderSpy} currentUser={currentUser} />);
-    wrapper.instance().onToken({ id: 'abc123' });
+    const wrapper = mount(<TakeMyMoney />, mountOptions);
+    wrapper.instance().onToken({ id: 'abc123' }, createOrderSpy);
     expect(NProgress.start).toHaveBeenCalled();
   });
 
-  it('routes to the order page', async () => {
+  it('routes to the order page when completed', async () => {
+    const createOrderSpy = jest.fn().mockResolvedValue({
+      data: { createOrder: { id: 'xyz789' } },
+    });
+
     Router.router.push = jest.fn();
-    const createOrderSpy = jest.fn(() => Promise.resolve({ data: { createOrder: { id: 'xyz789' } } }));
-    const wrapper = shallow(<TakeMyMoney createOrder={createOrderSpy} currentUser={currentUser} />);
-    wrapper.instance().onToken({ id: 'abc123' });
-    await wait(0);
-    expect(Router.router.push).toHaveBeenCalledWith({ pathname: '/order/xyz789', query: { id: 'xyz789' } });
+    const wrapper = mount(<TakeMyMoney />, mountOptions);
+    wrapper.instance().onToken({ id: 'abc123' }, createOrderSpy);
+    await wait();
+    expect(Router.router.push).toHaveBeenCalledWith({
+      pathname: '/order',
+      query: { id: 'xyz789' },
+    });
   });
 });

@@ -3,10 +3,12 @@
 exports[`<TakeMyMoney /> renders 1`] = `
 <ReactStripeCheckout
   ComponentClass="span"
-  amount={150000}
+  amount={281050000}
   className="StripeCheckout"
   currency="USD"
-  description="Order of 30 Items From Sick Fits"
+  description="Order of 5621 Items From Sick Fits"
+  email="Ella_Douglas@Lou.info"
+  image="dog.jpg"
   label="Pay With Card"
   locale="auto"
   name="Sick Fits Haul"
@@ -14,5 +16,52 @@ exports[`<TakeMyMoney /> renders 1`] = `
   stripeKey="pk_lclTtThFp8CnO3QtEZSd8HA9mFUps"
   token={[Function]}
   triggerEvent="onClick"
-/>
+>
+  <button
+    className="StripeCheckout"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseOut={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "background": "linear-gradient(#28a0e5,#015e94)",
+        "border": 0,
+        "borderRadius": 5,
+        "boxShadow": "0 1px 0 rgba(0,0,0,0.2)",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "overflow": "hidden",
+        "padding": 1,
+        "textDecoration": "none",
+        "userSelect": "none",
+        "visibility": "visible",
+      }
+    }
+  >
+    <span
+      style={
+        Object {
+          "backgroundImage": "linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4)",
+          "borderRadius": 4,
+          "boxShadow": "inset 0 1px 0 rgba(255,255,255,0.25)",
+          "color": "#fff",
+          "display": "block",
+          "fontFamily": "\\"Helvetica Neue\\",Helvetica,Arial,sans-serif",
+          "fontSize": 14,
+          "fontWeight": "bold",
+          "height": 30,
+          "lineHeight": "30px",
+          "padding": "0 12px",
+          "position": "relative",
+          "textShadow": "0 -1px 0 rgba(0,0,0,0.25)",
+        }
+      }
+    >
+      Pay With Card
+    </span>
+  </button>
+</ReactStripeCheckout>
 `;
