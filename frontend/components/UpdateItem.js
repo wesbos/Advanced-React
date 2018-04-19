@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
-import { SINGLE_ITEM_QUERY, UPDATE_ITEM_MUTATION } from '../queries';
+import { SINGLE_ITEM_QUERY, UPDATE_ITEM_MUTATION } from '../queries/queries';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import Dump from './Dump';
@@ -62,12 +62,21 @@ class UpdateItem extends Component {
 
                     <label htmlFor="description">
                       Description
-                      <textarea defaultValue={item.description} name="description" onChange={this.saveToState} />
+                      <textarea
+                        defaultValue={item.description}
+                        name="description"
+                        onChange={this.saveToState}
+                      />
                     </label>
 
                     <label htmlFor="price">
                       Price
-                      <input type="number" name="price" onChange={this.saveToState} defaultValue={item.price} />
+                      <input
+                        type="number"
+                        name="price"
+                        onChange={this.saveToState}
+                        defaultValue={item.price}
+                      />
                     </label>
                     <button type="submit">Save...</button>
                   </fieldset>

@@ -4,7 +4,6 @@ import toJSON from 'enzyme-to-json';
 import { ApolloProvider } from 'react-apollo';
 import ResetRequest from '../components/ResetRequest';
 import mountOptions from './mockMang';
-import wait from 'waait';
 
 describe('<ResetRequest/>', () => {
   it('renders and matches snapshot', async () => {
@@ -20,10 +19,10 @@ describe('<ResetRequest/>', () => {
     input.simulate('change', { target: { name: 'email', value: 'wesbos@gmail.com' } });
     // Create a spy function on mutate
     mutation.client.mutate = jest.fn();
-    mutation.forceUpdate();
+    // mutation.forceUpdate();
     wrapper.find('Form').simulate('submit');
 
-    expect(mutation.client.mutate).toBeCalledWithVariables({ email: 'wesbos@gmail.com' });
+    expect(mutation.client.mutate).toBeCalledWithVariables({ email: 'wesbos@gmail.comx' });
 
     expect(toJSON(wrapper)).toMatchSnapshot();
   });

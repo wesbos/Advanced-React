@@ -2,7 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { format, formatDistance } from 'date-fns';
 import Link from 'next/link';
-import { USER_ORDERS_QUERY } from '../queries';
+import { USER_ORDERS_QUERY } from '../queries/queries';
 import styled from 'styled-components';
 import formatMoney from '../lib/formatMoney';
 
@@ -92,7 +92,9 @@ class OrderList extends React.Component {
                           </p>
                         </div>
                         <div className="images">
-                          {order.items.map(item => <img key={item.id} src={item.image} alt={item.title} />)}
+                          {order.items.map(item => (
+                            <img key={item.id} src={item.image} alt={item.title} />
+                          ))}
                         </div>
                       </a>
                     </Link>

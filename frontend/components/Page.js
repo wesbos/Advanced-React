@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 import Meta from './Meta';
 import { client } from '../lib/withData';
-import { CURRENT_USER_QUERY } from '../queries';
+import { CURRENT_USER_QUERY } from '../queries/queries';
 
 const theme = {
   red: '#FF0000',

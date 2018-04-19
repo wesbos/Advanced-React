@@ -3,7 +3,7 @@ import Router from 'next/router';
 import styled, { keyframes } from 'styled-components';
 import debounce from 'lodash.debounce';
 import { client } from '../lib/withData';
-import { SEARCH_ITEMS_QUERY } from '../queries';
+import { SEARCH_ITEMS_QUERY } from '../queries/queries';
 
 function routeToItem(item) {
   Router.push({

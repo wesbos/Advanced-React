@@ -8,9 +8,9 @@ expect.extend({
     const receivedVariables = received.mock.calls[0][0].variables;
     const pass = this.equals(receivedVariables, argument);
     const message = () =>
-      `expected ${this.utils.printExpected(argument)} to match ${this.utils.printReceived(
-        receivedVariables
-      )}`;
+      `expected ${this.utils.printExpected(argument)}
+
+to match ${this.utils.printReceived(receivedVariables)}`;
 
     return { message, pass };
   },

@@ -3,7 +3,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { Mutation, Query } from 'react-apollo';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
 import calcTotalPrice from '../lib/calcTotalPrice';
 
 function totalItems(cart) {

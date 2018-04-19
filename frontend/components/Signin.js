@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation, Query, ApolloConsumer } from 'react-apollo';
-import { SIGNIN_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import { SIGNIN_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
 import { client } from '../lib/withData';

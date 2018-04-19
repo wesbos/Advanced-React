@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import { CREATE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries';
+import { CREATE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries/queries';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
 import PropTypes from 'prop-types';

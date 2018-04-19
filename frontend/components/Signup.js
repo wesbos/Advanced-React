@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { client } from '../lib/withData';
@@ -45,7 +45,13 @@ class Signup extends Component {
 
               <label htmlFor="name">
                 Name
-                <input type="text" name="name" placeholder="name" value={this.state.name} onChange={this.saveToState} />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="name"
+                  value={this.state.name}
+                  onChange={this.saveToState}
+                />
               </label>
 
               <label htmlFor="signupPassword">

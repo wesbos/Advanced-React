@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import { RESET_MUTATION, CURRENT_USER_QUERY } from '../queries';
+import { RESET_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
 
 class Reset extends React.Component {
   static propTypes = {
