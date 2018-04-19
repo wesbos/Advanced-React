@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import { CartCount } from '../components/CartCount';
+import CartCount from '../components/CartCount';
 
 describe('<CartCount></CartCount>', () => {
   it('renders okay', () => {

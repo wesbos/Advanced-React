@@ -12,10 +12,11 @@ exports[`<CartCount></CartCount> matches snapshot 1`] = `
       key="10"
       timeout={
         Object {
-          "enter": 2000,
-          "exit": 2000,
+          "enter": 400,
+          "exit": 400,
         }
       }
+      unmountOnExit={true}
     >
       <styled.div>
         10
@@ -46,10 +47,11 @@ exports[`<CartCount></CartCount> updates via props 1`] = `
             onExited={[Function]}
             timeout={
               Object {
-                "enter": 2000,
-                "exit": 2000,
+                "enter": 400,
+                "exit": 400,
               }
             }
+            unmountOnExit={true}
           >
             <Transition
               appear={false}
@@ -66,17 +68,17 @@ exports[`<CartCount></CartCount> updates via props 1`] = `
               onExiting={[Function]}
               timeout={
                 Object {
-                  "enter": 2000,
-                  "exit": 2000,
+                  "enter": 400,
+                  "exit": 400,
                 }
               }
-              unmountOnExit={false}
+              unmountOnExit={true}
             >
               <styled.div
                 className="count"
               >
                 <div
-                  className="count sc-bdVaJa cYFOmX"
+                  className="count sc-bdVaJa ldHGxH"
                 >
                   50
                 </div>
@@ -111,10 +113,11 @@ exports[`<CartCount></CartCount> updates via props 2`] = `
             onExited={[Function]}
             timeout={
               Object {
-                "enter": 2000,
-                "exit": 2000,
+                "enter": 400,
+                "exit": 400,
               }
             }
+            unmountOnExit={true}
           >
             <Transition
               appear={false}
@@ -131,17 +134,17 @@ exports[`<CartCount></CartCount> updates via props 2`] = `
               onExiting={[Function]}
               timeout={
                 Object {
-                  "enter": 2000,
-                  "exit": 2000,
+                  "enter": 400,
+                  "exit": 400,
                 }
               }
-              unmountOnExit={false}
+              unmountOnExit={true}
             >
               <styled.div
                 className="count"
               >
                 <div
-                  className="count sc-bdVaJa cYFOmX"
+                  className="count sc-bdVaJa ldHGxH"
                 >
                   10
                 </div>
@@ -156,10 +159,11 @@ exports[`<CartCount></CartCount> updates via props 2`] = `
             onExited={[Function]}
             timeout={
               Object {
-                "enter": 2000,
-                "exit": 2000,
+                "enter": 400,
+                "exit": 400,
               }
             }
+            unmountOnExit={true}
           >
             <Transition
               appear={false}
@@ -176,17 +180,17 @@ exports[`<CartCount></CartCount> updates via props 2`] = `
               onExiting={[Function]}
               timeout={
                 Object {
-                  "enter": 2000,
-                  "exit": 2000,
+                  "enter": 400,
+                  "exit": 400,
                 }
               }
-              unmountOnExit={false}
+              unmountOnExit={true}
             >
               <styled.div
                 className="count"
               >
                 <div
-                  className="count sc-bdVaJa cYFOmX"
+                  className="count sc-bdVaJa ldHGxH"
                 >
                   50
                 </div>
