@@ -27,11 +27,12 @@ describe('<SingleItem/>', () => {
     );
     // Check for loading state
     expect(wrapper.text()).toContain('Loading...');
+    1;
 
     // wait for response and refresh
     await wait(55);
     wrapper.update();
-    // Grab the peice we wnat
+    // Grab the piece we want
     const Item = wrapper.find('[data-test="SingleItem"]');
     // snapshot it!
     expect(toJSON(Item)).toMatchSnapshot();

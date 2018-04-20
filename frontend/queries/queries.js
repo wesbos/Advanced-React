@@ -3,6 +3,7 @@ import { perPage } from '../config';
 
 const itemDetails = gql`
   fragment itemDetails on Item {
+    __typename
     id
     title
     price

@@ -48,6 +48,23 @@ const fakeItem = () => ({
   largeImage: 'dog.jpg',
 });
 
+const fakeUser = () => ({
+  __typename: 'User',
+  id: '4234',
+  name: 'Fakey Mc Fake',
+  email: 'fake@fake.com',
+  permissions: ['ADMIN'],
+});
+
+const fakeCartItem = overrides => ({
+  __typename: 'CartItem',
+  id: 'omg123',
+  quantity: 3,
+  item: fakeItem(),
+  user: fakeUser(),
+  ...overrides,
+});
+
 const resolvers = {
   // Query: {
   //   cartOpen: () => true,
@@ -81,4 +98,4 @@ const mountWithApollo = Component => {
 
 export default mountOptions;
 
-export { mocked, mountWithApollo, fakeItem };
+export { mocked, mountWithApollo, fakeItem, fakeUser, fakeCartItem };
