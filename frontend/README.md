@@ -46,5 +46,7 @@ Things to Ask James:
 * Client via <ApolloConsumer> - best way?
 * Update on Items Pagination
 * Testing with context. Is this context okay? Deprecation
+* Testing Error States
+* wait and loading - normal?
 
 -->

@@ -29,7 +29,8 @@ class EditUser extends React.Component {
   render() {
     return (
       <Query query={CURRENT_USER_QUERY}>
-        {({ data: { me } }) => {
+        {({ data: { me }, loading }) => {
+          if (loading) return <p>Loading...</p>;
           if (!me) return <p>You must be logged in</p>;
           return (
             <Mutation

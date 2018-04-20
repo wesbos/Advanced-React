@@ -63,9 +63,9 @@ const mountOptions = {
   },
 };
 
-const mountWithApollo = (Component, props) => {
+const mountWithApollo = Component => {
   const wrapper = mount(<ApolloProvider client={mocked.client}>{Component}</ApolloProvider>);
-  return wrapper.children();
+  return { wrapper, component: wrapper.children() };
 };
 
 export default mountOptions;

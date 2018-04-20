@@ -10,35 +10,46 @@ exports[`<EditUser/> renders 1`] = `
 <Form
   onSubmit={[Function]}
 >
-  <label
-    htmlFor="name"
+  <form
+    className="sc-bdVaJa LHejR"
+    onSubmit={[Function]}
   >
-    Name:
-    <input
-      defaultValue="Wes Bos"
-      name="name"
-      onChange={[Function]}
-      type="text"
-    />
-  </label>
-  <button
-    type="submit"
-  >
-    Update
-  </button>
-  <strong>
-    me:
-  </strong>
-  <pre>
-    "Wes Bos"
-  </pre>
-  <strong>
-    Change:
-  </strong>
-  <pre
-    data-test="change"
-  >
-    {}
-  </pre>
+    <DisplayError />
+    <fieldset
+      aria-busy={false}
+      disabled={false}
+    >
+      <label
+        htmlFor="name"
+      >
+        Name:
+        <input
+          defaultValue="Miss Tillman Mitchell"
+          name="name"
+          onChange={[Function]}
+          type="text"
+        />
+      </label>
+      <button
+        type="submit"
+      >
+        Update
+      </button>
+      <strong>
+        me:
+      </strong>
+      <pre>
+        "Miss Tillman Mitchell"
+      </pre>
+      <strong>
+        Change:
+      </strong>
+      <pre
+        data-test="change"
+      >
+        {}
+      </pre>
+    </fieldset>
+  </form>
 </Form>
 `;
