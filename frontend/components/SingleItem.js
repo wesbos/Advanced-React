@@ -1,10 +1,10 @@
-import { Query } from 'react-apollo';
-import PropTypes from 'prop-types';
-import { SINGLE_ITEM_QUERY } from '../queries/queries';
-import Dump from './Dump';
-import styled from 'styled-components';
-import Link from 'next/link';
-import Error from './ErrorMessage';
+import { Query } from "react-apollo";
+import PropTypes from "prop-types";
+import { SINGLE_ITEM_QUERY } from "../queries/queries";
+import Dump from "./Dump";
+import styled from "styled-components";
+import Link from "next/link";
+import Error from "./ErrorMessage";
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
@@ -21,10 +21,16 @@ const SingleItemStyles = styled.div`
 `;
 
 const SingleItem = props => (
-  <Query query={SINGLE_ITEM_QUERY} variables={{ id: props.id }}>
-    {({ data: { items }, loading, error }) => {
+  <Query
+    query={SINGLE_ITEM_QUERY}
+    variables={{ id: props.id }}
+    errorPolicy="all"
+  >
+    {({ data, loading, error }) => {
       if (loading) return <p>Loading...</p>;
-      const [item] = items;
+      console.log(data, error);
+      if (error) return <Error error={error} />;
+      const [item] = data.items;
       return (
         <SingleItemStyles data-test="SingleItem">
           <Error error={error} />
@@ -34,7 +40,7 @@ const SingleItem = props => (
             <p>{item.description}</p>
             <Link
               href={{
-                pathname: '/admin/update',
+                pathname: "/admin/update",
                 query: { id: item.id },
               }}
             >

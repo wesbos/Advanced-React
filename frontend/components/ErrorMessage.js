@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import React from 'react';
+import styled from "styled-components";
+import React from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const StyledError = styled.div`
   padding: 2rem;
@@ -20,21 +20,25 @@ const StyledError = styled.div`
 
 const DisplayError = ({ error, refetch }) => {
   if (!error || !error.message) return null;
-  if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
+  if (
+    error.networkError &&
+    error.networkError.result &&
+    error.networkError.result.errors.length
+  ) {
     return error.networkError.result.errors.map((error, i) => (
       <StyledError key={i}>
-        <p>
+        <p data-test="network-error">
           <strong>Shoot!</strong>
-          {error.message.replace('GraphQL error: ', '')}
+          {error.message.replace("GraphQL error: ", "")}
         </p>
       </StyledError>
     ));
   }
   return (
     <StyledError>
-      <p>
+      <p data-test="graphql-error">
         <strong>Shoot!</strong>
-        {error.message.replace('GraphQL error: ', '')}
+        {error.message.replace("GraphQL error: ", "")}
         <button onClick={refetch}>Try Again</button>
       </p>
     </StyledError>

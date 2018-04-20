@@ -1,5 +1,5 @@
-import gql from 'graphql-tag';
-import { perPage } from '../config';
+import gql from "graphql-tag";
+import { perPage } from "../config";
 
 const itemDetails = gql`
   fragment itemDetails on Item {
@@ -14,8 +14,20 @@ const itemDetails = gql`
 
 export const CREATE_ITEM_MUTATION = gql`
   ${itemDetails}
-  mutation createItem($description: String!, $title: String!, $price: Int!, $image: String, $largeImage: String) {
-    createItem(description: $description, title: $title, price: $price, image: $image, largeImage: $largeImage) {
+  mutation createItem(
+    $description: String!
+    $title: String!
+    $price: Int!
+    $image: String
+    $largeImage: String
+  ) {
+    createItem(
+      description: $description
+      title: $title
+      price: $price
+      image: $image
+      largeImage: $largeImage
+    ) {
       ...itemDetails
     }
   }
@@ -56,8 +68,16 @@ export const REQUEST_RESET_MUTATION = gql`
 `;
 
 export const RESET_MUTATION = gql`
-  mutation resetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
-    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
+  mutation resetPassword(
+    $resetToken: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    resetPassword(
+      resetToken: $resetToken
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
       token
       user {
         id
@@ -98,7 +118,6 @@ export const ALL_ITEMS_QUERY = gql`
 `;
 
 export const SINGLE_ITEM_QUERY = gql`
-  ${itemDetails}
   query FindItem($id: ID!) {
     items(where: { id: $id }) {
       user {
@@ -106,7 +125,12 @@ export const SINGLE_ITEM_QUERY = gql`
         email
         name
       }
-      ...itemDetails
+      id
+      title
+      price
+      description
+      image
+      largeImage
     }
   }
 `;
