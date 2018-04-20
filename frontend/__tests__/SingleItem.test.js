@@ -15,7 +15,7 @@ describe('<SingleItem/>', () => {
     expect(toJSON(Item)).toMatchSnapshot();
   });
 
-  xit('Errors with a not found Item', async () => {
-    const wrapper = mount(<SingleItem id="123" />, mountOptions);
+  it('Errors with a not found Item', async () => {
+    expect('wes').toBe('able to replicate an error');
   });
 });

@@ -16,10 +16,10 @@
     "apollo-client": "^2.2.8",
     "babel-plugin-styled-components": "^1.5.1",
     "date-fns": "^2.0.0-alpha.7",
-    "downshift": "^1.31.9",
+    "downshift": "^1.31.10",
     "graphql": "^0.13.2",
     "graphql-import": "^0.5.0",
-    "graphql-mock": "0.2.0",
+    "graphql-mock": "0.3.0",
     "graphql-tag": "^2.9.1",
     "lodash.debounce": "^4.0.8",
     "next": "^5.1.0",
@@ -41,7 +41,7 @@
     "enzyme-to-json": "^3.3.3",
     "graphql-tools": "^2.24.0",
     "jest": "^22.4.3",
-    "waait": "^1.0.1"
+    "waait": "^1.0.2"
   },
   "//": "This is out babel config, I prefer this over a .babelrc file",
   "jest": {

@@ -11,31 +11,31 @@ Array [
     >
       <DisplayError />
       <img
-        alt="Quo quis molestiae"
-        src="Hello World"
+        alt="Facilis corporis"
+        src="large-dog.jpg"
       />
       <div
         className="details"
       >
         <h2>
           Viewing 
-          Quo quis molestiae
+          Facilis corporis
         </h2>
         <p>
-          Omnis porro porro quos nihil omnis reiciendis velit. Culpa deleniti qui reprehenderit in nisi et qui. Odio dolore veritatis eligendi in.
+          Quidem praesentium magnam. Error molestiae laborum est possimus assumenda aut enim iure. Ut explicabo iure vitae occaecati officia iure nisi.
         </p>
         <Link
           href={
             Object {
               "pathname": "/admin/update",
               "query": Object {
-                "id": "79c17dc9-5865-4045-9bad-f487a49d94a8",
+                "id": "5505a740-e67e-4e17-958f-46760116bcd2",
               },
             }
           }
         >
           <a
-            href="/admin/update?id=79c17dc9-5865-4045-9bad-f487a49d94a8"
+            href="/admin/update?id=5505a740-e67e-4e17-958f-46760116bcd2"
             onClick={[Function]}
           >
             Edit ✏️
@@ -50,31 +50,31 @@ Array [
   >
     <DisplayError />
     <img
-      alt="Quo quis molestiae"
-      src="Hello World"
+      alt="Facilis corporis"
+      src="large-dog.jpg"
     />
     <div
       className="details"
     >
       <h2>
         Viewing 
-        Quo quis molestiae
+        Facilis corporis
       </h2>
       <p>
-        Omnis porro porro quos nihil omnis reiciendis velit. Culpa deleniti qui reprehenderit in nisi et qui. Odio dolore veritatis eligendi in.
+        Quidem praesentium magnam. Error molestiae laborum est possimus assumenda aut enim iure. Ut explicabo iure vitae occaecati officia iure nisi.
       </p>
       <Link
         href={
           Object {
             "pathname": "/admin/update",
             "query": Object {
-              "id": "79c17dc9-5865-4045-9bad-f487a49d94a8",
+              "id": "5505a740-e67e-4e17-958f-46760116bcd2",
             },
           }
         }
       >
         <a
-          href="/admin/update?id=79c17dc9-5865-4045-9bad-f487a49d94a8"
+          href="/admin/update?id=5505a740-e67e-4e17-958f-46760116bcd2"
           onClick={[Function]}
         >
           Edit ✏️
