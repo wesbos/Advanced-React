@@ -9,7 +9,7 @@ const currentUser = {
   me: {
     name: 'Wes Bos',
   },
-  refetch() { },
+  refetch() {},
 };
 
 describe('<EditUser/>', () => {
@@ -43,17 +43,18 @@ describe('<EditUser/>', () => {
     mutation.client.mutate = jest.fn();
     const nameInput = wrapper.find('[name="name"]');
     nameInput.simulate('change', { target: { name: 'name', value: 'Scott' } });
-    wrapper.find('form').simulate('submit', { preventDefault() { } });
+    wrapper.find('form').simulate('submit', { preventDefault() {} });
     expect(mutation.client.mutate).toHaveBeenCalledWithVariables({ name: 'Scott' });
   });
 
-  it.only('refetches the current user after an update', async () => {
+  it('refetches the current user after an update', async () => {
     const { wrapper } = mountWithApollo(<EditUser />);
     await wait();
     wrapper.update();
     const query = wrapper.find('Query').instance();
     const mutation = wrapper.find('Mutation').instance();
     console.log(mutation.props.mutation);
+    expect('wes').toBe('finished with this one');
     // wrapper.find('form').simulate('submit', { preventDefault() {} });
     // expect(query.client.reFetchObservableQueries).toHaveBeenCalled();
   });

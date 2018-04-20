@@ -106,7 +106,13 @@ export const SINGLE_ITEM_QUERY = gql`
         email
         name
       }
-      ...itemDetails
+      # TODO Swap with fragment once apollo is fixed
+      id
+      title
+      price
+      description
+      image
+      largeImage
     }
   }
 `;

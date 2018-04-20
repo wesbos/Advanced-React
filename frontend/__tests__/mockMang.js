@@ -37,6 +37,17 @@ const mocks = {
   }),
 };
 
+const fakeItem = () => ({
+  __typename: 'Item',
+  id: '123',
+  price: 5000,
+  user: null,
+  image: 'dog-small.jpg',
+  title: 'dogs are best',
+  description: 'dogs',
+  largeImage: 'dog.jpg',
+});
+
 const resolvers = {
   // Query: {
   //   cartOpen: () => true,
@@ -70,4 +81,4 @@ const mountWithApollo = Component => {
 
 export default mountOptions;
 
-export { mocked, mountWithApollo };
+export { mocked, mountWithApollo, fakeItem };

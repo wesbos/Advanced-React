@@ -1,9 +1,9 @@
 import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { SINGLE_ITEM_QUERY } from '../queries/queries';
-import Dump from './Dump';
 import styled from 'styled-components';
 import Link from 'next/link';
+import Dump from './Dump';
 import Error from './ErrorMessage';
 
 const SingleItemStyles = styled.div`
@@ -22,19 +22,19 @@ const SingleItemStyles = styled.div`
 
 const SingleItem = props => (
   <Query query={SINGLE_ITEM_QUERY} variables={{ id: props.id }}>
-    {({ data: { items }, loading, error }) => {
+    {({ data, loading, error }) => {
       if (loading) return <p>Loading...</p>;
-      const [item] = items;
+      if (error) return <Error error={error} />;
+      const [item] = data.items;
       return (
         <SingleItemStyles data-test="SingleItem">
-          <Error error={error} />
           <img src={item.largeImage || item.image} alt={item.title} />
           <div className="details">
             <h2>Viewing {item.title}</h2>
             <p>{item.description}</p>
             <Link
               href={{
-                pathname: '/admin/update',
+                pathname: '/update',
                 query: { id: item.id },
               }}
             >

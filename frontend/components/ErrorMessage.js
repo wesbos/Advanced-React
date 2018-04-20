@@ -23,7 +23,7 @@ const DisplayError = ({ error, refetch }) => {
   if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
     return error.networkError.result.errors.map((error, i) => (
       <StyledError key={i}>
-        <p>
+        <p data-test="graphql-error">
           <strong>Shoot!</strong>
           {error.message.replace('GraphQL error: ', '')}
         </p>
@@ -32,7 +32,7 @@ const DisplayError = ({ error, refetch }) => {
   }
   return (
     <StyledError>
-      <p>
+      <p data-test="graphql-error">
         <strong>Shoot!</strong>
         {error.message.replace('GraphQL error: ', '')}
         <button onClick={refetch}>Try Again</button>

@@ -32,8 +32,6 @@ Yeti
 Keep your brie and bevies chilly. Heavy-duty insulation ensures cold temperatures persist. A self-stopping hinge and Yeti-tough details are durable. Non-slip rubber feet keep your drinks and snacks orderly through whitewater or rough approaches to the picnic site.
 
 
-
-
 Test Order:
 
 FormatMoney

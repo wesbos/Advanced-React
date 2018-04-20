@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<SingleItem/> Errors with a not found Item 1`] = `
+<p
+  data-test="graphql-error"
+>
+  <strong>
+    Shoot!
+  </strong>
+  Item not found!
+  <button>
+    Try Again
+  </button>
+</p>
+`;
+
 exports[`<SingleItem/> Renders with Proper Data 1`] = `
 Array [
   <styled.div
@@ -9,33 +23,32 @@ Array [
       className="sc-bwzfXH dFvSZo"
       data-test="SingleItem"
     >
-      <DisplayError />
       <img
-        alt="Facilis corporis"
-        src="large-dog.jpg"
+        alt="dogs are best"
+        src="dog.jpg"
       />
       <div
         className="details"
       >
         <h2>
           Viewing 
-          Facilis corporis
+          dogs are best
         </h2>
         <p>
-          Quidem praesentium magnam. Error molestiae laborum est possimus assumenda aut enim iure. Ut explicabo iure vitae occaecati officia iure nisi.
+          dogs
         </p>
         <Link
           href={
             Object {
-              "pathname": "/admin/update",
+              "pathname": "/update",
               "query": Object {
-                "id": "5505a740-e67e-4e17-958f-46760116bcd2",
+                "id": "123",
               },
             }
           }
         >
           <a
-            href="/admin/update?id=5505a740-e67e-4e17-958f-46760116bcd2"
+            href="/update?id=123"
             onClick={[Function]}
           >
             Edit ✏️
@@ -48,33 +61,32 @@ Array [
     className="sc-bwzfXH dFvSZo"
     data-test="SingleItem"
   >
-    <DisplayError />
     <img
-      alt="Facilis corporis"
-      src="large-dog.jpg"
+      alt="dogs are best"
+      src="dog.jpg"
     />
     <div
       className="details"
     >
       <h2>
         Viewing 
-        Facilis corporis
+        dogs are best
       </h2>
       <p>
-        Quidem praesentium magnam. Error molestiae laborum est possimus assumenda aut enim iure. Ut explicabo iure vitae occaecati officia iure nisi.
+        dogs
       </p>
       <Link
         href={
           Object {
-            "pathname": "/admin/update",
+            "pathname": "/update",
             "query": Object {
-              "id": "5505a740-e67e-4e17-958f-46760116bcd2",
+              "id": "123",
             },
           }
         }
       >
         <a
-          href="/admin/update?id=5505a740-e67e-4e17-958f-46760116bcd2"
+          href="/update?id=123"
           onClick={[Function]}
         >
           Edit ✏️
