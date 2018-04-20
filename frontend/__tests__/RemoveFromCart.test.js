@@ -1,19 +1,22 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
+import { ApolloProvider } from 'react-apollo';
 import RemoveFromCart from '../components/RemoveFromCart';
-import mountOptions from './mockMang';
+import mountOptions, { mocked, mountWithApollo } from './mockMang';
 
 describe('<RemoveFromCart/>', () => {
   it('renders and matches snapshot', () => {
-    const wrapper = shallow(<RemoveFromCart id="abc123" removeFromCart={() => { }} />);
-    expect(toJSON(wrapper)).toMatchSnapshot();
+    const wrapper = mountWithApollo(<RemoveFromCart id="123" />);
+    expect(toJSON(wrapper.find('button'))).toMatchSnapshot();
   });
 
-  it("runs a function when it's clicked", () => {
-    const removeSpy = jest.fn();
-    const wrapper = shallow(<RemoveFromCart id="abc123" removeFromCart={removeSpy} />);
-    wrapper.simulate('click');
-    expect(removeSpy).toHaveBeenCalledWith({ variables: { id: 'abc123' } });
+  it('runs the mutation with correct variables', () => {
+    const wrapper = mountWithApollo(<RemoveFromCart id="abc123" />);
+    const mutation = wrapper.find('Mutation').instance();
+    mutation.client.mutate = jest.fn().mockResolvedValue({ removeFromCart: { id: 'abc123' } });
+    wrapper.find('button').simulate('click');
+    expect(mutation.client.mutate).toHaveBeenCalled();
+    expect(mutation.client.mutate).toHaveBeenCalledWithVariables({ id: 'abc123' });
   });
 });

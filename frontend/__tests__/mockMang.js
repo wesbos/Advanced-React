@@ -3,6 +3,8 @@ import { makeExecutableSchema } from 'graphql-tools';
 import MockClient from 'graphql-mock';
 import casual from 'casual';
 import PropTypes from 'prop-types';
+import { ApolloProvider } from 'react-apollo';
+import { mount } from 'enzyme';
 
 // seed it so we get consistent results
 casual.seed(777);
@@ -61,4 +63,11 @@ const mountOptions = {
   },
 };
 
+const mountWithApollo = (Component, props) => {
+  const wrapper = mount(<ApolloProvider client={mocked.client}>{Component}</ApolloProvider>);
+  return wrapper.children();
+};
+
 export default mountOptions;
+
+export { mocked, mountWithApollo };
