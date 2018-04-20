@@ -2,8 +2,8 @@ import Downshift from 'downshift';
 import Router from 'next/router';
 import styled, { keyframes } from 'styled-components';
 import debounce from 'lodash.debounce';
-import { client } from '../lib/withData';
 import { SEARCH_ITEMS_QUERY } from '../queries/queries';
+import { ApolloConsumer } from 'react-apollo';
 
 function routeToItem(item) {
   Router.push({
@@ -62,7 +62,7 @@ class AutoComplete extends React.Component {
     items: [],
     loading: false,
   };
-  onChange = debounce(async e => {
+  onChange = debounce(async (e, client) => {
     if (!e.target.value) {
       return this.setState({ items: [] });
     }
@@ -81,17 +81,21 @@ class AutoComplete extends React.Component {
           {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
             <div>
               {/* This is the searchInput */}
-              <input
-                {...getInputProps({
-                  placeholder: 'Search For Item',
-                  id: 'search',
-                  className: this.state.loading ? 'loading' : '',
-                  onChange: e => {
-                    e.persist();
-                    this.onChange(e);
-                  },
-                })}
-              />
+              <ApolloConsumer>
+                {client => (
+                  <input
+                    {...getInputProps({
+                      placeholder: 'Search For Item',
+                      id: 'search',
+                      className: this.state.loading ? 'loading' : '',
+                      onChange: e => {
+                        e.persist();
+                        this.onChange(e, client);
+                      },
+                    })}
+                  />
+                )}
+              </ApolloConsumer>
               {/* This is the Dropdown */}
               {isOpen && (
                 <DropDown>

@@ -40,8 +40,11 @@ FormatMoney
 Cart Count
 CartItem
 
+Things to Ask James:
 
-
+* Testing Mutations - overwrite instance Mutation.client.mutate?
+* Client via <ApolloConsumer> - best way?
+* Update on Items Pagination
 
 
 -->
