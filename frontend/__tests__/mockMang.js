@@ -51,9 +51,30 @@ const fakeItem = () => ({
 const fakeUser = () => ({
   __typename: 'User',
   id: '4234',
-  name: 'Fakey Mc Fake',
-  email: 'fake@fake.com',
+  name: casual.name,
+  email: casual.email,
   permissions: ['ADMIN'],
+  orders: [],
+  cart: [],
+});
+
+const fakeOrderItem = () => ({
+  id: casual.uuid,
+  image: `${casual.word}.jpg`,
+  title: casual.words(),
+  price: 4234,
+  quantity: 1,
+  description: casual.words(),
+});
+
+const fakeOrder = () => ({
+  __typename: 'Order',
+  id: 'ord123',
+  charge: 'ch_123',
+  total: 40000,
+  items: [fakeOrderItem(), fakeOrderItem()],
+  createdAt: '2018-04 - 06T19: 24: 16.000Z',
+  user: fakeUser(),
 });
 
 const fakeCartItem = overrides => ({
@@ -98,4 +119,4 @@ const mountWithApollo = Component => {
 
 export default mountOptions;
 
-export { mocked, mountWithApollo, fakeItem, fakeUser, fakeCartItem };
+export { mocked, mountWithApollo, fakeItem, fakeUser, fakeCartItem, fakeOrder, fakeOrderItem };

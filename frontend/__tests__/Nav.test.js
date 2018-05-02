@@ -1,35 +1,70 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import { Nav } from '../components/Nav';
+import Nav from '../components/Nav';
+import { MockedProvider } from 'react-apollo/test-utils';
+import { fakeUser, fakeOrder } from './mockMang';
+import { CURRENT_USER_QUERY } from '../queries/queries';
+import wait from 'waait';
+// Mock the router
+import Router from 'next/router';
+
+Router.router = { push() {} };
 
 const currentUserLoggedOut = {
   refetch() {},
 };
 
-const currentUser = {
-  me: {},
-  refetch() {},
-};
+const loggedOutMocks = [
+  {
+    request: { query: CURRENT_USER_QUERY },
+    delay: 0,
+    result: {
+      data: {
+        me: null,
+      },
+    },
+  },
+];
+
+const loggedInMocks = [
+  {
+    request: { query: CURRENT_USER_QUERY },
+    result: {
+      data: {
+        what: 'yah',
+        me: {
+          ...fakeUser(),
+          orders: [],
+          cart: [],
+        },
+      },
+    },
+  },
+];
 
 describe('<Nav></Nav>', () => {
-  it('renders', () => {
-    shallow(<Nav currentUser={currentUserLoggedOut} />);
-  });
-
   it('Renders minimal nav when logged out', () => {
-    const wrapper = shallow(<Nav currentUser={currentUserLoggedOut} />);
-    expect(toJSON(wrapper)).toMatchSnapshot();
+    const wrapper = mount(
+      <MockedProvider mocks={loggedOutMocks}>
+        <Nav />
+      </MockedProvider>
+    );
+    const nav = wrapper.find('ul[data-test="nav"]');
+    expect(toJSON(nav)).toMatchSnapshot();
   });
 
-  it('renders full nav when logged in', () => {
-    const wrapper = shallow(<Nav currentUser={currentUser} />);
-    expect(toJSON(wrapper)).toMatchSnapshot();
-  });
-
-  it('tries to refetch the current user when it mounts', () => {
-    const refetch = jest.fn();
-    shallow(<Nav currentUser={{ ...currentUser, refetch }} />);
-    expect(refetch).toHaveBeenCalled();
+  it('renders full nav when logged in', async () => {
+    const wrapper = mount(
+      <MockedProvider mocks={loggedInMocks}>
+        <Nav />
+      </MockedProvider>
+    );
+    await wait();
+    wrapper.update();
+    const nav = wrapper.find('ul[data-test="nav"]');
+    // account link
+    const accountLink = wrapper.find('a[href="/me"]');
+    expect(accountLink.length).toBe(1);
   });
 });

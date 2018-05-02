@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { perPage } from '../config';
-import { ALL_ITEMS_QUERY, ITEM_COUNT_QUERY } from '../queries/queries';
+import { ALL_ITEMS_QUERY } from '../queries/queries';
 
 const PaginationStyles = styled.div`
   text-align: center;
@@ -33,6 +33,7 @@ const PaginationStyles = styled.div`
 const Pagination = props => (
   <Query query={ALL_ITEMS_QUERY}>
     {({ data, loading, error }) => {
+      console.log(error);
       if (loading) return null;
       const { aggregate } = data.itemsConnection;
       const { page } = props;

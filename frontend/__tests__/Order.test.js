@@ -1,16 +1,42 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import wait from 'waait';
+import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
+import wait from 'waait';
 import Order from '../components/Order';
-import mountOptions from './mockMang';
+import { MockedProvider } from 'react-apollo/test-utils';
+import { fakeOrder } from './mockMang';
+import { SINGLE_ORDER_QUERY } from '../queries/queries';
+
+const mocks = [
+  {
+    request: { query: SINGLE_ORDER_QUERY, variables: { id: '123' } },
+    result: {
+      data: {
+        order: fakeOrder(),
+      },
+    },
+  },
+];
 
 describe('<Order/>', () => {
-  it('Renders with Proper Data', async () => {
-    const wrapper = mount(<Order id="123" />, mountOptions);
-    await wait();
+  it('Renders loading state', async () => {
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <Order id="123" />
+      </MockedProvider>
+    );
+    expect(wrapper.text()).toContain('Loading...');
+  });
+
+  it('Renders the order', async () => {
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <Order id="123" />
+      </MockedProvider>
+    );
+    await wait(15);
     wrapper.update();
-    const order = wrapper.find('[data-test="order"]');
+    const order = wrapper.find('div[data-test="order"]');
     expect(toJSON(order)).toMatchSnapshot();
   });
 });

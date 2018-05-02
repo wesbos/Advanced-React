@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Item/> Renders an item 1`] = `
+exports[`<Item/> Renders and matches snapshot 1`] = `
 <styled.div
   key="ABC123"
 >
@@ -36,7 +36,7 @@ exports[`<Item/> Renders an item 1`] = `
     <Link
       href={
         Object {
-          "pathname": "/admin/update",
+          "pathname": "/update",
           "query": Object {
             "id": "ABC123",
           },
@@ -47,14 +47,12 @@ exports[`<Item/> Renders an item 1`] = `
         Edit ✏️
       </a>
     </Link>
-    <Apollo(Apollo(AddToCart))
+    <AddToCart
       id="ABC123"
     />
-    <button
-      onClick={[Function]}
-    >
-      × Delete item
-    </button>
+    <DeleteItem
+      id="ABC123"
+    />
   </div>
 </styled.div>
 `;

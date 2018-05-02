@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import wait from 'waait';
 import toJSON from 'enzyme-to-json';
 import SingleItem from '../components/SingleItem';
-import { MockedProvider } from 'react-apollo/test-utils';
 import { SINGLE_ITEM_QUERY } from '../queries/queries';
+import { MockedProvider } from 'react-apollo/test-utils';
 import { fakeItem } from './mockMang';
 
 const data = {
@@ -27,7 +27,6 @@ describe('<SingleItem/>', () => {
     );
     // Check for loading state
     expect(wrapper.text()).toContain('Loading...');
-    1;
 
     // wait for response and refresh
     await wait(55);

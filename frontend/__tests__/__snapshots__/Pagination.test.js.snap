@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Pagination/> displays loading message 1`] = `
-<p>
-  Loading...
-</p>
-`;
-
 exports[`<Pagination/> renders pagination for 18 items 1`] = `
 <styled.div>
   <Link

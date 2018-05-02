@@ -2,12 +2,12 @@ import React, { Fragment } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Query } from 'react-apollo';
-import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY } from '../queries/queries';
+import { CURRENT_USER_QUERY } from '../queries/queries';
 import CartCount from './CartCount';
 import Signout from './Signout';
 import { ApolloConsumer } from 'react-apollo';
 
-const StyledUl = styled.ul`
+const StyledNav = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
@@ -69,23 +69,20 @@ const StyledUl = styled.ul`
 `;
 
 class Nav extends React.Component {
-  componentDidMount() {
-    console.log('NAV MOUNTED');
-  }
   render() {
     return (
-      <Query query={CURRENT_USER_QUERY} ssr={false}>
-        {({ data: { me }, refetch }) => (
-          <StyledUl>
-            <Link prefetch href="/items">
+      <Query query={CURRENT_USER_QUERY}>
+        {({ data: { me } }) => (
+          <StyledNav data-test="nav">
+            <Link href="/items">
               <a>Shop</a>
             </Link>
-            <Link prefetch href="/add">
+            <Link href="/add">
               <a>Sell</a>
             </Link>
 
             {!me && (
-              <Link prefetch href="/signup">
+              <Link href="/signup">
                 <a>Sign In</a>
               </Link>
             )}
@@ -112,7 +109,7 @@ class Nav extends React.Component {
                 </ApolloConsumer>
               </Fragment>
             )}
-          </StyledUl>
+          </StyledNav>
         )}
       </Query>
     );

@@ -1,16 +1,33 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import { Pagination } from '../components/Pagination';
+import Pagination from '../components/Pagination';
+import { MockedProvider } from 'react-apollo/test-utils';
+import { fakeItem } from './mockMang';
+import { ALL_ITEMS_QUERY } from '../queries/queries';
 
-const fakeQuery = {
+const data = {
   itemsConnection: { aggregate: { count: 18 } },
+  items: [fakeItem()],
 };
 
 describe('<Pagination/>', () => {
-  it('displays loading message', () => {
-    const wrapper = shallow(<Pagination loading page={1} itemsQuery={fakeQuery} />);
-    expect(toJSON(wrapper)).toMatchSnapshot();
+  fit('displays loading message', () => {
+    const mocks = [
+      {
+        request: { query: ALL_ITEMS_QUERY, variables: { skip: 0 } },
+        delay: 50,
+        result: { data },
+      },
+    ];
+
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <Pagination page={1} />
+      </MockedProvider>
+    );
+    console.log(wrapper.debug());
+    // expect(toJSON(wrapper)).toMatchSnapshot();
   });
 
   it('renders pagination for 18 items', () => {

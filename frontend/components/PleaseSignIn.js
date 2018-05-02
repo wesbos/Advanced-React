@@ -5,7 +5,8 @@ import Dump from './Dump';
 
 const PleaseSignIn = props => (
   <Query query={CURRENT_USER_QUERY}>
-    {({ data }) => {
+    {({ data, loading }) => {
+      if (loading) return <p>Loading...</p>;
       // check if they are signed in
       if (!data.me) {
         return (
@@ -24,7 +25,7 @@ const PleaseSignIn = props => (
         ) {
           return (
             <p>
-              Insufficient Permissions to Manage Permissions. You have:
+              Insufficient Permissions. You have:
               <strong>{data.me.permissions}</strong>
               and you need
               <strong>{props.allowedPermissions.join(' OR ')}</strong>

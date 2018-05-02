@@ -194,7 +194,7 @@ export const UPDATE_USER_MUTATION = gql`
 `;
 
 export const CURRENT_USER_QUERY = gql`
-  ${itemDetails}
+  # ${itemDetails}
   query userQuery {
     me {
       id
@@ -202,15 +202,17 @@ export const CURRENT_USER_QUERY = gql`
       name
       permissions
       orders {
-        charge
         id
+        charge
         total
       }
       cart {
-        id
+        # id
         quantity
         item {
-          ...itemDetails
+          id
+          price
+          # ...itemDetails
         }
       }
     }
