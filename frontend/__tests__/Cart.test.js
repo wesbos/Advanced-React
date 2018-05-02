@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import mountOptions from './mockMang';
+import mountOptions from './testUtils';
 import wait from 'waait';
 import Cart from '../components/Cart';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeOrder } from './mockMang';
+import { fakeOrder } from './testUtils';
 import { LOCAL_STATE_QUERY } from '../queries/queries';
 
 const mocks = [

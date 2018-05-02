@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import EditUser from '../components/EditUser';
-import { mountWithApollo } from './mockMang';
+import { mountWithApollo } from './testUtils';
 import wait from 'waait';
 
 const currentUser = {

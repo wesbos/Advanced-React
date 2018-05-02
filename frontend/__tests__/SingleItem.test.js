@@ -5,7 +5,7 @@ import toJSON from 'enzyme-to-json';
 import SingleItem from '../components/SingleItem';
 import { SINGLE_ITEM_QUERY } from '../queries/queries';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeItem } from './mockMang';
+import { fakeItem } from './testUtils';
 
 const data = {
   items: [fakeItem()],

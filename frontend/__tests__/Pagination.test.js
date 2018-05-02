@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import Pagination from '../components/Pagination';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeItem } from './mockMang';
+import { fakeItem } from './testUtils';
 import { ALL_ITEMS_QUERY } from '../queries/queries';
 
 const data = {

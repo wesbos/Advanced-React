@@ -1,9 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import { ApolloProvider } from 'react-apollo';
 import ResetRequest from '../components/ResetRequest';
-import mountOptions from './mockMang';
+import mountOptions from './testUtils';
 
 describe('<ResetRequest/>', () => {
   it('renders and matches snapshot', async () => {

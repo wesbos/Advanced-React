@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import AddToCart from '../components/AddToCart';
-import mountOptions from './mockMang';
+import mountOptions from './testUtils';
 
 describe('<AddtoCart/>', () => {
   it('renders and matches snapshot', () => {

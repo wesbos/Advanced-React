@@ -4,7 +4,7 @@ import toJSON from 'enzyme-to-json';
 import wait from 'waait';
 import Order from '../components/Order';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeOrder } from './mockMang';
+import { fakeOrder } from './testUtils';
 import { SINGLE_ORDER_QUERY } from '../queries/queries';
 
 const mocks = [

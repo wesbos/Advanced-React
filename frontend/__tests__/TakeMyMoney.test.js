@@ -5,7 +5,7 @@ import NProgress from 'nprogress';
 import TakeMyMoney from '../components/TakeMyMoney';
 import Router from 'next/router';
 import wait from 'waait';
-import mountOptions from './mockMang';
+import mountOptions from './testUtils';
 
 Router.router = { push() {} };
 
