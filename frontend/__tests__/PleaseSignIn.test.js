@@ -1,11 +1,10 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import toJSON from 'enzyme-to-json';
+import { mount } from 'enzyme';
+import wait from 'waait';
 import PleaseSignIn from '../components/PleaseSignIn';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeUser, fakeOrder } from './mockMang';
+import { fakeUser } from '../lib/testUtils';
 import { CURRENT_USER_QUERY } from '../queries/queries';
-import wait from 'waait';
 
 const notSignedInMocks = [
   {

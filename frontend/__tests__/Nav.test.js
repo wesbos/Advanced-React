@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import Nav from '../components/Nav';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeUser, fakeOrder } from './mockMang';
+import { fakeUser, fakeOrder } from 'testUtils';
 import { CURRENT_USER_QUERY } from '../queries/queries';
 import wait from 'waait';
 // Mock the router

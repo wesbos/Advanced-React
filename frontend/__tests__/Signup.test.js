@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import wait from 'waait';
 import Signup from '../components/Signup';
-import mountOptions from './testUtils';
+import mountOptions from '../lib/testUtils';
 
 function type(wrapper, name, value) {
   wrapper.find(`input[name="${name}"]`).simulate('change', {

@@ -2,14 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import EditUser from '../components/EditUser';
-import { mountWithApollo } from './testUtils';
+import { mountWithApollo } from '../lib/testUtils';
 import wait from 'waait';
 
 const currentUser = {
   me: {
     name: 'Wes Bos',
   },
-  refetch() {},
+  refetch() { },
 };
 
 describe('<EditUser/>', () => {
@@ -43,7 +43,7 @@ describe('<EditUser/>', () => {
     mutation.client.mutate = jest.fn();
     const nameInput = wrapper.find('[name="name"]');
     nameInput.simulate('change', { target: { name: 'name', value: 'Scott' } });
-    wrapper.find('form').simulate('submit', { preventDefault() {} });
+    wrapper.find('form').simulate('submit', { preventDefault() { } });
     expect(mutation.client.mutate).toHaveBeenCalledWithVariables({ name: 'Scott' });
   });
 

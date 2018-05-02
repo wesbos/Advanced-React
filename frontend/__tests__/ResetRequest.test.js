@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import ResetRequest from '../components/ResetRequest';
-import mountOptions from './testUtils';
+import mountOptions from '../lib/testUtils';
 
 describe('<ResetRequest/>', () => {
   it('renders and matches snapshot', async () => {

@@ -5,9 +5,9 @@ import NProgress from 'nprogress';
 import TakeMyMoney from '../components/TakeMyMoney';
 import Router from 'next/router';
 import wait from 'waait';
-import mountOptions from './testUtils';
+import mountOptions from '../lib/testUtils';
 
-Router.router = { push() {} };
+Router.router = { push() { } };
 
 describe('<TakeMyMoney />', () => {
   it('renders', async () => {
