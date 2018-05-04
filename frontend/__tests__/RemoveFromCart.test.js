@@ -5,7 +5,7 @@ import { ApolloConsumer } from 'react-apollo';
 import { MockedProvider } from 'react-apollo/test-utils';
 import wait from 'waait';
 import RemoveFromCart from '../components/RemoveFromCart';
-import { mountWithApollo, fakeCartItem, fakeUser } from '../lib/testUtils';
+import { fakeCartItem, fakeUser } from '../lib/testUtils';
 import { CURRENT_USER_QUERY, REMOVE_FROM_CART_MUTATION } from '../queries/queries';
 
 const mocks = [
@@ -36,14 +36,6 @@ const mocks = [
       },
     },
   },
-  // {
-  //   request: { query: CURRENT_USER_QUERY },
-  //   result: {
-  //     data: {
-  //       me: { name: 'hi', cart: [], permissions: [], orders: [], id: 22, email: 'jame@apollo.com' },
-  //     },
-  //   },
-  // },
 ];
 
 describe('<RemoveFromCart/>', () => {
