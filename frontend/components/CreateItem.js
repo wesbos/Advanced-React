@@ -48,10 +48,12 @@ class CreateItem extends Component {
       <Mutation
         mutation={CREATE_ITEM_MUTATION}
         variables={this.state}
-        refetchQueries={[{ query: ALL_ITEMS_QUERY }]}
+        // TODO - update all items
+        // refetchQueries={[{ query: ALL_ITEMS_QUERY }]}
       >
         {(createItem, { loading, error }) => (
           <Form
+            data-test
             onSubmit={async e => {
               e.preventDefault();
               const { data: { createItem: item } } = await createItem();
