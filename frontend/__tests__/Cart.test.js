@@ -5,8 +5,8 @@ import mountOptions from '../lib/testUtils';
 import wait from 'waait';
 import Cart from '../components/Cart';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeOrder } from '../lib/testUtils';
-import { LOCAL_STATE_QUERY } from '../queries/queries';
+import { fakeCart, fakeUser } from '../lib/testUtils';
+import { CURRENT_USER_QUERY } from '../queries/queries';
 
 const mocks = [
   {

@@ -72,6 +72,7 @@ const CloseButton = styled.button`
   right: 0;
 `;
 
+// TODO: use react-adopt to compose these
 const Cart = props => (
   <Mutation mutation={TOGGLE_CART_MUTATION}>
     {toggle => (

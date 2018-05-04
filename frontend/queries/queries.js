@@ -107,13 +107,7 @@ export const SINGLE_ITEM_QUERY = gql`
         email
         name
       }
-      # TODO Swap with fragment once apollo is fixed
-      id
-      title
-      price
-      description
-      image
-      largeImage
+      ...itemDetails
     }
   }
 `;
@@ -194,7 +188,7 @@ export const UPDATE_USER_MUTATION = gql`
 `;
 
 export const CURRENT_USER_QUERY = gql`
-  # ${itemDetails}
+  ${itemDetails}
   query userQuery {
     me {
       id
@@ -207,12 +201,10 @@ export const CURRENT_USER_QUERY = gql`
         total
       }
       cart {
-        # id
+        id
         quantity
         item {
-          id
-          price
-          # ...itemDetails
+          ...itemDetails
         }
       }
     }

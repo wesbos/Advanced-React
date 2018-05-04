@@ -21,9 +21,9 @@ class RemoveFromCart extends Component {
 
   update = (proxy, payload) => {
     const data = proxy.readQuery({ query: CURRENT_USER_QUERY });
-    console.log(data);
+    // console.log(data.me.cart[0]);
     const cartItemId = payload.data.removeFromCart.id;
-    data.me.cart = data.me.cart.filter(item => item.id !== cartItemId);
+    data.me.cart = data.me.cart.filter(cartItem => cartItem.id !== cartItemId);
     proxy.writeQuery({ query: CURRENT_USER_QUERY, data });
   };
 
@@ -33,8 +33,8 @@ class RemoveFromCart extends Component {
         mutation={REMOVE_FROM_CART_MUTATION}
         variables={{ id: this.props.id }}
         update={this.update}
-        // TODO - we should be able to remove this because we remove the item above
-        // refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+      // TODO - we should be able to remove this because we remove the item above
+      // refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {removeFromCart => (
           <BigButton title="Remove From Cart" onClick={removeFromCart}>
