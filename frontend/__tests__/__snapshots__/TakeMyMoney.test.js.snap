@@ -3,12 +3,12 @@
 exports[`<TakeMyMoney /> renders 1`] = `
 <ReactStripeCheckout
   ComponentClass="span"
-  amount={281050000}
+  amount={15000}
   className="StripeCheckout"
   currency="USD"
-  description="Order of 5621 Items From Sick Fits"
-  email="Ella_Douglas@Lou.info"
-  image="dog.jpg"
+  description="Order of 3 Items From Sick Fits"
+  email="Delmer.Smith@yahoo.com"
+  image="dog-small.jpg"
   label="Pay With Card"
   locale="auto"
   name="Sick Fits Haul"

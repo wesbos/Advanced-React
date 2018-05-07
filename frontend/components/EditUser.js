@@ -31,7 +31,6 @@ class EditUser extends React.Component {
       <Query query={CURRENT_USER_QUERY}>
         {({ data: { me }, loading }) => {
           if (loading) return <p>Loading...</p>;
-          if (!me) return <p>You must be logged in</p>;
           return (
             <Mutation
               mutation={UPDATE_USER_MUTATION}
@@ -42,6 +41,7 @@ class EditUser extends React.Component {
                 <Form onSubmit={e => this.handleSubmit(e, updateUser)}>
                   <Error error={error} />
                   <fieldset disabled={loading} aria-busy={loading}>
+                    {called && !error && <p data-test="updated">Updated!</p>}
                     <label htmlFor="name">
                       Name:
                       <input

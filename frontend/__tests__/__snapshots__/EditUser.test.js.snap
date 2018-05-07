@@ -1,55 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<EditUser/> asks you to log in when you arent logged in 1`] = `
-<p>
-  You must be logged in
-</p>
-`;
-
 exports[`<EditUser/> renders 1`] = `
-<Form
+<form
+  className="sc-bdVaJa LHejR"
   onSubmit={[Function]}
 >
-  <form
-    className="sc-bdVaJa LHejR"
-    onSubmit={[Function]}
+  <DisplayError />
+  <fieldset
+    aria-busy={false}
+    disabled={false}
   >
-    <DisplayError />
-    <fieldset
-      aria-busy={false}
-      disabled={false}
+    <label
+      htmlFor="name"
     >
-      <label
-        htmlFor="name"
-      >
-        Name:
-        <input
-          defaultValue="Miss Tillman Mitchell"
-          name="name"
-          onChange={[Function]}
-          type="text"
-        />
-      </label>
-      <button
-        type="submit"
-      >
-        Update
-      </button>
-      <strong>
-        me:
-      </strong>
-      <pre>
-        "Miss Tillman Mitchell"
-      </pre>
-      <strong>
-        Change:
-      </strong>
-      <pre
-        data-test="change"
-      >
-        {}
-      </pre>
-    </fieldset>
-  </form>
-</Form>
+      Name:
+      <input
+        defaultValue="Miss Coleman Berge"
+        name="name"
+        onChange={[Function]}
+        type="text"
+      />
+    </label>
+    <button
+      type="submit"
+    >
+      Update
+    </button>
+    <strong>
+      me:
+    </strong>
+    <pre>
+      "Miss Coleman Berge"
+    </pre>
+    <strong>
+      Change:
+    </strong>
+    <pre
+      data-test="change"
+    >
+      {}
+    </pre>
+  </fieldset>
+</form>
 `;

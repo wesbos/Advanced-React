@@ -25,6 +25,7 @@ const fakeUser = () => ({
 });
 
 const fakeOrderItem = () => ({
+  __typename: 'OrderItem',
   id: casual.uuid,
   image: `${casual.word}.jpg`,
   title: casual.words(),
@@ -52,4 +53,27 @@ const fakeCartItem = overrides => ({
   ...overrides,
 });
 
-export { fakeItem, fakeUser, fakeCartItem, fakeOrder, fakeOrderItem };
+// Fake LocalStorage
+class LocalStorageMock {
+  constructor() {
+    this.store = {};
+  }
+
+  clear() {
+    this.store = {};
+  }
+
+  getItem(key) {
+    return this.store[key] || null;
+  }
+
+  setItem(key, value) {
+    this.store[key] = value.toString();
+  }
+
+  removeItem(key) {
+    delete this.store[key];
+  }
+}
+
+export { LocalStorageMock, fakeItem, fakeUser, fakeCartItem, fakeOrder, fakeOrderItem };

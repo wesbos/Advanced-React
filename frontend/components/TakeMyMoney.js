@@ -5,6 +5,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
 import calcTotalPrice from '../lib/calcTotalPrice';
+import Error from './ErrorMessage';
 
 function totalItems(cart) {
   return cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
@@ -29,8 +30,9 @@ class TakeMyMoney extends Component {
   render() {
     return (
       <Query query={CURRENT_USER_QUERY}>
-        {({ data: { me } }) => {
+        {({ data: { me }, error }) => {
           if (!me || !me.cart.length) return null;
+          if (error) return <Error error={error} />;
           return (
             <Mutation
               mutation={CREATE_ORDER_MUTATION}

@@ -16,8 +16,8 @@ class ResetRequest extends React.Component {
           <Form
             onSubmit={async e => {
               e.preventDefault();
-              // I wanna spy on this
               const res = await resetMutation();
+              console.log('HEYY');
               console.log(res);
             }}
             data-test="ResetRequest"

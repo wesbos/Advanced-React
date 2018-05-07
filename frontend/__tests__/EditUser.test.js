@@ -1,32 +1,55 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import EditUser from '../components/EditUser';
-import { mountWithApollo } from '../lib/testUtils';
 import wait from 'waait';
+import { MockedProvider } from 'react-apollo/test-utils';
+import { fakeUser } from '../lib/testUtils';
+import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/queries';
 
-const currentUser = {
-  me: {
-    name: 'Wes Bos',
+const mocks = [
+  {
+    request: { query: CURRENT_USER_QUERY },
+    result: {
+      data: {
+        me: fakeUser(),
+      },
+    },
   },
-  refetch() { },
-};
+  {
+    request: {
+      query: UPDATE_USER_MUTATION,
+      variables: {
+        name: 'Westopher',
+      },
+    },
+    result: {
+      updateUser: {
+        name: 'Westopher',
+        __typename: 'User',
+      },
+    },
+  },
+];
 
 describe('<EditUser/>', () => {
   it('renders', async () => {
-    const { wrapper, component } = mountWithApollo(<EditUser />);
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <EditUser />
+      </MockedProvider>
+    );
     await wait();
     wrapper.update();
-    expect(toJSON(wrapper.find('Form'))).toMatchSnapshot();
-  });
-
-  it('asks you to log in when you arent logged in', () => {
-    const wrapper = shallow(<EditUser />);
-    expect(toJSON(wrapper)).toMatchSnapshot();
+    expect(toJSON(wrapper.find('form'))).toMatchSnapshot();
   });
 
   it('displays changes', async () => {
-    const { wrapper } = mountWithApollo(<EditUser />);
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <EditUser />
+      </MockedProvider>
+    );
     await wait();
     wrapper.update();
     const nameInput = wrapper.find('[name="name"]');
@@ -36,26 +59,17 @@ describe('<EditUser/>', () => {
   });
 
   it('calls update user when form is submitted', async () => {
-    const { wrapper } = mountWithApollo(<EditUser />);
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <EditUser />
+      </MockedProvider>
+    );
     await wait();
     wrapper.update();
-    const mutation = wrapper.find('Mutation').instance();
-    mutation.client.mutate = jest.fn();
     const nameInput = wrapper.find('[name="name"]');
-    nameInput.simulate('change', { target: { name: 'name', value: 'Scott' } });
-    wrapper.find('form').simulate('submit', { preventDefault() { } });
-    expect(mutation.client.mutate).toHaveBeenCalledWithVariables({ name: 'Scott' });
-  });
-
-  it('refetches the current user after an update', async () => {
-    const { wrapper } = mountWithApollo(<EditUser />);
-    await wait();
+    nameInput.simulate('change', { target: { name: 'name', value: 'Westopher' } });
+    wrapper.find('form').simulate('submit');
     wrapper.update();
-    const query = wrapper.find('Query').instance();
-    const mutation = wrapper.find('Mutation').instance();
-    console.log(mutation.props.mutation);
-    expect('wes').toBe('finished with this one');
-    // wrapper.find('form').simulate('submit', { preventDefault() {} });
-    // expect(query.client.reFetchObservableQueries).toHaveBeenCalled();
+    expect(wrapper.find('[data-test="updated"]').text()).toBe('Updated!');
   });
 });
