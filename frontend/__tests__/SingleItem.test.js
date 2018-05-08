@@ -59,7 +59,6 @@ describe('<SingleItem/>', () => {
     wrapper.update();
 
     const Item = wrapper.find('[data-test="graphql-error"]');
-    console.log(Item.debug());
     expect(toJSON(Item)).toMatchSnapshot();
   });
 });

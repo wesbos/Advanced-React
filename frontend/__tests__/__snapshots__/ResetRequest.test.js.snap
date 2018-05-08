@@ -31,29 +31,3 @@ exports[`<ResetRequest/> renders and matches snapshot 1`] = `
   </fieldset>
 </form>
 `;
-
-exports[`<ResetRequest/> renders errors 1`] = `
-<DisplayError
-  error={
-    Object {
-      "message": "Shit!",
-    }
-  }
->
-  <styled.div>
-    <div
-      className="sc-bwzfXH flKeYn"
-    >
-      <p>
-        <strong>
-          Shoot!
-        </strong>
-        Shit!
-        <button>
-          Try Again
-        </button>
-      </p>
-    </div>
-  </styled.div>
-</DisplayError>
-`;

@@ -34,7 +34,7 @@ describe('<Order/>', () => {
         <Order id="123" />
       </MockedProvider>
     );
-    await wait(10);
+    await wait(50);
     wrapper.update();
     const order = wrapper.find('div[data-test="order"]');
     expect(toJSON(order)).toMatchSnapshot();

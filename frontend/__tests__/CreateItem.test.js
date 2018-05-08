@@ -126,7 +126,7 @@ describe('<Createitem/>', () => {
     // it submits and matches the mocks
     wrapper.find('form').simulate('submit');
     // it routes to the item page
-    await wait();
+    await wait(50);
     expect(Router.router.push).toHaveBeenCalled();
     expect(Router.router.push).toHaveBeenCalledWith({ pathname: '/item', query: { id: '123' } });
   });

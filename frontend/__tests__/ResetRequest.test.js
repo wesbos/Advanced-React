@@ -81,6 +81,7 @@ describe('<ResetRequest/>', () => {
       wrapper.find('form').simulate('submit');
       await wait();
     } catch (e) {
+      console.log('CAUGHT');
       console.log(e);
     }
     // expect(async () => {

@@ -87,12 +87,12 @@ export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
   ${itemDetails}
   query AllItemsQuery($skip: Int = 0, $first: Int = ${perPage}) {
-    itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) @connection(key: "itemsConnection") {
+    itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
       aggregate {
         count
       }
     }
-    items(orderBy: createdAt_DESC, first: $first, skip: $skip) @connection(key: "items") {
+    items(orderBy: createdAt_DESC, first: $first, skip: $skip) {
       ...itemDetails
     }
   }

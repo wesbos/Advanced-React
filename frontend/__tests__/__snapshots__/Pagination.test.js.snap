@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Pagination/> renders pagination for 18 items 1`] = `
-<styled.div>
+exports[`<Pagination/> displays loading message 1`] = `
+<div
+  className="sc-bdVaJa ijYKGd"
+  data-test="pagination"
+>
   <Link
     href={
       Object {
@@ -11,11 +14,12 @@ exports[`<Pagination/> renders pagination for 18 items 1`] = `
         },
       }
     }
-    prefetch={true}
   >
     <a
       aria-disabled={true}
       className="prev"
+      href="items?page=0"
+      onClick={[Function]}
     >
       ←Prev
     </a>
@@ -30,12 +34,12 @@ exports[`<Pagination/> renders pagination for 18 items 1`] = `
     <strong
       className="totalPages"
     >
-      2
+      1
     </strong>
   </p>
   <p>
     <strong>
-      18
+      1
     </strong>
      Items Total
   </p>
@@ -48,14 +52,15 @@ exports[`<Pagination/> renders pagination for 18 items 1`] = `
         },
       }
     }
-    prefetch={true}
   >
     <a
-      aria-disabled={false}
+      aria-disabled={true}
       className="next"
+      href="items?page=2"
+      onClick={[Function]}
     >
       Next →
     </a>
   </Link>
-</styled.div>
+</div>
 `;

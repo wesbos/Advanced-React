@@ -33,15 +33,14 @@ const PaginationStyles = styled.div`
 const Pagination = props => (
   <Query query={ALL_ITEMS_QUERY}>
     {({ data, loading, error }) => {
-      console.log(error);
-      if (loading) return null;
+      if (loading || error) return null;
       const { aggregate } = data.itemsConnection;
       const { page } = props;
       const pages = Math.ceil(aggregate.count / perPage);
+      // TODO prefetch this
       return (
-        <PaginationStyles>
+        <PaginationStyles data-test="pagination">
           <Link
-            prefetch
             href={{
               pathname: 'items',
               query: { page: page - 1 },
@@ -58,7 +57,6 @@ const Pagination = props => (
             <strong>{aggregate.count}</strong> Items Total
           </p>
           <Link
-            prefetch
             href={{
               pathname: 'items',
               query: { page: page + 1 },

@@ -5,8 +5,8 @@ import mountOptions from '../lib/testUtils';
 import wait from 'waait';
 import Cart from '../components/Cart';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeCart, fakeUser } from '../lib/testUtils';
-import { CURRENT_USER_QUERY } from '../queries/queries';
+import { fakeCartItem, fakeUser } from '../lib/testUtils';
+import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY } from '../queries/queries';
 
 const mocks = [
   {
@@ -15,26 +15,31 @@ const mocks = [
       data: {
         me: {
           ...fakeUser(),
-          cart: fakeCart(),
+          cart: [fakeCartItem()],
         },
+      },
+    },
+  },
+  {
+    request: { query: LOCAL_STATE_QUERY },
+    result: {
+      data: {
+        cartOpen: true,
       },
     },
   },
 ];
 
 describe('<Cart/>', () => {
-  // TODO fix this one
-  expect('wes').toBe('fixed');
   it('renders', async () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <Cart />
       </MockedProvider>
     );
-    console.log(wrapper.debug());
-    // await wait();
-    // wrapper.update();
-    // expect(toJSON(wrapper.find('header'))).toMatchSnapshot();
-    // expect(wrapper.find('CartItem')).toHaveLength(2);
+    await wait();
+    wrapper.update();
+    expect(toJSON(wrapper.find('header'))).toMatchSnapshot();
+    expect(wrapper.find('CartItem')).toHaveLength(1);
   });
 });

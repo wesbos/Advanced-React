@@ -6,6 +6,7 @@ import formatMoney from '../lib/formatMoney';
 import CartItem from './CartItem';
 import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../queries/queries';
 import calcTotalPrice from '../lib/calcTotalPrice';
+import Error from './ErrorMessage';
 
 const CartStyles = styled.div`
   padding: 20px;
@@ -78,9 +79,11 @@ const Cart = props => (
     {toggle => (
       <Query query={LOCAL_STATE_QUERY}>
         {({ data }) => (
-          <Query query={CURRENT_USER_QUERY}>
+          <Query query={CURRENT_USER_QUERY} data-test="cart">
             {({ data: { me }, error, loading }) => {
-              if (loading || error || !me) return null;
+              if (loading) return <p>Loading...</p>;
+              if (error) return <Error error={error} />;
+              if (!me) return <p>Please Sign In!</p>;
               return (
                 <CartStyles open={data.cartOpen}>
                   <header>

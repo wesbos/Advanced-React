@@ -1,19 +1,15 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
+import wait from 'waait';
+import Router from 'next/router';
 import Nav from '../components/Nav';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeUser, fakeOrder } from './testUtils';
+import { fakeUser } from '../lib/testUtils';
 import { CURRENT_USER_QUERY } from '../queries/queries';
-import wait from 'waait';
+
 // Mock the router
-import Router from 'next/router';
-
 Router.router = { push() {} };
-
-const currentUserLoggedOut = {
-  refetch() {},
-};
 
 const loggedOutMocks = [
   {

@@ -17,8 +17,6 @@ class ResetRequest extends React.Component {
             onSubmit={async e => {
               e.preventDefault();
               const res = await resetMutation();
-              console.log('HEYY');
-              console.log(res);
             }}
             data-test="ResetRequest"
           >

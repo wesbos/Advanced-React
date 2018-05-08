@@ -87,7 +87,7 @@ describe('<Signup/>', () => {
     wrapper.update();
     wrapper.find('form').simulate('submit');
 
-    await wait();
+    await wait(5);
     expect(localStorage.getItem('token')).toBe('tok123');
   });
 });

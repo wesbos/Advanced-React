@@ -3,61 +3,95 @@ import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import Pagination from '../components/Pagination';
 import { MockedProvider } from 'react-apollo/test-utils';
+import wait from 'waait';
 import { fakeItem } from '../lib/testUtils';
 import { ALL_ITEMS_QUERY } from '../queries/queries';
 
-const data = {
-  itemsConnection: { aggregate: { count: 18 } },
-  items: [fakeItem()],
-};
+import Router from 'next/router';
+
+Router.router = { push() {} };
+
+function makeMocksFor(length) {
+  return [
+    {
+      request: { query: ALL_ITEMS_QUERY, variables: { skip: 0, first: 4 } },
+      result: {
+        data: {
+          itemsConnection: {
+            // TODO what are these typenames ????
+            __typename: 'aggregate',
+            aggregate: {
+              count: length,
+              __typename: 'count',
+            },
+          },
+          // items: [fakeItem()],
+          items: Array.from({ length }, (_, i) => fakeItem({ id: `item${i}` })),
+        },
+      },
+    },
+  ];
+}
 
 describe('<Pagination/>', () => {
-  fit('displays loading message', () => {
-    const mocks = [
-      {
-        request: { query: ALL_ITEMS_QUERY, variables: { skip: 0 } },
-        delay: 50,
-        result: { data },
-      },
-    ];
-
+  it('displays loading message', async () => {
     const wrapper = mount(
-      <MockedProvider mocks={mocks}>
+      <MockedProvider mocks={makeMocksFor(1)}>
         <Pagination page={1} />
       </MockedProvider>
     );
-    console.log(wrapper.debug());
-    // expect(toJSON(wrapper)).toMatchSnapshot();
+    await wait();
+    wrapper.update();
+    expect(toJSON(wrapper.find('div[data-test="pagination"]'))).toMatchSnapshot();
   });
 
-  it('renders pagination for 18 items', () => {
-    const wrapper = shallow(<Pagination loading={false} page={1} itemsQuery={fakeQuery} />);
-    expect(toJSON(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('.totalPages').text()).toEqual('2');
+  it('renders pagination for 18 items', async () => {
+    const wrapper = mount(
+      <MockedProvider mocks={makeMocksFor(18)}>
+        <Pagination page={1} />
+      </MockedProvider>
+    );
+    await wait();
+    wrapper.update();
+    expect(wrapper.find('.totalPages').text()).toEqual('5');
   });
 
-  it('renders pagination for 28 items', () => {
-    const fakeQuery2 = {
-      itemsConnection: { aggregate: { count: 28 } },
-    };
-    const wrapper = shallow(<Pagination loading={false} page={1} itemsQuery={fakeQuery2} />);
-    expect(wrapper.find('.totalPages').text()).toEqual('4');
+  it('disables prev button on first page', async () => {
+    const wrapper = mount(
+      <MockedProvider mocks={makeMocksFor(18)}>
+        <Pagination page={1} />
+      </MockedProvider>
+    );
+    await wait();
+    wrapper.update();
+    // first page
+    expect(wrapper.find('a.prev').prop('aria-disabled')).toEqual(true);
+    expect(wrapper.find('a.next').prop('aria-disabled')).toEqual(false);
   });
 
-  it('disables and enables next/prev buttons', () => {
-    const fakeQuery3 = {
-      itemsConnection: { aggregate: { count: 100 } },
-    };
-    const wrapper = shallow(<Pagination loading={false} page={1} itemsQuery={fakeQuery} />);
+  it('disables next button on last page', async () => {
+    const wrapper = mount(
+      <MockedProvider mocks={makeMocksFor(18)}>
+        <Pagination page={5} />
+      </MockedProvider>
+    );
+    await wait();
+    wrapper.update();
+    // first page
+    expect(wrapper.find('a.prev').prop('aria-disabled')).toEqual(false);
+    expect(wrapper.find('a.next').prop('aria-disabled')).toEqual(true);
+  });
 
-    expect(wrapper.find('a.prev').props()['aria-disabled']).toEqual(true);
-    expect(wrapper.find('a.next').props()['aria-disabled']).toEqual(false);
-    wrapper.setProps({ page: 2 });
-    expect(wrapper.find('a.prev').props()['aria-disabled']).toEqual(false);
-    expect(wrapper.find('a.next').props()['aria-disabled']).toEqual(true);
-    // when in the middle, both should work
-    wrapper.setProps({ itemsQuery: fakeQuery3, page: 3 });
-    expect(wrapper.find('a.prev').props()['aria-disabled']).toEqual(false);
-    expect(wrapper.find('a.next').props()['aria-disabled']).toEqual(false);
+  it('enables all buttons on a middle page', async () => {
+    const wrapper = mount(
+      <MockedProvider mocks={makeMocksFor(18)}>
+        <Pagination page={2} />
+      </MockedProvider>
+    );
+    await wait();
+    wrapper.update();
+    // first page
+    expect(wrapper.find('a.prev').prop('aria-disabled')).toEqual(false);
+    expect(wrapper.find('a.next').prop('aria-disabled')).toEqual(false);
   });
 });
