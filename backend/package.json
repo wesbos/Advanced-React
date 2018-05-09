@@ -14,6 +14,7 @@
     "jsonwebtoken": "8.2.1",
     "nodemailer": "^4.6.4",
     "prisma-binding": "1.5.16",
+    "react-adopt": "^0.4.1",
     "stripe": "^5.8.0"
   },
   "devDependencies": {

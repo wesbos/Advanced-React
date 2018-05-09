@@ -4,7 +4,7 @@ import Page from '../components/Page';
 import withData from '../lib/withData';
 
 const Home = props => {
-  const page = parseInt(props.url.query.page) || 1;
+  const page = parseInt(props.router.query.page) || 1;
   return (
     <Page>
       <Items page={page} />
@@ -13,7 +13,7 @@ const Home = props => {
 };
 
 Home.propTypes = {
-  url: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 export default withData(Home);

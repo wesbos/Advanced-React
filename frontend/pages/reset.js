@@ -5,7 +5,7 @@ import Reset from '../components/Reset';
 const ResetPage = props => (
   <Page>
     <h2>So you wanna reset your password?</h2>
-    <Reset resetToken={props.url.query.resetToken} />
+    <Reset resetToken={props.router.query.resetToken} />
   </Page>
 );
 

@@ -27,6 +27,7 @@
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
+    "react-adopt": "^0.4.1",
     "react-apollo": "^2.1.4",
     "react-dom": "^16.3.2",
     "react-stripe-checkout": "^2.6.3",

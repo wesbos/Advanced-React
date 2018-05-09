@@ -24,7 +24,6 @@ class ItemList extends React.Component {
     page: PropTypes.number.isRequired,
   };
   static getDerivedStateFromProps(nextProps, state) {
-    console.log(nextProps);
     return { refetch: state.page !== nextProps.page };
   }
   state = {

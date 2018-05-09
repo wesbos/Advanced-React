@@ -1,63 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Title from './styles/Title';
 import AddToCart from './AddToCart';
 import DeleteItem from './DeleteItem';
 import formatMoney from '../lib/formatMoney';
-import PropTypes from 'prop-types';
+import ItemStyles from './styles/ItemStyles';
+import PriceTag from './styles/PriceTag';
 
-const Item = styled.div`
-  background: white;
-  border: 1px solid ${props => props.theme.offWhite};
-  box-shadow: ${props => props.theme.bs};
-  position: relative;
-  display: grid;
-  align-content: start;
-  grid-auto-rows: fit-content;
-  img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-  }
-  p {
-    font-size: 14px;
-    line-height: 2;
-    font-weight: 600;
-    padding: 0 3rem;
-    font-size: 1.5rem;
-  }
-  .buttonList {
-    display: grid;
-    border-top: 1px solid ${props => props.theme.lightgrey};
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-gap: 1px;
-    background: ${props => props.theme.lightgrey};
-    align-self: end;
-    & > * {
-      background: white;
-      border: 0;
-      font-size: 1rem;
-      padding: 1rem;
-    }
-  }
-`;
-
-const PriceTag = styled.span`
-  background: ${props => props.theme.red};
-  transform: rotate(3deg);
-  color: white;
-  font-weight: 600;
-  padding: 5px;
-  line-height: 1;
-  font-size: 3rem;
-  display: inline-block;
-  position: absolute;
-  top: -3px;
-  right: -3px;
-`;
-
-class ItemComponent extends React.Component {
+class Item extends React.Component {
   static propTypes = {
     item: PropTypes.object.isRequired,
   };
@@ -65,7 +16,7 @@ class ItemComponent extends React.Component {
   render() {
     const item = this.props.item;
     return (
-      <Item key={item.id}>
+      <ItemStyles key={item.id}>
         {item.image && <img src={item.image} alt={item.title} />}
         <Title>
           <Link
@@ -94,9 +45,9 @@ class ItemComponent extends React.Component {
           <AddToCart id={item.id} />
           <DeleteItem id={item.id} />
         </div>
-      </Item>
+      </ItemStyles>
     );
   }
 }
 
-export default ItemComponent;
+export default Item;

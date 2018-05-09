@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import Page from '../components/Page';
 import withData from '../lib/withData';
 import CreateItem from '../components/CreateItem';
