@@ -7,8 +7,10 @@ const Query = require('./resolvers/Query');
 function createServer() {
   return new GraphQLServer({
     typeDefs: 'src/schema.graphql',
+    resolverValidationOptions: {
+      requireResolversForResolveType: false,
+    },
     resolvers: {
-      // detail resolvers
       Mutation,
       Query,
     },
