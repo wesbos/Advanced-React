@@ -1,9 +1,8 @@
 import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { SINGLE_ITEM_QUERY } from '../queries/queries';
 import styled from 'styled-components';
 import Link from 'next/link';
-import Dump from './Dump';
+import { SINGLE_ITEM_QUERY } from '../queries/queries';
 import Error from './ErrorMessage';
 
 const SingleItemStyles = styled.div`

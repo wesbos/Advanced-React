@@ -7,7 +7,7 @@ import Cart from './Cart';
 import Search from './Search';
 import Nav from './Nav';
 
-Router.onRouteChangeStart = url => {
+Router.onRouteChangeStart = () => {
   NProgress.start();
 };
 Router.onRouteChangeComplete = () => NProgress.done();
@@ -51,7 +51,7 @@ const Logo = styled.h1`
   }
 `;
 
-const Header = props => (
+const Header = () => (
   <StyledHeader>
     <div className="bar">
       <Logo>

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import { CREATE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries/queries';
+import Router from 'next/router';
+import { CREATE_ITEM_MUTATION } from '../queries/queries';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
-import PropTypes from 'prop-types';
-import Router from 'next/router';
 import formatMoney from '../lib/formatMoney';
 
 class CreateItem extends Component {
@@ -66,14 +65,20 @@ class CreateItem extends Component {
             <h2>Sell an Item.</h2>
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
-              <label>
+              <label htmlFor="file">
                 Image
-                <input required onChange={this.uploadFile} type="file" accept=".png, .jpg, .jpeg" />
+                <input
+                  required
+                  id="file"
+                  onChange={this.uploadFile}
+                  type="file"
+                  accept=".png, .jpg, .jpeg"
+                />
                 {this.state.image ? (
                   <img src={this.state.image} width="100" alt={this.state.title} />
                 ) : null}
               </label>
-              <label>
+              <label htmlFor="title">
                 Title
                 <input
                   required
@@ -85,7 +90,7 @@ class CreateItem extends Component {
                   placeholder="Title"
                 />
               </label>
-              <label>
+              <label htmlFor="price">
                 Price {this.state.price && formatMoney(this.state.price)}
                 <input
                   required

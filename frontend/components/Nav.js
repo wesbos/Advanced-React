@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
-import { Query } from 'react-apollo';
+import { Query, ApolloConsumer } from 'react-apollo';
 import { CURRENT_USER_QUERY } from '../queries/queries';
 import CartCount from './CartCount';
 import Signout from './Signout';
-import { ApolloConsumer } from 'react-apollo';
 
 import NavStyles from './styles/NavStyles';
 

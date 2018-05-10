@@ -1,12 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Link from 'next/link';
 import Title from './styles/Title';
-import AddToCart from './AddToCart';
-import DeleteItem from './DeleteItem';
-import formatMoney from '../lib/formatMoney';
 import ItemStyles from './styles/ItemStyles';
-import PriceTag from './styles/PriceTag';
 
 class LoadingItem extends React.Component {
   render() {

@@ -1,9 +1,10 @@
+import React from 'react';
 import Downshift from 'downshift';
 import Router from 'next/router';
+import { ApolloConsumer } from 'react-apollo';
 import styled, { keyframes } from 'styled-components';
 import debounce from 'lodash.debounce';
 import { SEARCH_ITEMS_QUERY } from '../queries/queries';
-import { ApolloConsumer } from 'react-apollo';
 
 function routeToItem(item) {
   Router.push({

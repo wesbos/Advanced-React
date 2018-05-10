@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Mutation, Query, ApolloConsumer } from 'react-apollo';
+import { Mutation, ApolloConsumer } from 'react-apollo';
 import { SIGNIN_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
@@ -28,7 +28,7 @@ class Signin extends Component {
       <ApolloConsumer>
         {client => (
           <Mutation mutation={SIGNIN_MUTATION} variables={this.state}>
-            {(signin, { data, loading, error }) => (
+            {(signin, { loading, error }) => (
               <Form onSubmit={e => this.loginUser(e, signin, client)}>
                 <Error error={error} />
                 <fieldset disabled={loading} aria-busy={loading}>

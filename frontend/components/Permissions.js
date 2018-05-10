@@ -1,5 +1,6 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
+import PropTypes from 'prop-types';
 import { ALL_USERS_QUERY, UPDATE_PERMISSIONS_MUTATION } from '../queries/queries';
 import Error from './ErrorMessage';
 import SickButton from './styles/SickButton';
@@ -15,6 +16,12 @@ const possiblePermissions = [
 ];
 
 class User extends React.Component {
+  static propTypes = {
+    user: PropTypes.shape({
+      permissions: PropTypes.array.isRequired,
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  };
   state = {
     permissions: this.props.user.permissions,
   };
@@ -57,7 +64,7 @@ class User extends React.Component {
                 type="button"
                 disabled={loading}
                 onClick={async () => {
-                  const res = await updatePermissions({
+                  await updatePermissions({
                     variables: {
                       permissions: this.state.permissions,
                       userId: this.props.user.id,

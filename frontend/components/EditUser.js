@@ -37,7 +37,7 @@ class EditUser extends React.Component {
               refetchQueries={[{ query: CURRENT_USER_QUERY }]}
               variables={this.state.changes}
             >
-              {(updateUser, { loading, error, called, data }) => (
+              {(updateUser, { error, called }) => (
                 <Form onSubmit={e => this.handleSubmit(e, updateUser)}>
                   <Error error={error} />
                   <fieldset disabled={loading} aria-busy={loading}>

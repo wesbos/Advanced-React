@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
+import PropTypes from 'prop-types';
 import { SINGLE_ITEM_QUERY, UPDATE_ITEM_MUTATION } from '../queries/queries';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import Dump from './Dump';
 
 class UpdateItem extends Component {
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+  };
   state = {
     item: {},
   };
@@ -44,7 +47,7 @@ class UpdateItem extends Component {
           const [item] = items;
           return (
             <Mutation mutation={UPDATE_ITEM_MUTATION}>
-              {(updateItemMutation, { error, loading }) => (
+              {(updateItemMutation, { error }) => (
                 <Form onSubmit={e => this.updateItem(e, updateItemMutation)}>
                   <Error error={error} />
                   <h2>Edit {item.title}</h2>

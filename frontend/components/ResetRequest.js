@@ -12,11 +12,11 @@ class ResetRequest extends React.Component {
   render() {
     return (
       <Mutation mutation={REQUEST_RESET_MUTATION} variables={this.state}>
-        {(resetMutation, { loading, error, called, data }) => (
+        {(resetMutation, { loading, error, called }) => (
           <Form
             onSubmit={async e => {
               e.preventDefault();
-              const res = await resetMutation();
+              await resetMutation();
             }}
             data-test="ResetRequest"
           >

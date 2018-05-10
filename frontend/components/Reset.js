@@ -23,7 +23,6 @@ class Reset extends React.Component {
   resetPassword = async (e, resetMutation) => {
     e.preventDefault();
     const res = await resetMutation();
-    console.log(res);
     // sign them in!
     localStorage.setItem('token', res.data.resetPassword.token);
     // TODO: Manually call refresh on a Query
@@ -40,7 +39,7 @@ class Reset extends React.Component {
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
-        {(resetMutation, { error, loading, called }) => (
+        {(resetMutation, { error, loading }) => (
           <Form onSubmit={e => this.resetPassword(e, resetMutation)}>
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>

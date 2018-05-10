@@ -1,7 +1,7 @@
 import { Query } from 'react-apollo';
+import PropTypes from 'prop-types';
 import { CURRENT_USER_QUERY } from '../queries/queries';
 import Signin from './Signin';
-import Dump from './Dump';
 
 const PleaseSignIn = props => (
   <Query query={CURRENT_USER_QUERY}>
@@ -37,5 +37,10 @@ const PleaseSignIn = props => (
     }}
   </Query>
 );
+
+PleaseSignIn.propTypes = {
+  allowedPermissions: PropTypes.array.isRequired,
+  children: PropTypes.any.isRequired,
+};
 
 export default PleaseSignIn;
