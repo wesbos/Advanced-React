@@ -33,12 +33,10 @@ class RemoveFromCart extends Component {
         mutation={REMOVE_FROM_CART_MUTATION}
         variables={{ id: this.props.id }}
         update={this.update}
-      // TODO - we should be able to remove this because we remove the item above
-      // refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
-        {removeFromCart => (
-          <BigButton title="Remove From Cart" onClick={removeFromCart}>
-            &times;
+        {(removeFromCart, { loading }) => (
+          <BigButton disabled={loading} title="Remove From Cart" onClick={removeFromCart}>
+            ×
           </BigButton>
         )}
       </Mutation>

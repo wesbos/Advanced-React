@@ -1,7 +1,5 @@
 # Advanced-React
 
-
-
 <!--
 ## Marketing
 
@@ -48,3 +46,4 @@ Things to Ask James:
 * wait and loading - normal?
 
 -->
+

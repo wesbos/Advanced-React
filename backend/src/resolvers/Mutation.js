@@ -221,13 +221,23 @@ const mutations = {
 
   // delete that cart item
   async removeFromCart(parent, args, ctx, info) {
-    return ctx.db.mutation.deleteManyCartItems(
+    console.log(args.id);
+    // 1. Find the CartItem
+    const cartItem = await ctx.db.query.cartItem(
+      {
+        where: { id: args.id },
+      },
+      `{ id, user { id, permissions }}`
+    );
+    // 2. Check they own it
+    if (cartItem.user.id !== ctx.request.userId) {
+      throw new Error("Cheatin' huh");
+    }
+    // 3. Delete it
+    return ctx.db.mutation.deleteCartItem(
       {
         where: {
           id: args.id,
-          user: {
-            id: ctx.request.userId,
-          },
         },
       },
       info
