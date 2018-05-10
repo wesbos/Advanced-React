@@ -44,6 +44,7 @@ const glow = keyframes`
     box-shadow: 0 0 10px 1px yellow;
   }
 `;
+
 const SearchStyles = styled.div`
   position: relative;
   input {

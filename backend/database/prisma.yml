@@ -4,7 +4,6 @@ service: sick-fits
 # the cluster and stage the service is deployed to
 stage: ${env:PRISMA_STAGE}
 
-# to disable authentication:
 disableAuth: true
 # secret: ${env:PRISMA_SECRET}
 

@@ -10,6 +10,7 @@ import Error from './ErrorMessage';
 import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';
 import CloseButton from './styles/CloseButton';
+import SickButton from './styles/SickButton';
 
 const Composed = adopt({
   toggleCart: <Mutation mutation={TOGGLE_CART_MUTATION} />,
@@ -41,7 +42,7 @@ const Cart = () => (
           <footer>
             <p>{formatMoney(calcTotalPrice(me.cart))}</p>
             <TakeMyMoney>
-              <button>Checkout</button>
+              <SickButton>Checkout</SickButton>
             </TakeMyMoney>
           </footer>
         </CartStyles>

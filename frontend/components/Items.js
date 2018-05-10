@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Pagination from './Pagination';
 import Item from './Item';
+import LoadingItem from './LoadingItem';
 import { perPage } from '../config';
 import { ALL_ITEMS_QUERY } from '../queries/queries';
 
@@ -43,7 +44,15 @@ class ItemList extends React.Component {
           fetchPolicy={fetchPolicy}
         >
           {({ data, error, loading }) => {
-            if (loading) return null;
+            if (loading) {
+              return (
+                <Items>
+                  {Array.from({ length: 4 })
+                    .map((x, id) => ({ id }))
+                    .map(x => <LoadingItem key={x.id} />)}
+                </Items>
+              );
+            }
             if (error) return <div>Error</div>;
             return <Items>{data.items.map(item => <Item key={item.id} item={item} />)}</Items>;
           }}

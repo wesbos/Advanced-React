@@ -28,7 +28,6 @@ injectGlobal`
    margin: 0;
    font-size: 1.5rem;
    line-height: 2;
-   background: red;
   }
   *, *:before, *:after {
     box-sizing: inherit;
