@@ -36,4 +36,4 @@ const client = new ApolloClient({
 // TODO don't export client for page.js
 export { client };
 
-export default withApollo({ client });
+export default withApollo({ client, getInitialProps: true });
