@@ -31,4 +31,4 @@ class MyApp extends App {
   }
 }
 
-export default withData(withRouter(MyApp));
+export default withRouter(withData(MyApp));
