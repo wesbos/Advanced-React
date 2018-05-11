@@ -1,9 +1,8 @@
-import { Component } from 'react';
-import withData from '../lib/withData';
+import React from 'react';
 import Page from '../components/Page';
 import EditUser from '../components/EditUser';
 
-class Orders extends Component {
+class MyAccount extends React.Component {
   render() {
     return (
       <Page>
@@ -14,4 +13,4 @@ class Orders extends Component {
   }
 }
 
-export default withData(Orders);
+export default MyAccount;

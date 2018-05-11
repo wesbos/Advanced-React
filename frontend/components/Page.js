@@ -55,6 +55,8 @@ class Page extends React.Component {
   };
   componentDidMount() {
     // The first time we load in the client, we need to refetch the current user data
+    // TODO use ApolloContext API here instead
+    // TODO can we just use _app for this?
     if (typeof window !== 'undefined' && !window.__CLIENTLOADED__) {
       client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
       window.__CLIENTLOADED__ = true;

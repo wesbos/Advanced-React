@@ -1,11 +1,11 @@
-import withData from '../lib/withData';
+import React from 'react';
 import Page from '../components/Page';
 import SingleItem from '../components/SingleItem';
 
 const ItemPage = props => (
   <Page>
-    <SingleItem id={props.url.query.id} />
+    <SingleItem id={props.router.query.id} />
   </Page>
 );
 
-export default withData(ItemPage);
+export default ItemPage;

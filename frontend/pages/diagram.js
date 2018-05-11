@@ -1,5 +1,4 @@
 import Page from '../components/Page';
-import withData from '../lib/withData';
 import styled from 'styled-components';
 
 const DiagramStyles = styled.div`
@@ -205,4 +204,4 @@ const DiagramPage = () => (
   </Page>
 );
 
-export default withData(DiagramPage);
+export default DiagramPage;

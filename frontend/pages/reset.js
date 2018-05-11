@@ -1,4 +1,3 @@
-import withData from '../lib/withData';
 import Page from '../components/Page';
 import Reset from '../components/Reset';
 
@@ -9,4 +8,4 @@ const ResetPage = props => (
   </Page>
 );
 
-export default withData(ResetPage);
+export default ResetPage;

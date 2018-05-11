@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import withData from '../lib/withData';
 import UpdateItem from '../components/UpdateItem';
 import Page from '../components/Page';
 import PleaseSignIn from '../components/PleaseSignIn';
@@ -16,4 +15,4 @@ class Home extends Component {
   }
 }
 
-export default withData(Home);
+export default Home;

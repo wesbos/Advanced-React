@@ -1,6 +1,5 @@
-import { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import withData from '../lib/withData';
 import Signup from '../components/Signup';
 import Signin from '../components/Signin';
 import Page from '../components/Page';
@@ -22,4 +21,4 @@ const SignUpPage = () => (
   </Page>
 );
 
-export default withData(SignUpPage);
+export default SignUpPage;

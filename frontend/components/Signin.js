@@ -23,7 +23,6 @@ class Signin extends Component {
   };
 
   render() {
-    // TODO / ASK - do I really have to wrap this in a query just to access the refetch function
     return (
       <ApolloConsumer>
         {client => (

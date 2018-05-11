@@ -1,6 +1,7 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { withRouter } from 'next/router';
+import withData from '../lib/withData';
 
 // Next.js wraps each Page in an <App></App> component. This is handy for when you want to persist anything from page to page, or just access a component that is 1 level higher than each page.
 
@@ -30,4 +31,4 @@ class MyApp extends App {
   }
 }
 
-export default withRouter(MyApp);
+export default withData(withRouter(MyApp));

@@ -1,5 +1,4 @@
-import { Component } from 'react';
-import withData from '../lib/withData';
+import React from 'react';
 import Page from '../components/Page';
 import Order from '../components/Order';
 
@@ -9,4 +8,4 @@ const OrderPage = props => (
   </Page>
 );
 
-export default withData(OrderPage);
+export default OrderPage;

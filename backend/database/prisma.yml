@@ -1,11 +1,3 @@
-service: sick-fits
-stage: ${env:PRISMA_STAGE}
-cluster: wesbos/prisma-us1
-
-disableAuth: true
-secret: ${env:PRISMA_SECRET}
-
-# the file path pointing to your data model
+endpoint: ${PRISMA_ENDPOINT}
 datamodel: datamodel.graphql
-
-
+secret: ${env:PRISMA_SECRET}
