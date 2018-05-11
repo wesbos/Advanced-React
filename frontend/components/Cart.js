@@ -13,9 +13,13 @@ import CloseButton from './styles/CloseButton';
 import SickButton from './styles/SickButton';
 
 const Composed = adopt({
-  toggleCart: <Mutation mutation={TOGGLE_CART_MUTATION} />,
-  localState: <Query query={LOCAL_STATE_QUERY} />,
-  currentUser: <Query query={CURRENT_USER_QUERY} data-test="cart" />,
+  toggleCart: <Mutation mutation={TOGGLE_CART_MUTATION}>{() => {}}</Mutation>,
+  localState: <Query query={LOCAL_STATE_QUERY}>{() => {}}</Query>,
+  currentUser: (
+    <Query query={CURRENT_USER_QUERY} data-test="cart">
+      {() => {}}
+    </Query>
+  ),
 });
 
 const Cart = () => (

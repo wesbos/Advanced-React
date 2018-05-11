@@ -11,13 +11,16 @@ const mutations = {
   async signup(parent, args, ctx, info) {
     args.email = args.email.toLowerCase();
     const password = await bcrypt.hash(args.password, 10);
-    const user = await ctx.db.mutation.createUser({
-      data: {
-        ...args,
-        password,
-        permissions: { set: ['USER'] },
+    const user = await ctx.db.mutation.createUser(
+      {
+        data: {
+          ...args,
+          password,
+          permissions: { set: ['USER'] },
+        },
       },
-    });
+      info
+    );
 
     return {
       token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),

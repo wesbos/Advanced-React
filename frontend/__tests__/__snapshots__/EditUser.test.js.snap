@@ -5,7 +5,9 @@ exports[`<EditUser/> renders 1`] = `
   className="sc-bdVaJa LHejR"
   onSubmit={[Function]}
 >
-  <DisplayError />
+  <DisplayError
+    error={Object {}}
+  />
   <fieldset
     aria-busy={false}
     disabled={false}

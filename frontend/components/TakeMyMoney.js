@@ -62,7 +62,7 @@ class TakeMyMoney extends Component {
 }
 
 TakeMyMoney.propTypes = {
-  children: PropTypes.any.isRequired,
+  children: PropTypes.any,
 };
 
 export default TakeMyMoney;

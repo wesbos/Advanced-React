@@ -1,16 +1,11 @@
-# the name for the service (will be part of the service's HTTP endpoint)
 service: sick-fits
-
-# the cluster and stage the service is deployed to
 stage: ${env:PRISMA_STAGE}
+cluster: wesbos/prisma-us1
 
 disableAuth: true
-# secret: ${env:PRISMA_SECRET}
+secret: ${env:PRISMA_SECRET}
 
 # the file path pointing to your data model
 datamodel: datamodel.graphql
 
-# cluster: ${env:PRISMA_CLUSTER}
-# cluster: local
 
-cluster: wesbos/prisma-us1

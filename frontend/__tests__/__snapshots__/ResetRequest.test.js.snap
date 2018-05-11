@@ -6,7 +6,9 @@ exports[`<ResetRequest/> renders and matches snapshot 1`] = `
   data-test="ResetRequest"
   onSubmit={[Function]}
 >
-  <DisplayError />
+  <DisplayError
+    error={Object {}}
+  />
   <fieldset
     aria-busy={false}
     disabled={false}

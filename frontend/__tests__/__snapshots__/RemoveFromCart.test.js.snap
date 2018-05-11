@@ -3,6 +3,7 @@
 exports[`<RemoveFromCart/> renders and matches snapshot 1`] = `
 <button
   className="sc-bdVaJa fXnNqM"
+  disabled={false}
   onClick={[Function]}
   title="Remove From Cart"
 >

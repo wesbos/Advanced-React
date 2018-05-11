@@ -7,7 +7,7 @@ exports[`<Cart/> renders 1`] = `
     title="close"
   >
     <button
-      className="sc-bZQynM julgib"
+      className="sc-EHOje jytiuo"
       onClick={[Function]}
       title="close"
     >
@@ -16,7 +16,7 @@ exports[`<Cart/> renders 1`] = `
   </styled.button>
   <styled.h3>
     <h3
-      className="sc-EHOje ixXoOG"
+      className="sc-ifAKCX imryuh"
     >
       Miss Coleman Berge
       's Cart.

@@ -41,6 +41,7 @@ const Pagination = props => (
       return (
         <PaginationStyles data-test="pagination">
           <Link
+            prefetch
             href={{
               pathname: 'items',
               query: { page: page - 1 },
@@ -57,6 +58,7 @@ const Pagination = props => (
             <strong>{aggregate.count}</strong> Items Total
           </p>
           <Link
+            prefetch
             href={{
               pathname: 'items',
               query: { page: page + 1 },

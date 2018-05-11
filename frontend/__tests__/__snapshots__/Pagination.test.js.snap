@@ -14,6 +14,7 @@ exports[`<Pagination/> displays loading message 1`] = `
         },
       }
     }
+    prefetch={true}
   >
     <a
       aria-disabled={true}
@@ -52,6 +53,7 @@ exports[`<Pagination/> displays loading message 1`] = `
         },
       }
     }
+    prefetch={true}
   >
     <a
       aria-disabled={true}

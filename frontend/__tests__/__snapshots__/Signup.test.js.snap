@@ -9,7 +9,9 @@ exports[`<Signup/> renders and matches snapshot 1`] = `
     aria-busy={false}
     disabled={false}
   >
-    <DisplayError />
+    <DisplayError
+      error={Object {}}
+    />
     <h2>
       Sign Up for an Account
     </h2>

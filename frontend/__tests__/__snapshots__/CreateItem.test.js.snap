@@ -9,21 +9,28 @@ exports[`<Createitem/> renders and matches snapshot 1`] = `
   <h2>
     Sell an Item.
   </h2>
-  <DisplayError />
+  <DisplayError
+    error={Object {}}
+  />
   <fieldset
     aria-busy={false}
     disabled={false}
   >
-    <label>
+    <label
+      htmlFor="file"
+    >
       Image
       <input
         accept=".png, .jpg, .jpeg"
+        id="file"
         onChange={[Function]}
         required={true}
         type="file"
       />
     </label>
-    <label>
+    <label
+      htmlFor="title"
+    >
       Title
       <input
         id="title"
@@ -35,7 +42,9 @@ exports[`<Createitem/> renders and matches snapshot 1`] = `
         value=""
       />
     </label>
-    <label>
+    <label
+      htmlFor="price"
+    >
       Price 
       0
       <input

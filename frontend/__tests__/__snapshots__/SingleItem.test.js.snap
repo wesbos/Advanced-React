@@ -8,9 +8,6 @@ exports[`<SingleItem/> Errors with a not found Item 1`] = `
     Shoot!
   </strong>
   Item not found!
-  <button>
-    Try Again
-  </button>
 </p>
 `;
 

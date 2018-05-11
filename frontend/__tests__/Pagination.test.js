@@ -9,7 +9,8 @@ import { ALL_ITEMS_QUERY } from '../queries/queries';
 
 import Router from 'next/router';
 
-Router.router = { push() {} };
+// mock the router because there isn't really a router instance
+Router.router = { push() {}, prefetch() {} };
 
 function makeMocksFor(length) {
   return [
@@ -18,14 +19,12 @@ function makeMocksFor(length) {
       result: {
         data: {
           itemsConnection: {
-            // TODO what are these typenames ????
             __typename: 'aggregate',
             aggregate: {
               count: length,
               __typename: 'count',
             },
           },
-          // items: [fakeItem()],
           items: Array.from({ length }, (_, i) => fakeItem({ id: `item${i}` })),
         },
       },

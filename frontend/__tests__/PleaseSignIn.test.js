@@ -37,7 +37,7 @@ describe('<PleaseSignIn />', () => {
   it('renders sign in dialog to logged out users', async () => {
     const wrapper = mount(
       <MockedProvider mocks={notSignedInMocks}>
-        <PleaseSignIn>
+        <PleaseSignIn allowedPermissions={[]}>
           <Hey />
         </PleaseSignIn>
       </MockedProvider>

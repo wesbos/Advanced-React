@@ -5,15 +5,15 @@ import CartCount from '../components/CartCount';
 
 describe('<CartCount></CartCount>', () => {
   it('renders okay', () => {
-    shallow(<CartCount count="10" />);
+    shallow(<CartCount count={10} />);
   });
 
   it('matches snapshot', () => {
-    const wrapper = shallow(<CartCount count="10" />);
+    const wrapper = shallow(<CartCount count={10} />);
     expect(toJSON(wrapper)).toMatchSnapshot();
   });
   it('updates via props', () => {
-    const wrapper = mount(<CartCount count="50" />);
+    const wrapper = mount(<CartCount count={50} />);
     expect(toJSON(wrapper)).toMatchSnapshot();
     wrapper.setProps({ count: 10 });
     expect(toJSON(wrapper)).toMatchSnapshot();

@@ -24,14 +24,7 @@ class ItemList extends React.Component {
   static propTypes = {
     page: PropTypes.number.isRequired,
   };
-  static getDerivedStateFromProps(nextProps, state) {
-    return { refetch: state.page !== nextProps.page };
-  }
-  state = {
-    refetch: false,
-  };
   render() {
-    const fetchPolicy = this.state.refetch ? 'network-only' : 'cache-first';
     return (
       <Center key={this.props.page}>
         <Pagination page={this.props.page} />
@@ -41,7 +34,7 @@ class ItemList extends React.Component {
             skip: this.props.page * perPage - perPage,
             first: perPage,
           }}
-          fetchPolicy={fetchPolicy}
+          // fetchPolicy="network-only"
         >
           {({ data, error, loading }) => {
             if (loading) {

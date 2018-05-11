@@ -4,6 +4,7 @@ const { forwardTo } = require('prisma-binding');
 
 const Query = {
   items(parent, args, ctx, info) {
+    console.log(args);
     return ctx.db.query.items({ ...args }, info);
   },
 

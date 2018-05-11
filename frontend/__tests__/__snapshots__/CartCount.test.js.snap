@@ -28,7 +28,7 @@ exports[`<CartCount></CartCount> matches snapshot 1`] = `
 
 exports[`<CartCount></CartCount> updates via props 1`] = `
 <CartCount
-  count="50"
+  count={50}
 >
   <styled.span>
     <span
