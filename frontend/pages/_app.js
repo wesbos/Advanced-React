@@ -9,7 +9,6 @@ import { withRouter } from 'next/router';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    console.log('GET INITITAL PROPS');
     let pageProps = {};
     const ComposedComponent = withData(Component);
 
@@ -20,7 +19,6 @@ class MyApp extends App {
   }
 
   render() {
-    console.log('RENDER');
     const { Component, pageProps, query } = this.props;
     const ComposedComponent = withData(Component);
     return (
