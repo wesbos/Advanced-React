@@ -8,7 +8,7 @@ class Home extends Component {
     return (
       <Page>
         <PleaseSignIn>
-          <UpdateItem id={this.props.router.query.id} />
+          <UpdateItem id={this.props.query.id} />
         </PleaseSignIn>
       </Page>
     );

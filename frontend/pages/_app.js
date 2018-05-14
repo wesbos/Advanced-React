@@ -7,29 +7,28 @@ import { withRouter } from 'next/router';
 
 // This code is taken right from the Next.js docs, and then we add the Router to the page props, which is why we need a custom _app.js
 
-let ComposedComponent;
-
 class MyApp extends App {
-  static async getInitialProps({ Component, router, ctx }) {
+  static async getInitialProps({ Component, ctx }) {
+    console.log('GET INITITAL PROPS');
     let pageProps = {};
-    ComposedComponent = withData(Component);
+    const ComposedComponent = withData(Component);
 
     if (ComposedComponent.getInitialProps) {
-      pageProps = await ComposedComponent.getInitialProps(ctx);
+      pageProps = await withData(Component).getInitialProps(ctx);
     }
-    pageProps.router = router;
-    return { pageProps };
+    return { pageProps, query: ctx.query };
   }
 
   render() {
-    const { Component, pageProps } = this.props;
-
+    console.log('RENDER');
+    const { Component, pageProps, query } = this.props;
+    const ComposedComponent = withData(Component);
     return (
       <Container>
-        <ComposedComponent {...pageProps} />
+        <ComposedComponent {...pageProps} query={query} />
       </Container>
     );
   }
 }
 
-export default withData(MyApp);
+export default MyApp;
