@@ -40,7 +40,9 @@ describe('<TakeMyMoney />', () => {
   });
 
   it('creates an order onToken', async () => {
-    const createOrderSpy = jest.fn().mockResolvedValue({ data: { createOrder: { id: 'xyz789' } } });
+    const createOrderSpy = jest
+      .fn()
+      .mockResolvedValue({ data: { CREATE_ORDER_MUTATION: { id: 'xyz789' } } });
 
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
@@ -64,7 +66,9 @@ describe('<TakeMyMoney />', () => {
     wrapper.update();
     NProgress.start = jest.fn();
 
-    const createOrderSpy = jest.fn().mockResolvedValue({ data: { createOrder: { id: 'xyz789' } } });
+    const createOrderSpy = jest
+      .fn()
+      .mockResolvedValue({ data: { CREATE_ORDER_MUTATION: { id: 'xyz789' } } });
     const component = wrapper.find('TakeMyMoney');
     component.instance().onToken({ id: 'abc123' }, createOrderSpy);
     wrapper.find('button').simulate('click');
@@ -83,7 +87,9 @@ describe('<TakeMyMoney />', () => {
 
     // Spy on Router Push
     Router.router.push = jest.fn();
-    const createOrderSpy = jest.fn().mockResolvedValue({ data: { createOrder: { id: 'xyz789' } } });
+    const createOrderSpy = jest
+      .fn()
+      .mockResolvedValue({ data: { CREATE_ORDER_MUTATION: { id: 'xyz789' } } });
 
     const component = wrapper.find('TakeMyMoney');
     component.instance().onToken({ id: 'abc123' }, createOrderSpy);

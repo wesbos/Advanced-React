@@ -16,10 +16,10 @@ exports[`<Nav></Nav> Renders minimal nav when logged out 1`] = `
     </a>
   </Link>
   <Link
-    href="/add"
+    href="/sell"
   >
     <a
-      href="/add"
+      href="/sell"
       onClick={[Function]}
     >
       Sell

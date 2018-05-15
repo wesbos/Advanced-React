@@ -21,7 +21,7 @@ class TakeMyMoney extends Component {
       },
     });
     // Route them to that order page
-    const { id } = order.data.createOrder;
+    const { id } = order.data.CREATE_ORDER_MUTATION;
     Router.push({
       pathname: `/order`,
       query: { id },

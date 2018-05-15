@@ -8,278 +8,229 @@ fragment itemDetails on Item {
   largeImage
 }
 
-# export const CREATE_ITEM_MUTATION = gql`
-  # ${itemDetails}
-  mutation CREATE_ITEM_MUTATION($description: String!, $title: String!, $price: Int!, $image: String, $largeImage: String) {
-    createItem(description: $description, title: $title, price: $price, image: $image, largeImage: $largeImage) {
-      ...itemDetails
-    }
+mutation CREATE_ITEM_MUTATION($description: String!, $title: String!, $price: Int!, $image: String, $largeImage: String) {
+  createItem(description: $description, title: $title, price: $price, image: $image, largeImage: $largeImage) {
+    ...itemDetails
   }
-# `;
+}
 
-# export const SIGNUP_MUTATION = gql`
-  mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
-    signup(email: $email, name: $name, password: $password) {
-      token
-      user {
-        id
-        email
-        name
-      }
-    }
-  }
-# `;
-
-# export const SIGNIN_MUTATION = gql`
-  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-    signin(email: $email, password: $password) {
-      token
-      user {
-        id
-        email
-        name
-      }
-    }
-  }
-# `;
-
-# export const REQUEST_RESET_MUTATION = gql`
-  mutation REQUEST_RESET_MUTATION($email: String!) {
-    requestReset(email: $email) {
-      id
-    }
-  }
-# `;
-
-# export const RESET_MUTATION = gql`
-  mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
-    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
-      token
-      user {
-        id
-        email
-        name
-      }
-    }
-  }
-# `;
-
-# export const CREATE_ORDER_MUTATION = gql`
-  mutation CREATE_ORDER_MUTATION($token: String!) {
-    createOrder(token: $token) {
-      id
-      charge
-      total
-      items {
-        id
-        title
-      }
-    }
-  }
-# `;
-
-# export const ALL_ITEMS_QUERY = gql`
-  # Import the Fragment
-  # ${itemDetails}
-  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
-      aggregate {
-        count
-      }
-    }
-    items(orderBy: createdAt_DESC, first: $first, skip: $skip) {
-      ...itemDetails
-    }
-  }
-# `;
-
-# export const SINGLE_ITEM_QUERY = gql`
-  # ${itemDetails}
-  query SINGLE_ITEM_QUERY($id: ID!) {
-    items(where: { id: $id }) {
-      user {
-        id
-        email
-        name
-      }
-      ...itemDetails
-    }
-  }
-# `;
-
-# export const SINGLE_ORDER_QUERY = gql`
-  query SINGLE_ORDER_QUERY($id: ID!) {
-    order(id: $id) {
-      id
-      charge
-      total
-      createdAt
-      user {
-        id
-      }
-      items {
-        id
-        title
-        price
-        description
-        image
-        quantity
-      }
-    }
-  }
-# `;
-
-# export const SEARCH_ITEMS_QUERY = gql`
-  # ${itemDetails}
-  query SEARCH_ITEMS_QUERY($searchTerm: String!) {
-    items(
-      where: {
-        OR: [
-          { title_contains: $searchTerm }
-          { description_contains: $searchTerm }
-        ]
-      }
-    ) {
-      ...itemDetails
-    }
-  }
-# `;
-
-# export const REMOVE_ITEM_MUTATION = gql`
-  mutation REMOVE_ITEM_MUTATION($id: ID!) {
-    deleteItem(id: $id) {
-      id
-      title
-      description
-    }
-  }
-# `;
-
-# export const UPDATE_ITEM_MUTATION = gql`
-  # ${itemDetails}
-  mutation UPDATE_ITEM_MUTATION(
-    $id: ID!
-    $title: String
-    $description: String
-    $price: Int
-  ) {
-    updateItem(
-      id: $id
-      description: $description
-      title: $title
-      price: $price
-    ) {
-      ...itemDetails
-    }
-  }
-# `;
-
-# export const UPDATE_USER_MUTATION = gql`
-  mutation UPDATE_USER_MUTATION($name: String!) {
-    updateUser(name: $name) {
-      name
-    }
-  }
-# `;
-
-# export const CURRENT_USER_QUERY = gql`
-  # ${itemDetails}
-  query CURRENT_USER_QUERY {
-    me {
+mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
+  signup(email: $email, name: $name, password: $password) {
+    token
+    user {
       id
       email
       name
-      permissions
-      orders {
-        id
-        charge
-        total
-      }
-      cart {
-        id
-        quantity
-        item {
-          ...itemDetails
-        }
-      }
     }
   }
-# `;
+}
 
-# export const USER_ORDERS_QUERY = gql`
-  query USER_ORDERS_QUERY {
-    orders(orderBy: createdAt_DESC) {
+mutation SIGNIN_MUTATION($email: String!, $password: String!) {
+  signin(email: $email, password: $password) {
+    token
+    user {
       id
-      total
-      createdAt
-      updatedAt
-      items {
-        id
-        title
-        price
-        description
-        quantity
-        image
-      }
+      email
+      name
     }
   }
-# `;
+}
 
-# export const ADD_TO_CART_MUTATION = gql`
-  mutation ADD_TO_CART_MUTATION($id: ID!) {
-    addToCart(id: $id) {
+mutation REQUEST_RESET_MUTATION($email: String!) {
+  requestReset(email: $email) {
+    id
+  }
+}
+
+mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
+  resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
+    token
+    user {
+      id
+      email
+      name
+    }
+  }
+}
+
+mutation CREATE_ORDER_MUTATION($token: String!) {
+  createOrder(token: $token) {
+    id
+    charge
+    total
+    items {
+      id
+      title
+    }
+  }
+}
+
+query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = 4) {
+  itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+  items(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+    ...itemDetails
+  }
+}
+
+query SINGLE_ITEM_QUERY($id: ID!) {
+  items(where: { id: $id }) {
+    user {
+      id
+      email
+      name
+    }
+    ...itemDetails
+  }
+}
+
+query SINGLE_ORDER_QUERY($id: ID!) {
+  order(id: $id) {
+    id
+    charge
+    total
+    createdAt
+    user {
+      id
+    }
+    items {
+      id
+      title
+      price
+      description
+      image
+      quantity
+    }
+  }
+}
+
+query SEARCH_ITEMS_QUERY($searchTerm: String!) {
+  items(
+    where: {
+      OR: [
+        { title_contains: $searchTerm }
+        { description_contains: $searchTerm }
+      ]
+    }
+  ) {
+    ...itemDetails
+  }
+}
+
+mutation REMOVE_ITEM_MUTATION($id: ID!) {
+  deleteItem(id: $id) {
+    id
+    title
+    description
+  }
+}
+
+mutation UPDATE_ITEM_MUTATION(
+  $id: ID!
+  $title: String
+  $description: String
+  $price: Int
+) {
+  updateItem(
+    id: $id
+    description: $description
+    title: $title
+    price: $price
+  ) {
+    ...itemDetails
+  }
+}
+
+mutation UPDATE_USER_MUTATION($name: String!) {
+  updateUser(name: $name) {
+    name
+  }
+}
+
+query CURRENT_USER_QUERY {
+  me {
+    id
+    email
+    name
+    permissions
+    orders {
+      id
+      charge
+      total
+    }
+    cart {
       id
       quantity
       item {
-        id
-        price
-        description
-        image
-        title
+        ...itemDetails
       }
     }
   }
-# `;
+}
 
-# export const REMOVE_FROM_CART_MUTATION = gql`
-  mutation REMOVE_FROM_CART_MUTATION($id: ID!) {
-    removeFromCart(id: $id) {
+query USER_ORDERS_QUERY {
+  orders(orderBy: createdAt_DESC) {
+    id
+    total
+    createdAt
+    updatedAt
+    items {
       id
+      title
+      price
+      description
+      quantity
+      image
     }
   }
-# `;
+}
 
-# export const ALL_USERS_QUERY = gql`
-  query ALL_USERS_QUERY {
-    users {
+mutation ADD_TO_CART_MUTATION($id: ID!) {
+  addToCart(id: $id) {
+    id
+    quantity
+    item {
       id
-      name
-      email
-      permissions
+      price
+      description
+      image
+      title
     }
   }
-# `;
+}
 
-# export const UPDATE_PERMISSIONS_MUTATION = gql`
-  mutation UPDATE_PERMISSIONS_MUTATION($permissions: [Permission], $userId: ID!) {
-    updatePermissions(permissions: $permissions, userId: $userId) {
-      id
-      permissions
-      name
-      email
-    }
+mutation REMOVE_FROM_CART_MUTATION($id: ID!) {
+  removeFromCart(id: $id) {
+    id
   }
-# `;
+}
 
-# export const LOCAL_STATE_QUERY = gql`
-  query LOCAL_STATE_QUERY {
-    cartOpen @client
+query ALL_USERS_QUERY {
+  users {
+    id
+    name
+    email
+    permissions
   }
-# `;
+}
 
-# export const TOGGLE_CART_MUTATION = gql`
-  mutation TOGGLE_CART_MUTATION {
-    toggleCart @client
+mutation UPDATE_PERMISSIONS_MUTATION($permissions: [Permission], $userId: ID!) {
+  updatePermissions(permissions: $permissions, userId: $userId) {
+    id
+    permissions
+    name
+    email
   }
-# `;
- "
+}
+
+query LOCAL_STATE_QUERY {
+  cartOpen @client
+}
+
+mutation TOGGLE_CART_MUTATION {
+  toggleCart @client
+}
+
