@@ -3,8 +3,7 @@ import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import Meta from './Meta';
-import { client } from '../lib/withData';
-import { CURRENT_USER_QUERY } from '../queries/queries';
+import { ApolloConsumer } from 'react-apollo';
 
 const theme = {
   red: '#FF0000',
@@ -53,24 +52,19 @@ class Page extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
   };
-  componentDidMount() {
-    // The first time we load in the client, we need to refetch the current user data
-    // TODO use ApolloContext API here instead
-    // TODO can we just use _app for this?
-    if (typeof window !== 'undefined' && !window.__CLIENTLOADED__) {
-      client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
-      window.__CLIENTLOADED__ = true;
-    }
-  }
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <StyledPage className="main">
-          <Meta />
-          <Header />
-          <Inner>{this.props.children}</Inner>
-        </StyledPage>
-      </ThemeProvider>
+      <ApolloConsumer>
+        {client => (
+          <ThemeProvider theme={theme}>
+            <StyledPage className="main">
+              <Meta />
+              <Header />
+              <Inner>{this.props.children}</Inner>
+            </StyledPage>
+          </ThemeProvider>
+        )}
+      </ApolloConsumer>
     );
   }
 }
