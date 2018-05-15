@@ -1,18 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Items from '../components/Items';
-import Page from '../components/Page';
 
-class Home extends React.Component {
-  render() {
-    const page = parseInt(this.props.query.page) || 1;
-    console.log(this.props);
-    return (
-      <Page>
-        <Items page={page} />
-      </Page>
-    );
-  }
+const Home = props => {
+  const page = parseInt(props.query.page) || 1;
+  console.log(props);
+  return <Items page={page} />
 }
 
 export default Home;
