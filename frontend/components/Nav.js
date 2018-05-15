@@ -16,7 +16,7 @@ class Nav extends React.Component {
             <Link href="/items">
               <a>Shop</a>
             </Link>
-            <Link href="/add">
+            <Link href="/sell">
               <a>Sell</a>
             </Link>
 
