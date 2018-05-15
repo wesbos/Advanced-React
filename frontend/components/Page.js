@@ -3,7 +3,6 @@ import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import Meta from './Meta';
-import { ApolloConsumer } from 'react-apollo';
 
 const theme = {
   red: '#FF0000',
@@ -54,17 +53,13 @@ class Page extends React.Component {
   };
   render() {
     return (
-      <ApolloConsumer>
-        {client => (
-          <ThemeProvider theme={theme}>
-            <StyledPage className="main">
-              <Meta />
-              <Header />
-              <Inner>{this.props.children}</Inner>
-            </StyledPage>
-          </ThemeProvider>
-        )}
-      </ApolloConsumer>
+      <ThemeProvider theme={theme}>
+        <StyledPage className="main">
+          <Meta />
+          <Header />
+          <Inner>{this.props.children}</Inner>
+        </StyledPage>
+      </ThemeProvider>
     );
   }
 }
