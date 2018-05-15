@@ -42,6 +42,8 @@
     "enzyme-to-json": "^3.3.3",
     "graphql-tools": "^3.0.1",
     "jest": "^22.4.3",
+    "jest-transform-graphql": "^2.1.0",
+    "next-plugin-graphql": "0.0.1",
     "waait": "^1.0.2"
   },
   "//": "This is out babel config, I prefer this over a .babelrc file",
@@ -50,7 +52,11 @@
     "testPathIgnorePatterns": [
       "<rootDir>/.next/",
       "<rootDir>/node_modules/"
-    ]
+    ],
+    "transform": {
+      "\\.(gql|graphql)$": "jest-transform-graphql",
+      ".*": "babel-jest"
+    }
   },
   "babel": {
     "env": {
