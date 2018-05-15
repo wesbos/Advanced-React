@@ -1,28 +1,23 @@
-import gql from 'graphql-tag';
-import { perPage } from '../config';
+fragment itemDetails on Item {
+  __typename
+  id
+  title
+  price
+  description
+  image
+  largeImage
+}
 
-const itemDetails = gql`
-  fragment itemDetails on Item {
-    __typename
-    id
-    title
-    price
-    description
-    image
-    largeImage
-  }
-`;
-
-export const CREATE_ITEM_MUTATION = gql`
-  ${itemDetails}
+# export const CREATE_ITEM_MUTATION = gql`
+  # ${itemDetails}
   mutation createItem($description: String!, $title: String!, $price: Int!, $image: String, $largeImage: String) {
     createItem(description: $description, title: $title, price: $price, image: $image, largeImage: $largeImage) {
       ...itemDetails
     }
   }
-`;
+# `;
 
-export const SIGNUP_MUTATION = gql`
+# export const SIGNUP_MUTATION = gql`
   mutation signup($email: String!, $name: String!, $password: String!) {
     signup(email: $email, name: $name, password: $password) {
       token
@@ -33,9 +28,9 @@ export const SIGNUP_MUTATION = gql`
       }
     }
   }
-`;
+# `;
 
-export const SIGNIN_MUTATION = gql`
+# export const SIGNIN_MUTATION = gql`
   mutation signup($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
       token
@@ -46,17 +41,17 @@ export const SIGNIN_MUTATION = gql`
       }
     }
   }
-`;
+# `;
 
-export const REQUEST_RESET_MUTATION = gql`
+# export const REQUEST_RESET_MUTATION = gql`
   mutation requestReset($email: String!) {
     requestReset(email: $email) {
       id
     }
   }
-`;
+# `;
 
-export const RESET_MUTATION = gql`
+# export const RESET_MUTATION = gql`
   mutation resetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
     resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
       token
@@ -67,9 +62,9 @@ export const RESET_MUTATION = gql`
       }
     }
   }
-`;
+# `;
 
-export const CREATE_ORDER_MUTATION = gql`
+# export const CREATE_ORDER_MUTATION = gql`
   mutation CreateOrderMutation($token: String!) {
     createOrder(token: $token) {
       id
@@ -81,11 +76,11 @@ export const CREATE_ORDER_MUTATION = gql`
       }
     }
   }
-`;
+# `;
 
-export const ALL_ITEMS_QUERY = gql`
+# export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
-  ${itemDetails}
+  # ${itemDetails}
   query AllItemsQuery($skip: Int = 0, $first: Int = ${perPage}) {
     itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
       aggregate {
@@ -96,10 +91,10 @@ export const ALL_ITEMS_QUERY = gql`
       ...itemDetails
     }
   }
-`;
+# `;
 
-export const SINGLE_ITEM_QUERY = gql`
-  ${itemDetails}
+# export const SINGLE_ITEM_QUERY = gql`
+  # ${itemDetails}
   query FindItem($id: ID!) {
     items(where: { id: $id }) {
       user {
@@ -110,9 +105,9 @@ export const SINGLE_ITEM_QUERY = gql`
       ...itemDetails
     }
   }
-`;
+# `;
 
-export const SINGLE_ORDER_QUERY = gql`
+# export const SINGLE_ORDER_QUERY = gql`
   query order($id: ID!) {
     order(id: $id) {
       id
@@ -132,10 +127,10 @@ export const SINGLE_ORDER_QUERY = gql`
       }
     }
   }
-`;
+# `;
 
-export const SEARCH_ITEMS_QUERY = gql`
-  ${itemDetails}
+# export const SEARCH_ITEMS_QUERY = gql`
+  # ${itemDetails}
   query SearchItems($searchTerm: String!) {
     items(
       where: {
@@ -148,9 +143,9 @@ export const SEARCH_ITEMS_QUERY = gql`
       ...itemDetails
     }
   }
-`;
+# `;
 
-export const REMOVE_ITEM_MUTATION = gql`
+# export const REMOVE_ITEM_MUTATION = gql`
   mutation RemoveItem($id: ID!) {
     deleteItem(id: $id) {
       id
@@ -158,10 +153,10 @@ export const REMOVE_ITEM_MUTATION = gql`
       description
     }
   }
-`;
+# `;
 
-export const UPDATE_ITEM_MUTATION = gql`
-  ${itemDetails}
+# export const UPDATE_ITEM_MUTATION = gql`
+  # ${itemDetails}
   mutation UpdateItem(
     $id: ID!
     $title: String
@@ -177,18 +172,18 @@ export const UPDATE_ITEM_MUTATION = gql`
       ...itemDetails
     }
   }
-`;
+# `;
 
-export const UPDATE_USER_MUTATION = gql`
+# export const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($name: String!) {
     updateUser(name: $name) {
       name
     }
   }
-`;
+# `;
 
-export const CURRENT_USER_QUERY = gql`
-  ${itemDetails}
+# export const CURRENT_USER_QUERY = gql`
+  # ${itemDetails}
   query userQuery {
     me {
       id
@@ -209,9 +204,9 @@ export const CURRENT_USER_QUERY = gql`
       }
     }
   }
-`;
+# `;
 
-export const USER_ORDERS_QUERY = gql`
+# export const USER_ORDERS_QUERY = gql`
   query orders {
     orders(orderBy: createdAt_DESC) {
       id
@@ -228,9 +223,9 @@ export const USER_ORDERS_QUERY = gql`
       }
     }
   }
-`;
+# `;
 
-export const ADD_TO_CART_MUTATION = gql`
+# export const ADD_TO_CART_MUTATION = gql`
   mutation addToCart($id: ID!) {
     addToCart(id: $id) {
       id
@@ -244,17 +239,17 @@ export const ADD_TO_CART_MUTATION = gql`
       }
     }
   }
-`;
+# `;
 
-export const REMOVE_FROM_CART_MUTATION = gql`
+# export const REMOVE_FROM_CART_MUTATION = gql`
   mutation removeFromCart($id: ID!) {
     removeFromCart(id: $id) {
       id
     }
   }
-`;
+# `;
 
-export const ALL_USERS_QUERY = gql`
+# export const ALL_USERS_QUERY = gql`
   query Users {
     users {
       id
@@ -263,9 +258,9 @@ export const ALL_USERS_QUERY = gql`
       permissions
     }
   }
-`;
+# `;
 
-export const UPDATE_PERMISSIONS_MUTATION = gql`
+# export const UPDATE_PERMISSIONS_MUTATION = gql`
   mutation updatePermissions($permissions: [Permission], $userId: ID!) {
     updatePermissions(permissions: $permissions, userId: $userId) {
       id
@@ -274,15 +269,16 @@ export const UPDATE_PERMISSIONS_MUTATION = gql`
       email
     }
   }
-`;
+# `;
 
-export const LOCAL_STATE_QUERY = gql`
+# export const LOCAL_STATE_QUERY = gql`
   {
     cartOpen @client
   }
-`;
-export const TOGGLE_CART_MUTATION = gql`
+# `;
+
+# export const TOGGLE_CART_MUTATION = gql`
   mutation toggleCart {
     toggleCart @client
   }
-`;
+# `;
