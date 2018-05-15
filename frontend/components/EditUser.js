@@ -1,7 +1,7 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
 import Form from './styles/Form';
-import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/queries';
+import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/queries.graphql';
 import Error from './ErrorMessage';
 
 class EditUser extends React.Component {

@@ -6,7 +6,7 @@ import { MockedProvider } from 'react-apollo/test-utils';
 import wait from 'waait';
 import RemoveFromCart from '../components/RemoveFromCart';
 import { fakeCartItem, fakeUser } from '../lib/testUtils';
-import { CURRENT_USER_QUERY, REMOVE_FROM_CART_MUTATION } from '../queries/queries';
+import { CURRENT_USER_QUERY, REMOVE_FROM_CART_MUTATION } from '../queries/queries.graphql';
 
 const mocks = [
   {

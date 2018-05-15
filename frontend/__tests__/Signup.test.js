@@ -5,7 +5,7 @@ import wait from 'waait';
 import Signup from '../components/Signup';
 import { MockedProvider } from 'react-apollo/test-utils';
 import { LocalStorageMock, fakeItem, fakeUser, fakeCartItem } from '../lib/testUtils';
-import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
+import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
 
 function type(wrapper, name, value) {
   wrapper.find(`input[name="${name}"]`).simulate('change', {

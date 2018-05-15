@@ -6,7 +6,7 @@ import Pagination from './Pagination';
 import Item from './Item';
 import LoadingItem from './LoadingItem';
 import { perPage } from '../config';
-import { ALL_ITEMS_QUERY } from '../queries/queries';
+import { ALL_ITEMS_QUERY } from '../queries/queries.graphql';
 
 const Items = styled.div`
   display: grid;

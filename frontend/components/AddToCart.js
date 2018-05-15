@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Mutation, Query } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { ADD_TO_CART_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
+import { ADD_TO_CART_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
 
 class AddToCart extends Component {
   static propTypes = {

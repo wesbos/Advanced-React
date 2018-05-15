@@ -6,7 +6,7 @@ import { MockedProvider } from 'react-apollo/test-utils';
 import CreateItem from '../components/CreateItem';
 import wait from 'waait';
 import { fakeItem } from '../lib/testUtils';
-import { CREATE_ITEM_MUTATION } from '../queries/queries';
+import { CREATE_ITEM_MUTATION } from '../queries/queries.graphql';
 
 const dogImage = 'https://dog.com/dog.jpg';
 

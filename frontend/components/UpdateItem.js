@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { SINGLE_ITEM_QUERY, UPDATE_ITEM_MUTATION } from '../queries/queries';
+import { SINGLE_ITEM_QUERY, UPDATE_ITEM_MUTATION } from '../queries/queries.graphql';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 

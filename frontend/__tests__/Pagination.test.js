@@ -5,7 +5,7 @@ import Pagination from '../components/Pagination';
 import { MockedProvider } from 'react-apollo/test-utils';
 import wait from 'waait';
 import { fakeItem } from '../lib/testUtils';
-import { ALL_ITEMS_QUERY } from '../queries/queries';
+import { ALL_ITEMS_QUERY } from '../queries/queries.graphql';
 
 import Router from 'next/router';
 

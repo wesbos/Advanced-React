@@ -4,7 +4,7 @@ import { Mutation, Query } from 'react-apollo';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import PropTypes from 'prop-types';
-import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
+import { CREATE_ORDER_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import Error from './ErrorMessage';
 

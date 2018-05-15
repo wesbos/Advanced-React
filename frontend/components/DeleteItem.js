@@ -1,7 +1,7 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { REMOVE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries/queries';
+import { REMOVE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries/queries.graphql';
 
 class DeleteItem extends React.Component {
   static propTypes = {

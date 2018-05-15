@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation, ApolloConsumer } from 'react-apollo';
-import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
+import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 

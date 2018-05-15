@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import wait from 'waait';
 import toJSON from 'enzyme-to-json';
 import SingleItem from '../components/SingleItem';
-import { SINGLE_ITEM_QUERY } from '../queries/queries';
+import { SINGLE_ITEM_QUERY } from '../queries/queries.graphql';
 import { MockedProvider } from 'react-apollo/test-utils';
 import { fakeItem } from '../lib/testUtils';
 

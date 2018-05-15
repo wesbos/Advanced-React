@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import Router from 'next/router';
-import { CREATE_ITEM_MUTATION } from '../queries/queries';
+import { CREATE_ITEM_MUTATION } from '../queries/queries.graphql';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
 import formatMoney from '../lib/formatMoney';

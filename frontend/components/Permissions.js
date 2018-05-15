@@ -1,7 +1,7 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { ALL_USERS_QUERY, UPDATE_PERMISSIONS_MUTATION } from '../queries/queries';
+import { ALL_USERS_QUERY, UPDATE_PERMISSIONS_MUTATION } from '../queries/queries.graphql';
 import Error from './ErrorMessage';
 import SickButton from './styles/SickButton';
 import Table from './styles/Table';

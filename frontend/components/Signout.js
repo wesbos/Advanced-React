@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
-import { CURRENT_USER_QUERY } from '../queries/queries';
+import { CURRENT_USER_QUERY } from '../queries/queries.graphql';
 
 class Signout extends Component {
   signout = refetch => {

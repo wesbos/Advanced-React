@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { perPage } from '../config';
-import { ALL_ITEMS_QUERY } from '../queries/queries';
+import { ALL_ITEMS_QUERY } from '../queries/queries.graphql';
 
 const PaginationStyles = styled.div`
   text-align: center;

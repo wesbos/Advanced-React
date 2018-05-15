@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { REMOVE_FROM_CART_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
+import { REMOVE_FROM_CART_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
 
 const BigButton = styled.button`
   font-size: 3rem;

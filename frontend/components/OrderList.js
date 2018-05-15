@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { USER_ORDERS_QUERY } from '../queries/queries';
+import { USER_ORDERS_QUERY } from '../queries/queries.graphql';
 import formatMoney from '../lib/formatMoney';
 import OrderItemStyles from './styles/OrderItemStyles';
 

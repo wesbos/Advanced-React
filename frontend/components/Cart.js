@@ -4,7 +4,7 @@ import { adopt } from 'react-adopt';
 import TakeMyMoney from './TakeMyMoney';
 import formatMoney from '../lib/formatMoney';
 import CartItem from './CartItem';
-import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../queries/queries';
+import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../queries/queries.graphql';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import Error from './ErrorMessage';
 import CartStyles from './styles/CartStyles';

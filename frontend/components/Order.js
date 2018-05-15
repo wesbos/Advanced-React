@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import { format } from 'date-fns';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import { SINGLE_ORDER_QUERY } from '../queries/queries';
+import { SINGLE_ORDER_QUERY } from '../queries/queries.graphql';
 import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 import OrderStyles from './styles/OrderStyles';

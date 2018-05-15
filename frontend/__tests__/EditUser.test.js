@@ -5,7 +5,7 @@ import EditUser from '../components/EditUser';
 import wait from 'waait';
 import { MockedProvider } from 'react-apollo/test-utils';
 import { fakeUser } from '../lib/testUtils';
-import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/queries';
+import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/queries.graphql';
 
 const mocks = [
   {

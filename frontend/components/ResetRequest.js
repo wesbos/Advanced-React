@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { REQUEST_RESET_MUTATION } from '../queries/queries';
+import { REQUEST_RESET_MUTATION } from '../queries/queries.graphql';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 

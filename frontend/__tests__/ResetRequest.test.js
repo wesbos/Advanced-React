@@ -5,7 +5,7 @@ import ResetRequest from '../components/ResetRequest';
 import { MockedProvider } from 'react-apollo/test-utils';
 import wait from 'waait';
 import { fakeItem } from '../lib/testUtils';
-import { REQUEST_RESET_MUTATION, RESET_MUTATION } from '../queries/queries';
+import { REQUEST_RESET_MUTATION, RESET_MUTATION } from '../queries/queries.graphql';
 
 const mocks = [
   {

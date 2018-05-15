@@ -2,7 +2,7 @@ import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { SINGLE_ITEM_QUERY } from '../queries/queries';
+import { SINGLE_ITEM_QUERY } from '../queries/queries.graphql';
 import Error from './ErrorMessage';
 
 const SingleItemStyles = styled.div`

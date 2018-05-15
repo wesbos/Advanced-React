@@ -5,7 +5,7 @@ import wait from 'waait';
 import Order from '../components/Order';
 import { MockedProvider } from 'react-apollo/test-utils';
 import { fakeOrder } from '../lib/testUtils';
-import { SINGLE_ORDER_QUERY } from '../queries/queries';
+import { SINGLE_ORDER_QUERY } from '../queries/queries.graphql';
 
 const mocks = [
   {

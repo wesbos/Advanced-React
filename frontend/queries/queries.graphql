@@ -10,7 +10,7 @@ fragment itemDetails on Item {
 
 # export const CREATE_ITEM_MUTATION = gql`
   # ${itemDetails}
-  mutation createItem($description: String!, $title: String!, $price: Int!, $image: String, $largeImage: String) {
+  mutation CREATE_ITEM_MUTATION($description: String!, $title: String!, $price: Int!, $image: String, $largeImage: String) {
     createItem(description: $description, title: $title, price: $price, image: $image, largeImage: $largeImage) {
       ...itemDetails
     }
@@ -18,7 +18,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const SIGNUP_MUTATION = gql`
-  mutation signup($email: String!, $name: String!, $password: String!) {
+  mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
     signup(email: $email, name: $name, password: $password) {
       token
       user {
@@ -31,7 +31,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const SIGNIN_MUTATION = gql`
-  mutation signup($email: String!, $password: String!) {
+  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
       token
       user {
@@ -44,7 +44,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const REQUEST_RESET_MUTATION = gql`
-  mutation requestReset($email: String!) {
+  mutation REQUEST_RESET_MUTATION($email: String!) {
     requestReset(email: $email) {
       id
     }
@@ -52,7 +52,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const RESET_MUTATION = gql`
-  mutation resetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
+  mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
     resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
       token
       user {
@@ -65,7 +65,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const CREATE_ORDER_MUTATION = gql`
-  mutation CreateOrderMutation($token: String!) {
+  mutation CREATE_ORDER_MUTATION($token: String!) {
     createOrder(token: $token) {
       id
       charge
@@ -81,7 +81,7 @@ fragment itemDetails on Item {
 # export const ALL_ITEMS_QUERY = gql`
   # Import the Fragment
   # ${itemDetails}
-  query AllItemsQuery($skip: Int = 0, $first: Int = ${perPage}) {
+  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
     itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
       aggregate {
         count
@@ -95,7 +95,7 @@ fragment itemDetails on Item {
 
 # export const SINGLE_ITEM_QUERY = gql`
   # ${itemDetails}
-  query FindItem($id: ID!) {
+  query SINGLE_ITEM_QUERY($id: ID!) {
     items(where: { id: $id }) {
       user {
         id
@@ -108,7 +108,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const SINGLE_ORDER_QUERY = gql`
-  query order($id: ID!) {
+  query SINGLE_ORDER_QUERY($id: ID!) {
     order(id: $id) {
       id
       charge
@@ -131,7 +131,7 @@ fragment itemDetails on Item {
 
 # export const SEARCH_ITEMS_QUERY = gql`
   # ${itemDetails}
-  query SearchItems($searchTerm: String!) {
+  query SEARCH_ITEMS_QUERY($searchTerm: String!) {
     items(
       where: {
         OR: [
@@ -146,7 +146,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const REMOVE_ITEM_MUTATION = gql`
-  mutation RemoveItem($id: ID!) {
+  mutation REMOVE_ITEM_MUTATION($id: ID!) {
     deleteItem(id: $id) {
       id
       title
@@ -157,7 +157,7 @@ fragment itemDetails on Item {
 
 # export const UPDATE_ITEM_MUTATION = gql`
   # ${itemDetails}
-  mutation UpdateItem(
+  mutation UPDATE_ITEM_MUTATION(
     $id: ID!
     $title: String
     $description: String
@@ -175,7 +175,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($name: String!) {
+  mutation UPDATE_USER_MUTATION($name: String!) {
     updateUser(name: $name) {
       name
     }
@@ -184,7 +184,7 @@ fragment itemDetails on Item {
 
 # export const CURRENT_USER_QUERY = gql`
   # ${itemDetails}
-  query userQuery {
+  query CURRENT_USER_QUERY {
     me {
       id
       email
@@ -207,7 +207,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const USER_ORDERS_QUERY = gql`
-  query orders {
+  query USER_ORDERS_QUERY {
     orders(orderBy: createdAt_DESC) {
       id
       total
@@ -226,7 +226,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const ADD_TO_CART_MUTATION = gql`
-  mutation addToCart($id: ID!) {
+  mutation ADD_TO_CART_MUTATION($id: ID!) {
     addToCart(id: $id) {
       id
       quantity
@@ -242,7 +242,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const REMOVE_FROM_CART_MUTATION = gql`
-  mutation removeFromCart($id: ID!) {
+  mutation REMOVE_FROM_CART_MUTATION($id: ID!) {
     removeFromCart(id: $id) {
       id
     }
@@ -250,7 +250,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const ALL_USERS_QUERY = gql`
-  query Users {
+  query ALL_USERS_QUERY {
     users {
       id
       name
@@ -261,7 +261,7 @@ fragment itemDetails on Item {
 # `;
 
 # export const UPDATE_PERMISSIONS_MUTATION = gql`
-  mutation updatePermissions($permissions: [Permission], $userId: ID!) {
+  mutation UPDATE_PERMISSIONS_MUTATION($permissions: [Permission], $userId: ID!) {
     updatePermissions(permissions: $permissions, userId: $userId) {
       id
       permissions
@@ -272,13 +272,14 @@ fragment itemDetails on Item {
 # `;
 
 # export const LOCAL_STATE_QUERY = gql`
-  {
+  query LOCAL_STATE_QUERY {
     cartOpen @client
   }
 # `;
 
 # export const TOGGLE_CART_MUTATION = gql`
-  mutation toggleCart {
+  mutation TOGGLE_CART_MUTATION {
     toggleCart @client
   }
 # `;
+ "

@@ -7,7 +7,7 @@ import Router from 'next/router';
 import wait from 'waait';
 import { MockedProvider } from 'react-apollo/test-utils';
 import { fakeItem, fakeUser, fakeCartItem } from '../lib/testUtils';
-import { CREATE_ITEM_MUTATION, CURRENT_USER_QUERY } from '../queries/queries';
+import { CREATE_ITEM_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
 
 Router.router = { push() {} };
 

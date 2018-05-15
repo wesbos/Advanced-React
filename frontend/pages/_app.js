@@ -1,6 +1,6 @@
 import { ApolloApp } from 'next-with-apollo';
 import withData from '../lib/withData';
-import { CURRENT_USER_QUERY } from '../queries/queries';
+import { CURRENT_USER_QUERY } from '../queries/queries.graphql';
 
 // Next.js wraps each Page in an <App></App> component. This is handy for when you want to persist anything from page to page, or just access a component that is 1 level higher than each page.
 
