@@ -1,9 +1,7 @@
 import Items from '../components/Items';
 
-const Home = props => {
-  const page = parseInt(props.query.page) || 1;
-  console.log(props);
-  return <Items page={page} />
-}
+const Home = props => (
+  <Items page={parseInt(props.query.page) || 1} />
+)
 
 export default Home;

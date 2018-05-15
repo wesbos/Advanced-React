@@ -11,7 +11,6 @@ import Page from '../components/Page';
 class MyApp extends App {
   componentDidMount() {
     if (typeof window !== 'undefined' && !window.__CLIENTLOADED__) {
-      console.log('Refetching current user');
       this.props.apollo.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
       window.__CLIENTLOADED__ = true;
     }
