@@ -1,8 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import Signup from '../components/Signup';
 import Signin from '../components/Signin';
-import Page from '../components/Page';
 import ResetRequest from '../components/ResetRequest';
 
 const Columns = styled.div`
@@ -12,13 +10,11 @@ const Columns = styled.div`
 `;
 
 const SignUpPage = () => (
-  <Page>
-    <Columns>
-      <Signup />
-      <Signin />
-      <ResetRequest />
-    </Columns>
-  </Page>
+  <Columns>
+    <Signup />
+    <Signin />
+    <ResetRequest />
+  </Columns>
 );
 
 export default SignUpPage;
