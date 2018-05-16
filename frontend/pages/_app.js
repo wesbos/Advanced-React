@@ -3,27 +3,14 @@ import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/withData';
 import { CURRENT_USER_QUERY } from '../queries/queries.graphql';
 import Page from '../components/Page';
-import cookie from 'cookie';
 
 // Next.js wraps each Page in an <App></App> component. This is handy for when you want to persist anything from page to page, or just access a component that is 1 level higher than each page.
 
 // here we use App from next/app and wrap it with withData so we can get Apollo and SSR
 
 class MyApp extends App {
-  // componentDidMount() {
-  //   if (typeof window !== 'undefined' && !window.__CLIENTLOADED__) {
-  //     this.props.apollo.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
-  //     window.__CLIENTLOADED__ = true;
-  //   }
-  // }
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
-    if (!process.browser && ctx.req.headers.cookie) {
-      // if we are SSR, pass along the cookie to apollo
-      const cookies = cookie.parse(ctx.req.headers.cookie);
-      pageProps.token = cookies.token;
-    }
-
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
