@@ -36,6 +36,12 @@ mutation SIGNIN_MUTATION($email: String!, $password: String!) {
   }
 }
 
+mutation SIGN_OUT_MUTATION {
+  signout {
+    id
+  }
+}
+
 mutation REQUEST_RESET_MUTATION($email: String!) {
   requestReset(email: $email) {
     id

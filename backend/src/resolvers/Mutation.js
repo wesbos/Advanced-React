@@ -22,10 +22,18 @@ const mutations = {
       info
     );
 
-    return {
-      token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
-      user,
-    };
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    ctx.response.cookie('token', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+      httpOnly: true,
+    });
+    return { user };
+  },
+
+  async signout(parent, args, ctx, info) {
+    ctx.response.clearCookie('token');
+    // TODO: What do we return here?
+    return { id: 'abc123' };
   },
 
   async signin(parent, { email, password }, ctx, info) {
@@ -38,8 +46,14 @@ const mutations = {
     if (!valid) {
       throw new Error('Invalid password');
     }
+    // set the cookie
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    ctx.response.cookie('token', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+      httpOnly: true,
+    });
     return {
-      token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
+      token,
       user,
     };
   },

@@ -6,15 +6,16 @@ import { LOCAL_STATE_QUERY } from '../queries/queries.graphql';
 const client = new ApolloClient({
   uri: process.env.NODE_ENV === 'development' ? 'http://localhost:4444' : 'http://localhost:4444',
   ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
-  request: operation => {
-    // if we're in the client and the user has a token, send it along with the request
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
-      operation.setContext({
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-    }
+  // TODO this is a bug: https://github.com/apollographql/apollo-client/issues/3265
+  fetchOptions: {
+    credentials: 'include',
+  },
+  request: async operation => {
+    operation.setContext({
+      fetchOptions: {
+        credentials: 'include',
+      },
+    });
   },
   clientState: {
     resolvers: {

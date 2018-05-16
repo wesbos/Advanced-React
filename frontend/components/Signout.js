@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
-import { CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import { Query, Mutation } from 'react-apollo';
+import { CURRENT_USER_QUERY, SIGN_OUT_MUTATION } from '../queries/queries.graphql';
 
 class Signout extends Component {
-  signout = refetch => {
-    console.log(refetch);
-    console.log('Signing Out');
-    localStorage.removeItem('token');
-    refetch();
-  };
-
   render() {
     return (
-      <Query query={CURRENT_USER_QUERY}>
-        {({ refetch }) => <button onClick={() => this.signout(refetch)}>Sign Out</button>}
-      </Query>
+      <Mutation mutation={SIGN_OUT_MUTATION} refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
+        {signout => <button onClick={signout}>Sign Out</button>}
+      </Mutation>
     );
   }
 }

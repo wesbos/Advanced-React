@@ -26,7 +26,7 @@ class Signup extends Component {
                 onSubmit={async e => {
                   e.preventDefault();
                   const res = await signup();
-                  localStorage.setItem('token', res.data.signup.token);
+                  // TODO can we return theuser from signup?
                   client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
                 }}
               >

@@ -13,7 +13,7 @@ class Signin extends Component {
   loginUser = async (e, signin, client) => {
     e.preventDefault();
     const res = await signin();
-    localStorage.setItem('token', res.data.signin.token);
+    // TODO instead of refetching, can we just use the data returned?
     client.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
   };
 

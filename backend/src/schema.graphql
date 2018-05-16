@@ -18,6 +18,7 @@ type Mutation {
   removeFromCart(id: ID!): CartItem
   createOrder(token: String!): Order!
   updateUser(name: String): User
+  signout: User
   updatePermissions(permissions: [Permission], userId: ID!): User
 }
 

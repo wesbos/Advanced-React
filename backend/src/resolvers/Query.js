@@ -36,8 +36,7 @@ const Query = {
   },
 
   me(parent, args, ctx, info) {
-    const Authorization = ctx.request.get('Authorization');
-    if (!Authorization || Authorization === 'null') {
+    if (!ctx.request.userId) {
       return null; // don't error out, just return nothing
     }
 
