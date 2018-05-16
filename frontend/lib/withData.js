@@ -5,15 +5,21 @@ import { LOCAL_STATE_QUERY } from '../queries/queries.graphql';
 
 const client = new ApolloClient({
   uri: process.env.NODE_ENV === 'development' ? 'http://localhost:4444' : 'http://localhost:4444',
-  ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
+  // ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
   // TODO this is a bug: https://github.com/apollographql/apollo-client/issues/3265
   fetchOptions: {
     credentials: 'include',
   },
-  request: async operation => {
+  request: async (operation, forward) => {
     operation.setContext({
       fetchOptions: {
         credentials: 'include',
+      },
+      headers: {
+        haha: `lol${Date.now()}`,
+        cookie: '',
+        // TODO: This cookie needs to come from the SSR
+        // cookie:'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjamY0ZWtqcm55ZGQ0MDkxNnhweXEweGVqIiwiaWF0IjoxNTI2NDc4NzY2fQ.LJbLhKZ6j5d3ntDvaBR4V-4rFEPv_pzJiIhZ84WkO6A',
       },
     });
   },
