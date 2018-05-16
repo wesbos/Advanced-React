@@ -22,7 +22,7 @@
     "graphql-mock": "1.0.0",
     "graphql-tag": "^2.9.2",
     "lodash.debounce": "^4.0.8",
-    "next": "^6.0.2",
+    "next": "^6.0.3-canary.0",
     "next-with-apollo": "^2.0.2",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.1",
