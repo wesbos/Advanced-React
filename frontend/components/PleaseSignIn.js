@@ -39,7 +39,7 @@ const PleaseSignIn = props => (
 );
 
 PleaseSignIn.propTypes = {
-  allowedPermissions: PropTypes.array.isRequired,
+  allowedPermissions: PropTypes.array,
   children: PropTypes.any.isRequired,
 };
 

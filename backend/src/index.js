@@ -10,8 +10,6 @@ const server = createServer();
 server.express.use(cookieParser());
 
 server.express.use((req, res, next) => {
-  console.log('Hey');
-
   const { token } = req.cookies;
   if (token) {
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
@@ -26,7 +24,6 @@ server.express.use(async (req, res, next) => {
   const user = await server
     .context()
     .db.query.user({ where: { id: req.userId } }, `{ id, permissions, email, name }`);
-  console.log(user);
   req.user = user;
   next();
 });

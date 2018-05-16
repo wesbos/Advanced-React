@@ -17,13 +17,12 @@ class MyApp extends App {
   //   }
   // }
   static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
     if (!process.browser && ctx.req.headers.cookie) {
       // if we are SSR, pass along the cookie to apollo
-      console.log('On the server');
       const cookies = cookie.parse(ctx.req.headers.cookie);
-      console.log(cookies.token);
+      pageProps.token = cookies.token;
     }
-    let pageProps = {};
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);

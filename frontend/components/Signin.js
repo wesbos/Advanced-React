@@ -28,7 +28,7 @@ class Signin extends Component {
         {client => (
           <Mutation mutation={SIGNIN_MUTATION} variables={this.state}>
             {(signin, { loading, error }) => (
-              <Form method="post" onSubmit={e => this.loginUser(e, signin, client)}>
+              <Form onSubmit={e => this.loginUser(e, signin, client)}>
                 <Error error={error} />
                 <fieldset disabled={loading} aria-busy={loading}>
                   <label htmlFor="email">
