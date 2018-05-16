@@ -7,10 +7,6 @@ function createClient({ headers }) {
   return new ApolloClient({
     uri: process.env.NODE_ENV === 'development' ? 'http://localhost:4444' : 'http://localhost:4444',
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
-    // TODO this is a bug: https://github.com/apollographql/apollo-client/issues/3265
-    fetchOptions: {
-      credentials: 'include',
-    },
     request: async operation => {
       operation.setContext({
         fetchOptions: {

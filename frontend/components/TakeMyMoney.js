@@ -27,7 +27,6 @@ class TakeMyMoney extends Component {
       query: { id },
     });
   };
-  // TODO - refetchQueries after an order is created
   render() {
     return (
       <Query query={CURRENT_USER_QUERY}>

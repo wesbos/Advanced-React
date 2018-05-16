@@ -4,7 +4,11 @@ import { adopt } from 'react-adopt';
 import TakeMyMoney from './TakeMyMoney';
 import formatMoney from '../lib/formatMoney';
 import CartItem from './CartItem';
-import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../queries/queries.graphql';
+import {
+  CURRENT_USER_QUERY,
+  LOCAL_STATE_QUERY,
+  TOGGLE_CART_MUTATION,
+} from '../queries/queries.graphql';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import Error from './ErrorMessage';
 import CartStyles from './styles/CartStyles';
@@ -28,7 +32,7 @@ const Cart = () => (
       const { data: { me }, error, loading } = currentUser;
       if (loading) return <p>Loading...</p>;
       if (error) return <Error error={error} />;
-      if (!me) return <p>Please Sign In!</p>;
+      if (!me) return null;
       return (
         <CartStyles open={localState.data.cartOpen}>
           <header>
