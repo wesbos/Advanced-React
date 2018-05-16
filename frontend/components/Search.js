@@ -64,14 +64,18 @@ class AutoComplete extends React.Component {
     items: [],
     loading: false,
   };
-  onChange = debounce(async (e, client) => {
+  onChange = async (e, client) => {
     if (!e.target.value) {
       return this.setState({ items: [] });
     }
     this.setState({ loading: true });
+    this.search(client, e.target.value);
+  };
+
+  search = debounce(async (client, searchTerm) => {
     const res = await client.query({
       query: SEARCH_ITEMS_QUERY,
-      variables: { searchTerm: e.target.value },
+      variables: { searchTerm },
     });
     this.setState({ items: res.data.items, loading: false });
   }, 350);
@@ -112,9 +116,10 @@ class AutoComplete extends React.Component {
                     </DropDownItem>
                   ))}
                   {/* Found Nothing State */}
-                  {!this.state.items.length && (
-                    <DropDownItem>Nothing Found for {inputValue}...</DropDownItem>
-                  )}
+                  {!this.state.items.length &&
+                    !this.state.loading && (
+                      <DropDownItem>Nothing Found for {inputValue}...</DropDownItem>
+                    )}
                 </DropDown>
               )}
             </div>

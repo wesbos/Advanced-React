@@ -22,10 +22,7 @@ class Reset extends React.Component {
 
   resetPassword = async (e, resetMutation) => {
     e.preventDefault();
-    const res = await resetMutation();
-    // sign them in!
-    localStorage.setItem('token', res.data.resetPassword.token);
-    // TODO: Manually call refresh on a Query
+    await resetMutation();
   };
 
   render() {

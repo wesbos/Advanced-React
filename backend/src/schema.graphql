@@ -7,10 +7,10 @@ type Query {
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload!
-  signin(email: String!, password: String!): AuthPayload!
+  signup(email: String!, password: String!, name: String!): User!
+  signin(email: String!, password: String!): User!
   requestReset(email: String!): User
-  resetPassword(resetToken: String!, password: String!, confirmPassword: String!): AuthPayload!
+  resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
   createItem(title: String, description: String, price: Int, image: String, largeImage: String): Item!
   deleteItem(id: ID!): Item!
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
@@ -18,13 +18,12 @@ type Mutation {
   removeFromCart(id: ID!): CartItem
   createOrder(token: String!): Order!
   updateUser(name: String): User
-  signout: User
+  signout: SuccessMessage
   updatePermissions(permissions: [Permission], userId: ID!): User
 }
 
-type AuthPayload {
-  token: String!
-  user: User!
+type SuccessMessage {
+  message: String
 }
 
 type User {

@@ -37,7 +37,6 @@ const Pagination = props => (
       const { aggregate } = data.itemsConnection;
       const { page } = props;
       const pages = Math.ceil(aggregate.count / perPage);
-      // TODO prefetch this
       return (
         <PaginationStyles data-test="pagination">
           <Link

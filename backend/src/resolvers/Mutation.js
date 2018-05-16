@@ -21,19 +21,17 @@ const mutations = {
       },
       info
     );
-
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     ctx.response.cookie('token', token, {
       maxAge: 1000 * 60 * 60 * 24 * 365,
       httpOnly: true,
     });
-    return { user };
+    return user;
   },
 
   async signout(parent, args, ctx, info) {
     ctx.response.clearCookie('token');
-    // TODO: What do we return here?
-    return { id: 'abc123' };
+    return { message: 'goodbye!' };
   },
 
   async signin(parent, { email, password }, ctx, info) {
@@ -52,10 +50,7 @@ const mutations = {
       maxAge: 1000 * 60 * 60 * 24 * 365,
       httpOnly: true,
     });
-    return {
-      token,
-      user,
-    };
+    return user;
   },
 
   // Create An Item
@@ -139,11 +134,9 @@ const mutations = {
       from: 'wesbos@gmail.com',
       to: user.email,
       subject: 'Your password reset token',
-      // TODO: don't hardcore localhost here
       html: mail.makeANiceEmail(
-        `Your password reset link is here! \n\n<a href="${ctx.request.protocol}://${ctx.request.get(
-          'host'
-        )}/reset?resetToken=${resetToken}">Click Here to reset</a>s`
+        `Your password reset link is here! \n\n<a href="${process.env
+          .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to reset</a>`
       ),
     });
     return res.updateUser;
@@ -182,13 +175,14 @@ const mutations = {
         resetTokenExpiry: null,
       },
     });
+    const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
+    ctx.response.cookie('token', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+      httpOnly: true,
+    });
 
-    // 6. send back the Auth Payload for the GraphQL request on the client
-    return {
-      // TODO: This should use sub instead of userId
-      token: jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET),
-      user: updatedUser,
-    };
+    // 6. send back the User for the GraphQL request on the client
+    return updatedUser;
   },
   /*
     Add to cart
@@ -265,7 +259,6 @@ const mutations = {
     const userId = ctx.request.userId;
     const user = await ctx.db.query.user(
       { where: { id: userId } },
-      // TODO - can we just pass info here?
       '{ id, name, email, cart { id, quantity, item { title, price, id, description, image } }}'
     );
     // 1. Recalculate the total for the price
@@ -303,7 +296,6 @@ const mutations = {
         total: charge.amount,
         charge: charge.id,
         items: {
-          // TODO this is going to be create instead
           create: orderItems,
         },
         user: {

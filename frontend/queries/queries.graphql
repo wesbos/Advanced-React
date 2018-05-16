@@ -16,18 +16,14 @@ mutation CREATE_ITEM_MUTATION($description: String!, $title: String!, $price: In
 
 mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
   signup(email: $email, name: $name, password: $password) {
-    token
-    user {
-      id
-      email
-      name
-    }
+    id
+    email
+    name
   }
 }
 
 mutation SIGNIN_MUTATION($email: String!, $password: String!) {
   signin(email: $email, password: $password) {
-    token
     user {
       id
       email
@@ -38,7 +34,7 @@ mutation SIGNIN_MUTATION($email: String!, $password: String!) {
 
 mutation SIGN_OUT_MUTATION {
   signout {
-    id
+    message
   }
 }
 
@@ -50,7 +46,6 @@ mutation REQUEST_RESET_MUTATION($email: String!) {
 
 mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
   resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
-    token
     user {
       id
       email

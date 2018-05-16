@@ -4,13 +4,12 @@ const { forwardTo } = require('prisma-binding');
 
 const Query = {
   items(parent, args, ctx, info) {
+    console.log(args);
     return ctx.db.query.items({ ...args }, info);
   },
 
   itemsConnection: forwardTo('db'),
 
-  // TODO: Make sure they own this order before looking it up
-  // order: forwardTo('db'),
   async order(parent, args, ctx, info) {
     // 1. make sure they are signed in
     if (!ctx.request.userId) {
