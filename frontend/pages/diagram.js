@@ -1,4 +1,3 @@
-import Page from '../components/Page';
 import styled from 'styled-components';
 
 const DiagramStyles = styled.div`
@@ -198,10 +197,4 @@ const Diagram = () => (
   </DiagramStyles>
 );
 
-const DiagramPage = () => (
-  <Page>
-    <Diagram />
-  </Page>
-);
-
-export default DiagramPage;
+export default Diagram;

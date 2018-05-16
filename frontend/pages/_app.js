@@ -1,12 +1,14 @@
-import { ApolloApp } from 'next-with-apollo';
+import App, { Container } from 'next/app';
+import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/withData';
 import { CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import Page from '../components/Page';
 
 // Next.js wraps each Page in an <App></App> component. This is handy for when you want to persist anything from page to page, or just access a component that is 1 level higher than each page.
 
-// normall here you import App from next/app, but we use next-with-apollo's ApolloApp here so we can get SSR
+// here we use App from next/app and wrap it with withData so we can get Apollo and SSR
 
-class MyApp extends ApolloApp {
+class MyApp extends App {
   componentDidMount() {
     if (typeof window !== 'undefined' && !window.__CLIENTLOADED__) {
       this.props.apollo.query({ query: CURRENT_USER_QUERY, fetchPolicy: 'network-only' });
@@ -23,6 +25,19 @@ class MyApp extends ApolloApp {
     pageProps.query = ctx.query;
 
     return { pageProps };
+  }
+  render() {
+    const { Component, pageProps, apollo } = this.props;
+
+    return (
+      <Container>
+        <ApolloProvider client={apollo}>
+          <Page>
+            <Component {...pageProps} />
+          </Page>
+        </ApolloProvider>
+      </Container>
+    );
   }
 }
 
