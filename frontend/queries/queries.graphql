@@ -24,11 +24,9 @@ mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
 
 mutation SIGNIN_MUTATION($email: String!, $password: String!) {
   signin(email: $email, password: $password) {
-    user {
-      id
-      email
-      name
-    }
+    id
+    email
+    name
   }
 }
 
@@ -46,11 +44,9 @@ mutation REQUEST_RESET_MUTATION($email: String!) {
 
 mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
   resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
-    user {
-      id
-      email
-      name
-    }
+    id
+    email
+    name
   }
 }
 

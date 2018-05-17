@@ -4,18 +4,24 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import { SINGLE_ITEM_QUERY } from '../queries/queries.graphql';
 import Error from './ErrorMessage';
+import AddToCart from './AddToCart';
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
   margin: 2rem auto;
   box-shadow: ${props => props.theme.bs};
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  min-height: 800px;
   img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
   }
   .details {
     margin: 3rem;
-    font-size: 3rem;
+    font-size: 2rem;
   }
 `;
 
@@ -39,6 +45,7 @@ const SingleItem = props => (
             >
               <a>Edit ✏️</a>
             </Link>
+            <AddToCart id={item.id} />
           </div>
         </SingleItemStyles>
       );

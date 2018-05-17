@@ -14,6 +14,7 @@ const DiagramStyles = styled.div`
     list-style: none;
     li {
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      padding: 5px 0;
     }
   }
   h2 {
@@ -27,7 +28,8 @@ const DiagramStyles = styled.div`
   span.for {
     font-size: 12px;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     display: block;
   }
   .slat {
@@ -130,7 +132,7 @@ const Diagram = () => (
           <strong>Error</strong> and <strong>Loading</strong> UI States
         </li>
         <li>
-          <small>Apollo-client replaces the need for redux + data fetching libraries</small>
+          <small>Apollo Client replaces the need for redux + data fetching/caching libraries</small>
         </li>
       </ul>
     </div>
@@ -157,7 +159,7 @@ const Diagram = () => (
           <strong>Sending</strong> Email
         </li>
         <li>
-          Performing <strong>Authentication</strong>
+          Performing <strong>JWT Authentication</strong>
         </li>
         <li>
           Checking <strong>Permissions</strong>
@@ -174,7 +176,7 @@ const Diagram = () => (
       <span className="for">A GraphQL Database Interface</span>
       <ul>
         <li>
-          Provides a set of GraphQL <strong>CRUD APIs</strong> for our (currently MySQL){' '}
+          Provides a set of GraphQL <strong>CRUD APIs</strong> for MySQL or Postgres{' '}
           <strong>Database</strong>
         </li>
         <li>

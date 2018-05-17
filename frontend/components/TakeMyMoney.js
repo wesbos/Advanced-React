@@ -20,8 +20,9 @@ class TakeMyMoney extends Component {
         token: res.id,
       },
     });
+    console.log(order);
     // Route them to that order page
-    const { id } = order.data.CREATE_ORDER_MUTATION;
+    const { id } = order.data.createOrder;
     Router.push({
       pathname: `/order`,
       query: { id },
