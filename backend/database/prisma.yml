@@ -1,3 +1,0 @@
-endpoint: ${PRISMA_ENDPOINT}
-datamodel: datamodel.graphql
-secret: ${env:PRISMA_SECRET}
