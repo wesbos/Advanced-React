@@ -33,4 +33,4 @@ function createClient({ headers }) {
   });
 }
 
-export default withApollo({ client: createClient });
+export default withApollo(createClient);
