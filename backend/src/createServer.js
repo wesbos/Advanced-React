@@ -1,8 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga');
-const { Prisma } = require('prisma-binding');
-
 const Mutation = require('./resolvers/Mutation');
 const Query = require('./resolvers/Query');
+const db = require('./db');
 
 function createServer() {
   return new GraphQLServer({
@@ -14,15 +13,7 @@ function createServer() {
       Mutation,
       Query,
     },
-    context: req => ({
-      ...req,
-      db: new Prisma({
-        typeDefs: 'src/generated/prisma.graphql',
-        endpoint: process.env.PRISMA_ENDPOINT, // the endpoint of the Prisma DB service (value is set in variables.env)
-        secret: process.env.PRISMA_SECRET, // taken from prisma/prisma.yml (value is set in .env)
-        debug: false, // log all GraphQL queries & mutations
-      }),
-    }),
+    context: req => ({ ...req, db }),
   });
 }
 
