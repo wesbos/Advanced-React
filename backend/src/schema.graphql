@@ -1,9 +1,12 @@
-# The Below line looks like a comment, but its not!
-# import Permission, Order, OrderItem, CartItem, ItemWhereInput, ItemOrderByInput, allItems, Item, ItemCreateInput, ItemOrderByInput, ItemWhereInput, Query.orders, Query.users, Query.items, Query.itemsConnection from './generated/prisma.graphql'
+# The Below line looks like a comment, but it's not!
+# import * from './generated/prisma.graphql'
 
 type Query {
   me: User
   order(id: ID!): Order!
+  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, first: Int, last: Int): ItemConnection!
 }
 
 type Mutation {
