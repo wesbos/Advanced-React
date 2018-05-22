@@ -10,19 +10,19 @@
     "bcryptjs": "2.4.3",
     "cookie-parser": "^1.4.3",
     "graphql": "^0.13.2",
-    "graphql-yoga": "1.13.1",
+    "graphql-yoga": "1.14.1",
     "jsonwebtoken": "8.2.1",
     "nodemailer": "^4.6.4",
-    "prisma-binding": "2.0.0",
-    "stripe": "^5.9.0"
+    "prisma-binding": "2.0.1",
+    "stripe": "^6.0.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.7.0",
     "dotenv": "5.0.1",
     "graphql-cli": "^2.16.0",
-    "jest-cli": "^22.4.3",
+    "jest-cli": "^22.4.4",
     "nodemon": "1.17.4",
-    "prisma": "1.8.0"
+    "prisma": "1.8.3"
   },
   "license": "MIT",
   "repository": {
