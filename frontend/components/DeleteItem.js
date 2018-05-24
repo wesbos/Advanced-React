@@ -1,20 +1,23 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { REMOVE_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../queries/queries.graphql';
+import {
+  REMOVE_ITEM_MUTATION,
+  ALL_ITEMS_QUERY,
+} from '../queries/queries.graphql';
 
 class DeleteItem extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
   };
 
-  update = (proxy, payload) => {
+  update = (cache, payload) => {
     const deletedItem = payload.data.deleteItem;
-    const data = proxy.readQuery({ query: ALL_ITEMS_QUERY });
+    const data = cache.readQuery({ query: ALL_ITEMS_QUERY });
     // filter this one out
     data.items = data.items.filter(item => item.id !== deletedItem.id);
-    // write the data back to the proxy
-    proxy.writeQuery({ query: ALL_ITEMS_QUERY, data });
+    // write the data back to the cache
+    cache.writeQuery({ query: ALL_ITEMS_QUERY, data });
   };
 
   render() {

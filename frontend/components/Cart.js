@@ -17,19 +17,23 @@ import CloseButton from './styles/CloseButton';
 import SickButton from './styles/SickButton';
 
 const Composed = adopt({
-  toggleCart: <Mutation mutation={TOGGLE_CART_MUTATION}>{() => {}}</Mutation>,
-  localState: <Query query={LOCAL_STATE_QUERY}>{() => {}}</Query>,
-  currentUser: (
-    <Query query={CURRENT_USER_QUERY} data-test="cart">
-      {() => {}}
-    </Query>
+  toggleCart: ({ render }) => (
+    <Mutation mutation={TOGGLE_CART_MUTATION}>
+      {(mutate, result) => render({ mutate, result })}
+    </Mutation>
   ),
+  localState: <Query query={LOCAL_STATE_QUERY} />,
+  currentUser: <Query query={CURRENT_USER_QUERY} data-test="cart" />,
 });
 
 const Cart = () => (
   <Composed>
     {({ toggleCart, localState, currentUser }) => {
-      const { data: { me }, error, loading } = currentUser;
+      const {
+        data: { me },
+        error,
+        loading,
+      } = currentUser;
       if (loading) return <p>Loading...</p>;
       if (error) return <Error error={error} />;
       if (!me) return null;
@@ -42,11 +46,16 @@ const Cart = () => (
 
             <Supreme>{me.name}'s Cart.</Supreme>
             <p>
-              You have {me.cart.length} item{me.cart.length === 1 ? '' : 's'} in your cart.
+              You have {me.cart.length} item{me.cart.length === 1 ? '' : 's'} in
+              your cart.
             </p>
           </header>
 
-          <ul>{me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}</ul>
+          <ul>
+            {me.cart.map(cartItem => (
+              <CartItem key={cartItem.id} cartItem={cartItem} />
+            ))}
+          </ul>
           <footer>
             <p>{formatMoney(calcTotalPrice(me.cart))}</p>
             <TakeMyMoney>
