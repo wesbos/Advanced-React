@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Link from 'next/link';
-import { Query, ApolloConsumer } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
+import { TOGGLE_CART_MUTATION } from './Cart';
 import User from './User';
 import CartCount from './CartCount';
 import Signout from './Signout';
@@ -35,9 +36,9 @@ class Nav extends React.Component {
                   <a>My Account</a>
                 </Link>
                 <Signout />
-                <ApolloConsumer>
-                  {cache => (
-                    <button onClick={() => cache.writeData({ data: { cartOpen: true } })}>
+                <Mutation mutation={TOGGLE_CART_MUTATION}>
+                  {toggleCart => (
+                    <button onClick={toggleCart}>
                       My Cart
                       <CartCount
                         className="cart-count"
@@ -45,7 +46,7 @@ class Nav extends React.Component {
                       />
                     </button>
                   )}
-                </ApolloConsumer>
+                </Mutation>
               </Fragment>
             )}
           </NavStyles>

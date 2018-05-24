@@ -1,14 +1,10 @@
 import withApollo from 'next-with-apollo';
 import ApolloClient from 'apollo-boost';
-import { LOCAL_STATE_QUERY } from '../queries/queries.graphql';
-// can also be a function that accepts a `headers` object (SSR only) and returns a config
+import { LOCAL_STATE_QUERY } from '../components/Cart';
 
 function createClient({ headers }) {
   return new ApolloClient({
-    uri:
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:4444'
-        : 'http://localhost:4444',
+    uri: process.env.NODE_ENV === 'development' ? 'http://localhost:4444' : 'http://localhost:4444',
     request: operation => {
       operation.setContext({
         fetchOptions: {
