@@ -1,9 +1,20 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import { RESET_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import { CURRENT_USER_QUERY } from './User';
+
+const RESET_MUTATION = gql`
+  mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
+    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
+      id
+      email
+      name
+    }
+  }
+`;
 
 class Reset extends React.Component {
   static propTypes = {
@@ -71,3 +82,4 @@ class Reset extends React.Component {
 }
 
 export default Reset;
+export { RESET_MUTATION };

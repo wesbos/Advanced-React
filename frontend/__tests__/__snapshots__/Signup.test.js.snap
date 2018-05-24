@@ -3,6 +3,7 @@
 exports[`<Signup/> renders and matches snapshot 1`] = `
 <form
   className="sc-bdVaJa LHejR"
+  method="post"
   onSubmit={[Function]}
 >
   <fieldset
@@ -24,7 +25,7 @@ exports[`<Signup/> renders and matches snapshot 1`] = `
         onChange={[Function]}
         placeholder="email"
         type="text"
-        value="wesbos@gmail.com"
+        value=""
       />
     </label>
     <label
@@ -36,7 +37,7 @@ exports[`<Signup/> renders and matches snapshot 1`] = `
         onChange={[Function]}
         placeholder="name"
         type="text"
-        value="Wes Bos"
+        value=""
       />
     </label>
     <label
@@ -50,7 +51,7 @@ exports[`<Signup/> renders and matches snapshot 1`] = `
         onChange={[Function]}
         placeholder="password"
         type="password"
-        value="wes"
+        value=""
       />
     </label>
     <button

@@ -3,9 +3,28 @@ import { Query } from 'react-apollo';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { USER_ORDERS_QUERY } from '../queries/queries.graphql';
+import gql from 'graphql-tag';
 import formatMoney from '../lib/formatMoney';
 import OrderItemStyles from './styles/OrderItemStyles';
+
+const USER_ORDERS_QUERY = gql`
+  query orders {
+    orders(orderBy: createdAt_DESC) {
+      id
+      total
+      createdAt
+      updatedAt
+      items {
+        id
+        title
+        price
+        description
+        quantity
+        image
+      }
+    }
+  }
+`;
 
 const OrderUl = styled.ul`
   display: grid;
@@ -71,3 +90,4 @@ class OrderList extends React.Component {
 }
 
 export default OrderList;
+export { USER_ORDERS_QUERY };

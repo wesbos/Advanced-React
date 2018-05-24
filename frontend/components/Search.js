@@ -2,10 +2,19 @@ import React from 'react';
 import Downshift from 'downshift';
 import Router from 'next/router';
 import { ApolloConsumer } from 'react-apollo';
+import gql from 'graphql-tag';
 import styled, { keyframes } from 'styled-components';
 import debounce from 'lodash.debounce';
-import { SEARCH_ITEMS_QUERY } from '../queries/queries.graphql';
 
+const SEARCH_ITEMS_QUERY = gql`
+  query SEARCH_ITEMS_QUERY($searchTerm: String!) {
+    items(where: { OR: [{ title_contains: $searchTerm }, { description_contains: $searchTerm }] }) {
+      id
+      image
+      title
+    }
+  }
+`;
 function routeToItem(item) {
   Router.push({
     pathname: '/item',
@@ -131,3 +140,4 @@ class AutoComplete extends React.Component {
 }
 
 export default AutoComplete;
+export { SEARCH_ITEMS_QUERY };

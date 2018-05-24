@@ -1,10 +1,18 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import {
-  REMOVE_ITEM_MUTATION,
-  ALL_ITEMS_QUERY,
-} from '../queries/queries.graphql';
+import gql from 'graphql-tag';
+import { ALL_ITEMS_QUERY } from './Items';
+
+const DELETE_ITEM_MUTATION = gql`
+  mutation deleteItem($id: ID!) {
+    deleteItem(id: $id) {
+      id
+      title
+      description
+    }
+  }
+`;
 
 class DeleteItem extends React.Component {
   static propTypes = {
@@ -23,7 +31,7 @@ class DeleteItem extends React.Component {
   render() {
     return (
       <Mutation
-        mutation={REMOVE_ITEM_MUTATION}
+        mutation={DELETE_ITEM_MUTATION}
         variables={{ id: this.props.id }}
         update={this.update}
       >
@@ -44,3 +52,4 @@ class DeleteItem extends React.Component {
 }
 
 export default DeleteItem;
+export { DELETE_ITEM_MUTATION };

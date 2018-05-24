@@ -1,21 +1,17 @@
 import React, { Fragment } from 'react';
 import Link from 'next/link';
 import { Query, ApolloConsumer } from 'react-apollo';
-import { CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import User from './User';
 import CartCount from './CartCount';
 import Signout from './Signout';
-import Dump from './Dump';
 import NavStyles from './styles/NavStyles';
 
 class Nav extends React.Component {
   render() {
     // below we set the fetchPolicy to network only so it forces re-fetch on the server
     return (
-      <Query
-        query={CURRENT_USER_QUERY}
-        fetchPolicy={process.browser ? 'cache-first' : 'network-only'}
-      >
-        {({ data: { me }, loading, error }) => (
+      <User>
+        {({ data: { me }, error }) => (
           <NavStyles data-test="nav">
             <Link href="/items">
               <a>Shop</a>
@@ -54,7 +50,7 @@ class Nav extends React.Component {
             )}
           </NavStyles>
         )}
-      </Query>
+      </User>
     );
   }
 }

@@ -3,10 +3,29 @@ import { Query } from 'react-apollo';
 import { format } from 'date-fns';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import { SINGLE_ORDER_QUERY } from '../queries/queries.graphql';
+import gql from 'graphql-tag';
 import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 import OrderStyles from './styles/OrderStyles';
+
+const SINGLE_ORDER_QUERY = gql`
+  query SINGLE_ORDER_QUERY($id: ID!) {
+    order(id: $id) {
+      id
+      charge
+      total
+      createdAt
+      items {
+        id
+        title
+        price
+        description
+        image
+        quantity
+      }
+    }
+  }
+`;
 
 class Order extends Component {
   static propTypes = {
@@ -73,3 +92,4 @@ class Order extends Component {
 }
 
 export default Order;
+export { SINGLE_ORDER_QUERY };

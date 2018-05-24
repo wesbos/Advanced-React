@@ -12,84 +12,21 @@ exports[`<SingleItem/> Errors with a not found Item 1`] = `
 `;
 
 exports[`<SingleItem/> Renders with Proper Data 1`] = `
-Array [
-  <styled.div
-    data-test="SingleItem"
-  >
-    <div
-      className="sc-bwzfXH dFvSZo"
-      data-test="SingleItem"
-    >
-      <img
-        alt="dogs are best"
-        src="dog.jpg"
-      />
-      <div
-        className="details"
-      >
-        <h2>
-          Viewing 
-          dogs are best
-        </h2>
-        <p>
-          dogs
-        </p>
-        <Link
-          href={
-            Object {
-              "pathname": "/update",
-              "query": Object {
-                "id": "123",
-              },
-            }
-          }
-        >
-          <a
-            href="/update?id=123"
-            onClick={[Function]}
-          >
-            Edit ✏️
-          </a>
-        </Link>
-      </div>
-    </div>
-  </styled.div>,
-  <div
-    className="sc-bwzfXH dFvSZo"
-    data-test="SingleItem"
-  >
-    <img
-      alt="dogs are best"
-      src="dog.jpg"
-    />
-    <div
-      className="details"
-    >
-      <h2>
-        Viewing 
-        dogs are best
-      </h2>
-      <p>
-        dogs
-      </p>
-      <Link
-        href={
-          Object {
-            "pathname": "/update",
-            "query": Object {
-              "id": "123",
-            },
-          }
-        }
-      >
-        <a
-          href="/update?id=123"
-          onClick={[Function]}
-        >
-          Edit ✏️
-        </a>
-      </Link>
-    </div>
-  </div>,
-]
+<h2>
+  Viewing 
+  dogs are best
+</h2>
+`;
+
+exports[`<SingleItem/> Renders with Proper Data 2`] = `
+<img
+  alt="dogs are best"
+  src="dog.jpg"
+/>
+`;
+
+exports[`<SingleItem/> Renders with Proper Data 3`] = `
+<p>
+  dogs
+</p>
 `;

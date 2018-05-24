@@ -2,10 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import wait from 'waait';
 import toJSON from 'enzyme-to-json';
-import SingleItem from '../components/SingleItem';
-import { SINGLE_ITEM_QUERY } from '../queries/queries.graphql';
+import SingleItem, { SINGLE_ITEM_QUERY } from '../components/SingleItem';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeItem } from '../lib/testUtils';
+import { fakeItem, fakeUser } from '../lib/testUtils';
+import { CURRENT_USER_QUERY } from '../components/User';
 
 const data = {
   items: [fakeItem()],
@@ -16,8 +16,11 @@ describe('<SingleItem/>', () => {
     const mocks = [
       {
         request: { query: SINGLE_ITEM_QUERY, variables: { id: '123' } },
-        delay: 50,
         result: { data },
+      },
+      {
+        request: { query: CURRENT_USER_QUERY },
+        result: { data: { me: fakeUser() } },
       },
     ];
     const wrapper = mount(
@@ -32,9 +35,9 @@ describe('<SingleItem/>', () => {
     await wait(55);
     wrapper.update();
     // Grab the piece we want
-    const Item = wrapper.find('[data-test="SingleItem"]');
-    // snapshot it!
-    expect(toJSON(Item)).toMatchSnapshot();
+    expect(toJSON(wrapper.find('h2'))).toMatchSnapshot();
+    expect(toJSON(wrapper.find('img'))).toMatchSnapshot();
+    expect(toJSON(wrapper.find('p'))).toMatchSnapshot();
   });
 
   it('Errors with a not found Item', async () => {

@@ -6,7 +6,8 @@ import wait from 'waait';
 import Cart from '../components/Cart';
 import { MockedProvider } from 'react-apollo/test-utils';
 import { fakeCartItem, fakeUser } from '../lib/testUtils';
-import { CURRENT_USER_QUERY, LOCAL_STATE_QUERY } from '../queries/queries.graphql';
+import { CURRENT_USER_QUERY } from '../components/User';
+import { LOCAL_STATE_QUERY } from '../components/Cart';
 
 const mocks = [
   {

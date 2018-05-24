@@ -1,8 +1,16 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { REQUEST_RESET_MUTATION } from '../queries/queries.graphql';
+import gql from 'graphql-tag';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
+
+const REQUEST_RESET_MUTATION = gql`
+  mutation requestReset($email: String!) {
+    requestReset(email: $email) {
+      id
+    }
+  }
+`;
 
 class ResetRequest extends React.Component {
   state = {
@@ -44,3 +52,4 @@ class ResetRequest extends React.Component {
 }
 
 export default ResetRequest;
+export { REQUEST_RESET_MUTATION };

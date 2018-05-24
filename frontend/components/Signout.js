@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { Query, Mutation } from 'react-apollo';
-import { CURRENT_USER_QUERY, SIGN_OUT_MUTATION } from '../queries/queries.graphql';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import { CURRENT_USER_QUERY } from './User';
+
+const SIGN_OUT_MUTATION = gql`
+  mutation SIGN_OUT_MUTATION {
+    signout {
+      message
+    }
+  }
+`;
 
 class Signout extends Component {
   render() {
@@ -13,3 +22,4 @@ class Signout extends Component {
 }
 
 export default Signout;
+export { SIGN_OUT_MUTATION };

@@ -1,10 +1,32 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { ALL_USERS_QUERY, UPDATE_PERMISSIONS_MUTATION } from '../queries/queries.graphql';
+import gql from 'graphql-tag';
 import Error from './ErrorMessage';
 import SickButton from './styles/SickButton';
 import Table from './styles/Table';
+
+const ALL_USERS_QUERY = gql`
+  query {
+    users {
+      id
+      name
+      email
+      permissions
+    }
+  }
+`;
+
+const UPDATE_PERMISSIONS_MUTATION = gql`
+  mutation updatePermissions($permissions: [Permission], $userId: ID!) {
+    updatePermissions(permissions: $permissions, userId: $userId) {
+      id
+      permissions
+      name
+      email
+    }
+  }
+`;
 
 const possiblePermissions = [
   'ADMIN',
@@ -108,3 +130,4 @@ const Permissions = () => (
 );
 
 export default Permissions;
+export { ALL_USERS_QUERY, UPDATE_PERMISSIONS_MUTATION };

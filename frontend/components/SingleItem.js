@@ -2,9 +2,21 @@ import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { SINGLE_ITEM_QUERY } from '../queries/queries.graphql';
+import gql from 'graphql-tag';
 import Error from './ErrorMessage';
 import AddToCart from './AddToCart';
+
+const SINGLE_ITEM_QUERY = gql`
+  query SINGLE_ITEM_QUERY($id: ID!) {
+    items(where: { id: $id }) {
+      id
+      title
+      description
+      largeImage
+      image
+    }
+  }
+`;
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
@@ -58,3 +70,4 @@ SingleItem.propTypes = {
 };
 
 export default SingleItem;
+export { SINGLE_ITEM_QUERY };

@@ -1,11 +1,10 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import Pagination from '../components/Pagination';
+import Pagination, { PAGINATION_QUERY } from '../components/Pagination';
 import { MockedProvider } from 'react-apollo/test-utils';
 import wait from 'waait';
 import { fakeItem } from '../lib/testUtils';
-import { ALL_ITEMS_QUERY } from '../queries/queries.graphql';
 
 import Router from 'next/router';
 
@@ -15,7 +14,7 @@ Router.router = { push() {}, prefetch() {} };
 function makeMocksFor(length) {
   return [
     {
-      request: { query: ALL_ITEMS_QUERY, variables: { skip: 0, first: 4 } },
+      request: { query: PAGINATION_QUERY, variables: { skip: 0, first: 4 } },
       result: {
         data: {
           itemsConnection: {
@@ -25,7 +24,6 @@ function makeMocksFor(length) {
               __typename: 'count',
             },
           },
-          items: Array.from({ length }, (_, i) => fakeItem({ id: `item${i}` })),
         },
       },
     },

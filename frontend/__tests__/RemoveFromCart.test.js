@@ -4,9 +4,9 @@ import toJSON from 'enzyme-to-json';
 import { ApolloConsumer } from 'react-apollo';
 import { MockedProvider } from 'react-apollo/test-utils';
 import wait from 'waait';
-import RemoveFromCart from '../components/RemoveFromCart';
+import RemoveFromCart, { REMOVE_FROM_CART_MUTATION } from '../components/RemoveFromCart';
 import { fakeCartItem, fakeUser } from '../lib/testUtils';
-import { CURRENT_USER_QUERY, REMOVE_FROM_CART_MUTATION } from '../queries/queries.graphql';
+import { CURRENT_USER_QUERY } from '../components/User';
 
 const mocks = [
   {

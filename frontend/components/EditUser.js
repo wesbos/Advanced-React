@@ -1,8 +1,18 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
 import Form from './styles/Form';
-import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/queries.graphql';
+import { CURRENT_USER_QUERY } from './User';
 import Error from './ErrorMessage';
+import User from './User';
+
+const UPDATE_USER_MUTATION = gql`
+  mutation updateUser($name: String!) {
+    updateUser(name: $name) {
+      name
+    }
+  }
+`;
 
 class EditUser extends React.Component {
   state = {
@@ -28,7 +38,7 @@ class EditUser extends React.Component {
 
   render() {
     return (
-      <Query query={CURRENT_USER_QUERY}>
+      <User>
         {({ data: { me }, loading }) => {
           if (loading) return <p>Loading...</p>;
           return (
@@ -62,9 +72,10 @@ class EditUser extends React.Component {
             </Mutation>
           );
         }}
-      </Query>
+      </User>
     );
   }
 }
 
 export default EditUser;
+export { UPDATE_USER_MUTATION };

@@ -1,12 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import AddToCart from '../components/AddToCart';
 import { ApolloConsumer } from 'react-apollo';
 import { MockedProvider } from 'react-apollo/test-utils';
 import wait from 'waait';
+import AddToCart, { ADD_TO_CART_MUTATION } from '../components/AddToCart';
 import { fakeCartItem, fakeUser } from '../lib/testUtils';
-import { ADD_TO_CART_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import { CURRENT_USER_QUERY } from '../components/User';
 
 const mocks = [
   {
@@ -34,12 +34,15 @@ const mocks = [
 ];
 
 describe('<AddtoCart/>', () => {
-  it('renders and matches snapshot', () => {
+  it('renders and matches snapshot', async () => {
     const wrapper = mount(
-      <MockedProvider>
+      <MockedProvider mocks={mocks}>
         <AddToCart id="abc123" />
       </MockedProvider>
     );
+    await wait();
+    wrapper.update();
+
     expect(toJSON(wrapper.find('button'))).toMatchSnapshot();
   });
 
@@ -58,6 +61,8 @@ describe('<AddtoCart/>', () => {
       </MockedProvider>
     );
     await wait();
+    wrapper.update();
+
     const { me } = apolloClient.readQuery({ query: CURRENT_USER_QUERY });
     expect(me.cart).toHaveLength(0);
 
@@ -72,12 +77,14 @@ describe('<AddtoCart/>', () => {
     expect(me2.cart[0].quantity).toBe(1);
   });
 
-  it('changes to adding when clicked', () => {
+  it('changes to adding when clicked', async () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <AddToCart id="abc123" />
       </MockedProvider>
     );
+    await wait();
+    wrapper.update();
     expect(wrapper.text()).toContain('🛒 Add To Cart');
     wrapper.find('button').simulate('click');
     expect(wrapper.text()).toContain('🛒 Adding To Cart');

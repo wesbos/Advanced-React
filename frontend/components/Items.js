@@ -2,11 +2,25 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import Pagination from './Pagination';
 import Item from './Item';
 import LoadingItem from './LoadingItem';
 import { perPage } from '../config';
-import { ALL_ITEMS_QUERY } from '../queries/queries.graphql';
+
+const ALL_ITEMS_QUERY = gql`
+  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = 4) {
+    items(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+      __typename
+      id
+      title
+      price
+      description
+      image
+      largeImage
+    }
+  }
+`;
 
 const Items = styled.div`
   display: grid;
@@ -57,3 +71,4 @@ class ItemList extends React.Component {
 }
 
 export default ItemList;
+export { ALL_ITEMS_QUERY };

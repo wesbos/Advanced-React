@@ -6,7 +6,7 @@ import Router from 'next/router';
 import Nav from '../components/Nav';
 import { MockedProvider } from 'react-apollo/test-utils';
 import { fakeUser } from '../lib/testUtils';
-import { CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import { CURRENT_USER_QUERY } from '../components/User';
 
 // Mock the router
 Router.router = { push() {} };

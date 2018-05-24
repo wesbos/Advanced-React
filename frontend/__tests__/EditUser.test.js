@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import EditUser from '../components/EditUser';
-import wait from 'waait';
 import { MockedProvider } from 'react-apollo/test-utils';
+import wait from 'waait';
+import EditUser, { UPDATE_USER_MUTATION } from '../components/EditUser';
 import { fakeUser } from '../lib/testUtils';
-import { CURRENT_USER_QUERY, UPDATE_USER_MUTATION } from '../queries/queries.graphql';
+import { CURRENT_USER_QUERY } from '../components/User';
 
 const mocks = [
   {

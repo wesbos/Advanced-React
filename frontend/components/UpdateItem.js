@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { SINGLE_ITEM_QUERY, UPDATE_ITEM_MUTATION } from '../queries/queries.graphql';
+import gql from 'graphql-tag';
+import { SINGLE_ITEM_QUERY } from './SingleItem';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
+
+const UPDATE_ITEM_MUTATION = gql`
+  mutation updateItem($id: ID!, $title: String, $description: String, $price: Int) {
+    updateItem(id: $id, description: $description, title: $title, price: $price) {
+      id
+    }
+  }
+`;
 
 class UpdateItem extends Component {
   static propTypes = {
@@ -18,7 +27,6 @@ class UpdateItem extends Component {
     if (type === 'number') {
       value = parseInt(value);
     }
-    console.log('Saving to state');
     const item = { ...this.state.item };
     item[name] = value;
     this.setState({ item });
@@ -94,3 +102,4 @@ class UpdateItem extends Component {
 }
 
 export default UpdateItem;
+export { UPDATE_ITEM_MUTATION };

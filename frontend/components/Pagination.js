@@ -3,8 +3,18 @@ import { Query } from 'react-apollo';
 import styled from 'styled-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import { perPage } from '../config';
-import { ALL_ITEMS_QUERY } from '../queries/queries.graphql';
+
+const PAGINATION_QUERY = gql`
+  query itemsConnection($skip: Int = 0, $first: Int = 4) {
+    itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
 
 const PaginationStyles = styled.div`
   text-align: center;
@@ -31,7 +41,7 @@ const PaginationStyles = styled.div`
 `;
 
 const Pagination = props => (
-  <Query query={ALL_ITEMS_QUERY}>
+  <Query query={PAGINATION_QUERY}>
     {({ data, loading, error }) => {
       if (loading || error) return null;
       const { aggregate } = data.itemsConnection;
@@ -78,3 +88,4 @@ Pagination.propTypes = {
 };
 
 export default Pagination;
+export { PAGINATION_QUERY };

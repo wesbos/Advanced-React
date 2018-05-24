@@ -1,13 +1,12 @@
-import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import NProgress from 'nprogress';
-import TakeMyMoney from '../components/TakeMyMoney';
 import Router from 'next/router';
 import wait from 'waait';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { fakeItem, fakeUser, fakeCartItem } from '../lib/testUtils';
-import { CREATE_ITEM_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import TakeMyMoney from '../components/TakeMyMoney';
+import { fakeUser, fakeCartItem } from '../lib/testUtils';
+import { CURRENT_USER_QUERY } from '../components/User';
 
 Router.router = { push() {} };
 
@@ -40,9 +39,7 @@ describe('<TakeMyMoney />', () => {
   });
 
   it('creates an order onToken', async () => {
-    const createOrderSpy = jest
-      .fn()
-      .mockResolvedValue({ data: { CREATE_ORDER_MUTATION: { id: 'xyz789' } } });
+    const createOrderSpy = jest.fn().mockResolvedValue({ data: { createOrder: { id: 'xyz789' } } });
 
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
@@ -66,9 +63,7 @@ describe('<TakeMyMoney />', () => {
     wrapper.update();
     NProgress.start = jest.fn();
 
-    const createOrderSpy = jest
-      .fn()
-      .mockResolvedValue({ data: { CREATE_ORDER_MUTATION: { id: 'xyz789' } } });
+    const createOrderSpy = jest.fn().mockResolvedValue({ data: { createOrder: { id: 'xyz789' } } });
     const component = wrapper.find('TakeMyMoney');
     component.instance().onToken({ id: 'abc123' }, createOrderSpy);
     wrapper.find('button').simulate('click');
@@ -87,9 +82,7 @@ describe('<TakeMyMoney />', () => {
 
     // Spy on Router Push
     Router.router.push = jest.fn();
-    const createOrderSpy = jest
-      .fn()
-      .mockResolvedValue({ data: { CREATE_ORDER_MUTATION: { id: 'xyz789' } } });
+    const createOrderSpy = jest.fn().mockResolvedValue({ data: { createOrder: { id: 'xyz789' } } });
 
     const component = wrapper.find('TakeMyMoney');
     component.instance().onToken({ id: 'abc123' }, createOrderSpy);

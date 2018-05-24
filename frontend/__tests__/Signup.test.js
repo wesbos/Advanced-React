@@ -2,10 +2,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import wait from 'waait';
-import Signup from '../components/Signup';
+import { ApolloConsumer } from 'react-apollo';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { LocalStorageMock, fakeItem, fakeUser, fakeCartItem } from '../lib/testUtils';
-import { SIGNUP_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import Signup, { SIGNUP_MUTATION } from '../components/Signup';
+import { fakeUser } from '../lib/testUtils';
+import { CURRENT_USER_QUERY } from '../components/User';
 
 function type(wrapper, name, value) {
   wrapper.find(`input[name="${name}"]`).simulate('change', {
@@ -29,14 +30,10 @@ const mocks = [
     result: {
       data: {
         signup: {
-          __typename: 'AuthPayload',
-          token: 'tok123',
-          user: {
-            __typename: 'User',
-            id: 'abc123',
-            email: me.email,
-            name: me.name,
-          },
+          __typename: 'User',
+          id: 'abc123',
+          email: me.email,
+          name: me.name,
         },
       },
     },
@@ -56,11 +53,6 @@ const mocks = [
 ];
 
 describe('<Signup/>', () => {
-  beforeAll(() => {
-    // mock localStorage
-    global.localStorage = new LocalStorageMock();
-  });
-
   it('renders and matches snapshot', () => {
     const wrapper = mount(
       <MockedProvider>
@@ -71,9 +63,15 @@ describe('<Signup/>', () => {
   });
 
   it('calls mutation with correct data', async () => {
+    let apolloClient;
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
-        <Signup />
+        <ApolloConsumer>
+          {client => {
+            apolloClient = client;
+            return <Signup />;
+          }}
+        </ApolloConsumer>
       </MockedProvider>
     );
 
@@ -87,7 +85,7 @@ describe('<Signup/>', () => {
     wrapper.update();
     wrapper.find('form').simulate('submit');
 
-    await wait(5);
-    expect(localStorage.getItem('token')).toBe('tok123');
+    const user = await apolloClient.query({ query: CURRENT_USER_QUERY });
+    expect(user.data.me).toMatchObject(me);
   });
 });

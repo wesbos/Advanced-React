@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
-import { Mutation, ApolloConsumer } from 'react-apollo';
-import { SIGNIN_MUTATION, CURRENT_USER_QUERY } from '../queries/queries.graphql';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import { CURRENT_USER_QUERY } from './User';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
 
+const SIGNIN_MUTATION = gql`
+  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
+    signin(email: $email, password: $password) {
+      id
+      email
+      name
+    }
+  }
+`;
+
 class Signin extends Component {
   state = {
-    email: `wesbos@gmail.com`,
-    password: 'abc123',
+    email: '',
+    password: '',
   };
+
   saveToState = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -64,3 +76,4 @@ class Signin extends Component {
 }
 
 export default Signin;
+export { SIGNIN_MUTATION };
