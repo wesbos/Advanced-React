@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
 import { ALL_ITEMS_QUERY } from './Items';
+import { PAGINATION_QUERY } from './Pagination';
 import { perPage } from '../config';
 
 const DELETE_ITEM_MUTATION = gql`
@@ -28,7 +29,6 @@ class DeleteItem extends React.Component {
     const variables = { skip };
     // TODO Expose Page Number here
     const data = cache.readQuery({ query: ALL_ITEMS_QUERY, variables });
-    console.log(data.items);
     // filter this one out
     data.items = data.items.filter(item => item.id !== deletedItem.id);
     // write the data back to the cache
@@ -37,7 +37,6 @@ class DeleteItem extends React.Component {
   };
 
   render() {
-    console.log(this.props.router.query);
     return (
       <Mutation
         mutation={DELETE_ITEM_MUTATION}
@@ -45,8 +44,9 @@ class DeleteItem extends React.Component {
         refetchQueries={[
           {
             query: ALL_ITEMS_QUERY,
-            variables: { skip: this.props.router.query.page * perPage - perPage },
+            variables: { skip: (this.props.router.query.page || 1) * perPage - perPage },
           },
+          { query: PAGINATION_QUERY },
         ]}
         update={this.update}
       >
