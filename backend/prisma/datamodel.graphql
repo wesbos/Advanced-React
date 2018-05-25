@@ -52,8 +52,6 @@ type OrderItem {
   createdAt: DateTime!
   updatedAt: DateTime!
   quantity: Int! @default(value: 1)
-  item: Item! # Relationship to an Item
-  user: User! # Relationship to a user
 }
 
 type Order {

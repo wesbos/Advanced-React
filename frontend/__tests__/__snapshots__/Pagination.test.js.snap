@@ -5,6 +5,9 @@ exports[`<Pagination/> displays loading message 1`] = `
   className="sc-bdVaJa ijYKGd"
   data-test="pagination"
 >
+  <SideEffect(Head)>
+    <Head />
+  </SideEffect(Head)>
   <Link
     href={
       Object {

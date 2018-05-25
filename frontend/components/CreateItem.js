@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import Router from 'next/router';
+import wait from 'waait';
 import gql from 'graphql-tag';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
 import formatMoney from '../lib/formatMoney';
+import { ALL_ITEMS_QUERY } from './Items';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -63,13 +65,19 @@ class CreateItem extends Component {
 
   render() {
     return (
-      <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={CREATE_ITEM_MUTATION}
+        variables={this.state}
+        refetchQueries={[{ query: ALL_ITEMS_QUERY }]}
+      >
         {(createItem, { loading, error }) => (
           <Form
             data-test
             onSubmit={async e => {
               e.preventDefault();
               const { data: { createItem: item } } = await createItem();
+              // we wait 0 ms so  it puts the router push at the end of the call stack. This ensures that refetchQueries runs before we unmount the component :)
+              await wait();
               Router.push({
                 pathname: `/item`,
                 query: { id: item.id },

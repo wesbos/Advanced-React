@@ -2,7 +2,9 @@ import React from 'react';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import { withRouter } from 'next/router';
 import { ALL_ITEMS_QUERY } from './Items';
+import { perPage } from '../config';
 
 const DELETE_ITEM_MUTATION = gql`
   mutation deleteItem($id: ID!) {
@@ -21,18 +23,31 @@ class DeleteItem extends React.Component {
 
   update = (cache, payload) => {
     const deletedItem = payload.data.deleteItem;
-    const data = cache.readQuery({ query: ALL_ITEMS_QUERY });
+    const { page = 1 } = this.props.router.query;
+    const skip = page * perPage - perPage;
+    const variables = { skip };
+    // TODO Expose Page Number here
+    const data = cache.readQuery({ query: ALL_ITEMS_QUERY, variables });
+    console.log(data.items);
     // filter this one out
     data.items = data.items.filter(item => item.id !== deletedItem.id);
     // write the data back to the cache
-    cache.writeQuery({ query: ALL_ITEMS_QUERY, data });
+    console.log(data.items);
+    cache.writeQuery({ query: ALL_ITEMS_QUERY, data, variables });
   };
 
   render() {
+    console.log(this.props.router.query);
     return (
       <Mutation
         mutation={DELETE_ITEM_MUTATION}
         variables={{ id: this.props.id }}
+        refetchQueries={[
+          {
+            query: ALL_ITEMS_QUERY,
+            variables: { skip: this.props.router.query.page * perPage - perPage },
+          },
+        ]}
         update={this.update}
       >
         {(removeItem, { error }) => (
@@ -51,5 +66,5 @@ class DeleteItem extends React.Component {
   }
 }
 
-export default DeleteItem;
+export default withRouter(DeleteItem);
 export { DELETE_ITEM_MUTATION };

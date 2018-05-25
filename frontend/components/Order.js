@@ -15,6 +15,9 @@ const SINGLE_ORDER_QUERY = gql`
       charge
       total
       createdAt
+      user {
+        id
+      }
       items {
         id
         title

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import Head from 'next/head';
 import { perPage } from '../config';
 
 const PAGINATION_QUERY = gql`
@@ -49,6 +50,11 @@ const Pagination = props => (
       const pages = Math.ceil(aggregate.count / perPage);
       return (
         <PaginationStyles data-test="pagination">
+          <Head>
+            <title>
+              Sick Fits! — Page {page} of {pages}
+            </title>
+          </Head>
           <Link
             prefetch
             href={{

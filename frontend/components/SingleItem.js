@@ -1,6 +1,7 @@
 import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Head from 'next/head';
 import Link from 'next/link';
 import gql from 'graphql-tag';
 import Error from './ErrorMessage';
@@ -29,7 +30,7 @@ const SingleItemStyles = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
   .details {
     margin: 3rem;
@@ -45,6 +46,9 @@ const SingleItem = props => (
       const [item] = data.items;
       return (
         <SingleItemStyles data-test="SingleItem">
+          <Head>
+            <title>{item.title}</title>
+          </Head>
           <img src={item.largeImage || item.image} alt={item.title} />
           <div className="details">
             <h2>Viewing {item.title}</h2>
