@@ -81,16 +81,12 @@ const mutations = {
     };
     // 1. find the item
     const item = await ctx.db.query.item({ where }, `{ user {id}, title, id, description }`);
-    console.log(item.user);
-    console.log('-----------------');
-    console.log(ctx.request.user);
     // 2. if they 1. Don't own it AND 2. aren't an admin
     if (item.user.id !== ctx.request.user.id && !ctx.request.user.permissions.includes('ADMIN')) {
       throw new Error("You aren't allowed to delete that item!");
     }
 
     // 3. remove any orderItems this item is in
-
 
     return ctx.db.mutation.deleteItem({ where }, info);
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
 import { ALL_ITEMS_QUERY } from './Items';
@@ -24,16 +24,17 @@ class DeleteItem extends React.Component {
 
   update = (cache, payload) => {
     const deletedItem = payload.data.deleteItem;
-    const { page = 1 } = this.props.router.query;
+    let { page = 1 } = this.props.router.query;
+    page = parseFloat(page);
     const skip = page * perPage - perPage;
     const variables = { skip };
-    // TODO Expose Page Number here
     const data = cache.readQuery({ query: ALL_ITEMS_QUERY, variables });
     // filter this one out
     data.items = data.items.filter(item => item.id !== deletedItem.id);
     // write the data back to the cache
     console.log(data.items);
     cache.writeQuery({ query: ALL_ITEMS_QUERY, data, variables });
+    // FYI Pagination is broken with Apollo currently - will make a followup video
   };
 
   render() {
