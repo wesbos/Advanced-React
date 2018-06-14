@@ -1,0 +1,39 @@
+{
+  "name": "my-own",
+  "scripts": {
+    "start": "nodemon -e js,graphql -x node src/index.js",
+    "debug": "nodemon -e js,graphql -x node --inspect src/index.js",
+    "test": "jest",
+    "playground": "graphql playground",
+    "deploy": "prisma deploy --env-file variables.env",
+    "dev": "npm-run-all --parallel debug playground"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "cookie-parser": "^1.4.3",
+    "graphql": "^0.13.2",
+    "graphql-yoga": "1.14.7",
+    "jsonwebtoken": "8.3.0",
+    "nodemailer": "^4.6.6",
+    "npm-run-all": "^4.1.3",
+    "prisma-binding": "2.0.2",
+    "stripe": "^6.1.1"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "dotenv": "6.0.0",
+    "graphql-cli": "^2.16.2",
+    "jest-cli": "^23.1.0",
+    "nodemon": "1.17.5",
+    "prisma": "1.9.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "url": "wesbos.com"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}

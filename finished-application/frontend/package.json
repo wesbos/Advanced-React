@@ -43,8 +43,7 @@
     "enzyme-to-json": "^3.3.4",
     "graphql-tools": "^3.0.2",
     "jest": "^22.4.4",
-    "jest-transform-graphql": "^2.1.0",
-    "next-plugin-graphql": "0.0.1"
+    "jest-transform-graphql": "^2.1.0"
   },
   "//": "This is out babel config, I prefer this over a .babelrc file",
   "jest": {
