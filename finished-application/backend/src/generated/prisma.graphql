@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/wesbos/sick-fits/dev
-# timestamp: Fri May 25 2018 10:46:45 GMT-0400 (EDT)
+# timestamp: Mon Jun 18 2018 16:08:08 GMT-0400 (EDT)
 
 type AggregateCartItem {
   count: Int!
@@ -819,6 +819,7 @@ type OrderItem implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   quantity: Int!
+  user(where: UserWhereInput): User
 }
 
 """A connection to a list of items."""
@@ -838,6 +839,7 @@ input OrderItemCreateInput {
   largeImage: String
   price: Int!
   quantity: Int
+  user: UserCreateOneInput
 }
 
 input OrderItemCreateManyInput {
@@ -933,6 +935,7 @@ input OrderItemUpdateDataInput {
   largeImage: String
   price: Int
   quantity: Int
+  user: UserUpdateOneInput
 }
 
 input OrderItemUpdateInput {
@@ -942,6 +945,7 @@ input OrderItemUpdateInput {
   largeImage: String
   price: Int
   quantity: Int
+  user: UserUpdateOneInput
 }
 
 input OrderItemUpdateManyInput {
@@ -1261,6 +1265,7 @@ input OrderItemWhereInput {
 
   """All values greater than or equal the given value."""
   quantity_gte: Int
+  user: UserWhereInput
 }
 
 input OrderItemWhereUniqueInput {
@@ -1759,6 +1764,7 @@ input UserUpdateInput {
 input UserUpdateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput

@@ -276,14 +276,15 @@ const mutations = {
 
     // 3. convert the items they want to OrderItems
     const orderItems = user.cart.map(cartItem => {
+      console.log(cartItem);
       const orderItem = {
         quantity: cartItem.quantity,
         // copy all the item details so it's there forever
         ...cartItem.item,
-        item: {
-          // relationship to the Item incase we need it
-          connect: { id: cartItem.item.id },
-        },
+        // item: {
+        //   // relationship to the Item incase we need it
+        //   connect: { id: cartItem.item.id },
+        // },
         user: { connect: { id: user.id } },
       };
       // scrub the ID from it because the orderItem will have it's own ID

@@ -22,7 +22,10 @@ server.express.use((req, res, next) => {
 // 2. Get User from their ID
 server.express.use(async (req, res, next) => {
   if (!req.userId) return next();
-  const user = await db.query.user({ where: { id: req.userId } }, `{ id, permissions, email, name }`);
+  const user = await db.query.user(
+    { where: { id: req.userId } },
+    `{ id, permissions, email, name }`
+  );
   req.user = user;
   next();
 });
@@ -33,7 +36,7 @@ server.start(
       credentials: true,
       origin: process.env.FRONTEND_URL,
     },
-    port: 4444,
+    port: process.env.PORT,
   },
   deets => {
     console.log(`Server is running on http://localhost:${deets.port}`);

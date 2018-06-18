@@ -52,6 +52,7 @@ type OrderItem {
   createdAt: DateTime!
   updatedAt: DateTime!
   quantity: Int! @default(value: 1)
+  user: User
 }
 
 type Order {
