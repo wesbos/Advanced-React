@@ -1,4 +1,4 @@
-# what
+# Advanced React + GraphQL
 
-this is a WIP so pay no attention 😘
+Coming Soon!
 
