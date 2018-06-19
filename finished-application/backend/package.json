@@ -4,7 +4,7 @@
     "start": "nodemon -e js,graphql -x node src/index.js",
     "debug": "nodemon -e js,graphql -x node --inspect src/index.js",
     "test": "jest",
-    "playground": "graphql playground",
+    "playground": "graphql playground --dotenv variables.env",
     "deploy": "prisma deploy --env-file variables.env",
     "dev": "npm-run-all --parallel debug playground"
   },
