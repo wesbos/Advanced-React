@@ -54,7 +54,7 @@ class Page extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <StyledPage className="main">
+        <StyledPage>
           <Meta />
           <Header />
           <Inner>{this.props.children}</Inner>
