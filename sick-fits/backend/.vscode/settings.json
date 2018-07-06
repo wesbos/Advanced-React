@@ -1,23 +1,11 @@
-// Mac users
+// Windows and Linux users enable custom titlebar 
+//"window.titleBarStyle": "custom"
 {
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#FF2C70",
     "titleBar.inactiveBackground": "#FF2C70CC"
   }
 }
-
-
-// Windows and Linux users
-/* {
-  "window.titleBarStyle": "custom",
-  "workbench.colorCustomizations": {
-    // Name of the theme you are using "[Cobalt2]"
-    "[Cobalt2]": {
-      "titleBar.activeBackground": "#FF2C70",
-      "titleBar.inactiveBackground": "#FF2C70CC"
-    },
-  },
-} */
 
 
 
