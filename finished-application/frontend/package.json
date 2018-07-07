@@ -45,7 +45,7 @@
     "jest": "^22.4.4",
     "jest-transform-graphql": "^2.1.0"
   },
-  "//": "This is out babel config, I prefer this over a .babelrc file",
+  "//": "This is our babel config, I prefer this over a .babelrc file",
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
     "testPathIgnorePatterns": [
