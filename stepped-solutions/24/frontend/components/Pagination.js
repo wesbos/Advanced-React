@@ -1,18 +1,14 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import styled from 'styled-components';
-import Link from 'next/link';
-import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 import Head from 'next/head';
-import { perPage } from '../config';
+import Link from 'next/link';
 import PaginationStyles from './styles/PaginationStyles';
-
-
+import { perPage } from '../config';
 
 const PAGINATION_QUERY = gql`
-  query itemsConnection($skip: Int = 0, $first: Int = 4) {
-    itemsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+  query PAGINATION_QUERY {
+    itemsConnection {
       aggregate {
         count
       }
@@ -23,12 +19,12 @@ const PAGINATION_QUERY = gql`
 const Pagination = props => (
   <Query query={PAGINATION_QUERY}>
     {({ data, loading, error }) => {
-      if (loading || error) return null;
-      const { aggregate } = data.itemsConnection;
-      const { page } = props;
-      const pages = Math.ceil(aggregate.count / perPage);
+      if (loading) return <p>Loading...</p>;
+      const count = data.itemsConnection.aggregate.count;
+      const pages = Math.ceil(count / perPage);
+      const page = props.page;
       return (
-        <PaginationStyles data-test="pagination">
+        <PaginationStyles>
           <Head>
             <title>
               Sick Fits! — Page {page} of {pages}
@@ -42,15 +38,13 @@ const Pagination = props => (
             }}
           >
             <a className="prev" aria-disabled={page <= 1}>
-              ←Prev
+              ← Prev
             </a>
           </Link>
           <p>
-            Page <strong>{page} </strong> of <strong className="totalPages">{pages}</strong>
+            Page {props.page} of {pages}!
           </p>
-          <p>
-            <strong>{aggregate.count}</strong> Items Total
-          </p>
+          <p>{count} Items Total</p>
           <Link
             prefetch
             href={{
@@ -58,7 +52,7 @@ const Pagination = props => (
               query: { page: page + 1 },
             }}
           >
-            <a className="next" aria-disabled={page >= pages}>
+            <a className="prev" aria-disabled={page >= pages}>
               Next →
             </a>
           </Link>
@@ -68,9 +62,4 @@ const Pagination = props => (
   </Query>
 );
 
-Pagination.propTypes = {
-  page: PropTypes.number.isRequired,
-};
-
 export default Pagination;
-export { PAGINATION_QUERY };
