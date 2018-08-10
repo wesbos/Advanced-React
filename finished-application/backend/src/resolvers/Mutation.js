@@ -140,6 +140,7 @@ const mutations = {
           .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to reset</a>`
       ),
     });
+
     return res.updateUser;
   },
 

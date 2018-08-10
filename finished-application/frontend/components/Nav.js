@@ -12,7 +12,7 @@ class Nav extends React.Component {
     // below we set the fetchPolicy to network only so it forces re-fetch on the server
     return (
       <User>
-        {({ data: { me }, error }) => (
+        {({ data: { me } }) => (
           <NavStyles data-test="nav">
             <Link href="/items">
               <a>Shop</a>
