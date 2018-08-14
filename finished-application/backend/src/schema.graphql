@@ -3,6 +3,7 @@
 
 type Query {
   me: User
+  users: [User]!
   order(id: ID!): Order!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!

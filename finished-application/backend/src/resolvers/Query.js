@@ -5,6 +5,13 @@ const { forwardTo } = require('prisma-binding');
 const Query = {
   items: forwardTo('db'),
   itemsConnection: forwardTo('db'),
+  async users(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error('Insufficient Permissions');
+    }
+
+    return ctx.db.query.users({}, info);
+  },
 
   async order(parent, args, ctx, info) {
     // 1. make sure they are signed in

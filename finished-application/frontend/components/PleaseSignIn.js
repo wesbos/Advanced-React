@@ -18,7 +18,7 @@ const PleaseSignIn = props => (
       }
       // check if they need permissions
       if (props.allowedPermissions) {
-        // check if they NO permissions, or they don't meet the requmrenets
+        // check if they have NO permissions, or they don't meet the requmrenets
         if (
           !data.me.permissions ||
           !props.allowedPermissions.some(permission => data.me.permissions.includes(permission))
