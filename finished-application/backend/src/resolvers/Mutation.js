@@ -204,6 +204,7 @@ const mutations = {
       },
     });
 
+    // 2. If there is a cart item, increment it by 1
     if (existingCartItem) {
       return ctx.db.mutation.updateCartItem(
         {
@@ -214,7 +215,7 @@ const mutations = {
       );
     }
 
-    // Otherwise create a new cartItem
+    // 3. Otherwise create a new cartItem
     return ctx.db.mutation.createCartItem(
       {
         data: {

@@ -44,7 +44,7 @@ class RemoveFromCart extends Component {
         update={this.update}
       >
         {(removeFromCart, { loading }) => (
-          <BigButton disabled={loading} title="Remove From Cart" onClick={() => removeFromCart}>
+          <BigButton disabled={loading} title="Remove From Cart" onClick={removeFromCart}>
             ×
           </BigButton>
         )}
