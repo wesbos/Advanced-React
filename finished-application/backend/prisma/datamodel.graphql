@@ -24,7 +24,7 @@ type User {
 type CartItem {
   id: ID! @unique
   quantity: Int! @default(value: 1)
-  item: Item # Relationship to an Item
+  item: Item! # Relationship to an Item
   user: User! # Relationship to a user
   createdAt: DateTime!
   updatedAt: DateTime!
