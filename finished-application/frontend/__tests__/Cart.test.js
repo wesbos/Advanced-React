@@ -1,10 +1,8 @@
-import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import mountOptions from '../lib/testUtils';
 import wait from 'waait';
-import Cart from '../components/Cart';
 import { MockedProvider } from 'react-apollo/test-utils';
+import Cart from '../components/Cart';
 import { fakeCartItem, fakeUser } from '../lib/testUtils';
 import { CURRENT_USER_QUERY } from '../components/User';
 import { LOCAL_STATE_QUERY } from '../components/Cart';
