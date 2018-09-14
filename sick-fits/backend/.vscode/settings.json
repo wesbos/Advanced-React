@@ -1,5 +1,11 @@
+// Windows and Linux users enable custom titlebar 
+//"window.titleBarStyle": "custom"
 {
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#FF2C70",
     "titleBar.inactiveBackground": "#FF2C70CC"
   }
+}
+
+
+
