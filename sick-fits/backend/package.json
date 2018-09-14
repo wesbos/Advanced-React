@@ -19,7 +19,7 @@
     "prisma-binding": "2.1.5",
     "stripe": "^6.1.1",
     "dotenv": "6.0.0",
-    "prisma": "1.16.0",
+    "prisma": "1.16.2",
     "babel-preset-env": "^1.7.0",
     "nodemon": "1.18.4"
   },
