@@ -1,7 +1,9 @@
 import SingleItem from '../components/SingleItem';
 
-const ItemPage = ({ query }) => (
-  <SingleItem id={query.id} />
+const Item = props => (
+  <div>
+    <SingleItem id={props.query.id} />
+  </div>
 );
 
-export default ItemPage;
+export default Item;

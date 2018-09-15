@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Nav></Nav> Renders minimal nav when logged out 1`] = `
+exports[`<Nav/> renders a minimal nav when signed out 1`] = `
 <ul
-  className="sc-dnqmqq kxZizK"
+  className="NavStyles-sc-11c0d2g-0 YVEeD"
   data-test="nav"
 >
   <Link
@@ -16,16 +16,6 @@ exports[`<Nav></Nav> Renders minimal nav when logged out 1`] = `
     </a>
   </Link>
   <Link
-    href="/sell"
-  >
-    <a
-      href="/sell"
-      onClick={[Function]}
-    >
-      Sell
-    </a>
-  </Link>
-  <Link
     href="/signup"
   >
     <a
@@ -36,4 +26,12 @@ exports[`<Nav></Nav> Renders minimal nav when logged out 1`] = `
     </a>
   </Link>
 </ul>
+`;
+
+exports[`<Nav/> renders the amount of items in the cart 1`] = `
+<div
+  className="count CartCount__Dot-xxvp4g-1 fJsVOg"
+>
+  9
+</div>
 `;

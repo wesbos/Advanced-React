@@ -1,3 +1,3 @@
-import Index from './index';
+import Items from './index';
 
-export default Index;
+export default Items;

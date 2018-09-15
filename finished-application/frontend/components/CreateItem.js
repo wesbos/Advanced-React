@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import Router from 'next/router';
-import wait from 'waait';
 import gql from 'graphql-tag';
-import Error from './ErrorMessage';
+import Router from 'next/router';
 import Form from './styles/Form';
 import formatMoney from '../lib/formatMoney';
-import { ALL_ITEMS_QUERY } from './Items';
-import { PAGINATION_QUERY } from './Pagination';
+import Error from './ErrorMessage';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
-    $description: String!
     $title: String!
+    $description: String!
     $price: Int!
     $image: String
     $largeImage: String
   ) {
     createItem(
-      description: $description
       title: $title
+      description: $description
       price: $price
       image: $image
       largeImage: $largeImage
@@ -37,22 +34,19 @@ class CreateItem extends Component {
     largeImage: '',
     price: 0,
   };
-
   handleChange = e => {
-    const { name, value, type } = e.target;
+    const { name, type, value } = e.target;
     const val = type === 'number' ? parseFloat(value) : value;
     this.setState({ [name]: val });
   };
 
   uploadFile = async e => {
-    this.setState({ loading: true });
-    const files = e.currentTarget.files;
+    const files = e.target.files;
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', 'sickfits');
 
-    // use the file endpoint
-    const res = await fetch('https://api.cloudinary.com/v1_1/wesbos/image/upload', {
+    const res = await fetch('https://api.cloudinary.com/v1_1/wesbostutorial/image/upload', {
       method: 'POST',
       body: data,
     });
@@ -60,82 +54,82 @@ class CreateItem extends Component {
     this.setState({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url,
-      loading: false,
     });
   };
-
   render() {
     return (
-      <Mutation
-        mutation={CREATE_ITEM_MUTATION}
-        variables={this.state}
-        refetchQueries={[{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }]}
-      >
+      <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
         {(createItem, { loading, error }) => (
           <Form
-            data-test
+            data-test="form"
             onSubmit={async e => {
+              // Stop the form from submitting
               e.preventDefault();
-              const { data: { createItem: item } } = await createItem();
-              // we wait 0 ms so  it puts the router push at the end of the call stack. This ensures that refetchQueries runs before we unmount the component :)
-              await wait();
+              // call the mutation
+              const res = await createItem();
+              // change them to the single item page
+              console.log(res);
               Router.push({
-                pathname: `/item`,
-                query: { id: item.id },
+                pathname: '/item',
+                query: { id: res.data.createItem.id },
               });
             }}
           >
-            <h2>Sell an Item.</h2>
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="file">
                 Image
                 <input
-                  required
-                  id="file"
-                  onChange={this.uploadFile}
                   type="file"
-                  accept=".png, .jpg, .jpeg"
+                  id="file"
+                  name="file"
+                  placeholder="Upload an image"
+                  required
+                  onChange={this.uploadFile}
                 />
-                {this.state.image ? (
-                  <img src={this.state.image} width="100" alt={this.state.title} />
-                ) : null}
+                {this.state.image && (
+                  <img width="200" src={this.state.image} alt="Upload Preview" />
+                )}
               </label>
+
               <label htmlFor="title">
                 Title
                 <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Title"
                   required
                   value={this.state.title}
                   onChange={this.handleChange}
-                  type="text"
-                  name="title"
-                  id="title"
-                  placeholder="Title"
                 />
               </label>
+
               <label htmlFor="price">
-                Price {this.state.price && formatMoney(this.state.price)}
+                Price
                 <input
-                  required
                   type="number"
                   id="price"
                   name="price"
-                  min="0"
+                  placeholder="Price"
+                  required
                   value={this.state.price}
                   onChange={this.handleChange}
                 />
               </label>
-              <textarea
-                id="description"
-                required
-                name="description"
-                value={this.state.description}
-                onChange={this.handleChange}
-                placeholder="The desc for this item"
-              />
-              <button disabled={this.state.loading} type="submit">
-                Submit
-              </button>
+
+              <label htmlFor="description">
+                Description
+                <textarea
+                  id="description"
+                  name="description"
+                  placeholder="Enter A Description"
+                  required
+                  value={this.state.description}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <button type="submit">Submit</button>
             </fieldset>
           </Form>
         )}

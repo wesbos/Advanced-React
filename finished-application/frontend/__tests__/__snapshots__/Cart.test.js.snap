@@ -1,31 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Cart/> renders 1`] = `
+exports[`<Cart/> renders and matches snappy 1`] = `
 <header>
-  <styled.button
+  <CloseButton
     onClick={[Function]}
     title="close"
   >
     <button
-      className="sc-EHOje jytiuo"
+      className="CloseButton-sc-1seb878-0 lbNKfp"
       onClick={[Function]}
       title="close"
     >
       ×
     </button>
-  </styled.button>
-  <styled.h3>
+  </CloseButton>
+  <Supreme>
     <h3
-      className="sc-ifAKCX imryuh"
+      className="Supreme-xv30qb-0 hpaXsq"
     >
       Miss Coleman Berge
-      's Cart.
+      's Cart
     </h3>
-  </styled.h3>
+  </Supreme>
   <p>
-    You have 
+    You Have 
     1
-     item
+     Item
      in your cart.
   </p>
 </header>

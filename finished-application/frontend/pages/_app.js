@@ -1,11 +1,7 @@
 import App, { Container } from 'next/app';
+import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/withData';
-import Page from '../components/Page';
-
-// Next.js wraps each Page in an <App></App> component. This is handy for when you want to persist anything from page to page, or just access a component that is 1 level higher than each page.
-
-// here we use App from next/app and wrap it with withData so we can get Apollo and SSR
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -13,13 +9,12 @@ class MyApp extends App {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
-
+    // this exposes the query to the user
     pageProps.query = ctx.query;
-
     return { pageProps };
   }
   render() {
-    const { Component, pageProps, apollo } = this.props;
+    const { Component, apollo, pageProps } = this.props;
 
     return (
       <Container>

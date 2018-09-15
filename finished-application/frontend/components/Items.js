@@ -1,17 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Query } from 'react-apollo';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import Pagination from './Pagination';
+import styled from 'styled-components';
 import Item from './Item';
-import LoadingItem from './LoadingItem';
+import Pagination from './Pagination';
 import { perPage } from '../config';
 
 const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    items(orderBy: createdAt_DESC, first: $first, skip: $skip) {
-      __typename
+    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
       id
       title
       price
@@ -22,7 +19,11 @@ const ALL_ITEMS_QUERY = gql`
   }
 `;
 
-const Items = styled.div`
+const Center = styled.div`
+  text-align: center;
+`;
+
+const ItemsList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 60px;
@@ -30,38 +31,24 @@ const Items = styled.div`
   margin: 0 auto;
 `;
 
-const Center = styled.div`
-  text-align: center;
-`;
-
-class ItemList extends React.Component {
-  static propTypes = {
-    page: PropTypes.number.isRequired,
-  };
+class Items extends Component {
   render() {
     return (
-      <Center key={this.props.page}>
+      <Center>
         <Pagination page={this.props.page} />
         <Query
           query={ALL_ITEMS_QUERY}
+          // fetchPolicy="network-only"
           variables={{
             skip: this.props.page * perPage - perPage,
-            first: perPage,
           }}
-          // fetchPolicy="network-only"
         >
           {({ data, error, loading }) => {
-            if (loading) {
-              return (
-                <Items>
-                  {Array.from({ length: 4 })
-                    .map((x, id) => ({ id }))
-                    .map(x => <LoadingItem key={x.id} />)}
-                </Items>
-              );
-            }
-            if (error) return <div>Error</div>;
-            return <Items>{data.items.map(item => <Item key={item.id} item={item} />)}</Items>;
+            if (loading) return <p>Loading...</p>;
+            if (error) return <p>Error: {error.message}</p>;
+            return (
+              <ItemsList>{data.items.map(item => <Item item={item} key={item.id} />)}</ItemsList>
+            );
           }}
         </Query>
         <Pagination page={this.props.page} />
@@ -70,5 +57,5 @@ class ItemList extends React.Component {
   }
 }
 
-export default ItemList;
+export default Items;
 export { ALL_ITEMS_QUERY };

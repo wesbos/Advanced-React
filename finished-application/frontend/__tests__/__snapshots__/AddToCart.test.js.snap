@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<AddtoCart/> renders and matches snapshot 1`] = `
+exports[`<AddToCart/> renders and matches the snap shot 1`] = `
 <button
   disabled={false}
   onClick={[Function]}
 >
-  🛒 Add
-   To Cart
+  Add
+   To Cart 🛒
 </button>
 `;

@@ -1,82 +1,79 @@
 import React, { Component } from 'react';
-import { Query, Mutation } from 'react-apollo';
-import PropTypes from 'prop-types';
+import { Mutation, Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { SINGLE_ITEM_QUERY } from './SingleItem';
+import Router from 'next/router';
 import Form from './styles/Form';
+import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 
-const UPDATE_ITEM_MUTATION = gql`
-  mutation updateItem($id: ID!, $title: String, $description: String, $price: Int) {
-    updateItem(id: $id, description: $description, title: $title, price: $price) {
+const SINGLE_ITEM_QUERY = gql`
+  query SINGLE_ITEM_QUERY($id: ID!) {
+    item(where: { id: $id }) {
       id
+      title
+      description
+      price
+    }
+  }
+`;
+const UPDATE_ITEM_MUTATION = gql`
+  mutation UPDATE_ITEM_MUTATION($id: ID!, $title: String, $description: String, $price: Int) {
+    updateItem(id: $id, title: $title, description: $description, price: $price) {
+      id
+      title
+      description
+      price
     }
   }
 `;
 
 class UpdateItem extends Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
+  state = {};
+  handleChange = e => {
+    const { name, type, value } = e.target;
+    const val = type === 'number' ? parseFloat(value) : value;
+    this.setState({ [name]: val });
   };
-  state = {
-    item: {},
-  };
-
-  saveToState = e => {
-    let { name, value, type } = e.target;
-    if (type === 'number') {
-      value = parseInt(value);
-    }
-    const item = { ...this.state.item };
-    item[name] = value;
-    this.setState({ item });
-  };
-
   updateItem = async (e, updateItemMutation) => {
-    console.log('Updating Item');
     e.preventDefault();
-
+    console.log('Updating Item!!');
+    console.log(this.state);
     const res = await updateItemMutation({
-      // pass in those variables from state
       variables: {
         id: this.props.id,
-        ...this.state.item,
+        ...this.state,
       },
     });
-    console.log(res);
+    console.log('Updated!!');
   };
 
   render() {
     return (
-      <Query query={SINGLE_ITEM_QUERY} variables={{ id: this.props.id }}>
-        {({ data: { items }, loading }) => {
+      <Query
+        query={SINGLE_ITEM_QUERY}
+        variables={{
+          id: this.props.id,
+        }}
+      >
+        {({ data, loading }) => {
           if (loading) return <p>Loading...</p>;
-          if (!items || !items.length) return <p>Item Not Found</p>;
-          const [item] = items;
+          if (!data.item) return <p>No Item Found for ID {this.props.id}</p>;
           return (
-            <Mutation mutation={UPDATE_ITEM_MUTATION}>
-              {(updateItemMutation, { error }) => (
-                <Form onSubmit={e => this.updateItem(e, updateItemMutation)}>
+            <Mutation mutation={UPDATE_ITEM_MUTATION} variables={this.state}>
+              {(updateItem, { loading, error }) => (
+                <Form onSubmit={e => this.updateItem(e, updateItem)}>
                   <Error error={error} />
-                  <h2>Edit {item.title}</h2>
                   <fieldset disabled={loading} aria-busy={loading}>
                     <label htmlFor="title">
                       Title
                       <input
-                        id="title"
-                        defaultValue={item.title}
-                        name="title"
-                        onChange={this.saveToState}
                         type="text"
-                      />
-                    </label>
-
-                    <label htmlFor="description">
-                      Description
-                      <textarea
-                        defaultValue={item.description}
-                        name="description"
-                        onChange={this.saveToState}
+                        id="title"
+                        name="title"
+                        placeholder="Title"
+                        required
+                        defaultValue={data.item.title}
+                        onChange={this.handleChange}
                       />
                     </label>
 
@@ -84,12 +81,27 @@ class UpdateItem extends Component {
                       Price
                       <input
                         type="number"
+                        id="price"
                         name="price"
-                        onChange={this.saveToState}
-                        defaultValue={item.price}
+                        placeholder="Price"
+                        required
+                        defaultValue={data.item.price}
+                        onChange={this.handleChange}
                       />
                     </label>
-                    <button type="submit">Save...</button>
+
+                    <label htmlFor="description">
+                      Description
+                      <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Enter A Description"
+                        required
+                        defaultValue={data.item.description}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                    <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>
                   </fieldset>
                 </Form>
               )}

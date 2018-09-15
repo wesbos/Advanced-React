@@ -2,7 +2,7 @@
 
 exports[`<Signup/> renders and matches snapshot 1`] = `
 <form
-  className="sc-bdVaJa LHejR"
+  className="Form-sc-1xszr8q-0 krRxky"
   method="post"
   onSubmit={[Function]}
 >
@@ -10,12 +10,12 @@ exports[`<Signup/> renders and matches snapshot 1`] = `
     aria-busy={false}
     disabled={false}
   >
+    <h2>
+      Sign Up for An Account
+    </h2>
     <DisplayError
       error={Object {}}
     />
-    <h2>
-      Sign Up for an Account
-    </h2>
     <label
       htmlFor="email"
     >
@@ -24,7 +24,7 @@ exports[`<Signup/> renders and matches snapshot 1`] = `
         name="email"
         onChange={[Function]}
         placeholder="email"
-        type="text"
+        type="email"
         value=""
       />
     </label>
@@ -41,12 +41,10 @@ exports[`<Signup/> renders and matches snapshot 1`] = `
       />
     </label>
     <label
-      htmlFor="signupPassword"
+      htmlFor="password"
     >
       Password
       <input
-        className="password"
-        id="signupPassword"
         name="password"
         onChange={[Function]}
         placeholder="password"
@@ -57,7 +55,7 @@ exports[`<Signup/> renders and matches snapshot 1`] = `
     <button
       type="submit"
     >
-      Submit
+      Sign Up!
     </button>
   </fieldset>
 </form>
