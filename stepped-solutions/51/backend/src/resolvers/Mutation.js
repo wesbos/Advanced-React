@@ -57,7 +57,7 @@ const Mutations = {
       ['ADMIN', 'ITEMDELETE'].includes(permission)
     );
 
-    if (!ownsItem && hasPermissions) {
+    if (!ownsItem && !hasPermissions) {
       throw new Error("You don't have permission to do that!");
     }
 
