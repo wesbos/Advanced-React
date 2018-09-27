@@ -5,7 +5,7 @@ casual.seed(777);
 
 const fakeItem = () => ({
   __typename: 'Item',
-  id: '123',
+  id: 'abc123',
   price: 5000,
   user: null,
   image: 'dog-small.jpg',
@@ -76,4 +76,11 @@ class LocalStorageMock {
   }
 }
 
-export { LocalStorageMock, fakeItem, fakeUser, fakeCartItem, fakeOrder, fakeOrderItem };
+export {
+  LocalStorageMock,
+  fakeItem,
+  fakeUser,
+  fakeCartItem,
+  fakeOrder,
+  fakeOrderItem,
+};
