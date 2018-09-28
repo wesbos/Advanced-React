@@ -12,7 +12,7 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  resetToken: Float
+  resetToken: String
   resetTokenExpiry: String
   permissions: [Permission]
   cart: [CartItem!]!
