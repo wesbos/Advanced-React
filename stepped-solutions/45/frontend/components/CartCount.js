@@ -11,7 +11,7 @@ const AnimationStyles = styled.span`
     transition: all 0.4s;
     backface-visibility: hidden;
   }
-  /* Intial State of the entered Dot */
+  /* Initial State of the entered Dot */
   .count-enter {
     transform: scale(4) rotateX(0.5turn);
   }
