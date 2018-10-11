@@ -31,6 +31,20 @@ const Mutations = {
     return item;
   },
   updateItem(parent, args, ctx, info) {
+    // make sure user has permission to update
+    // 1. find the item
+    const where = { id: args.id }
+    // 2. check if they own it or have permissions
+    const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);
+    const ownsItem = item.user.id === ctx.request.userId;
+    const hasPermissions = ctx.request.user.permissions.some(permission =>
+      ['ADMIN', 'ITEMUPDATE', 'PERMISSIONUPDATE'].includes(permission)
+    );
+
+    if (!ownsItem && !hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
+
     // first take a copy of the updates
     const updates = { ...args };
     // remove the ID from the updates
