@@ -35,7 +35,7 @@ const mocks = [
 ];
 
 describe('<RemoveFromCart/>', () => {
-  it('renders and matches snapshot', async () => {
+  it('renders and matches snapshot', () => {
     const wrapper = mount(
       <MockedProvider>
         <RemoveFromCart id="abc123" />
