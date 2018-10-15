@@ -36,7 +36,6 @@ describe('<Pagination/>', () => {
         <Pagination page={1} />
       </MockedProvider>
     );
-    const pagination = wrapper.find('[data-test="pagination"]');
     expect(wrapper.text()).toContain('Loading...');
   });
 
