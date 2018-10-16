@@ -37,7 +37,7 @@ describe('<TakeMyMoney/>', () => {
     const checkoutButton = wrapper.find('ReactStripeCheckout');
     expect(toJSON(checkoutButton)).toMatchSnapshot();
   });
-  it('creates an order ontoken', async () => {
+  it('creates an order ontoken', () => {
     const createOrderMock = jest.fn().mockResolvedValue({
       data: { createOrder: { id: 'xyz789' } },
     });
