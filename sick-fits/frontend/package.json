@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "test": "NODE_ENV=test jest --watch",
+    "test-win": "SET NODE_ENV=test&& jest --watch",
     "heroku-postbuild": "next build"
   },
   "author": "",
@@ -54,7 +55,8 @@
     ],
     "transform": {
       "\\.(gql|graphql)$": "jest-transform-graphql",
-      ".*": "babel-jest"
+      ".*": "babel-jest",
+      "^.+\\.js?$": "babel-jest"
     }
   },
   "//": "This is our babel config, I prefer this over a .babelrc file",
