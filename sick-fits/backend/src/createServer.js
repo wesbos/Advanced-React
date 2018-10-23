@@ -1,6 +1,9 @@
-const { graphQLServer } = require('graphql-yoga');
-const { Query } = require('./resolvers/Query.js');
-const { Mutations } = require('./resolvers/Mutations.js');
+// This is the actual GraphQL Express server, that sits on top of the Apollo server
+// We have two servers in this app: GraphQL-Yoga and Prisma
+// // Context for authentication purposes
+const { GraphQLServer } = require('graphql-yoga');
+const Mutation = require('./resolvers/Mutation.js');
+const Query = require('./resolvers/Query.js');
 const db = require('./db');
 
 function createServer() {
