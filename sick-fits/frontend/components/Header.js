@@ -1,8 +1,24 @@
 import React from "react";
 import Link from "next/link";
+import Router from "next/router";
+import NProgress from "nprogress";
 import styled from "styled-components";
 
 import Nav from "./Nav";
+
+// handle the route loading animation
+Router.events.on("routeChangeStart", () => {
+  console.log("start");
+  NProgress.start();
+});
+Router.events.on("routeChangeComplete", () => {
+  console.log("end");
+  NProgress.done();
+});
+Router.events.on("routeChangeError", () => {
+  console.log("error");
+  NProgress.done();
+});
 
 const StyledLogo = styled.h1`
   font-size: 4rem;
