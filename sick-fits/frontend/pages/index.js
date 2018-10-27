@@ -1,9 +1,9 @@
-import React from 'react';
+import Items from '../components/Items';
 
 const Home = props => (
-	<div>
-		<p>Hey!</p>
-	</div>
+  <div>
+    <Items />
+  </div>
 );
 
 export default Home;
