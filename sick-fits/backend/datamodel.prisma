@@ -1,0 +1,20 @@
+# Define the data model
+# This gets pushed up to prisma, and allows it to generate the query options
+
+type User {
+  id: ID! @unique
+  name: String!
+  email: String!
+}
+
+type Item {
+  id: ID! @unique
+  title: String!
+  description: String!
+  image: String
+  largeImage: String
+  price: Int!
+  # createdAt: DateTime!
+  # updatedAt: DateTime!
+  # user: User!
+}
