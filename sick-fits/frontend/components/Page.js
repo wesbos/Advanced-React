@@ -4,6 +4,7 @@ import styled, { ThemeProvider, injectGlobal } from "styled-components";
 import Meta from "./Meta";
 import Header from "./Header";
 
+// global props theme object. Accessible in any sub-component Styled component
 const theme = {
   red: "#FF0000",
   black: "#393939",
@@ -25,6 +26,7 @@ const Inner = styled.div`
   padding: 2rem;
 `;
 
+// injects global app wide styles into the pahe
 injectGlobal`
   @font-face{
     font-family: 'radnika_next';
@@ -54,6 +56,12 @@ injectGlobal`
   }
 `;
 
+/**
+ * Sets up the context of a page, which is the top level 'render' component
+ * that contains UI content.
+ *
+ * ThemeProvider will expose the 'theme' object to all of the inner Styled components
+ */
 class Page extends Component {
   render() {
     return (

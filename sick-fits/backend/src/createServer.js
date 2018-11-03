@@ -17,7 +17,9 @@ const db = require("./db");
 
 function createServer() {
   return new GraphQLServer({
+    // what mutations and queries do we want to support
     typeDefs: "src/schema.graphql",
+    // matching implementations of the above (must be 1:1)
     resolvers: {
       Mutation,
       Query
@@ -25,6 +27,7 @@ function createServer() {
     resolverValidationOptions: {
       requireResolversForResolveType: false
     },
+    // connext the request to the DB
     context: req => ({ ...req, db })
   });
 }

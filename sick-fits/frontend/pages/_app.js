@@ -4,6 +4,11 @@ import withData from "../lib/withData";
 
 import Page from "../components/Page";
 
+/**
+ * Entire app wrapper.
+ * This component creates/sets up all of the top level props/contexts for the data
+ * the rest of the app will use
+ */
 class MyApp extends App {
   // nextjs lifecycle, autoruns before the first render
   // this crawls the page, and any time it runs into a query, itll expose it to the page

@@ -1,5 +1,8 @@
+# ------------------------------------
 # Define the data model
 # This gets pushed up to prisma, and allows it to generate the query options
+#
+# This is the root of all the 'Objects' your DB uses
 
 type User {
   id: ID! @unique

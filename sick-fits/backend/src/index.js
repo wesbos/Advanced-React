@@ -1,13 +1,14 @@
-// start the node server
 require("dotenv").config({ path: "variables.env" });
 const createServer = require("./createServer");
-const db = require("./db");
 
 const server = createServer();
 
 // TODO user express middleware to use cookies
 // TODO user express middleware populate user
 
+// start the node server from createServer. This starts up the
+// GQL-Yoga server, and passes it the credentials it needs to connect to
+// Prisma
 server.start(
   {
     cors: {

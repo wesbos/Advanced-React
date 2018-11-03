@@ -1,10 +1,14 @@
 import React from "react";
-import Link from "next/link";
 
+import Items from "../components/Items";
+
+/**
+ * Homepage. Default route at /
+ */
 const Home = () => {
   return (
     <div>
-      <p>hello from home!</p>
+      <Items />
     </div>
   );
 };
