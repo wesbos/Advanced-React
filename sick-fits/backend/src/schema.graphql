@@ -1,5 +1,10 @@
-# NOTE: this is how you import in graphql files
+# ----------------------
+# Define your Mutation/Query schemas here. All you're doing is an outline of
+# What should happen. For example, in a Mutaiton, you define the fields
+# you expect to take in, and the result of the Mutation.
+# The actual implementation happens in /resolvers/Mutation
 
+# NOTE: this is how you import in graphql files
 # import * from './generated/prisma.graphql'
 
 type Mutation {
