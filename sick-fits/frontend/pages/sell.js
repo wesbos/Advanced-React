@@ -1,7 +1,13 @@
 import React from "react";
 
+import CreateItem from "../components/CreateItem";
+
 const Sell = () => {
-  return <p>hello from sell!</p>;
+  return (
+    <div>
+      <CreateItem />
+    </div>
+  );
 };
 
 export default Sell;
