@@ -15,10 +15,26 @@ const Mutation = {
           ...args
         }
       },
-      info
+      info // explains how the functino knows what to return, in this case the created Item
     );
 
     return item;
+  },
+
+  async updateItem(parent, args, ctx, info) {
+    // copy the inputs
+    const updates = { ...args };
+    // remove the id since we're not updating the field
+    delete updates.id;
+    return ctx.db.mutation.updateItem(
+      {
+        data: updates,
+        where: {
+          id: args.id // since we removed it from the updates
+        }
+      },
+      info
+    );
   }
 };
 

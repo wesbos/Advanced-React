@@ -5,20 +5,16 @@ const { forwardTo } = require("prisma-binding");
  */
 
 const Query = {
-  // any time you have a query thats exactly the same on the FE end as the BE
+  // Any time you have a query thats exactly the same on the FE end as the BE
   // query, we can use fowardTo() to skip all of the functional definitinos
-  items: forwardTo("db")
+  //
+  // Alt way of defining the below
+  // async items(parent, args, ctx, info) {
+  //   return await ctx.db.query.items();
+  // }
+  items: forwardTo("db"),
+
+  item: forwardTo("db")
 };
 
 module.exports = Query;
-
-/*
-ALT definition of the above
-
-async items(parent, args, ctx, info) {
-  const items = await ctx.db.query.items();
-
-  return items;
-} 
-
-*/

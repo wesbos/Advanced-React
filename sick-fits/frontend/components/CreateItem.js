@@ -44,6 +44,27 @@ class CreateItem extends Component {
     this.setState({ [name]: val });
   };
 
+  handleUpload = async e => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "name_of_cloudinary");
+
+    const res = await fetch("CLOUDINARY_URL", {
+      method: "POST",
+      body: data
+    });
+
+    const file = await res.json();
+    console.log(file);
+
+    // put data into image
+    // this.setState({
+    //   image: file.secure_url,
+    //   largeImage: file.eager[0].secure_url
+    // })
+  };
+
   render() {
     return (
       <Mutation mutation={CREATE_ITEM_MULATION} variables={this.state}>
@@ -63,6 +84,18 @@ class CreateItem extends Component {
           >
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
+              <label htmlFor="file">
+                Image
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  placeholder="Upload an Image"
+                  required
+                  onChange={this.handleUpload}
+                />
+              </label>
+
               <label htmlFor="title">
                 Title
                 <input

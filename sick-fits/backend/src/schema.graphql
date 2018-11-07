@@ -15,8 +15,12 @@ type Mutation {
     image: String
     largeImage: String
   ): Item!
+
+  updateItem(id: ID!, title: String, description: String, price: Int): Item!
 }
 
 type Query {
   items: [Item]!
+  # ItemWhereUniqueItem can be found in the prisma.graphql generated file
+  item(where: ItemWhereUniqueInput!): Item
 }
