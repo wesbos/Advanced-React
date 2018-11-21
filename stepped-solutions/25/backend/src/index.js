@@ -7,7 +7,7 @@ const db = require('./db');
 const server = createServer();
 
 server.express.use(cookieParser());
-// TODO Use express middlware to populate current user
+// TODO Use express middleware to populate current user
 
 server.start(
   {
