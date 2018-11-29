@@ -1566,7 +1566,7 @@ type Query {
   orderItemsConnection(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
 
-  """Fetches an object given its ID"""
+  # """Fetches an object given its ID"""
   node(
     """The ID of an object"""
     id: ID!

@@ -4,9 +4,11 @@
   "description": "the backend of sick fits",
   "scripts": {
     "start": "nodemon -e js,graphql -x node src/index.js",
-    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
+    "debug": "nodemon -e js,graphql -x node --inspect src/index.js",
     "test": "jest",
-    "deploy": "prisma deploy --env-file variables.env"
+    "playground": "graphql playground --dotenv variables.env",
+    "deploy": "prisma deploy --env-file variables.env",
+    "dev": "npm-run-all --parallel debug playground"
   },
   "dependencies": {
     "babel-preset-env": "^1.7.0",
