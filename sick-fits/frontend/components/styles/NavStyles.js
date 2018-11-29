@@ -51,6 +51,9 @@ const NavStyles = styled.ul`
       &:after {
         width: calc(100% - 60px);
       }
+    @media (max-width: 700px) {
+        width: calc(100% - 10px);
+    }
     }
   }
   @media (max-width: 1300px) {
