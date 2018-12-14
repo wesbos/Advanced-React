@@ -18,6 +18,6 @@ describe('formatMoney Function', () => {
     expect(formatMoney(5012)).toEqual('$50.12');
     expect(formatMoney(101)).toEqual('$1.01');
     expect(formatMoney(110)).toEqual('$1.10');
-    expect(formatMoney(20893749823749823749)).toEqual('$208,937,498,237,498,240.00');
+    expect(formatMoney(20893749823749823749)).toEqual('$208,937,498,237,498,237.49');
   });
 });
