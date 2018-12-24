@@ -29,11 +29,12 @@ class AutoComplete extends React.Component {
   state = {
     items: [],
     loading: false,
+    loaded: false
   };
   onChange = debounce(async (e, client) => {
     console.log('Searching...');
     // turn loading on
-    this.setState({ loading: true });
+    this.setState({ loading: true, loaded: false });
     // Manually query apollo client
     const res = await client.query({
       query: SEARCH_ITEMS_QUERY,
@@ -42,6 +43,7 @@ class AutoComplete extends React.Component {
     this.setState({
       items: res.data.items,
       loading: false,
+      loaded: true
     });
   }, 350);
   render() {
@@ -67,7 +69,7 @@ class AutoComplete extends React.Component {
                   />
                 )}
               </ApolloConsumer>
-              {isOpen && (
+              {isOpen && this.state.loaded && (
                 <DropDown>
                   {this.state.items.map((item, index) => (
                     <DropDownItem
@@ -79,8 +81,7 @@ class AutoComplete extends React.Component {
                       {item.title}
                     </DropDownItem>
                   ))}
-                  {!this.state.items.length &&
-                    !this.state.loading && <DropDownItem> Nothing Found {inputValue}</DropDownItem>}
+                  {!this.state.items.length && <DropDownItem> Nothing Found {inputValue}</DropDownItem>}
                 </DropDown>
               )}
             </div>
