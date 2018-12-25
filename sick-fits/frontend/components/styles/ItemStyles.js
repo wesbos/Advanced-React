@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Item = styled.div`
   background: white;
@@ -30,10 +30,11 @@ const Item = styled.div`
     & > * {
       background: white;
       border: 0;
+      font-family: 'radnika_next';
       font-size: 1rem;
       padding: 1rem;
     }
   }
-`;
+`
 
-export default Item;
+export default Item
