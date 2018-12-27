@@ -6,7 +6,8 @@ const Query = {
   //   return items
   // }
   items: forwardTo('db'),
-  item: forwardTo('db')
+  item: forwardTo('db'),
+  itemsConnection: forwardTo('db')
 }
 
 module.exports = Query
