@@ -82,3 +82,4 @@ class Reset extends Component {
 }
 
 export default Reset;
+export { RESET_MUTATION };

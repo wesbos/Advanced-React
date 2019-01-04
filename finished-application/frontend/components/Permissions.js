@@ -129,3 +129,4 @@ class UserPermissions extends React.Component {
 }
 
 export default Permissions;
+export { UPDATE_PERMISSIONS_MUTATION, ALL_USERS_QUERY };

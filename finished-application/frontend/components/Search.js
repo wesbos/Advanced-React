@@ -92,3 +92,4 @@ class AutoComplete extends React.Component {
 }
 
 export default AutoComplete;
+export { SEARCH_ITEMS_QUERY };

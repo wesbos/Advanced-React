@@ -7,8 +7,9 @@
     "dev": "next -p 7777",
     "build": "next build",
     "start": "next start",
-    "test": "NODE_ENV=test jest --watch",
-    "heroku-postbuild": "next build"
+    "test": "npm run prepare-schema && NODE_ENV=test jest --watch",
+    "heroku-postbuild": "next build",
+    "prepare-schema": "npx get-graphql-schema https://sickfits-yoga-prod.herokuapp.com/ > schema.graphql"
   },
   "author": "",
   "license": "ISC",
@@ -41,6 +42,7 @@
     "babel-jest": "^23.6.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "casual": "^1.5.19",
+    "easygraphql-tester": "^3.0.2",
     "enzyme-to-json": "^3.3.4",
     "graphql-tools": "^4.0.0",
     "jest": "^23.6.0",

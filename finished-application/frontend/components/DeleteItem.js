@@ -48,3 +48,4 @@ class DeleteItem extends Component {
 }
 
 export default DeleteItem;
+export { DELETE_ITEM_MUTATION };
