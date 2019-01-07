@@ -16,24 +16,23 @@ const SEARCH_ITEMS_QUERY = gql`
   }
 `;
 
-function routeToItem(item) {
-  Router.push({
-    pathname: '/item',
-    query: {
-      id: item.id,
-    },
-  });
-}
-
 class AutoComplete extends React.Component {
   state = {
     items: [],
     loading: false,
+    searchValue: ''
   };
-  onChange = debounce(async (e, client) => {
+  onChange = (e, client) => {
+    //Update search value in state and set lading to true to avoid "Nothing found" result to be shown
+    this.setState({
+      searchValue: e.target.value,
+      loading: true
+    });
+    //Execute the search
+    this.search(e,client);
+  };
+  search = debounce(async (e, client) => {
     console.log('Searching...');
-    // turn loading on
-    this.setState({ loading: true });
     // Manually query apollo client
     const res = await client.query({
       query: SEARCH_ITEMS_QUERY,
@@ -44,11 +43,24 @@ class AutoComplete extends React.Component {
       loading: false,
     });
   }, 350);
+  routeToItem = (item) => {
+    //Clear input, and reset items array
+    this.setState({
+      searchValue: '',
+      items: []
+    });
+    Router.push({
+      pathname: '/item',
+      query: {
+        id: item.id
+      }
+    })
+  };
   render() {
     resetIdCounter();
     return (
       <SearchStyles>
-        <Downshift onChange={routeToItem} itemToString={item => (item === null ? '' : item.title)}>
+        <Downshift onChange={this.routeToItem} itemToString={item => (item === null ? '' : item.title)}>
           {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
             <div>
               <ApolloConsumer>
@@ -58,6 +70,7 @@ class AutoComplete extends React.Component {
                       type: 'search',
                       placeholder: 'Search For An Item',
                       id: 'search',
+                      value: this.state.searchValue,
                       className: this.state.loading ? 'loading' : '',
                       onChange: e => {
                         e.persist();
