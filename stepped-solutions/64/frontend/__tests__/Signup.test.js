@@ -18,7 +18,7 @@ const mocks = [
   // signup mock mutation
   {
     request: {
-      query: SIGNUP_MUTATION,
+      mutation: SIGNUP_MUTATION,
       variables: {
         name: me.name,
         email: me.email,
