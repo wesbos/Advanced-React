@@ -1,12 +1,11 @@
-type Dog {
-    name: String!
-}
+# Client facing API where we will do most of the querying for the app
+# how you import in GraphQL below => will only import things that are used.. (done with prisma)
+# import * from './generated/prisma.graphql'
+
 type Mutation {
-   createDog(name: String!): Dog
+    createItem(title: String, description: String, price: Int, image: String, largeImage: String): Item!
 }
 
 type Query {
-    # Dog! => can't return null for value of array
-    # {[name: 'Snickers']} => valid {[name: 'Snickers', null]} => not valid
-    dogs: [Dog!]!
+    items: [Item]!
 }
