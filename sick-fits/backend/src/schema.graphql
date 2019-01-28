@@ -1,7 +1,12 @@
-
-type Mutation {
-    hi: String
+type Dog {
+    name: String!
 }
+type Mutation {
+   createDog(name: String!): Dog
+}
+
 type Query {
-    hi:String
+    # Dog! => can't return null for value of array
+    # {[name: 'Snickers']} => valid {[name: 'Snickers', null]} => not valid
+    dogs: [Dog!]!
 }
