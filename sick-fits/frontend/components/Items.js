@@ -31,7 +31,6 @@ export default class Items extends Component {
   render() {
     return (
       <Center>
-        <p>Items!</p>
         {/* Only Child of a query component MUST be a function. */}
         <Query query={ALL_ITEMS_QUERY}>
           {({ data, error, loading }) => {

@@ -23,10 +23,10 @@ const Item = styled.div`
   .buttonList {
     display: grid;
     width: 100%;
-    border-top: 1px solid ${props => props.theme.lightgrey};
+    border-top: 1px solid ${props => props.theme.lightGray};
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-gap: 1px;
-    background: ${props => props.theme.lightgrey};
+    background: ${props => props.theme.lightGray};
     & > * {
       background: white;
       border: 0;
