@@ -10,7 +10,7 @@ const theme = {
   grey: '#747572',
   lightGray: '#E1E1E1',
   white: '#F7F9F9',
-  maxWidth: '100px',
+  maxWidth: '1000px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
   lgBreak: '1300px',
 };
