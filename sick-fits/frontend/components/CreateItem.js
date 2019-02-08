@@ -55,6 +55,31 @@ handleChange = (e) => {
 // the [name] -> computed property names from the name (e.target.name)..  which returns the name of the input
  this.setState({ [name]: val });
 }
+
+uploadFile = async e => {
+  console.log(e.target);
+  const files = e.target.files;
+  const data = new FormData();
+  data.append('file', files[0]);
+  // upload_preset is an argument needed by cloudinary
+  // sickfits -> name of preset
+  data.append('upload_preset', 'sickfits');
+  // dixjiljfee is the username of my cloudinary acct. 
+  const res = await fetch('https://api.cloudinary.com/v1_1/bryandl/image/upload', {
+    method: 'POST', 
+    body: data
+  });
+  // parse the response to JSON that we get from the Fetch Post
+  const file = await res.json();
+  console.log(file);
+  // eager is a secondary transformation
+  this.setState({
+    image: file.secure_url,
+    largeImage: file.eager[0].secure_url,
+  });
+
+  
+}
   render() {
     // Wrap the whole Form in a Mutation Component... the variables to be passed are this.state
     // Mutation takes mutation and variables as properties
@@ -82,7 +107,18 @@ handleChange = (e) => {
         {/* fieldset is great because it takes a disabled value! */}
         {/* Check the aria-busy in the css styles for the cool keyframe */}
         <fieldset disabled={loading} aria-busy={loading}>
-          <label htmlFor="title">
+          <label htmlFor="file">
+            Image 
+            <input
+              onChange={this.uploadFile} 
+              type="file" 
+              id="file" 
+              name="file" 
+              placeholder="Upload an Image"
+              required/>
+          </label>
+          {this.state.image && <img src={this.state.image}  width="200" alt="Upload preview" />}
+          <label htmlFor="file">
             Title 
             <input
               onChange={this.handleChange} 
