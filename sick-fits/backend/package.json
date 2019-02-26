@@ -20,7 +20,7 @@
     "nodemailer": "^4.6.8",
     "nodemon": "^1.18.7",
     "npm-run-all": "^4.1.5",
-    "prisma": "1.17.1",
+    "prisma": "^1.27.1",
     "prisma-binding": "2.1.6",
     "stripe": "^6.12.1"
   },
