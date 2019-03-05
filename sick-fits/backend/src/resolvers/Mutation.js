@@ -21,6 +21,11 @@ const Mutations = {
       },
       info
     );
+  },
+  deleteItem(parent, args, ctx, info) {
+    const where = { id: args.id };
+    const item = ctx.db.query.item({ where }, `title, id`);
+    return ctx.db.mutation.deleteItem({ where }, info);
   }
 };
 
