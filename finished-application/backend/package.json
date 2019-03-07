@@ -14,7 +14,7 @@
     "dotenv": "6.0.0",
     "graphql": "^0.13.2",
     "graphql-cli": "^2.16.7",
-    "graphql-yoga": "1.16.9",
+    "graphql-yoga": "1.17.4",
     "jsonwebtoken": "8.3.0",
     "nodemailer": "^4.6.8",
     "nodemon": "1.18.4",
