@@ -10,6 +10,7 @@ type Mutation {
   ): Item!
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
   deleteItem(id: ID!): Item
+  signup(email: String!, password: String!, name: String!): User!
 }
 
 type Query {
