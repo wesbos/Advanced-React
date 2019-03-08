@@ -42,7 +42,7 @@
     "babel-jest": "^23.6.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "casual": "^1.5.19",
-    "easygraphql-tester": "^3.0.2",
+    "easygraphql-tester": "^5.0.1",
     "enzyme-to-json": "^3.3.4",
     "graphql-tools": "^4.0.0",
     "jest": "^23.6.0",

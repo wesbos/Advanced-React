@@ -53,7 +53,9 @@ it('Should ALL_ITEMS_QUERY', () => {
 });
 
 it('Should SINGLE_ORDER_QUERY', () => {
-  tester.test(true, SINGLE_ORDER_QUERY)
+  tester.test(true, SINGLE_ORDER_QUERY, { 
+    id: '1' 
+  })
 });
 
 it('Should USER_ORDERS_QUERY', () => {
@@ -96,7 +98,9 @@ it('Should RESET_MUTATION', () => {
 });
 
 it('Should SEARCH_ITEMS_QUERY', () => {
-  tester.test(true, SEARCH_ITEMS_QUERY)
+  tester.test(true, SEARCH_ITEMS_QUERY, {
+    searchTerm: 'Shoes'
+  })
 })
 
 it('Should SIGNIN_MUTATION', () => {
@@ -119,7 +123,9 @@ it('Should SIGNUP_MUTATION', () => {
 });
 
 it('Should SINGLE_ITEM_QUERY', () => {
-  tester.test(true, SINGLE_ITEM_QUERY)
+  tester.test(true, SINGLE_ITEM_QUERY, {
+    id: '1'
+  })
 });
 
 it('Should CREATE_ORDER_MUTATION', () => {
