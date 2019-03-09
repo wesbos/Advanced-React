@@ -1,9 +1,8 @@
-import Link from 'next/link';
 import CreateItem from '../components/CreateItem';
-const Sell = props => (
+const SignUp = props => (
   <CreateItem>
     
   </CreateItem>
 );
 
-export default Sell;
+export default SignUp;
