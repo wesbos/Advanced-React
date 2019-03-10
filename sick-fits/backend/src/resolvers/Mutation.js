@@ -24,12 +24,14 @@ const Mutations = {
       info
     );
   },
+
   async deleteItem(parent, args, ctx, info) {
     const where = { id: args.id };
-    const item = await ctx.db.query.item({ where }, `title, id`);
+    const item = await ctx.db.query.item({ where }, `{title id}`);
     return ctx.db.mutation.deleteItem({ where }, info);
   },
-   async signup(parent, args, ctx, info) {
+
+  async signup(parent, args, ctx, info) {
     // lowercase their email
     args.email = args.email.toLowerCase();
     // hash their password
@@ -40,8 +42,8 @@ const Mutations = {
         data: {
           ...args,
           password,
-          permissions: { set: ['USER'] },
-        },
+          permissions: { set: ['USER'] }
+        }
       },
       info
     );
@@ -50,11 +52,11 @@ const Mutations = {
     // We set the jwt as a cookie on the response
     ctx.response.cookie('token', token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+      maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
     });
     // Finalllllly we return the user to the browser
     return user;
-  },
+  }
 };
 
 module.exports = Mutations;

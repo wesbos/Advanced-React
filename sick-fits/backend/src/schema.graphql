@@ -4,9 +4,9 @@ type Mutation {
   createItem(
     title: String
     description: String
+    price: Int
     image: String
     largeImage: String
-    price: Int
   ): Item!
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
   deleteItem(id: ID!): Item
@@ -22,4 +22,5 @@ type Query {
   ): [Item]!
   item(where: ItemWhereUniqueInput!): Item
   itemsConnection(where: ItemWhereInput): ItemConnection!
+  me: User
 }
