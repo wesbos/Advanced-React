@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/roma-8aef89/sick-fits/dev
-# timestamp: Fri Mar 08 2019 19:17:29 GMT+0200 (Eastern European Standard Time)
+# timestamp: Mon Mar 11 2019 22:17:16 GMT+0200 (Eastern European Standard Time)
 
 type AggregateItem {
   count: Int!
@@ -815,4 +815,5 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   email: String
+  resetToken: String
 }
