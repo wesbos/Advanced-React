@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 import Signup from '../components/Signup';
+import Signin from '../components/Signin';
+import Signout from '../components/Signout';
 
 const Column = styled.div`
   display: grid;
@@ -10,8 +12,8 @@ const Column = styled.div`
 const signupPage = props => (
   <Column>
     <Signup />
-    <Signup />
-    <Signup />
+    <Signin />
+    {/* <Signout /> */}
   </Column>
 );
 export default signupPage;
