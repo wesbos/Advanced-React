@@ -19,11 +19,11 @@ const ConsoleLog = ({ children }) => {
 
 const User = props => (
   <Query {...props} query={CURRENT_USER_QUERY}>
-    {payload => props.children(payload)}
+    {payload => props.children(payload) || props.children(payload)}
   </Query>
 );
 
-User.PropTypes = {
+User.propTypes = {
   children: PropTypes.func.isRequired
 };
 
