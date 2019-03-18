@@ -4,6 +4,18 @@ type SuccessMessage {
   message: String
 }
 
+type Query {
+  items(
+    where: ItemWhereInput
+    orderBy: ItemOrderByInput
+    skip: Int
+    first: Int
+  ): [Item]!
+  item(where: ItemWhereUniqueInput!): Item
+  itemsConnection(where: ItemWhereInput): ItemConnection!
+  me: User
+  users: [User]!
+}
 type Mutation {
   createItem(
     title: String
@@ -18,24 +30,12 @@ type Mutation {
   signin(email: String!, password: String!): User!
   signout: SuccessMessage
   requestReset(email: String!): SuccessMessage
+  updatePermissions(permissions: [Permission], userId: ID!): User
   resetPassword(
     resetToken: String!
     password: String!
     confirmPassword: String!
   ): User!
-}
-
-type Query {
-  items(
-    where: ItemWhereInput
-    orderBy: ItemOrderByInput
-    skip: Int
-    first: Int
-  ): [Item]!
-  item(where: ItemWhereUniqueInput!): Item
-  itemsConnection(where: ItemWhereInput): ItemConnection!
-  me: User
-  users: [User]!
 }
 
 type User {
