@@ -14,7 +14,7 @@ type User {
   password: String!
   resetToken: String
   resetTokenExpiry: String
-  permissions: [Permission]
+  permissions: [Permission!]! @scalarList(strategy: RELATION)
 }
 
 type Item {
