@@ -25,6 +25,7 @@ type Query {
 type User{
   id: ID!
   name: String!
+  password: String!
   email: String!
   permissions: [Permission!]!
 }
