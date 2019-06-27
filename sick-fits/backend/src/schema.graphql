@@ -1,0 +1,21 @@
+# import * from './generated/prisma.graphql';
+
+type Mutation {
+    createItem(title: String, description: String, price: Int, image: String, largeImage: String): Item!
+}
+
+type Query {
+    items: [Item]!
+}
+
+
+# type Dog {
+#     name: String!
+# }
+# type Mutation {
+#     createDog(name: String!): Dog
+# }
+# type Query {
+#     dogs:[Dog]!
+# }
+#THIS FILE IS THE PUBLIC API FOR THIS PROJECT
