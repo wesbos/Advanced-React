@@ -35,7 +35,7 @@
     "react-dom": "^16.5.2",
     "react-stripe-checkout": "^2.6.3",
     "react-transition-group": "^2.5.0",
-    "styled-components": "^3.4.9",
+    "styled-components": "^4.4.0",
     "waait": "^1.0.2"
   },
   "devDependencies": {
