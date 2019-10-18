@@ -1,0 +1,2 @@
+# MODEL: datamodel.graphql This is where you model the data required and deploy to Prisma 
+# SCHEMA: IS where we model the Queries and mutation's requirements :Is the rreturn type. 
