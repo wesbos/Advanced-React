@@ -1,3 +1,12 @@
+# My take on this course
+
+This is my own implementation of this course. I've just used it as a guide. My version is using completely updated versions of React and Apollo, uses Typescript
+and is using hooks and functional components rather than classes. - All the styling is Wes's. My intention wasn't to focus on styling. 
+
+My reasons for doing this are simple, *I want to build something using GraphQL to gain a better understanding of it's workings in the backend and frontend*. 
+
+
+
 ![Advanced React & GraphQL](https://advancedreact.com/images/ARG/arg-facebook-share.png)
 
 # Advanced React & GraphQL
