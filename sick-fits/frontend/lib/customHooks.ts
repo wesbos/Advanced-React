@@ -46,6 +46,7 @@ export const useForm = (runMutation, defaultValues) => {
   return {
     handleChange,
     handleSubmit,
-    inputs
+    inputs,
+    setInputs
   }
 }

@@ -47,19 +47,21 @@ const UPDATE_ITEM_MUTATION = gql`
 const UpdateItem = ({ id }: any) => {
   const [updateItem] = useMutation(UPDATE_ITEM_MUTATION);
   const { data, loading, error } = useQuery(GET_SINGLE_ITEM, { variables: { id } })
-  const defaultValues = {
+  let defaultValues = {
     id: id,
     file: '',
     title: '',
     price: 0,
     description: '',
   }
-  const { handleChange, inputs } = useForm(updateItem, defaultValues);
+  const { handleChange, inputs, setInputs } = useForm(updateItem, defaultValues);
 
   useEffect(() => {
-    Object.entries(defaultValues).map((input) => {
-      console.log('input', input, 'data', data);
-    })
+    if (data) {
+      Object.entries(data).map((item) => {
+        setInputs({ ...item[1] })
+      })
+    }
   }, [data])
 
   return (
