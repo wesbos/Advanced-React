@@ -5,6 +5,7 @@ import Title from '../styles/Title';
 import ItemStyles from '../styles/ItemStyles';
 import PriceTag from '../styles/PriceTag';
 import formatMoney from '../../lib/formatMoney';
+import DeleteItem from "../DeleteItem";
 //import DeleteItem from './DeleteItem';
 //import AddToCart from './AddToCart';
 
@@ -51,7 +52,7 @@ const Item: FC<ItemProps> = ({ id,
           <a>Edit ✏️</a>
         </Link>
         <button id={id}>Add To Cart </button>
-        <button id={id}>Delete This Item</button>
+        <DeleteItem id={id}>Delete This Item</DeleteItem>
       </div>
     </ItemStyles>
   );

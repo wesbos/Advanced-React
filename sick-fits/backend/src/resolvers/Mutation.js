@@ -22,6 +22,20 @@ const mutations = {
       }
     }, info) //info contains the query to pass to the backend
     return item;
+  },
+
+  async deleteItem(parent, args, ctx, info) {
+    const where = {
+      id: args.id
+    }
+    //to be used in the future
+    const item = await ctx.db.query.item({
+      where
+    }, `{id, title}`);
+
+    return await ctx.db.mutations.deleteItem({
+      where
+    }, info);
   }
 };
 
