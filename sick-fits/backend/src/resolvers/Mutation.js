@@ -25,6 +25,7 @@ const mutations = {
   },
 
   async deleteItem(parent, args, ctx, info) {
+    console.log('ARGS', args);
     const where = {
       id: args.id
     }
@@ -33,7 +34,7 @@ const mutations = {
       where
     }, `{id, title}`);
 
-    return await ctx.db.mutations.deleteItem({
+    return await ctx.db.mutation.deleteItem({
       where
     }, info);
   }

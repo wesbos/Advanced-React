@@ -5,7 +5,7 @@ type Mutation {
   updateItem(id: String, title:String, description:String, price:Int, image:String, largeImage:String):Item!
   signup(email: String!, password: String!, name: String!): User!
   signin(email: String!, password: String!): User!
-  deleteItem(id:String! ):Item!
+  deleteItem(id:ID ):Item!
 }
 
 type Query {
