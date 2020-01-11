@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+   backend:
+       build: ./backend
+       command: nodemon server.js
+       volumes:
+         - ./backend:/app
+       ports:
+         - "5001:80"
