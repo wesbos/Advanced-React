@@ -1,4 +1,4 @@
-FROM node:111
+FROM node:11
 
 WORKDIR /src
 

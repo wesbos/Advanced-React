@@ -3,7 +3,7 @@ version: "3"
 services:
    backend:
        build: ./backend
-       command: nodemon server.js
+       command: nodemon run dev
        volumes:
          - ./backend:/app
        ports:
