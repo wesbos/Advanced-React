@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  example-service:
+  frontend:
     build: ./backend
     volumes:
       - ./backend:/usr/src/app
@@ -9,4 +9,14 @@ services:
     ports:
       - 8080:8080
       - 9229:9229
+    command: npm run start:dev
+
+  backend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/usr/src/app
+      - /app/.next
+      - /usr/src/app/node_modeuls
+    ports:
+      - 7777:7777
     command: npm run start:dev
