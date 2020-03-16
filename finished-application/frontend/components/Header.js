@@ -25,8 +25,8 @@ const Logo = styled.h1`
   transform: skew(-7deg);
   a {
     padding: 0.5rem 1rem;
-    background: ${props => props.theme.red};
-    color: white;
+    background: ${props => props.theme.offWhite};
+    color: ${props => props.theme.black};
     text-transform: uppercase;
     text-decoration: none;
   }
@@ -37,7 +37,7 @@ const Logo = styled.h1`
 `;
 
 const StyledHeader = styled.header`
-  .bar {
+  /* .bar {
     border-bottom: 10px solid ${props => props.theme.black};
     display: grid;
     grid-template-columns: auto 1fr;
@@ -52,21 +52,21 @@ const StyledHeader = styled.header`
     display: grid;
     grid-template-columns: 1fr auto;
     border-bottom: 1px solid ${props => props.theme.lightgrey};
-  }
+  } */
 `;
 
 const Header = () => (
   <StyledHeader>
     <div className="bar">
-      <Logo>
+      {/* <Logo>
         <Link href="/">
           <a>BoostrBox</a>
         </Link>
-      </Logo>
+      </Logo> */}
       <Nav />
     </div>
     <div className="sub-bar">
-      <Search />
+      {/* <Search /> */}
     </div>
     <Cart />
   </StyledHeader>

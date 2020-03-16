@@ -29,8 +29,8 @@ const AnimationStyles = styled.span`
 `;
 
 const Dot = styled.div`
-  background: ${props => props.theme.red};
-  color: white;
+  background: ${props => props.theme.yellow};
+  color: ${props => props.theme.black};
   border-radius: 50%;
   padding: 0.5rem;
   line-height: 2rem;
