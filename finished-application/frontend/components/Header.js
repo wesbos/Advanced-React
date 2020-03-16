@@ -37,6 +37,15 @@ const Logo = styled.h1`
 `;
 
 const StyledHeader = styled.header`
+  .bar {
+    a {
+      padding: 1rem;
+    }
+    a:hover {
+      color: ${props => props.theme.blue};
+    }
+  }
+ 
   /* .bar {
     border-bottom: 10px solid ${props => props.theme.black};
     display: grid;
