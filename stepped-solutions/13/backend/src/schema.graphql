@@ -1,7 +1,0 @@
-type Mutation {
-  hi: String
-}
-
-type Query {
-  hi: String
-}
