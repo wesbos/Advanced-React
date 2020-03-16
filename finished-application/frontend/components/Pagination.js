@@ -29,7 +29,7 @@ const Pagination = props => (
         <PaginationStyles data-test="pagination">
           <Head>
             <title>
-              Sick Fits! — Page {page} of {pages}
+              BoostrBox
             </title>
           </Head>
           <Link
