@@ -44,29 +44,29 @@ const Nav = () => (
         </Link> */}
         {me && (
           <>
-            <Link href="/sell">
-              <a>Sell</a>
+            <Link href="/landingpage">
+              <a>about</a>
             </Link>
-            <Link href="/orders">
-              <a>Orders</a>
+            <Link href="/boxesPage">
+              <a>boxes</a>
             </Link>
-            <Link href="/me">
-              <a>Account</a>
+            <Link href="/my orders">
+              <a>my orders</a>
             </Link>
-            <Signout />
             <Mutation mutation={TOGGLE_CART_MUTATION}>
-              {(toggleCart) => (
-                <button onClick={toggleCart}>
-                  My Cart
-                  <CartCount count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}></CartCount>
-                </button>
-              )}
+                {(toggleCart) => (
+                  <a onClick={toggleCart} style={{display: "flex"}}>
+                    basket
+                    <CartCount count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}></CartCount>
+                  </a>
+                )}
             </Mutation>
+                <Signout />
           </>
         )}
         {!me && (
-          <Link href="/signup">
-            <a>Sign In</a>
+          <Link href="/signinPage">
+            <a>sign in</a>
           </Link>
         )}
       </NavStyles>

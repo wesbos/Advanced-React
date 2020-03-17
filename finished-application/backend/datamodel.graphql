@@ -24,6 +24,7 @@ type Item {
   description: String!
   image: String
   largeImage: String
+  contents: String
   price: Int!
   user: User!
   createdAt: DateTime! @createdAt

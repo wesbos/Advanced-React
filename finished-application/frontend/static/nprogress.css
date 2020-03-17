@@ -4,7 +4,7 @@
 }
 
 #nprogress .bar {
-  background: red;
+  background: #3347FF;
   position: fixed;
   z-index: 1031;
   top: 0;
@@ -21,7 +21,7 @@
   right: 0px;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 10px red, 0 0 5px red;
+  box-shadow: 0 0 10px #3347FF, 0 0 5px #3347FF;
   opacity: 1.0;
 
   -webkit-transform: rotate(3deg) translate(0px, -4px);
@@ -30,7 +30,7 @@
 }
 
 /* Remove these to get rid of the spinner */
-#nprogress .spinner {
+/* #nprogress .spinner {
   display: block;
   position: fixed;
   z-index: 1031;
@@ -44,8 +44,8 @@
   box-sizing: border-box;
 
   border: solid 2px transparent;
-  border-top-color: red;
-  border-left-color: red;
+  border-top-color: #3347FF;
+  border-left-color: #3347FF;
   border-radius: 50%;
 
   -webkit-animation: nprogress-spinner 400ms linear infinite;
@@ -69,4 +69,4 @@
 @keyframes nprogress-spinner {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
+} */

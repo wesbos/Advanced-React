@@ -38,10 +38,16 @@ const Logo = styled.h1`
 
 const StyledHeader = styled.header`
   .bar {
-    a {
+    a, button {
       padding: 1rem;
+      text-decoration: none;
+      border: none;
+      background: none;
+      cursor: pointer;
+      
     }
-    a:hover {
+    a:hover, button:hover {
+      text-decoration: none;
       color: ${props => props.theme.blue};
     }
   }

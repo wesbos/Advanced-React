@@ -1,8 +1,8 @@
-import Items from '../components/Items';
+import Landing from '../components/Landing';
 
 const Home = props => (
   <div>
-    <Items page={parseFloat(props.query.page) || 1} />
+    <Landing />
   </div>
 );
 

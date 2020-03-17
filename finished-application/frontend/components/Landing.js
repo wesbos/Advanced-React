@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import LoginModal from '../components/LoginModal';
 
 
 const Top = styled.div`
@@ -73,6 +74,9 @@ const Bottom = styled.div`
   background: ${props => props.theme.offWhite};
   min-height: 90vh;
   display: flex;
+  .center {
+    text-align: center;
+  }
   .info-text {
     max-width: 70%;
     margin: auto;
@@ -148,6 +152,7 @@ class Landing extends Component {
           <div className="count">
             over 104 boxes delivered so far!
           </div>
+          <LoginModal/>
 
           </div>
 
@@ -193,10 +198,13 @@ class Landing extends Component {
              <strong>contactless delivery</strong> to your doorstep, no germs
             </li>
           </ul>
-          <h3> 
-            in partnership with:
-          </h3>
-        </div>
+          <div className="center">
+            <h3> 
+              in partnership with:
+            </h3>
+              <img src="static/sands.png" alt=""/>
+          </div>
+            </div>
           </div>
         <div className="img">
 
