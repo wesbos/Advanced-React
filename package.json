@@ -1,0 +1,12 @@
+{
+  "name": "sick-fits",
+  "version": "1.0.0",
+  "description": "Root package for sick-fits",
+  "author": "Josh Buckland",
+  "license": "ISC",
+  "private": true,
+  "workspaces": [
+    "sick-fits-frontend",
+    "sick-fits-backend"
+  ]
+}
