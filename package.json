@@ -6,7 +6,6 @@
   "license": "ISC",
   "private": true,
   "workspaces": [
-    "sick-fits-frontend",
-    "sick-fits-backend"
+    "sick-fits/*"
   ]
 }
