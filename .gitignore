@@ -6,3 +6,5 @@ haters/
 .build/
 layout.md
 variables.env
+*.env
+.keystone
