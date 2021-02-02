@@ -1,0 +1,52 @@
+{
+  "name": "sick-fits-backend",
+  "version": "2.0.0",
+  "private": true,
+  "author": "Wes Bos",
+  "license": "MIT",
+  "scripts": {
+    "dev": "keystone-next",
+    "seed-data": "keystone-next --seed-data"
+  },
+  "eslintConfig": {
+    "extends": "wesbos/typescript.js"
+  },
+  "dependencies": {
+    "@keystone-next/admin-ui": "^3.1.2",
+    "@keystone-next/auth": "^6.0.0",
+    "@keystone-next/cloudinary": "^2.0.2",
+    "@keystone-next/fields": "^3.2.1",
+    "@keystone-next/keystone": "^5.0.0",
+    "@keystone-next/types": "^5.0.0",
+    "@keystonejs/server-side-graphql-client": "^1.1.2",
+    "@types/nodemailer": "^6.4.0",
+    "dotenv": "^8.2.0",
+    "next": "^10.0.3",
+    "nodemailer": "^6.4.16",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "stripe": "^8.126.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-wesbos": "^2.0.0-beta.0",
+    "eslint-plugin-html": "^6.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "repository": "https://github.com/keystonejs/keystone/tree/master/examples-next/ecommerce"
+}
