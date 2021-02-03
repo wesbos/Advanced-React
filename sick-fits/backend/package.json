@@ -1,36 +1,75 @@
 {
   "name": "sick-fits-backend",
-  "version": "1.0.0",
-  "description": "the backend of sick fits",
-  "scripts": {
-    "start": "nodemon -e js,graphql -x node src/index.js",
-    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
-    "test": "jest",
-    "deploy": "prisma deploy --env-file variables.env"
-  },
-  "dependencies": {
-    "babel-preset-env": "^1.7.0",
-    "bcryptjs": "2.4.3",
-    "cookie-parser": "^1.4.3",
-    "dotenv": "6.0.0",
-    "graphql": "^0.13.2",
-    "graphql-cli": "^2.16.7",
-    "graphql-yoga": "1.16.2",
-    "jsonwebtoken": "8.3.0",
-    "nodemailer": "^4.6.8",
-    "nodemon": "^1.18.7",
-    "npm-run-all": "^4.1.5",
-    "prisma": "1.17.1",
-    "prisma-binding": "2.1.6",
-    "stripe": "^6.12.1"
-  },
+  "version": "2.0.0",
+  "private": true,
+  "author": "Wes Bos",
   "license": "MIT",
-  "repository": {
-    "url": "wesbos.com"
+  "scripts": {
+    "dev": "keystone-next",
+    "seed-data": "keystone-next --seed-data"
+  },
+  "eslintConfig": {
+    "extends": "wesbos/typescript.js",
+    "rules": {
+      "@typescript-eslint/no-unsafe-assignment": 0
+    }
   },
   "babel": {
     "presets": [
-      "env"
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": 10,
+            "browsers": [
+              "last 2 chrome versions",
+              "last 2 firefox versions",
+              "last 2 safari versions",
+              "last 2 edge versions"
+            ]
+          }
+        }
+      ],
+      "@babel/preset-react",
+      "@babel/preset-typescript"
     ]
-  }
+  },
+  "dependencies": {
+    "@keystone-next/admin-ui": "^7.0.1",
+    "@keystone-next/auth": "^10.0.1",
+    "@keystone-next/cloudinary": "^2.0.7",
+    "@keystone-next/fields": "^4.0.3",
+    "@keystone-next/keystone": "^9.0.1",
+    "@keystone-next/types": "^10.0.0",
+    "@keystonejs/server-side-graphql-client": "^1.1.2",
+    "@types/nodemailer": "^6.4.0",
+    "dotenv": "^8.2.0",
+    "next": "^10.0.5",
+    "nodemailer": "^6.4.17",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "stripe": "^8.130.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-wesbos": "^2.0.0-beta.4",
+    "eslint-plugin-html": "^6.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": "https://github.com/wesbos/advanced-react"
 }

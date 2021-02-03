@@ -3,15 +3,15 @@ import styled from 'styled-components';
 const OrderStyles = styled.div`
   max-width: 1000px;
   margin: 0 auto;
-  border: 1px solid ${props => props.theme.offWhite};
-  box-shadow: ${props => props.theme.bs};
+  border: 1px solid var(--offWhite);
+  box-shadow: var(--bs);
   padding: 2rem;
   border-top: 10px solid red;
   & > p {
     display: grid;
     grid-template-columns: 1fr 5fr;
     margin: 0;
-    border-bottom: 1px solid ${props => props.theme.offWhite};
+    border-bottom: 1px solid var(--offWhite);
     span {
       padding: 1rem;
       &:first-child {
@@ -21,7 +21,7 @@ const OrderStyles = styled.div`
     }
   }
   .order-item {
-    border-bottom: 1px solid ${props => props.theme.offWhite};
+    border-bottom: 1px solid var(--offWhite);
     display: grid;
     grid-template-columns: 300px 1fr;
     align-items: center;

@@ -6,56 +6,76 @@
   "scripts": {
     "dev": "next -p 7777",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 7777",
     "test": "NODE_ENV=test jest --watch",
-    "heroku-postbuild": "next build"
+    "heroku-postbuild": "next build",
+    "preinstall": "npx npm-force-resolutions"
+  },
+  "eslintConfig": {
+    "extends": [
+      "wesbos"
+    ],
+    "rules": {
+      "react/jsx-props-no-spreading": 0
+    }
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-boost": "^0.1.16",
-    "apollo-client": "^2.4.2",
+    "@apollo/client": "^3.3.6",
+    "@apollo/link-error": "^2.0.0-beta.3",
+    "@apollo/react-ssr": "^4.0.0",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.11.0",
+    "apollo-upload-client": "^14.1.3",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-plugin-styled-components": "^1.7.1",
-    "date-fns": "^2.0.0-alpha.7",
-    "downshift": "^2.2.3",
-    "enzyme": "^3.6.0",
-    "enzyme-adapter-react-16": "^1.5.0",
-    "graphql": "^14.0.2",
-    "graphql-tag": "^2.9.2",
+    "babel-plugin-styled-components": "^1.12.0",
+    "date-fns": "^2.16.1",
+    "downshift": "^6.0.12",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "graphql": "^15.4.0",
+    "graphql-tag": "^2.11.0",
+    "graphql-upload": "^11.0.0",
     "lodash.debounce": "^4.0.8",
-    "next": "^7.0.0",
-    "next-with-apollo": "^3.1.3",
+    "next": "^10.0.5",
+    "next-with-apollo": "^5.1.0",
     "nprogress": "^0.2.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.5.2",
-    "react-adopt": "^0.6.0",
-    "react-apollo": "^2.2.1",
-    "react-dom": "^16.5.2",
-    "react-stripe-checkout": "^2.6.3",
-    "react-transition-group": "^2.5.0",
-    "styled-components": "^3.4.9",
-    "waait": "^1.0.2"
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-transition-group": "^4.4.1",
+    "styled-components": "^5.2.1",
+    "waait": "^1.0.5"
   },
   "devDependencies": {
-    "babel-jest": "^23.6.0",
-    "babel-plugin-module-resolver": "^3.1.1",
-    "casual": "^1.5.19",
-    "enzyme-to-json": "^3.3.4",
-    "graphql-tools": "^4.0.0",
-    "jest": "^23.6.0",
-    "jest-transform-graphql": "^2.1.0"
+    "@apollo/react-testing": "^4.0.0",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@testing-library/jest-dom": "^5.11.8",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
+    "casual": "^1.6.2",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-config-wesbos": "^1.0.1",
+    "eslint-plugin-html": "^6.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "react-test-renderer": "^17.0.1"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
-    "testPathIgnorePatterns": [
-      "<rootDir>/.next/",
-      "<rootDir>/node_modules/"
-    ],
-    "transform": {
-      "\\.(gql|graphql)$": "jest-transform-graphql",
-      ".*": "babel-jest"
-    }
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
   },
   "//": "This is our babel config, I prefer this over a .babelrc file",
   "babel": {
