@@ -1,15 +1,13 @@
 {
   "name": "sick-fits-frontend",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Sick Fits! An example React, GraphQL, Next and Apollo",
   "main": "index.js",
   "scripts": {
     "dev": "next -p 7777",
     "build": "next build",
     "start": "next start -p 7777",
-    "test": "NODE_ENV=test jest --watch",
-    "heroku-postbuild": "next build",
-    "preinstall": "npx npm-force-resolutions"
+    "test": "NODE_ENV=test jest --watch"
   },
   "author": "",
   "license": "ISC",
@@ -25,8 +23,6 @@
     "date-fns": "^2.16.1",
     "graphql-upload": "^11.0.0",
     "downshift": "^6.0.6",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.5",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
     "lodash.debounce": "^4.0.8",
