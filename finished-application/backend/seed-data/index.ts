@@ -5,7 +5,8 @@ export async function insertSeedData(ks: any) {
   const keystone = ks.keystone || ks;
   const adapter = keystone.adapters?.MongooseAdapter || keystone.adapter;
 
-  const { mongoose } = keystone.adapters.MongooseAdapter;
+  console.log(`🌱 Inserting Seed Data: ${products.length} Products`);
+  const { mongoose } = adapter;
   for (const product of products) {
     console.log(`  🛍️ Adding Product: ${product.name}`);
     const { _id } = await mongoose
@@ -15,6 +16,6 @@ export async function insertSeedData(ks: any) {
     await mongoose.model('Product').create(product);
   }
   console.log(`✅ Seed Data Inserted: ${products.length} Products`);
-  console.log('👋 Please start the process with `yarn dev` or `npm run dev`');
+  console.log(`👋 Please start the process with \`yarn dev\` or \`npm run dev\``);
   process.exit();
 }
