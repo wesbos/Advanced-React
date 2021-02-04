@@ -35,12 +35,12 @@
     ]
   },
   "dependencies": {
-    "@keystone-next/admin-ui": "^7.0.1",
-    "@keystone-next/auth": "^10.0.1",
-    "@keystone-next/cloudinary": "^2.0.7",
-    "@keystone-next/fields": "^4.0.3",
-    "@keystone-next/keystone": "^9.0.1",
-    "@keystone-next/types": "^10.0.0",
+    "@keystone-next/admin-ui": "^8.0.1",
+    "@keystone-next/auth": "^14.0.0",
+    "@keystone-next/cloudinary": "^2.0.9",
+    "@keystone-next/fields": "^4.1.1",
+    "@keystone-next/keystone": "^9.3.0",
+    "@keystone-next/types": "^12.0.0",
     "@keystonejs/server-side-graphql-client": "^1.1.2",
     "@types/nodemailer": "^6.4.0",
     "dotenv": "^8.2.0",
