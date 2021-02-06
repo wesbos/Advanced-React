@@ -35,7 +35,7 @@ const HeaderStyles = styled.header`
 export default function Header() {
     return (
         <HeaderStyles>
-                // FIXME styled-components styles are not getting applied.
+            {/* FIXME styled-components styles are not getting applied. */}
             <div className="bar">
                 <Logo>
                     <Link href="/">
