@@ -21,10 +21,10 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-plugin-styled-components": "^1.12.0",
     "date-fns": "^2.16.1",
-    "graphql-upload": "^11.0.0",
     "downshift": "^6.0.6",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
+    "graphql-upload": "^11.0.0",
     "lodash.debounce": "^4.0.8",
     "next": "^10.0.3",
     "next-with-apollo": "^5.1.0",
@@ -43,6 +43,11 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.3.0",
+    "@types/nprogress": "^0.2.0",
+    "@types/react": "^17.0.1",
+    "@types/styled-components": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
     "casual": "^1.6.2",
@@ -58,12 +63,34 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
-    "react-test-renderer": "^17.0.1"
+    "react-test-renderer": "^17.0.1",
+    "typescript": "^4.1.3"
   },
   "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
     "extends": [
-      "wesbos"
-    ]
+      "wesbos",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".ts",
+            ".tsx"
+          ]
+        }
+      }
+    },
+    "rules": {
+      "react/jsx-filename-extension": 0,
+      "react/jsx-props-no-spreading": 0,
+      "@typescript-eslint/explicit-module-boundary-types": 0
+    }
   },
   "jest": {
     "setupFilesAfterEnv": [
