@@ -9,7 +9,7 @@
     "start": "next start -p 7777",
     "test": "NODE_ENV=test jest --watch"
   },
-  "author": "",
+  "author": "Shabarish Kesa",
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.2.9",
