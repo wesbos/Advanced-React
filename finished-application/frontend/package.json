@@ -22,7 +22,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/client": "^3.3.6",
+    "@apollo/client": "^3.3.8",
     "@apollo/link-error": "^2.0.0-beta.3",
     "@apollo/react-ssr": "^4.0.0",
     "@stripe/react-stripe-js": "^1.1.2",
@@ -39,7 +39,7 @@
     "graphql-upload": "^11.0.0",
     "lodash.debounce": "^4.0.8",
     "next": "^10.0.5",
-    "next-with-apollo": "^5.1.0",
+    "next-with-apollo": "^5.1.1",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
