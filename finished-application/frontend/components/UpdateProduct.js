@@ -42,7 +42,7 @@ export default function UpdateProduct({ id }) {
   // 2. We need to get the mutation to update the product
   const [
     updateProduct,
-    { data: updateData, errror: updateError, loading: updateLoading },
+    { data: updateData, error: updateError, loading: updateLoading },
   ] = useMutation(UPDATE_PRODUCT_MUTATION);
   // 2.5 Create some state for the form inputs:
   const { inputs, handleChange, clearForm, resetForm } = useForm(
