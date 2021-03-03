@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/client": "^3.2.9",
+    "@apollo/client": "^3.3.8",
     "@apollo/link-error": "^2.0.0-beta.3",
     "@apollo/react-ssr": "^4.0.0",
     "@stripe/react-stripe-js": "^1.1.2",
