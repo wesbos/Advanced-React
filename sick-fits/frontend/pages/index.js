@@ -1,7 +1,9 @@
 export default function IndexPage() {
   return (
-    <div>
+    <>
       <p>Hello</p>
-    </div>
+      <code>var</code>
+      <p>I am another child</p>
+    </>
   );
 }
