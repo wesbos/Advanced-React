@@ -1,16 +1,20 @@
-import 'dotenv/config';
-import { User } from "./schemas/User";
-import { config, createSchema } from '@keystone-next/keystone/schema';
 import { createAuth } from '@keystone-next/auth';
-import { withItemData, statelessSessions } from '@keystone-next/keystone/session';
+import { config, createSchema } from '@keystone-next/keystone/schema';
+import {
+    statelessSessions,
+    withItemData,
+} from '@keystone-next/keystone/session';
+import 'dotenv/config';
+import { Product } from './schemas/Product';
+import { User } from './schemas/User';
 
 const databaseUrl =
     process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
 
 const sessionConfig = {
-    maxAge: 60 * 60 * 24 * 360, //how long do users stay logged in
-    secret: process.env.COOKIE_SECRET
-}
+    maxAge: 60 * 60 * 24 * 360, // how long do users stay logged in
+    secret: process.env.COOKIE_SECRET,
+};
 
 const { withAuth } = createAuth({
     listKey: 'User',
@@ -18,8 +22,8 @@ const { withAuth } = createAuth({
     secretField: 'password',
     initFirstItem: {
         fields: ['name', 'email', 'password'],
-        //TODO: add initial roles here
-    }
+        // TODO: add initial roles here
+    },
 });
 
 export default withAuth(
@@ -27,8 +31,8 @@ export default withAuth(
         server: {
             cors: {
                 origin: [process.env.FRONTEND_URL],
-                credentials: true
-            }
+                credentials: true,
+            },
         },
         db: {
             adapter: 'mongoose',
@@ -36,17 +40,19 @@ export default withAuth(
             // TODO: add data seeding here
         },
         lists: createSchema({
-            User
+            User,
+            Product,
         }),
         ui: {
             // Show the ui only for people who pass this test
-            isAccessAllowed: ({ session }) => {
+            isAccessAllowed: ({ session }) =>
                 // returns true if there is a valid session
-                return !!session?.data;
-            }
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                !!session?.data,
         },
         session: withItemData(statelessSessions(sessionConfig), {
             // GraphQL Query
-            User: 'id name email'
-        })
-    }));
+            User: 'id name email',
+        }),
+    })
+);
