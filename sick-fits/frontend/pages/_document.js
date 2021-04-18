@@ -9,7 +9,8 @@ export default class MyDocument extends Document {
         return {...page, styleTags };
     }
     render() {
-       return ( <Html>
+       return ( 
+       <Html>
            <Head />
             <body>
                 <Main />
