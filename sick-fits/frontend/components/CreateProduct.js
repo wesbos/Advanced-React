@@ -46,10 +46,9 @@ export default function CreateProduct() {
     return (
         <Form onSubmit={async (e) => {
             e.preventDefault();
-            console.log(inputs)
             // Submit the inputfields to the backend:
-            const res = await createProduct();
-            console.log(res)
+            await createProduct();
+            clearForm()
         }}>
             <DisplayError error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
