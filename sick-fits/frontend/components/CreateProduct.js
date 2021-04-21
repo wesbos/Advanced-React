@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client'
 import DisplayError from './ErrorMessage'
 import useForm from "../lib/useForm";
 import Form from './styles/Form'
+import { ALL_PRODUCTS_QUERY } from './Products'
 
 const CREATE_PRODUCT_MUTATION = gql`
     mutation CREATE_PRODUCT_MUTATION(
@@ -41,7 +42,8 @@ export default function CreateProduct() {
         description: "Nice Shoes"
     });
     const [createProduct, { loading, error, data }] = useMutation(CREATE_PRODUCT_MUTATION, {
-        variables: inputs
+        variables: inputs,
+        refetchQueries: [{ query: ALL_PRODUCTS_QUERY }]
     })
     return (
         <Form onSubmit={async (e) => {
