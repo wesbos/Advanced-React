@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Cart/> renders and matches snappy 1`] = `
+<div>
+  <div
+    class="CartStyles-sc-1tvog53-0 beGvYo"
+    data-testid="cart"
+  >
+    <header>
+      <button
+        class="CloseButton-sc-1seb878-0 dIMWdj"
+        title="close"
+      >
+        ×
+      </button>
+      <h3
+        class="Supreme-xv30qb-0 hLAPHn"
+      >
+        Miss Coleman Berge
+        's Cart
+      </h3>
+      <p>
+        You Have 
+        2
+         Item
+        s
+         in your cart.
+      </p>
+    </header>
+    <ul>
+      <li
+        class="CartItem__CartItemStyles-sc-1rm9l7o-0 dwvXQK"
+      >
+        <img
+          alt="dogs are best"
+          src="dog.jpg"
+          width="100"
+        />
+        <div
+          class="cart-item-details"
+        >
+          <h3>
+            dogs are best
+          </h3>
+          <p>
+            $150
+             - 
+            <em>
+              3
+               × 
+              $50
+               each
+            </em>
+          </p>
+        </div>
+        <button
+          class="RemoveFromCart__BigButton-emvtd6-0 jWbKEf"
+          title="Remove Item From Cart"
+        >
+          ×
+        </button>
+      </li>
+      <li
+        class="CartItem__CartItemStyles-sc-1rm9l7o-0 dwvXQK"
+      >
+        <img
+          alt="dogs are best"
+          src="dog.jpg"
+          width="100"
+        />
+        <div
+          class="cart-item-details"
+        >
+          <h3>
+            dogs are best
+          </h3>
+          <p>
+            $150
+             - 
+            <em>
+              3
+               × 
+              $50
+               each
+            </em>
+          </p>
+        </div>
+        <button
+          class="RemoveFromCart__BigButton-emvtd6-0 jWbKEf"
+          title="Remove Item From Cart"
+        >
+          ×
+        </button>
+      </li>
+    </ul>
+    <footer>
+      <p>
+        $300
+      </p>
+      <form
+        class="Checkout__CheckoutFormStyles-sc-10mtoy5-0 eNIfuo"
+        data-testid="checkout"
+      >
+        <div />
+        <button
+          class="SickButton-l04z44-0 ievaJh"
+          type="submit"
+        >
+          Pay
+        </button>
+      </form>
+    </footer>
+  </div>
+</div>
+`;
