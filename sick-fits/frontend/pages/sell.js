@@ -1,5 +1,9 @@
+// import Page from '../components/Page';
+// No need to wrap everything in Page tag because of _app.js
 export default function SellPage() {
-    return <div>
-        <p>Hello!</p>
-    </div>
+    return (
+        <Page>
+            <p>Hello!</p>
+        </Page>
+        )
 }
