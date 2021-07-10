@@ -6,6 +6,7 @@ import Link from 'next/link';
 import ErrorMessage from '../components/ErrorMessage';
 import formatMoney from '../lib/formatMoney';
 import OrderItemStyles from '../components/styles/OrderItemStyles';
+import { serverUrl } from '../config';
 
 const USER_ORDERS_QUERY = gql`
   query USER_ORDERS_QUERY {
@@ -24,7 +25,7 @@ const USER_ORDERS_QUERY = gql`
         quantity
         photo {
           image {
-            publicUrlTransformed
+            src
           }
         }
       }
@@ -70,7 +71,7 @@ export default function OrdersPage() {
                   {order.items.map((item) => (
                     <img
                       key={`image-${item.id}`}
-                      src={item.photo?.image?.publicUrlTransformed}
+                      src={`${serverUrl}${item.photo?.image?.src}`}
                       alt={item.name}
                     />
                   ))}
