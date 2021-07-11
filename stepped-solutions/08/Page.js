@@ -33,7 +33,7 @@ const GlobalStyles = createGlobalStyle`
   }
   a {
     text-decoration: none;
-    color: var(---black);
+    color: var(--black);
   }
   a:hover {
     text-decoration: underline;
