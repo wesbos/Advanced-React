@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import styled from 'styled-components';
+import { serverUrl } from '../config';
 import DisplayError from './ErrorMessage';
 
 const ProductStyles = styled.div`
@@ -29,7 +30,7 @@ const SINGLE_ITEM_QUERY = gql`
         id
         altText
         image {
-          publicUrlTransformed
+          src
         }
       }
     }
@@ -52,7 +53,7 @@ export default function SingleProduct({ id }) {
         <title>Sick Fits | {Product.name}</title>
       </Head>
       <img
-        src={Product.photo.image.publicUrlTransformed}
+        src={`${serverUrl}${Product.photo.image.src}`}
         alt={Product.photo.altText}
       />
       <div className="details">

@@ -17,7 +17,7 @@ const CURRENT_USER_QUERY = gql`
             description
             photo {
               image {
-                publicUrlTransformed
+                src
               }
             }
           }

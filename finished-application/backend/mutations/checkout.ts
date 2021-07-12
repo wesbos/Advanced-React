@@ -23,7 +23,7 @@ async function checkout(
 ): Promise<OrderCreateInput> {
   // 1. Make sure they are signed in
   const userId = context.session.itemId;
-  if(!userId) {
+  if (!userId) {
     throw new Error('Sorry! You must be signed in to create an order!')
   }
   // 1.5 Query the current user
@@ -45,7 +45,7 @@ async function checkout(
             id
             image {
               id
-              publicUrlTransformed
+              src
             }
           }
         }
@@ -55,7 +55,7 @@ async function checkout(
   console.dir(user, { depth: null })
   // 2. calc the total price for their order
   const cartItems = user.cart.filter(cartItem => cartItem.product);
-  const amount = cartItems.reduce(function(tally: number, cartItem: CartItemCreateInput) {
+  const amount = cartItems.reduce(function (tally: number, cartItem: CartItemCreateInput) {
     return tally + cartItem.quantity * cartItem.product.price;
   }, 0);
   console.log(amount);
@@ -65,6 +65,12 @@ async function checkout(
     currency: 'USD',
     confirm: true,
     payment_method: token,
+    // needed for Indian customer
+    description: 'Description',
+    shipping: {
+      name: 'some name',
+      address: { line1: 'sdsd', city: 'city', postal_code: '110001', state: 'KA', country: 'US', line2: '' }
+    }
   }).catch(err => {
     console.log(err);
     throw new Error(err.message);
@@ -77,7 +83,7 @@ async function checkout(
       description: cartItem.product.description,
       price: cartItem.product.price,
       quantity: cartItem.quantity,
-      photo: { connect: { id: cartItem.product.photo.id }},
+      photo: { connect: { id: cartItem.product.photo.id } },
     }
     return orderItem;
   })
@@ -88,7 +94,7 @@ async function checkout(
       total: charge.amount,
       charge: charge.id,
       items: { create: orderItems },
-      user: { connect: { id: userId }}
+      user: { connect: { id: userId } }
     },
     resolveFields: false,
   });

@@ -1,9 +1,6 @@
 import { createAuth } from '@keystone-next/auth';
 import { config, createSchema } from '@keystone-next/keystone/schema';
-import {
-  withItemData,
-  statelessSessions,
-} from '@keystone-next/keystone/session';
+import { statelessSessions } from '@keystone-next/keystone/session';
 import { permissionsList } from './schemas/fields';
 import { Role } from './schemas/Role';
 import { OrderItem } from './schemas/OrderItem';
@@ -20,11 +17,11 @@ import { extendGraphqlSchema } from './mutations';
 function check(name: string) {}
 
 const databaseURL =
-  process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
+  process.env.DATABASE_URL || 'postgres://localhost/keystone-sick-fits-tutorial';
 
 const sessionConfig = {
   maxAge: 60 * 60 * 24 * 360, // How long they stay signed in?
-  secret: process.env.COOKIE_SECRET,
+  secret: process.env.COOKIE_SECRET || '-- DEV COOKIE SECRET; CHANGE ME --',
 };
 
 const { withAuth } = createAuth({
@@ -33,6 +30,17 @@ const { withAuth } = createAuth({
   secretField: 'password',
   initFirstItem: {
     fields: ['name', 'email', 'password'],
+    itemData: {
+      role: {
+        create: {
+          name: 'initial role',
+          ...(permissionsList.reduce((result, permission) => {
+            result[permission] = true;
+            return result;
+          }, {})),
+        },
+      },
+    }
     // TODO: Add in inital roles here
   },
   passwordResetLink: {
@@ -41,11 +49,11 @@ const { withAuth } = createAuth({
       await sendPasswordResetEmail(args.token, args.identity);
     },
   },
+  sessionData: `name email role { ${permissionsList.join(' ')} }`,
 });
 
 export default withAuth(
   config({
-    // @ts-ignore
     server: {
       cors: {
         origin: [process.env.FRONTEND_URL],
@@ -53,15 +61,16 @@ export default withAuth(
       },
     },
     db: {
-      adapter: 'mongoose',
+      provider: 'postgresql',
       url: databaseURL,
-      async onConnect(keystone) {
+      async onConnect(context) {
         console.log('Connected to the database!');
         if (process.argv.includes('--seed-data')) {
-          await insertSeedData(keystone);
+          await insertSeedData(context);
         }
       },
     },
+    images: { upload: 'local' },
     lists: createSchema({
       // Schema items go in here
       User,
@@ -74,14 +83,11 @@ export default withAuth(
     }),
     extendGraphqlSchema,
     ui: {
-      // Show the UI only for poeple who pass this test
+      // Show the UI only for people who pass this test
       isAccessAllowed: ({ session }) =>
         // console.log(session);
         !!session?.data,
     },
-    session: withItemData(statelessSessions(sessionConfig), {
-      // GraphQL Query
-      User: `id name email role { ${permissionsList.join(' ')} }`,
-    }),
+    session: statelessSessions(sessionConfig),
   })
 );

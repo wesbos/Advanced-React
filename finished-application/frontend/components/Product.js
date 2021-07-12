@@ -5,12 +5,13 @@ import PriceTag from './styles/PriceTag';
 import formatMoney from '../lib/formatMoney';
 import DeleteProduct from './DeleteProduct';
 import AddToCart from './AddToCart';
+import { serverUrl } from '../config';
 
 export default function Product({ product }) {
   return (
     <ItemStyles>
       <img
-        src={product?.photo?.image?.publicUrlTransformed}
+        src={`${serverUrl}${product?.photo?.image?.src}`}
         alt={product.name}
       />
       <Title>
