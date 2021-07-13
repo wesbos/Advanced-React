@@ -3,6 +3,7 @@ import Form from './styles/Form';
 import gql from 'graphql-tag';
 import DisplayError from './ErrorMessage';
 import { useMutation } from "@apollo/client";
+import Router from 'next/Router';
 
 const CREATE_PRODUCT_MUTATION = gql`
     mutation CREATE_PRODUCT_MUTATION(
@@ -49,7 +50,10 @@ export default function CreateProduct() {
             await createProduct();
             console.log(res);
             clearForm();
-            
+            // Go to the product's page! Create the URL
+            Router.push({
+                pathname: `/product${res.data.res.data.createProduct.id}`,
+            })
         }}>
             {/* see Form.js style for aria-busy (accessibility attribute that serves as a loading bar) */}
             <DisplayError error={error}/>
