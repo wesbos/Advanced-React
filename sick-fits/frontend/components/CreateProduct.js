@@ -39,6 +39,8 @@ export default function CreateProduct() {
 
     const [createProduct, { loading, error, data }] = useMutation(CREATE_PRODUCT_MUTATION, {
         variables: inputs,
+        // prevents having to refresh the page:
+        refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
     });
     // console.log(createProduct);
     return (
