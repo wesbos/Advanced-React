@@ -50,9 +50,9 @@ export default function CreateProduct() {
             await createProduct();
             console.log(res);
             clearForm();
-            // Go to the product's page! Create the URL
+            // Go to the product's page! Create the URL:
             Router.push({
-                pathname: `/product${res.data.res.data.createProduct.id}`,
+                pathname: `/product/${res.data.createProduct.id}`,
             })
         }}>
             {/* see Form.js style for aria-busy (accessibility attribute that serves as a loading bar) */}
