@@ -47,13 +47,14 @@ const InnerStyles = styled.div`
     margin: 0 auto;
     padding: 2rem;
 `;
-
+// use <SingleProduct> component to manually insert products by id number
 export default function Page({ children, cool }) {
     return (
         <div>
             <GlobalStyles />
             <Header />
             <InnerStyles>{children}</InnerStyles>
+            {/* <SingleProduct /> */}
         </div>
     )
 }
