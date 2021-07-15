@@ -39,7 +39,7 @@ const SINGLE_ITEM_QUERY = gql`
 `;
 
 export default function SingleProduct({ id }) {
-    const { data, loading, error} = useQuery(SINGLE_ITEM_QUERY, {
+    const { data, loading, error } = useQuery(SINGLE_ITEM_QUERY, {
         variables: {
             id: id,
         }
