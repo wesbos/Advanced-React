@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import PaginationStyles from './styles/PaginationStyles'
-import Link from 'next/Link';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
+import gql from 'graphql-tag';
+import Head from 'next/head';
+import Link from 'next/Link';
+import PaginationStyles from './styles/PaginationStyles'
 import DisplayError from './ErrorMessage';
 import { perPage } from '../config';
 
@@ -21,8 +21,8 @@ export default function Pagination({ page }) {
     if(loading) return 'Loading...'
     if(error) return <DisplayError error={error} />;
     // round up to highest int:
-    const pageCount = Math.ceil(count / perPage);
     const count = data._allProductsMeta;
+    const pageCount = Math.ceil(count / perPage);
     return (
         <PaginationStyles>
             <Head>

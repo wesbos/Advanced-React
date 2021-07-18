@@ -1,5 +1,6 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import Products from "../../components/Products";
+import Pagination from "../../components/Pagination";
 
 export default function OrderPage() {
     // a next.js hook:
@@ -11,7 +12,7 @@ export default function OrderPage() {
     return (
         <div>
             <Pagination page={page || 1} />
-            <Products />
+            <Products page={page || 1}/>
             <Pagination page={page || 1} />
         </div>
     )
