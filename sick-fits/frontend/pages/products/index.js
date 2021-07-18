@@ -6,8 +6,9 @@ export default function OrderPage() {
     // a next.js hook:
     const { query } = useRouter();
     // destructure & get query from router
-    // console.log(router);
+    // console.log();
     const page = parseInt(query.page);
+    // console.log(page)
     // go to the page in the query, else to page 1
     return (
         <div>

@@ -5,7 +5,7 @@ import { perPage } from "../config";
 import Product from './Product';
 
 // set skip and first variables to define which products to display on each paginated page...
-const ALL_PRODUCTS_QUERY = gql`
+export const ALL_PRODUCTS_QUERY = gql`
 query ALL_PRODUCTS_QUERY($skip: Int = 0, $first: Int) {
     allProducts(first: $first, skip: $skip) {
       id
@@ -20,7 +20,6 @@ query ALL_PRODUCTS_QUERY($skip: Int = 0, $first: Int) {
       }
     } 
   }
-
 `;
 
 const ProductsListStyles = styled.div`
