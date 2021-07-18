@@ -20,13 +20,13 @@ export default function Pagination({ page }) {
 
     if(loading) return 'Loading...'
     if(error) return <DisplayError error={error} />;
-    // round to highest int:
+    // round up to highest int:
     const pageCount = Math.ceil(count / perPage);
     const count = data._allProductsMeta;
     return (
         <PaginationStyles>
             <Head>
-                <title>Sick fits - Page {page} of ___</title>
+                <title>Sick fits - Page {page} of {pageCount}</title>
             </Head>
             {/* A weird quirk of Next.js where you need an <a> tag for other attributes... */}
             <Link href={`/products/${page - 1}`}>
@@ -39,4 +39,4 @@ export default function Pagination({ page }) {
             </Link>
         </PaginationStyles>
     )
-}
+};
