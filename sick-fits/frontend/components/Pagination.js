@@ -7,7 +7,7 @@ import DisplayError from './ErrorMessage';
 import { perPage } from '../config';
 
 // query the total *number* of products:
-const PAGINATION_QUERY = gql`
+export const PAGINATION_QUERY = gql`
     query PAGINATION_QUERY {
         _allProductsMeta {
             count
@@ -21,6 +21,7 @@ export default function Pagination({ page }) {
     if(loading) return 'Loading...'
     if(error) return <DisplayError error={error} />;
     // round up to highest int:
+    // fixed count: **destructured** (this is what created objects not valid as React child error)
     const { count } = data._allProductsMeta;
     const pageCount = Math.ceil(count / perPage);
     return (
