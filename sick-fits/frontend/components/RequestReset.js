@@ -21,8 +21,6 @@ export default function RequestReset() {
 
     const [signup, { data, loading }] = useMutation(REQUEST_RESET_MUTATION, {
         variables: inputs,
-        // don't need refetch because we're not signing in here
-        // refetchQueries: [{ query: CURRENT_USER_QUERY }],
     })
 
     async function handleSubmit(e) {
