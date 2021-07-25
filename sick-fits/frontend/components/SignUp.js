@@ -47,14 +47,25 @@ export default function SignUp() {
         <fieldset>
             {/* Show a "signed up" state: let the user know they're signed up */}
             {data?.createUser && <p>Signed up with {data.createUser.email} - Please go ahead and sign in!</p>}
-            <label htmlFor="email">
-            Email
+            <label htmlFor="name">
+            Name
             <input 
                 type="text" 
                 name="name"
                 placeholder="your name"
                 autoComplete="name" 
                 value={inputs.name}
+                onChange={handleChange}
+            /> 
+            </label>
+            <label htmlFor="email">
+            Email
+            <input 
+                type="email" 
+                name="email"
+                placeholder="email address"
+                autoComplete="email" 
+                value={inputs.email}
                 onChange={handleChange}
             /> 
             </label>
