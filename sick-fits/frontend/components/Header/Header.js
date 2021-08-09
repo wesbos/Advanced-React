@@ -1,4 +1,3 @@
-import propTypes from 'prop-types';
 import NextLink from 'next/link';
 import Nav from '../Nav/Nav';
 
