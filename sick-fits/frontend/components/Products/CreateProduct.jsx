@@ -7,8 +7,16 @@ export default function CreateProduct() {
     price: 15,
   });
 
+  /**
+   *
+   * @param {event} event
+   */
+  function onSubmit(event) {
+    event.preventDefault();
+  }
+
   return (
-    <Form>
+    <Form onSubmit={onSubmit}>
       <label htmlFor="name">
         Name
         <input
