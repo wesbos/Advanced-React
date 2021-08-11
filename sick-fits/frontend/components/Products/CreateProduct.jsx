@@ -53,7 +53,8 @@ export default function CreateProduct() {
     event.preventDefault();
     const response = await createProduct();
     clearForm();
-    router.push({
+
+    Router.push({
       pathname: `/product/${response.createProduct.id}`,
     });
   }
