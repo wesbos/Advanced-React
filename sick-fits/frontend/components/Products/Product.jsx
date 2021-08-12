@@ -13,7 +13,7 @@ export default function Product({ product }) {
         alt={product.name}
       />
       <Title>
-        <NextLink href={`/product/${product.id}`}>{product.name}</NextLink>
+        <NextLink href={`/products/${product.id}`}>{product.name}</NextLink>
       </Title>
       <PriceTag>{formatMoney(product.price / 100)}</PriceTag>
       <p>{product.description}</p>
@@ -24,6 +24,7 @@ export default function Product({ product }) {
 
 Product.propTypes = {
   product: PropTypes.exact({
+    // eslint-disable-next-line react/no-unused-prop-types
     __typename: PropTypes.string,
     id: PropTypes.string,
     name: PropTypes.string,
