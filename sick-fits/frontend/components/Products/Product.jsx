@@ -14,7 +14,7 @@ export default function Product({ product }) {
         alt={product.name}
       />
       <Title>
-        <NextLink href={`/products/${product.id}`}>{product.name}</NextLink>
+        <NextLink href={`/product/${product.id}`}>{product.name}</NextLink>
       </Title>
       <PriceTag>{formatMoney(product.price / 100)}</PriceTag>
       <p>{product.description}</p>
