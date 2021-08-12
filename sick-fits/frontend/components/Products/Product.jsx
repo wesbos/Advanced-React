@@ -18,6 +18,18 @@ export default function Product({ product }) {
       <PriceTag>{formatMoney(product.price / 100)}</PriceTag>
       <p>{product.description}</p>
       {/* Add buttons to edit and delete item */}
+      <div className="buttonList">
+        <NextLink
+          href={{
+            pathname: 'update',
+            query: {
+              id: product.id,
+            },
+          }}
+        >
+          Edit
+        </NextLink>
+      </div>
     </ItemStyles>
   );
 }
