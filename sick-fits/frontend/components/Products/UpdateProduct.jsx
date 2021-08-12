@@ -77,16 +77,6 @@ export default function UpdateProduct({ id }) {
     <Form onSubmit={onSubmit}>
       <DisplayError error={error || updateError} />
       <fieldset disabled={updateLoading} aria-busy={updateLoading}>
-        {/* <label htmlFor="image">
-          Image
-          <input
-            required
-            type="file"
-            id="image"
-            name="image"
-            onChange={handleChange}
-          />
-        </label> */}
         <label htmlFor="name">
           Name
           <input
