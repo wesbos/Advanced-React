@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import { useState } from 'react';
-import { oneOfType, node, arrayOf, string, number } from 'prop-types';
+import { string } from 'prop-types';
+import { string } from 'prop-types';
 import { useMutation } from '@apollo/client';
 
 const DELETE_PRODUCT_MUTATION = gql`
@@ -23,6 +24,8 @@ export default function DeleteProduct({ id }) {
       variables: {
         id,
       },
+      update: (cache, payload) =>
+        cache.evict(cache.identify(payload.data.deleteProduct)),
     }
   );
 
