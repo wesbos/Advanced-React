@@ -1,7 +1,6 @@
 import gql from 'graphql-tag';
 import { useState } from 'react';
 import { string } from 'prop-types';
-import { string } from 'prop-types';
 import { useMutation } from '@apollo/client';
 
 const DELETE_PRODUCT_MUTATION = gql`
