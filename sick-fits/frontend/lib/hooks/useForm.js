@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Custom form hook for use with forms that deal with basic data
@@ -8,6 +8,11 @@ import { useState } from 'react';
 export default function useForm(initialState = {}) {
   // Create a state variable for our inputs
   const [inputs, setInputs] = useState(initialState);
+  const initialValues = Object.values(initialState).join('');
+
+  useEffect(() => {
+    setInputs(initialState);
+  }, [initialState, initialValues]);
 
   const handleChange = (event) => {
     let { value, name, type } = event.target;
