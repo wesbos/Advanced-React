@@ -16,7 +16,7 @@ export default function Product({ product }) {
       <Title>
         <NextLink href={`/product/${product.id}`}>{product.name}</NextLink>
       </Title>
-      <PriceTag>{formatMoney(product.price / 100)}</PriceTag>
+      <PriceTag>{formatMoney(product.price)}</PriceTag>
       <p>{product.description}</p>
       {/* Add buttons to edit and delete item */}
       <div className="buttonList">
