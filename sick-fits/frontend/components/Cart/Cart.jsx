@@ -5,7 +5,8 @@ import CartStyles from '../styles/CartStyles';
 import Supreme from '../styles/Supreme';
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
-
+import { useCart } from '../../lib/contexts/cartContext';
+import CloseButton from '../styles/CloseButton'
 const CartItemStyled = styled.li`
   padding: 1rem 0;
   border-bottom: 1px solid var(--lightGrey);
@@ -66,10 +67,13 @@ CartItem.propTypes = {
 
 function Cart(props) {
   const me = useUser();
+
+  const {cartOpen, closeCart, openCart} = useCart();
   return !me ? null : (
-    <CartStyles open>
+    <CartStyles open={cartOpen}>
       <header>
         <Supreme>{me.name}'s Cart</Supreme>
+        <CloseButton type="button" onClick={closeCart}>Close Cart</CloseButton>
       </header>
       <ul>
         {me.cart.map((cartItem) => (
