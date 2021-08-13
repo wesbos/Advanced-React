@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import RequestReset from '../components/User/RequestReset';
 import SignIn from '../components/User/SignIn';
 import SignUp from '../components/User/SignUp';
 
@@ -13,6 +14,7 @@ export default function SignInPage() {
     <GridStyled>
       <SignIn />
       <SignUp />
+      <RequestReset />
     </GridStyled>
   );
 }
