@@ -12,7 +12,7 @@ export default function useForm(initialState = {}) {
 
   useEffect(() => {
     setInputs(initialState);
-  }, [initialState, initialValues]);
+  }, [initialValues]);
 
   const handleChange = (event) => {
     let { value, name, type } = event.target;
