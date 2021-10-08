@@ -14,7 +14,7 @@ const BigButton = styled.button`
 
 const REMOVE_FROM_CART_MUTATION = gql`
   mutation REMOVE_FROM_CART_MUTATION($id: ID!) {
-    deleteCartItem(id: $id) {
+    deleteCartItem(where: { id: $id }) {
       id
     }
   }

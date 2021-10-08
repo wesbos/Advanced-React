@@ -1,27 +1,32 @@
 import {
   integer,
-  select,
   text,
   relationship,
   virtual,
-} from '@keystone-next/fields';
-import { list } from '@keystone-next/keystone/schema';
+} from '@keystone-next/keystone/fields';
+import { list, graphql } from '@keystone-next/keystone';
 import { isSignedIn, rules } from '../access';
 import formatMoney from '../lib/formatMoney';
 
 export const Order = list({
   access: {
-    create: isSignedIn,
-    read: rules.canOrder,
-    update: () => false,
-    delete: () => false,
+    operation: {
+      create: isSignedIn,
+      update: () => false,
+      delete: () => false,
+    },
+    filter: {
+      query: rules.canOrder,
+    },
   },
   fields: {
     label: virtual({
-      graphQLReturnType: 'String',
-      resolver(item) {
-        return `${formatMoney(item.total)}`;
-      },
+      field: graphql.field({
+        type: graphql.String,
+        resolve(item) {
+          return `${formatMoney(item.total as number)}`;
+        },
+      }),
     }),
     total: integer(),
     items: relationship({ ref: 'OrderItem.order', many: true }),
