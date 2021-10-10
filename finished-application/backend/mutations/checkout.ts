@@ -1,5 +1,5 @@
 import { KeystoneContext } from '@keystone-next/keystone/types';
-import { KeystoneContext as SpecificKeystoneContext } from '.keystone/types';
+import { KeystoneContext as ProjectKeystoneContext } from '.keystone/types';
 import { Order } from '.prisma/client';
 
 /* eslint-disable */
@@ -17,7 +17,7 @@ async function checkout(
   { token }: Arguments,
   _context: KeystoneContext
 ): Promise<Order> {
-  const context = _context as SpecificKeystoneContext;
+  const context = _context as ProjectKeystoneContext;
   // 1. Make sure they are signed in
   const userId = context.session.itemId;
   if(!userId) {
