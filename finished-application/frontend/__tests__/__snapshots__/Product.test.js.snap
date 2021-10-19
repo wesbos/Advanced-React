@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Item/> renders and matches the snapshot 1`] = `
+exports[`<Product/> Renders and matches the snapshot 1`] = `
 <div>
   <div
-    class="ItemStyles__Item-sc-16pk14u-0 biTBO"
+    class="ItemStyles-sc-16pk14u-0 eSQgQd"
   >
     <img
       alt="dogs are best"
       src="dog.jpg"
     />
     <h3
-      class="Title-sc-16nq74k-0 cPJKCc"
+      class="Title-sc-16nq74k-0 gXfwKx"
     >
       <a
         href="/product/abc123"
@@ -19,7 +19,7 @@ exports[`<Item/> renders and matches the snapshot 1`] = `
       </a>
     </h3>
     <span
-      class="PriceTag-nwbk6t-0 ffeJgy"
+      class="PriceTag-sc-nwbk6t-0 iDOMQG"
     >
       $50
     </span>
@@ -43,7 +43,7 @@ exports[`<Item/> renders and matches the snapshot 1`] = `
       <button
         type="button"
       >
-        Delete This Item
+        Delete
       </button>
     </div>
   </div>

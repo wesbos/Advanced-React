@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Product/> Renders and matches the snapshot 1`] = `
+<div>
+  <div
+    class="ItemStyles-sc-16pk14u-0 eSQgQd"
+  >
+    <img
+      alt="dogs are best"
+      src="dog.jpg"
+    />
+    <h3
+      class="Title-sc-16nq74k-0 gXfwKx"
+    >
+      <a
+        href="/product/abc123"
+      >
+        dogs are best
+      </a>
+    </h3>
+    <span
+      class="PriceTag-sc-nwbk6t-0 iDOMQG"
+    >
+      $50
+    </span>
+    <p>
+      dogs
+    </p>
+    <div
+      class="buttonList"
+    >
+      <a
+        href="/update?id=abc123"
+      >
+        Edit ✏️
+      </a>
+      <button
+        type="button"
+      >
+        Add
+         To Cart 🛒
+      </button>
+      <button
+        type="button"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+`;
