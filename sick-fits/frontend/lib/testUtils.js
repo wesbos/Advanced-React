@@ -11,7 +11,7 @@ const fakeItem = () => ({
   user: null,
   photo: {
     image: {
-      publicUrlTransformed: 'dog.jpg',
+      src: 'dog.jpg',
     },
   },
   name: 'dogs are best',

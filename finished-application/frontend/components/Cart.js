@@ -8,6 +8,7 @@ import calcTotalPrice from '../lib/calcTotalPrice';
 import { useCart } from '../lib/cartState';
 import RemoveFromCart from './RemoveFromCart';
 import { Checkout } from './Checkout';
+import { serverUrl } from '../config';
 
 const CartItemStyles = styled.li`
   padding: 1rem 0;
@@ -30,7 +31,7 @@ function CartItem({ cartItem }) {
     <CartItemStyles>
       <img
         width="100"
-        src={product.photo.image.publicUrlTransformed}
+        src={`${serverUrl}${product.photo.image.src}`}
         alt={product.name}
       />
       <div>

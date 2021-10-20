@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import Head from 'next/head';
 import ErrorMessage from '../../components/ErrorMessage';
 import OrderStyles from '../../components/styles/OrderStyles';
+import { serverUrl } from '../../config';
 import formatMoney from '../../lib/formatMoney';
 
 const SINGLE_ORDER_QUERY = gql`
@@ -22,7 +23,7 @@ const SINGLE_ORDER_QUERY = gql`
         quantity
         photo {
           image {
-            publicUrlTransformed
+            src
           }
         }
       }
@@ -60,7 +61,7 @@ export default function SingleOrderPage({ query }) {
       <div className="items">
         {order.items.map((item) => (
           <div className="order-item" key={item.id}>
-            <img src={item.photo.image.publicUrlTransformed} alt={item.title} />
+            <img src={`${serverUrl}${item.photo.image.src}`} alt={item.title} />
             <div className="item-details">
               <h2>{item.name}</h2>
               <p>Qty: {item.quantity}</p>
