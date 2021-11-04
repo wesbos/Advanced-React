@@ -20,7 +20,7 @@ const ProductStyles = styled.div`
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
-    product(where: { id: $id }) {
+    Product: product(where: { id: $id }) {
       name
       price
       description
@@ -44,20 +44,20 @@ export default function SingleProduct({ id }) {
   });
   if (loading) return <p>Loading...</p>;
   if (error) return <DisplayError error={error} />;
-  const { product } = data;
-  console.log(product);
+  const { Product } = data;
+  console.log(Product);
   return (
     <ProductStyles>
       <Head>
-        <title>Sick Fits | {product.name}</title>
+        <title>Sick Fits | {Product.name}</title>
       </Head>
       <img
-        src={product.photo.image.publicUrlTransformed}
-        alt={product.photo.altText}
+        src={Product.photo.image.publicUrlTransformed}
+        alt={Product.photo.altText}
       />
       <div className="details">
-        <h2>{product.name}</h2>
-        <p>{product.description}</p>
+        <h2>{Product.name}</h2>
+        <p>{Product.description}</p>
       </div>
     </ProductStyles>
   );
