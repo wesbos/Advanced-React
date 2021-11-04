@@ -7,7 +7,7 @@ import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
 const SEARCH_PRODUCTS_QUERY = gql`
   query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
-    searchTerms: Products(
+    searchTerms: products(
       where: {
         OR: [
           { name: { contains: $searchTerm } }
