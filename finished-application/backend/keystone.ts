@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { createAuth } from '@keystone-next/auth';
 import { config } from '@keystone-next/keystone';
 import { statelessSessions } from '@keystone-next/keystone/session';
-import { permissionsList } from './schemas/fields';
+import { permissionFields, permissionsList } from './schemas/fields';
 import { Role } from './schemas/Role';
 import { OrderItem } from './schemas/OrderItem';
 import { Order } from './schemas/Order';
@@ -13,6 +13,7 @@ import { User } from './schemas/User';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations';
+import { addCompatibilityForQueries } from './compat';
 
 const databaseURL = process.env.DATABASE_URL || 'file:./app.db';
 
@@ -27,6 +28,14 @@ const { withAuth } = createAuth({
   secretField: 'password',
   initFirstItem: {
     fields: ['name', 'email', 'password'],
+    itemData:{
+      role: {
+        create: {
+          name: 'Admin',
+          ...Object.fromEntries(Object.keys(permissionFields).map(x=>[x,true]))
+        }
+      }
+    }
     // TODO: Add in inital roles here
   },
   sessionData: `id name email role { ${permissionsList.join(' ')} }`,
@@ -66,7 +75,8 @@ export default withAuth(
       Order,
       Role,
     },
-    extendGraphqlSchema,
+    extendGraphqlSchema: (schema) =>
+      addCompatibilityForQueries(extendGraphqlSchema(schema)),
     ui: {
       // Show the UI only for poeple who pass this test
       isAccessAllowed: ({ session }) =>

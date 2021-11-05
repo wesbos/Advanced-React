@@ -7,7 +7,7 @@ import formatMoney from '../../lib/formatMoney';
 
 const SINGLE_ORDER_QUERY = gql`
   query SINGLE_ORDER_QUERY($id: ID!) {
-    order(where: { id: $id }) {
+    order: Order(where: { id: $id }) {
       id
       charge
       total
