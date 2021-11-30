@@ -7,7 +7,7 @@ const transport = createTransport({
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
-});
+} as any);
 
 function makeANiceEmail(text: string) {
   return `
@@ -27,8 +27,8 @@ function makeANiceEmail(text: string) {
 }
 
 export interface MailResponse {
-  accepted?: (string)[] | null;
-  rejected?: (null)[] | null;
+  accepted?: string[] | null;
+  rejected?: null[] | null;
   envelopeTime: number;
   messageTime: number;
   messageSize: number;
@@ -38,25 +38,23 @@ export interface MailResponse {
 }
 export interface Envelope {
   from: string;
-  to?: (string)[] | null;
+  to?: string[] | null;
 }
-
 
 export async function sendPasswordResetEmail(
   resetToken: string,
   to: string
 ): Promise<void> {
   // email the user a token
-  const info = (await transport.sendMail({
+  const info = await transport.sendMail({
     to,
     from: 'wes@wesbos.com',
     subject: 'Your password reset token!',
     html: makeANiceEmail(`Your Password Reset Token is here!
       <a href="${process.env.FRONTEND_URL}/reset?token=${resetToken}">Click Here to reset</a>
     `),
-  })) as MailResponse;
-  if(process.env.MAIL_USER.includes('ethereal.email')) {
+  });
+  if (process.env.MAIL_USER!.includes('ethereal.email')) {
     console.log(`💌 Message Sent!  Preview it at ${getTestMessageUrl(info)}`);
-
   }
 }
