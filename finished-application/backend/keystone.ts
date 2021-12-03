@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import { createAuth } from '@keystone-next/auth';
-import { config } from '@keystone-next/keystone';
-import { statelessSessions } from '@keystone-next/keystone/session';
+import { createAuth } from '@keystone-6/auth';
+import { config } from '@keystone-6/core';
+import { statelessSessions } from '@keystone-6/core/session';
 import { permissionFields, permissionsList } from './schemas/fields';
 import { Role } from './schemas/Role';
 import { OrderItem } from './schemas/OrderItem';
@@ -28,14 +28,16 @@ const { withAuth } = createAuth({
   secretField: 'password',
   initFirstItem: {
     fields: ['name', 'email', 'password'],
-    itemData:{
+    itemData: {
       role: {
         create: {
           name: 'Admin',
-          ...Object.fromEntries(Object.keys(permissionFields).map(x=>[x,true]))
-        }
-      }
-    }
+          ...Object.fromEntries(
+            Object.keys(permissionFields).map((x) => [x, true])
+          ),
+        },
+      },
+    },
     // TODO: Add in inital roles here
   },
   sessionData: `id name email role { ${permissionsList.join(' ')} }`,

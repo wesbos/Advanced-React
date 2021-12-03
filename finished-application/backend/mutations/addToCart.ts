@@ -1,19 +1,18 @@
-import { KeystoneContext } from "@keystone-next/keystone/types";
-import { KeystoneContext as ProjectKeystoneContext } from ".keystone/types";
-import { CartItem } from ".prisma/client";
-import { Session } from "../types";
+import { KeystoneContext } from '@keystone-6/core/types';
+import { Context } from '.keystone/types';
+import { CartItem } from '.prisma/client';
+import { Session } from '../types';
 
 async function addToCart(
   root: any,
   { productId }: { productId: string },
-  _context: KeystoneContext
+  context: Context
 ): Promise<CartItem> {
-  const context = _context as ProjectKeystoneContext;
-  console.log("ADDING TO CART!");
+  console.log('ADDING TO CART!');
   // 1. Query the current user see if they are signed in
   const sesh = context.session as Session;
   if (!sesh.itemId) {
-    throw new Error("You must be logged in to do this!");
+    throw new Error('You must be logged in to do this!');
   }
   // 2. Query the current users cart
   const allCartItems = await context.db.CartItem.findMany({

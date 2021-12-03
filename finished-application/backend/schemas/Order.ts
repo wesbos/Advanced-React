@@ -1,10 +1,5 @@
-import {
-  integer,
-  text,
-  relationship,
-  virtual,
-} from '@keystone-next/keystone/fields';
-import { list, graphql } from '@keystone-next/keystone';
+import { integer, text, relationship, virtual } from '@keystone-6/core/fields';
+import { list, graphql } from '@keystone-6/core';
 import { isSignedIn, rules } from '../access';
 import formatMoney from '../lib/formatMoney';
 
@@ -24,7 +19,7 @@ export const Order = list({
       field: graphql.field({
         type: graphql.String,
         resolve(item) {
-          return `${formatMoney(item.total as number)}`;
+          return `${formatMoney((item as { total: number }).total)}`;
         },
       }),
     }),
