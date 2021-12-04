@@ -8,3 +8,4 @@ layout.md
 variables.env
 *.env
 .keystone
+*.db

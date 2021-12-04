@@ -20,7 +20,7 @@ const ProductStyles = styled.div`
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
-    Product(where: { id: $id }) {
+    Product: product(where: { id: $id }) {
       name
       price
       description
