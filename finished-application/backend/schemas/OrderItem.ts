@@ -1,5 +1,5 @@
-import { integer, select, text, relationship } from '@keystone-next/fields';
-import { list } from '@keystone-next/keystone/schema';
+import { integer, select, text, relationship } from '@keystone-6/core/fields';
+import { list } from '@keystone-6/core';
 import { isSignedIn, rules } from '../access';
 
 export const OrderItem = list({

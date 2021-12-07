@@ -6,7 +6,7 @@ import {
 } from '../.keystone/schema-types';
 
 /* eslint-disable */
-import { KeystoneContext, SessionStore } from '@keystone-next/types';
+import { KeystoneContext} from '@keystone-6/core/types';
 import stripeConfig from '../lib/stripe';
 
 const graphql = String.raw;

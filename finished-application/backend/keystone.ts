@@ -1,9 +1,6 @@
-import { createAuth } from '@keystone-next/auth';
-import { config, createSchema } from '@keystone-next/keystone/schema';
-import {
-  withItemData,
-  statelessSessions,
-} from '@keystone-next/keystone/session';
+import { createAuth } from '@keystone-6/auth';
+import { config } from '@keystone-6/core';
+import { statelessSessions, } from '@keystone-6/core/session';
 import { permissionsList } from './schemas/fields';
 import { Role } from './schemas/Role';
 import { OrderItem } from './schemas/OrderItem';
@@ -16,8 +13,7 @@ import 'dotenv/config';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations';
-
-function check(name: string) {}
+import { addCompatibilityForQueries } from './compat';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
@@ -35,6 +31,7 @@ const { withAuth } = createAuth({
     fields: ['name', 'email', 'password'],
     // TODO: Add in inital roles here
   },
+  sessionData: `id name email role { ${permissionsList.join(' ')} }`,
   passwordResetLink: {
     async sendToken(args) {
       // send the email
@@ -53,16 +50,16 @@ export default withAuth(
       },
     },
     db: {
-      adapter: 'mongoose',
+      provider: 'sqlite',
       url: databaseURL,
-      async onConnect(keystone) {
+      async onConnect(context) {
         console.log('Connected to the database!');
         if (process.argv.includes('--seed-data')) {
-          await insertSeedData(keystone);
+          await insertSeedData(context.prisma);
         }
       },
     },
-    lists: createSchema({
+    lists: {
       // Schema items go in here
       User,
       Product,
@@ -71,17 +68,14 @@ export default withAuth(
       OrderItem,
       Order,
       Role,
-    }),
-    extendGraphqlSchema,
+    },
+    extendGraphqlSchema: (schema) => addCompatibilityForQueries(extendGraphqlSchema(schema)),
     ui: {
       // Show the UI only for poeple who pass this test
       isAccessAllowed: ({ session }) =>
         // console.log(session);
         !!session?.data,
     },
-    session: withItemData(statelessSessions(sessionConfig), {
-      // GraphQL Query
-      User: `id name email role { ${permissionsList.join(' ')} }`,
-    }),
+    session: statelessSessions(sessionConfig),
   })
 );
