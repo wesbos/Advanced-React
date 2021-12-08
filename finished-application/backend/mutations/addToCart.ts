@@ -1,6 +1,6 @@
 import { KeystoneContext } from '@keystone-6/core/types';
-// import { Context } from '.keystone/types';
-// import { CartItem } from '.prisma/client';
+import { Context } from './.keystone/types';
+import { CartItem } from '.prisma/client';
 import { Session } from '../types';
 
 async function addToCart(

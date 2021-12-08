@@ -38,7 +38,7 @@ const CREATE_ORDER_MUTATION = gql`
   }
 `;
 
-const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY || 'avc');
 
 function CheckoutForm() {
   const [error, setError] = useState();

@@ -1,6 +1,6 @@
 import { createAuth } from '@keystone-6/auth';
 import { config } from '@keystone-6/core';
-import { statelessSessions, } from '@keystone-6/core/session';
+import { statelessSessions } from '@keystone-6/core/session';
 import { permissionsList } from './schemas/fields';
 import { Role } from './schemas/Role';
 import { OrderItem } from './schemas/OrderItem';
@@ -15,8 +15,7 @@ import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations';
 import { addCompatibilityForQueries } from './compat';
 
-const databaseURL =
-  process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
+const databaseURL = process.env.DATABASE_URL || 'file:./app.db';
 
 const sessionConfig = {
   maxAge: 60 * 60 * 24 * 360, // How long they stay signed in?
@@ -69,7 +68,8 @@ export default withAuth(
       Order,
       Role,
     },
-    extendGraphqlSchema: (schema) => addCompatibilityForQueries(extendGraphqlSchema(schema)),
+    extendGraphqlSchema: (schema) =>
+      addCompatibilityForQueries(extendGraphqlSchema(schema)),
     ui: {
       // Show the UI only for poeple who pass this test
       isAccessAllowed: ({ session }) =>

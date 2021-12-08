@@ -5,7 +5,7 @@ import { permissions, rules } from '../access';
 export const User = list({
   access: {
     create: () => true,
-    read: rules.canManageUsers,
+    query: rules.canManageUsers,
     update: rules.canManageUsers,
     // only people with the permission can delete themselves!
     // You can't delete yourself
@@ -17,8 +17,8 @@ export const User = list({
     hideDelete: (args) => !permissions.canManageUsers(args),
   },
   fields: {
-    name: text({ isRequired: true }),
-    email: text({ isRequired: true, isUnique: true }),
+    name: text({ validation: { isRequired: true } }),
+    email: text({ validation: { isRequired: true }, isIndexed: 'unique' }),
     password: password(),
     cart: relationship({
       ref: 'CartItem.user',

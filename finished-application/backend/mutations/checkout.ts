@@ -1,12 +1,6 @@
-import { CartItem } from '../schemas/CartItem';
-import { User } from '../schemas/User';
-import {
-  CartItemCreateInput,
-  OrderCreateInput,
-} from '../.keystone/schema-types';
-
 /* eslint-disable */
-import { KeystoneContext} from '@keystone-6/core/types';
+import { Context } from '.keystone/types';
+import { Order } from '.prisma/client';
 import stripeConfig from '../lib/stripe';
 
 const graphql = String.raw;
@@ -19,17 +13,17 @@ interface Arguments {
 async function checkout(
   root: any,
   { token }: Arguments,
-  context: KeystoneContext
-): Promise<OrderCreateInput> {
+  context: Context
+): Promise<Order> {
   // 1. Make sure they are signed in
   const userId = context.session.itemId;
-  if(!userId) {
+  if (!userId) {
     throw new Error('Sorry! You must be signed in to create an order!')
   }
   // 1.5 Query the current user
-  const user = await context.lists.User.findOne({
+  const user = await context.query.User.findOne({
     where: { id: userId },
-    resolveFields: graphql`
+    query: graphql`
       id
       name
       email
@@ -54,8 +48,8 @@ async function checkout(
   });
   console.dir(user, { depth: null })
   // 2. calc the total price for their order
-  const cartItems = user.cart.filter(cartItem => cartItem.product);
-  const amount = cartItems.reduce(function(tally: number, cartItem: CartItemCreateInput) {
+  const cartItems: any[] = user.cart.filter((cartItem: any) => cartItem.product);
+  const amount = cartItems.reduce(function (tally, cartItem) {
     return tally + cartItem.quantity * cartItem.product.price;
   }, 0);
   console.log(amount);
@@ -77,26 +71,25 @@ async function checkout(
       description: cartItem.product.description,
       price: cartItem.product.price,
       quantity: cartItem.quantity,
-      photo: { connect: { id: cartItem.product.photo.id }},
+      photo: { connect: { id: cartItem.product.photo.id } },
     }
     return orderItem;
   })
   console.log('gonna create the order')
   // 5. Create the order and return it
-  const order = await context.lists.Order.createOne({
+  const order = await context.db.Order.createOne({
     data: {
       total: charge.amount,
       charge: charge.id,
       items: { create: orderItems },
-      user: { connect: { id: userId }}
+      user: { connect: { id: userId } }
     },
-    resolveFields: false,
   });
   // 6. Clean up any old cart item
-  const cartItemIds = user.cart.map(cartItem => cartItem.id);
+  const cartItemIds = user.cart.map((cartItem: any) => cartItem.id);
   console.log('gonna create delete cartItems')
-  await context.lists.CartItem.deleteMany({
-    ids: cartItemIds
+  await context.query.CartItem.deleteMany({
+    where: cartItemIds.map((id: string) => ({ id }))
   });
   return order;
 }

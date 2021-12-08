@@ -5,23 +5,29 @@ import {
   relationship,
   virtual,
 } from '@keystone-6/core/fields';
-import { list } from '@keystone-6/core';
+import { list, graphql } from '@keystone-6/core';
 import { isSignedIn, rules } from '../access';
 import formatMoney from '../lib/formatMoney';
 
 export const Order = list({
   access: {
-    create: isSignedIn,
-    read: rules.canOrder,
-    update: () => false,
-    delete: () => false,
+    operation: {
+      create: isSignedIn,
+      update: () => false,
+      delete: () => false,
+    },
+    filter: {
+      query: rules.canOrder,
+    },
   },
   fields: {
     label: virtual({
-      graphQLReturnType: 'String',
-      resolver(item) {
-        return `${formatMoney(item.total)}`;
-      },
+      field: graphql.field({
+        type: graphql.String,
+        resolve(item) {
+          return `${formatMoney(item.total)}`;
+        },
+      }),
     }),
     total: integer(),
     items: relationship({ ref: 'OrderItem.order', many: true }),
