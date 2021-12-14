@@ -4,6 +4,6 @@
     "wesbos.theme-cobalt2",
     "formulahendry.auto-rename-tag",
     "graphql.vscode-graphql",
-    "jpoissonnier.vscode-styled-components"
+    "styled-components.vscode-styled-components"
   ]
 }
