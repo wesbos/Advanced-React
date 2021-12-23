@@ -32,6 +32,7 @@ export default function Search() {
     SEARCH_PRODUCTS_QUERY,
     {
       fetchPolicy: 'no-cache',
+      ssr: false
     }
   );
   const items = data?.searchTerms || [];
