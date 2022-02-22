@@ -4,6 +4,7 @@ import {
   withItemData,
   statelessSessions,
 } from '@keystone-next/keystone/session';
+import { ProductImage } from './schemas/ProductImage';
 import { Product } from './schemas/Product';
 import { User } from './schemas/User';
 import 'dotenv/config';
@@ -43,6 +44,7 @@ export default withAuth(
       // Schema types go in here
       User,
       Product,
+      ProductImage,
     }),
     ui: {
       // Show the UI only for people that pass this test
