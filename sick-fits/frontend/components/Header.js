@@ -42,11 +42,11 @@ export default function Header() {
         <LogoStyles>
           <Link href="/">Sick beats</Link>
         </LogoStyles>
+        <Nav />
       </div>
       <div className="sub-bar">
         <Search />
       </div>
-      <Nav />
     </HeaderStyles>
   );
 }
