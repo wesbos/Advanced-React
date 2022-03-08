@@ -11,9 +11,9 @@ export default function useForm(initial = {}) {
       value = parseInt(value);
     }
 
-    if (type === 'files') {
+    if (type === 'file') {
       // funky way of how input files works 🥲
-      value[0] = e.target.files;
+      [value] = e.target.files;
     }
 
     setInputs({
