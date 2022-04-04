@@ -9,7 +9,10 @@
     "seed-data": "keystone-next --seed-data"
   },
   "eslintConfig": {
-    "extends": "wesbos/typescript.js",
+    "extends": [
+      "wesbos/typescript.js",
+      "wesbos"
+    ],
     "rules": {
       "@typescript-eslint/no-unsafe-assignment": 0
     }
