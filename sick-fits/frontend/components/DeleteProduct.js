@@ -10,10 +10,15 @@ const DELETE_PRODUCT_MUTATION = gql`
   }
 `;
 
+function update(cache, payload) {
+  // calling udpate after deleting an item so it updates on the cache
+  cache.evict(cache.identify(payload.data.deleteProduct));
+}
+
 export default function DeleteProduct({ id, children }) {
   const [deleteProduct, { data, error, loading }] = useMutation(
     DELETE_PRODUCT_MUTATION,
-    { variables: { id } }
+    { variables: { id }, update }
   );
 
   return (
