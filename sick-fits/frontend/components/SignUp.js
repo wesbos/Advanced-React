@@ -49,7 +49,7 @@ export default function SignUp() {
             Sign up with {data.createUser.email} - Please Go Ahead and Sign in!
           </p>
         )}
-        <label htmlFor="email">
+        <label htmlFor="name">
           Your Name
           <input
             type="text"
