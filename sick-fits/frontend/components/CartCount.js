@@ -39,7 +39,6 @@ const AnimationStyles = styled.span`
   }
 `;
 
-// TODO: open cart slide when adding a new item to the cart - challenge
 export default function CartCount({ count }) {
   return (
     <AnimationStyles>
