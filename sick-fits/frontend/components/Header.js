@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Cart from './Cart';
 import Nav from './Nav';
 import Search from './Search';
 
@@ -35,6 +37,25 @@ const HeaderStyles = styled.header`
   }
 `;
 
+// Search query fetching with lazyQuery wasn't working properly... would fetch correctly on the graphql playground but we would get an infite loading state and no data on the app
+// Okay, another way to get it to work is to update to the latest release of @apollo/client which is 3.5.10 . Change the version number in the package.json file and run npm i to install it.
+// Then add this ClientOnly component to mount the Search component only on the client. Newer releases of @apollo/client cause an infinite loop when server rendering with useLazyQuery so mounting it on the Client stops that from happening.
+// https://wesbos.slack.com/archives/C9G96G2UB/p1649362470736129?thread_ts=1649019262.784559&cid=C9G96G2UB
+function ClientOnly({ children, ...delegated }) {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) {
+    return null;
+  }
+
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <div {...delegated}>{children}</div>;
+}
+
 export default function Header() {
   return (
     <HeaderStyles>
@@ -45,8 +66,11 @@ export default function Header() {
         <Nav />
       </div>
       <div className="sub-bar">
-        <Search />
+        <ClientOnly>
+          <Search />
+        </ClientOnly>
       </div>
+      <Cart />
     </HeaderStyles>
   );
 }

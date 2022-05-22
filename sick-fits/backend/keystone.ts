@@ -4,11 +4,16 @@ import {
   withItemData,
   statelessSessions,
 } from '@keystone-next/keystone/session';
+import { Order } from './schemas/Order';
+import { OrderItem } from './schemas/OrderItem';
+import { extendGraphqlSchema } from './mutations/index';
+import { CartItem } from './schemas/CartItem';
 import { ProductImage } from './schemas/ProductImage';
 import { Product } from './schemas/Product';
 import { User } from './schemas/User';
 import 'dotenv/config';
 import { insertSeedData } from './seed-data';
+import { sendPasswordResetEmail } from './lib/mail';
 
 const databaseUrl =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
@@ -26,6 +31,18 @@ const { withAuth } = createAuth({
     fields: ['name', 'email', 'password'],
     // TODO: add in initial roles here
   },
+  passwordResetLink: {
+    async sendToken(args) {
+      // send the email
+      console.log('args', args);
+      await sendPasswordResetEmail(args.token, args.identity);
+    },
+  },
+
+  // passwordResetLink: {
+  //   sendToken: async ({ itemId, identity, token, context }) => { /* ... */ },
+  //   tokensValidForMins: 60,
+  // },
 });
 
 export default withAuth(
@@ -51,7 +68,11 @@ export default withAuth(
       User,
       Product,
       ProductImage,
+      CartItem,
+      OrderItem,
+      Order,
     }),
+    extendGraphqlSchema,
     ui: {
       // Show the UI only for people that pass this test
       isAccessAllowed: ({ session }) => !!session?.data,
