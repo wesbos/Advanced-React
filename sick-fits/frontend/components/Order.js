@@ -4,6 +4,7 @@ import { gql } from 'graphql-tag';
 import styled from 'styled-components';
 import DisplayError from './ErrorMessage';
 
+/* SingleOrderItem I created during the tutorial - unused, can be deleted */
 const SINGLE_ORDER_QUERY = gql`
   query SINGLE_ORDER_QUERY($id: ID!) {
     Order(where: { id: $id }) {
@@ -37,7 +38,6 @@ export default function Order({ id }) {
   if (loading) return <p>Loading...</p>;
   if (error) return <DisplayError error={error} />;
 
-  console.log('data :>> ', data);
   return (
     <>
       <h1>Order {id}</h1>

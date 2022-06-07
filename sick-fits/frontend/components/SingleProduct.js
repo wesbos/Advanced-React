@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { gql } from 'graphql-tag';
 import Head from 'next/head';
 import styled from 'styled-components';
-import DisplayError from './ErrorMessage';
+import ErrorMessage from './ErrorMessage';
 
 const ProductStyles = styled.div`
   display: grid;
@@ -45,7 +45,7 @@ export default function SingleProduct({ id }) {
   console.log('{ data, loading, error } :>> ', { data, loading, error });
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <DisplayError error={error} />;
+  if (error) return <ErrorMessage error={error} />;
 
   const { Product } = data;
 

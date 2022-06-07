@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { useRouter } from 'next/dist/client/router';
-import DisplayError from '../components/ErrorMessage';
+import ErrorMessage from '../components/ErrorMessage';
 
 const GET_ALL_ORDERS_QUERY = gql`
   query GET_ALL_ORDERS_QUERY {
@@ -21,7 +21,7 @@ export default function OrdersPage() {
   const router = useRouter();
   console.log('data :>> ', data);
   if (loading) return <p>Loading...</p>;
-  if (error) return <DisplayError error={error} />;
+  if (error) return <ErrorMessage error={error} />;
 
   return (
     <div>

@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import Head from 'next/head';
 import Link from 'next/link';
 import PaginationStyles from './styles/PaginationStyles';
-import DisplayError from './ErrorMessage';
+import ErrorMessage from './ErrorMessage';
 import { perPage } from '../config';
 
 export const PAGINATION_QUERY = gql`
@@ -18,7 +18,7 @@ export default function Pagination({ page }) {
   const { error, loading, data } = useQuery(PAGINATION_QUERY);
 
   if (loading) return 'Loading...';
-  if (error) return <DisplayError />;
+  if (error) return <ErrorMessage />;
 
   const { count } = data._allProductsMeta;
   const pageCount = Math.ceil(count / perPage);

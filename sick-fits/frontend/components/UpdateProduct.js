@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import useForm from '../lib/useForm';
-import DisplayError from './ErrorMessage';
+import ErrorMessage from './ErrorMessage';
 import Form from './styles/Form';
 
 const SINGLE_PRODUCT_QUERY = gql`
@@ -46,7 +46,7 @@ export default function UpdateProduct({ id }) {
   const { inputs, handleChange, resetForm, clearForm } = useForm(data?.Product);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <DisplayError error={error} />;
+  if (error) return <ErrorMessage error={error} />;
 
   console.log('data', data);
 
@@ -73,7 +73,7 @@ export default function UpdateProduct({ id }) {
         // Router.push({ pathname: `/product/${res.data.createProduct.id}` });
       }}
     >
-      <DisplayError error={error || updateError} />
+      <ErrorMessage error={error || updateError} />
       <fieldset disabled={updateLoading} aria-busy={updateLoading}>
         <label htmlFor="name">
           Name
