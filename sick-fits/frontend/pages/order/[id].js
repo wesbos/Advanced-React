@@ -4,7 +4,6 @@ import { gql } from 'graphql-tag';
 import ErrorMessage from '../../components/ErrorMessage';
 import OrderStyles from '../../components/styles/OrderStyles';
 import formatMoney from '../../lib/formatMoney';
-import Order from '../../components/Order';
 
 const SINGLE_ORDER_QUERY = gql`
   query SINGLE_ORDER_QUERY($id: ID!) {
