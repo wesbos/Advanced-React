@@ -9,3 +9,5 @@ variables.env
 *.env
 .keystone
 *.db
+sick-fits/backend/package-lock.json
+package-lock.json
