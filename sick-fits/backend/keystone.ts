@@ -4,6 +4,7 @@ import {
   withItemData,
   statelessSessions,
 } from '@keystone-next/keystone/session';
+import { permissionsList } from './schemas/fields';
 import { Role } from './schemas/Role';
 import { Order } from './schemas/Order';
 import { OrderItem } from './schemas/OrderItem';
@@ -80,7 +81,7 @@ export default withAuth(
       isAccessAllowed: ({ session }) => !!session?.data,
     },
     session: withItemData(statelessSessions(sessionConfig), {
-      User: 'id name email',
+      User: `id name email role { ${permissionsList.join(' ')}}`,
     }),
   })
 );
