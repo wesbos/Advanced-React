@@ -27,6 +27,10 @@ export const permissions = {
 // Rules can return a boolean - yes or no - or a filter which limits which products they can CRUD
 export const rules = {
   canManageProducts({ session }: ListAccessArgs) {
+    if (!isSignedIn({ session })) {
+      return false;
+    }
+
     // 1. Do they have the permission of canManageProducts
     if (permissions?.canManageProducts({ session })) {
       return true;
@@ -35,7 +39,37 @@ export const rules = {
     // if this query doesn't work, it returns falsy value
     return { user: { id: session.itemId } };
   },
+  canOrder({ session }: ListAccessArgs) {
+    if (!isSignedIn({ session })) {
+      return false;
+    }
+
+    if (permissions?.canManageCart({ session })) {
+      // 1. Do they have the permission of canManageProducts
+      return true;
+    }
+    // 2. If not, do they own this item? - graphqlQL query
+    // if this query doesn't work, it returns falsy value
+    return { user: { id: session.itemId } };
+  },
+  canManageOrderItems({ session }: ListAccessArgs) {
+    if (!isSignedIn({ session })) {
+      return false;
+    }
+
+    // 1. Do they have the permission of canManageProducts
+    if (permissions?.canManageCart({ session })) {
+      return true;
+    }
+    // 2. If not, do they own this item? - graphqlQL query
+    // if this query doesn't work, it returns falsy value
+    return { order: { user: { id: session.itemId } } };
+  },
   canReadProducts({ session }: ListAccessArgs) {
+    if (!isSignedIn({ session })) {
+      return false;
+    }
+
     if (permissions?.canManageProducts({ session })) {
       return true;
     }
