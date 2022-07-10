@@ -15,6 +15,7 @@ describe('<Product/>', () => {
         </MockedProvider>
       </CartStateProvider>
     );
+
     debug();
 
     const priceTag = screen.getByText('50 €');
@@ -26,5 +27,16 @@ describe('<Product/>', () => {
     expect(priceTag).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/product/abc123');
     expect(link).toHaveTextContent(product.name);
+  });
+
+  it('Renders and matches the snapshot', () => {
+    const { container } = render(
+      <CartStateProvider>
+        <MockedProvider>
+          <Product product={product} />
+        </MockedProvider>
+      </CartStateProvider>
+    );
+    expect(container).toMatchSnapshot();
   });
 });
