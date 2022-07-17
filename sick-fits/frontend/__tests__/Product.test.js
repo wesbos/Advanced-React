@@ -39,4 +39,17 @@ describe('<Product/>', () => {
     );
     expect(container).toMatchSnapshot();
   });
+
+  it('Renders img correctly', () => {
+    render(
+      <CartStateProvider>
+        <MockedProvider>
+          <Product product={product} />
+        </MockedProvider>
+      </CartStateProvider>
+    );
+
+    const img = screen.getByAltText(product.name);
+    expect(img).toBeInTheDocument();
+  });
 });
