@@ -11,12 +11,13 @@ export default function Nav() {
 
   return (
     <NavStyles>
-      <Link href="/account">Account</Link>
+      <Link href="/products">Products</Link>
       {user && (
         <>
-          <Link href="/orders">Orders</Link>
-          <Link href="/products">Products</Link>
           <Link href="/sell">Sell</Link>
+          <Link href="/orders">Orders</Link>
+          <Link href="/account">Account</Link>
+
           <SignOut />
           <button type="button" onClick={openCart}>
             My Cart
