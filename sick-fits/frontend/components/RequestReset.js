@@ -39,7 +39,7 @@ export default function RequestReset() {
       <Error error={error} />
       <fieldset>
         {data?.sendUserPasswordResetLink === null && (
-          <p>Check your email for a link!</p>
+          <p>Success! Check your email for a link!</p>
         )}
         <label htmlFor="email">
           Email
@@ -57,3 +57,5 @@ export default function RequestReset() {
     </Form>
   );
 }
+
+export { REQUEST_RESET_MUTATION };
