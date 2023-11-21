@@ -9,3 +9,4 @@ variables.env
 *.env
 .keystone
 *.db
+*.env*
