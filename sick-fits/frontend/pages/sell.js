@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function SellPage() {
-  return <div>SellPage</div>;
+  return <p>Hello I am the sell page</p>;
 }
