@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
-import Router from 'next/router';
+import React, { Component } from "react";
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
+import Router from "next/router";
 
-import Error from './ErrorMessage';
-import { ALL_ITEMS_QUERY } from './Items';
-import { PAGINATION_QUERY } from './Pagination';
-import Form from './styles/Form';
+import Error from "./ErrorMessage";
+import { ALL_ITEMS_QUERY } from "./Items";
+import { PAGINATION_QUERY } from "./Pagination";
+import Form from "./styles/Form";
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -30,10 +30,10 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component {
   state = {
-    title: '',
-    description: '',
-    image: '',
-    largeImage: '',
+    title: "",
+    description: "",
+    image: "",
+    largeImage: "",
     price: 0,
   };
 
@@ -41,7 +41,7 @@ class CreateItem extends Component {
     const { name, type, value } = e.target;
 
     // Inputs always come in as string. If the type needs to be stored as a number, convert it
-    const val = type === 'number' && value.length ? parseFloat(value) : value;
+    const val = type === "number" && value.length ? parseFloat(value) : value;
 
     this.setState({ [name]: val });
   };
@@ -52,25 +52,28 @@ class CreateItem extends Component {
     const res = await createItem();
 
     Router.push({
-      pathname: '/item',
+      pathname: "/item",
       query: { id: res.data.createItem.id },
     });
-  }
+  };
 
-  uploadFile = async e => {
+  uploadFile = async (e) => {
     const files = e.target.files;
     if (files.length) {
       const data = new FormData();
-      data.append('file', files[0]);
-      data.append('upload_preset', 'sickfits'); // Set in Cloudinary
-      const res = await fetch('https://api.cloudinary.com/v1_1/mbglasser/image/upload', {
-        method: 'POST',
-        body: data,
-      });
+      data.append("file", files[0]);
+      data.append("upload_preset", "sickfits"); // Set in Cloudinary
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/mbglasser/image/upload",
+        {
+          method: "POST",
+          body: data,
+        },
+      );
       const file = await res.json();
       this.setState({
         image: file.secure_url,
-        largeImage: file.eager ? file.eager[0].secure_url : '',
+        largeImage: file.eager ? file.eager[0].secure_url : "",
       });
     }
   };
@@ -85,14 +88,14 @@ class CreateItem extends Component {
       id: payload.data.createItem.id,
       __typename: "Item",
       ...this.state,
-    }
+    };
     data.items = [newItem, ...data.items];
     pagination.itemsConnection.aggregate.count++;
 
     // 3. Write our changes to the cache
     cache.writeQuery({ query: ALL_ITEMS_QUERY, data });
     cache.writeQuery({ query: PAGINATION_QUERY, data: pagination });
-  }
+  };
 
   render() {
     return (
@@ -102,7 +105,7 @@ class CreateItem extends Component {
         update={this.update}
       >
         {(createItem, { loading, error }) => (
-          <Form onSubmit={e => this.handleSubmit(e, createItem)}>
+          <Form onSubmit={(e) => this.handleSubmit(e, createItem)}>
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="file">
@@ -114,7 +117,9 @@ class CreateItem extends Component {
                   placeholder="Upload an Image"
                   onChange={this.uploadFile}
                 />
-                {this.state.image && <img src={this.state.image} alt="Upload Preview" />}
+                {this.state.image && (
+                  <img src={this.state.image} alt="Upload Preview" />
+                )}
               </label>
               <label htmlFor="title">
                 Title
@@ -134,7 +139,7 @@ class CreateItem extends Component {
                   type="number"
                   id="price"
                   name="price"
-                  placeholder="Price (in cents)"
+                  placeholder="Price (in dollars)"
                   onChange={this.handleChange}
                   value={this.state.price}
                   required
